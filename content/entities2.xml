@@ -1,0 +1,13 @@
+<entities anm2root="gfx/" version="5">
+  <entity anm2path="loot card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Loot Card" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="904">
+         <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
+  </entity>
+  <entity anm2path="lost penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Penny" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7452">
+  </entity>
+  <entity anm2path="lost key.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Key" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7453">
+  </entity>
+  <entity anm2path="lost bomb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Bomb" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7454">
+  </entity>
+  <entity anm2path="moms finger.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Mom's Finger" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="8292">
+  </entity>
+</entities>

@@ -1,0 +1,38 @@
+<items gfxroot="gfx/items/" version="1">
+  <passive name="Bloody Penny"
+      description="Loot the dead"
+      gfx="bloodypenny.png"
+  />
+  <passive name="Swallowed Penny"
+      description="Take damage, gain 1c"
+      gfx="swallowedpenny.png"
+  />
+  <passive name="Counterfeit Penny"
+      description="Gain an additional 1c"
+      gfx="counterfeitpenny.png"
+  />
+  <passive name="Cain's Eye"
+      description="Look at the top"
+      gfx="cainseye.png"
+  />
+  <passive name="Broken Ankh"
+      description="Prevent death?"
+      gfx="brokenankh.png"
+  />
+  <passive name="Curved Horn"
+      description="Stronger first attack"
+      gfx="curvedhorn.png"
+  />
+  <passive name="Purple Heart"
+      description="Monsters from the bottom"
+      gfx="purpleheart.png"
+  />
+  <passive name="Golden Horseshoe"
+      description="Treasure from the bottom"
+      gfx="goldenhorseshoe.png"
+  />
+  <passive name="Guppy's Hairball"
+      description="Prevent damage?"
+      gfx="guppyshairball.png"
+  />
+</items>
