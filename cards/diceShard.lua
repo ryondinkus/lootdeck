@@ -12,6 +12,7 @@ local function MC_USE_CARD(_, c, p, flags)
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS)
         f.newRoom = level:GetCurrentRoomIndex()
         if (flags & UseFlag.USE_MIMIC == 0) then
+            print("running")
             data.removeCard = true
         else
             data.dischargeMimic = true
@@ -29,13 +30,12 @@ end
 local function MC_POST_NEW_ROOM()
 	local game = Game()
 	local f = lootdeck.f
-    local k = lootdeck.k
     if f.checkEm then
         for i=0,game:GetNumPlayers()-1 do
             local p = Isaac.GetPlayer(i)
             local data = p:GetData()
             for j=0,3 do
-                if p:GetCard(j) == k.diceShard and data.removeCard then
+                if p:GetCard(j) == Id and data.removeCard then
                     p:SetCard(j, 0)
                     data.removeCard = nil
                 end

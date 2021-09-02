@@ -107,20 +107,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
--- TODO: Audio/visual indicators
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local level = game:GetLevel()
-    local effect = rng:RandomInt(2)
-    if effect == 0 then
-        sfx:Play(SoundEffect.SOUND_SUPERHOLY,1,0)
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GROUND_GLOW, 0, p.Position, Vector.Zero, p)
-        level:RemoveCurses(level:GetCurses())
-    else
-        sfx:Play(SoundEffect.SOUND_HOLY,1,0)
-        p:AddSoulHearts(2)
-    end
-end, k.dagaz)
-
 -- TODO: Base on loot deck weights, support stacking with multiple players and items, cap at 50% droprate
 helper.SimpleLootCardItem(k.bloodyPenny, t.bloodyPenny, SoundEffect.SOUND_VAMP_GULP)
 lootdeck:AddCallback(ModCallbacks.MC_POST_ENTITY_KILL, function(_, e)

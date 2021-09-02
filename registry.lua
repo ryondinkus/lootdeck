@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    dagaz = "Dagaz", -- 50% curse removal, 50% soul heart
     bloodyPenny = "Bloody Penny", -- passive, enemies killed drop loot
     swallowedPenny = "Swallowed Penny", -- passive, 50% to drop penny on damage taken
     counterfeitPenny = "Counterfeit Penny", -- passive, adds 1c to money counter every time money is gained
@@ -76,6 +75,7 @@ R.testCards = {
     diceShard = include("cards/diceShard"),
     soulHeart = include("cards/soulHeart"),
     blankRune = include("cards/blankRune"),
+    dagaz = include("cards/dagaz"),
     ehwaz = include("cards/ehwaz"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
