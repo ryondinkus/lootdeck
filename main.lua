@@ -107,14 +107,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
--- TODO: based on our discoveries with guppy's hairball, emulate a mantle effect
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    -- BUGGED: when AddCollectibleEffect() is fixed, this will give Holy Mantle effect for the room.
-    -- p:GetEffects():AddCollectibleEffect(5, false)
-    p:AddSoulHearts(2)
-    sfx:Play(SoundEffect.SOUND_HOLY,1,0)
-end, k.soulHeart)
-
 -- TODO: Visual and audio indicator for results, card spawns based on lootdeck weights,
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local room = game:GetRoom()

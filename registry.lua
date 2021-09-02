@@ -1,8 +1,6 @@
 local R = {}
 
 R.cards = {
-    diceShard = "Dice Shard", -- glowing hourglass effect, respawn in current room
-    soulHeart = "Soul Heart", -- one room mantle effect
     blankRune = "Blank Rune", -- gain 1c, loot 2, take 3 damage, gain 4c, loot 5, gain 6c
     dagaz = "Dagaz", -- 50% curse removal, 50% soul heart
     bloodyPenny = "Bloody Penny", -- passive, enemies killed drop loot
@@ -77,6 +75,7 @@ R.testCards = {
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),
     diceShard = include("cards/diceShard"),
+    soulHeart = include("cards/soulHeart"),
     ehwaz = include("cards/ehwaz"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
