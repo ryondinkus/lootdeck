@@ -74,6 +74,7 @@ R.testCards = {
     bluePill = include("cards/bluePill"),
     yellowPill = include("cards/yellowPill"),
     bomb = include("cards/bomb"),
+    goldBomb = include("cards/goldBomb"),
     ehwaz = include("cards/ehwaz"),
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),

@@ -85,20 +85,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-	local data = p:GetData()
-	data[helper.FormatDataKey(k.goldBomb)] = 1
-end, k.goldBomb)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-	helper.StaggerSpawn(k.goldBomb, p, 15, 3, function(p)
-		local target = helper.findRandomEnemy(p.Position) or 0
-		if target ~= 0 then
-			Isaac.Explode(target.Position, nil, 40)
-		end
-	end)
-end)
-
 local blackOverlay = Sprite()
 blackOverlay:Load("gfx/overlay.anm2")
 blackOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
