@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    bomb = "Bomb!", -- explode a random enemy in the room, explode on player if there are none
     goldBomb = "Gold Bomb!!", -- explode three random enemies in the room, explode on player if there are none
     diceShard = "Dice Shard", -- glowing hourglass effect, respawn in current room
     soulHeart = "Soul Heart", -- one room mantle effect
@@ -74,6 +73,7 @@ R.testCards = {
     redPill = include("cards/redPill"),
     bluePill = include("cards/bluePill"),
     yellowPill = include("cards/yellowPill"),
+    bomb = include("cards/bomb"),
     ehwaz = include("cards/ehwaz"),
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),

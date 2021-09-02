@@ -86,11 +86,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local target = helper.findRandomEnemy(p.Position) or p
-    Isaac.Explode(target.Position, nil, 40)
-end, k.bomb)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 	local data = p:GetData()
 	data[helper.FormatDataKey(k.goldBomb)] = 1
 end, k.goldBomb)

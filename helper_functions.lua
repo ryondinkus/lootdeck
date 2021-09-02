@@ -157,7 +157,7 @@ function H.glyphOfBalance(p)
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
     elseif p:GetNumBombs() < 5 then
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-    elseif p:GetTrinket(0) == 0 and not trinketsOnGround() then
+    elseif p:GetTrinket(0) == 0 and not H.trinketsOnGround() then
         return {PickupVariant.PICKUP_TRINKET, 0}
     elseif p:GetHearts() + p:GetSoulHearts() < 12 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
@@ -168,7 +168,7 @@ end
 
 function H.RemoveHeartsOnNewRoomEnter(player, hpValue)
     for i=1,hpValue do
-		if GetPlayerHeartTotal(player) > 2 then
+		if H.GetPlayerHeartTotal(player) > 2 then
         	player:AddMaxHearts(-2)
 		end
     end
@@ -185,13 +185,13 @@ end
 
 function H.GetPlayerHeartTotal(p)
     local heartTotal = p:GetMaxHearts()
-    if IsSoulHeartMarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
+    if H.IsSoulHeartMarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
     if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts() * 2) end
     return heartTotal
 end
 
 function H.FindHealthToAdd(p, hp)
-    local heartTotal = GetPlayerHeartTotal(p)
+    local heartTotal = H.GetPlayerHeartTotal(p)
     if heartTotal < p:GetHeartLimit() then
         local remainder = math.floor((p:GetHeartLimit() - heartTotal)/2)
         local amountToAdd = math.floor(hp/2)
@@ -203,7 +203,7 @@ end
 
 function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
 	local data = p:GetData()
-    local amountToAdd = FindHealthToAdd(p, hp)
+    local amountToAdd = H.FindHealthToAdd(p, hp)
     if p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
         if not data.soulHp then data.soulHp = 0 end
         data.soulHp = data.soulHp + amountToAdd
