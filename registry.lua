@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    goldBomb = "Gold Bomb!!", -- explode three random enemies in the room, explode on player if there are none
     diceShard = "Dice Shard", -- glowing hourglass effect, respawn in current room
     soulHeart = "Soul Heart", -- one room mantle effect
     blankRune = "Blank Rune", -- gain 1c, loot 2, take 3 damage, gain 4c, loot 5, gain 6c
@@ -75,9 +74,10 @@ R.testCards = {
     yellowPill = include("cards/yellowPill"),
     bomb = include("cards/bomb"),
     goldBomb = include("cards/goldBomb"),
-    ehwaz = include("cards/ehwaz"),
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),
+    diceShard = include("cards/diceShard"),
+    ehwaz = include("cards/ehwaz"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
