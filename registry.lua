@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    blankRune = "Blank Rune", -- gain 1c, loot 2, take 3 damage, gain 4c, loot 5, gain 6c
     dagaz = "Dagaz", -- 50% curse removal, 50% soul heart
     bloodyPenny = "Bloody Penny", -- passive, enemies killed drop loot
     swallowedPenny = "Swallowed Penny", -- passive, 50% to drop penny on damage taken
@@ -76,6 +75,7 @@ R.testCards = {
     megaBattery = include("cards/megaBattery"),
     diceShard = include("cards/diceShard"),
     soulHeart = include("cards/soulHeart"),
+    blankRune = include("cards/blankRune"),
     ehwaz = include("cards/ehwaz"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
