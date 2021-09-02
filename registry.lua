@@ -1,19 +1,15 @@
 local R = {}
 
 R.cards = {
-    butterBean = "Butter Bean!", -- butter bean effect
     redPill = "Pills! Red", -- 33% damage buff for the room, 33% hp buff for the room, 33% take 1 heart of dmg
     bluePill = "Pills! Blue", -- 33% gain a loot card, 33% gain 3 loot cards, 33% lose a key, coin, and bomb
     yellowPill = "Pills! Yellow", -- 33% +4c, 33% +7c, 33% -4c
     bomb = "Bomb!", -- explode a random enemy in the room, explode on player if there are none
     goldBomb = "Gold Bomb!!", -- explode three random enemies in the room, explode on player if there are none
-    lilBattery = "Lil Battery", -- spawns a lil battery
-    megaBattery = "Mega Battery", -- spawns a mega battery
     diceShard = "Dice Shard", -- glowing hourglass effect, respawn in current room
     soulHeart = "Soul Heart", -- one room mantle effect
     blankRune = "Blank Rune", -- gain 1c, loot 2, take 3 damage, gain 4c, loot 5, gain 6c
     dagaz = "Dagaz", -- 50% curse removal, 50% soul heart
-    ehwaz = "Ehwaz", -- d10 effect
     bloodyPenny = "Bloody Penny", -- passive, enemies killed drop loot
     swallowedPenny = "Swallowed Penny", -- passive, 50% to drop penny on damage taken
     counterfeitPenny = "Counterfeit Penny", -- passive, adds 1c to money counter every time money is gained
@@ -24,7 +20,6 @@ R.cards = {
     goldenHorseshoe = "Golden Horseshoe", -- passive, every treasure room has an extra glitch item
     guppysHairball = "Guppy's Hairball", -- passive, 1/6 chance to block damage
     lostSoul = "Lost Soul", -- spawns a ghost bomb familiar
-    theFool = "O. The Fool", -- glowing hourglass effect, respawn in starting room
     theMagician = "I. The Magician", -- brain worm for the room
     theHighPriestess = "II. The High Priestess", -- deal 40 damage to random enemy 1-6 times
     theEmpress = "III. The Empress", -- grants double shot and increased damage
@@ -79,8 +74,12 @@ R.testCards = {
     fourCents = include("cards/fourCents"),
     nickel = include("cards/nickel"),
     dime = include("cards/dime"),
+    butterBean = include("cards/butterBean"),
+    ehwaz = include("cards/ehwaz"),
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),
+    theFool = include("cards/theFool"),
+    strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }
 

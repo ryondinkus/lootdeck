@@ -88,8 +88,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
 end)
 
-helper.SimpleLootCardEffect(k.butterBean, CollectibleType.COLLECTIBLE_BUTTER_BEAN)
-
 callback.UseCard(k.redPill, function(p)
 	card.RedPill(p)
 end)
@@ -275,9 +273,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
         p:AddSoulHearts(2)
     end
 end, k.dagaz)
-
--- TODO: Audio/visual indicators
-helper.SimpleLootCardEffect(k.ehwaz, CollectibleType.COLLECTIBLE_D10, SoundEffect.SOUND_LAZARUS_FLIP_DEAD)
 
 -- TODO: Base on loot deck weights, support stacking with multiple players and items, cap at 50% droprate
 helper.SimpleLootCardItem(k.bloodyPenny, t.bloodyPenny, SoundEffect.SOUND_VAMP_GULP)
@@ -556,8 +551,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     --Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PURGATORY, 1, p.Position, Vector.Zero, nil)
 end, k.lostSoul)
 
-helper.SimpleLootCardEffect(k.theFool, CollectibleType.COLLECTIBLE_TELEPORT_2)
-
 -- If it ever gets fixed, AddTrinketEffect() would be better here
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()
@@ -737,24 +730,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     end
 end, k.wheelOfFortune)
-
-helper.SimpleLootCardEffect(k.strength, CollectibleType.COLLECTIBLE_D7)
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    local sprite = p:GetSprite()
-    if not data.strength then data.strength = 1
-    else
-        data.strength = data.strength + 1
-    end
-    for i=1,data.strength or 0 do
-        local color = Color(1,1,1,1,data.strength/10,0,0)
-        --color:SetColorize(0.1,0,0,1)
-        sprite.Color = color
-    end
-    p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-    p:EvaluateItems()
-    sfx:Play(SoundEffect.SOUND_LAZARUS_FLIP_ALIVE, 1, 0)
-end, k.strength)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()

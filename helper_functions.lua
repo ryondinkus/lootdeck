@@ -84,13 +84,11 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
 end
 
 -- function for registering basic loot cards that copy item effects
-function H.SimpleLootCardEffect(cardID, itemEffect, sound)
-    lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-        p:UseActiveItem(itemEffect, false)
-        if sound then
-            lootdeck.sfx:Play(sound,1,0)
-        end
-    end, cardID)
+function H.SimpleLootCardEffect(p, itemEffect, sound)
+    p:UseActiveItem(itemEffect, false)
+    if sound then
+        lootdeck.sfx:Play(sound,1,0)
+    end
 end
 
 -- function for registering basic loot cards that give items
