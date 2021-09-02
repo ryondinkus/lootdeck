@@ -92,13 +92,11 @@ function H.SimpleLootCardEffect(p, itemEffect, sound)
 end
 
 -- function for registering basic loot cards that give items
-function H.SimpleLootCardItem(cardID, itemID, sound)
-    lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-        p:AddCollectible(itemID)
-        if sound then
-            lootdeck.sfx:Play(sound,1,0)
-        end
-    end, cardID)
+function H.SimpleLootCardItem(p, itemID, sound)
+    p:AddCollectible(itemID)
+    if sound then
+        lootdeck.sfx:Play(sound,1,0)
+    end
 end
 
 -- function to convert tearflags to new BitSet128

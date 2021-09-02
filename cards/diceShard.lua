@@ -12,7 +12,6 @@ local function MC_USE_CARD(_, c, p, flags)
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS)
         f.newRoom = level:GetCurrentRoomIndex()
         if (flags & UseFlag.USE_MIMIC == 0) then
-            print("running")
             data.removeCard = true
         else
             data.dischargeMimic = true
