@@ -1,8 +1,6 @@
 local H = {}
-local registry = include("registry")
 
 local game = lootdeck.game
-local rng = lootdeck.rng
 local sfx = lootdeck.sfx
 
 function H.PlayQuick(sound)
@@ -36,7 +34,7 @@ end
 -- function for finding target enemy, then calculating the angle/position the fire will spawn
 function H.findRandomEnemy(pos, noDupes)
 	local enemies = H.ListEnemiesInRoom(pos)
-    local chosenEnt = enemies[rng:RandomInt(#enemies)+1]
+    local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
     if chosenEnt then chosenEnt:GetData().chosen = noDupes end
     return chosenEnt
 end
@@ -46,11 +44,11 @@ function H.SimpleLootCardSpawn(cardID, spawnType, spawnVariant, spawnSubtype, us
     lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
         room = game:GetRoom()
         for i = 1,(uses or 1) do
-            Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(rng:RandomInt(360)), p)
+            Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
         end
         if effect then
             for i=1,(effectAmount or 1) do
-                Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(rng:RandomInt(360)), p)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
             end
         end
         if sound then
@@ -118,7 +116,18 @@ end
 
 -- function to check if player can only use soul/black hearts
 function H.IsSoulHeartMarty(p)
-    for i,v in ipairs(registry.soulHeartMarties) do
+    local soulHeartMarties = {
+        PlayerType.PLAYER_XXX,
+        PlayerType.PLAYER_BLACKJUDAS,
+        PlayerType.PLAYER_THELOST,
+        PlayerType.PLAYER_THESOUL,
+        PlayerType.PLAYER_JUDAS_B,
+        PlayerType.PLAYER_XXX_B,
+        PlayerType.PLAYER_THELOST_B,
+        PlayerType.PLAYER_THESOUL_B,
+        PlayerType.PLAYER_BETHANY_B,
+    }
+    for i,v in ipairs(soulHeartMarties) do
         if p:GetPlayerType() == v then
             return true
         end
@@ -161,7 +170,7 @@ function H.glyphOfBalance(p)
     elseif p:GetHearts() + p:GetSoulHearts() < 12 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     else
-        return {(rng:RandomInt(4)+1)*10, 1}
+        return {(lootdeck.rng:RandomInt(4)+1)*10, 1}
     end
 end
 
@@ -213,33 +222,6 @@ function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
     p:AddMaxHearts(hp)
     p:AddHearts(hp)
     sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
-end
-
-function H.ConvertRegistryToContent(tbl, contentType)
-    local ret = {}
-    for k, v in pairs(tbl) do
-        local id
-        if contentType == "I" then
-            id = Isaac.GetItemIdByName(v)
-        elseif contentType == "K" then
-        	id = Isaac.GetCardIdByName(v)
-        elseif contentType == "ET" then
-        	id = Isaac.GetEntityTypeByName(v)
-        elseif contentType == "EV" then
-        	id = Isaac.GetEntityVariantByName(v)
-		elseif contentType == "C" then
-			id = Isaac.GetCostumeIdByPath("gfx/characters/costumes/".. v ..".anm2")
-		end
-
-        if id ~= -1 then
-            ret[k] = id
-        else
-            Isaac.DebugString(k .. " invalid name!")
-            ret[k] = id
-        end
-    end
-
-    return ret
 end
 
 return H

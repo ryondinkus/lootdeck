@@ -78,6 +78,10 @@ R.costumes = {
     sun = "gfx/sun.anm2"
 }
 
+R.testCards = {
+    theTower = include("cards/theTower")
+}
+
 -- for wheel of fortune
 R.arcadeItems = {
     CollectibleType.COLLECTIBLE_DOLLAR,

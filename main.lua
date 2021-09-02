@@ -31,10 +31,37 @@ lootdeck.f = {
 local helper = include("helper_functions")
 local callback = include("callback_functions")
 
-lootdeck.k = helper.ConvertRegistryToContent(registry.cards, "K")
-lootdeck.t = helper.ConvertRegistryToContent(registry.items, "I")
-lootdeck.ev = helper.ConvertRegistryToContent(registry.entityVariants, "EV")
-lootdeck.c = helper.ConvertRegistryToContent(registry.costumes, "C")
+function ConvertRegistryToContent(tbl, contentType)
+    local ret = {}
+    for k, v in pairs(tbl) do
+        local id
+        if contentType == "I" then
+            id = Isaac.GetItemIdByName(v)
+        elseif contentType == "K" then
+        	id = Isaac.GetCardIdByName(v)
+        elseif contentType == "ET" then
+        	id = Isaac.GetEntityTypeByName(v)
+        elseif contentType == "EV" then
+        	id = Isaac.GetEntityVariantByName(v)
+		elseif contentType == "C" then
+			id = Isaac.GetCostumeIdByPath("gfx/characters/costumes/".. v ..".anm2")
+		end
+
+        if id ~= -1 then
+            ret[k] = id
+        else
+            Isaac.DebugString(k .. " invalid name!")
+            ret[k] = id
+        end
+    end
+
+    return ret
+end
+
+lootdeck.k = ConvertRegistryToContent(registry.cards, "K")
+lootdeck.t = ConvertRegistryToContent(registry.items, "I")
+lootdeck.ev = ConvertRegistryToContent(registry.entityVariants, "EV")
+lootdeck.c = ConvertRegistryToContent(registry.costumes, "C")
 
 local card = include("cards")
 
@@ -46,6 +73,12 @@ local k = lootdeck.k
 local t = lootdeck.t
 local ev = lootdeck.ev
 local c = lootdeck.c
+
+for _, card in pairs(registry.testCards) do
+    for _, callback in pairs(card.callbacks) do
+       lootdeck:AddCallback(table.unpack(callback)) 
+    end
+end
 
 -- set rng seed
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
@@ -779,34 +812,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function(_, p)
     end
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-	data[helper.FormatDataKey(k.theTower)] = 1
-end, k.theTower)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-	local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true) + 1
-    helper.StaggerSpawn(k.theTower, p, 7, numberOfEnemies, function(player, counterName)
-		local data = p:GetData()
-		if data[counterName] > numberOfEnemies then
-			data[counterName] = numberOfEnemies
-		end
-		local target
-
-		if data[counterName] == 1 then
-			target = p
-		else
-			target = helper.findRandomEnemy(p.Position, true) or p
-		end
-		Isaac.Explode(target.Position, nil, 40)
-		data[counterName] = data[counterName] - 1
-	end,
-	function(p)
-		helper.clearChosens(p.Position)
-	end,
-	1)
-end)
-
 -- TODO: visual audio cues
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local itemPool = game:GetItemPool()
@@ -815,7 +820,7 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
     local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     spawnedItem.AutoUpdatePrice = false
-    if IsSoulHeartMarty(p) then
+    if helper.IsSoulHeartMarty(p) then
         spawnedItem.Price = -3
     elseif p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
         spawnedItem.Price = 15
@@ -1063,7 +1068,7 @@ lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
             p.Damage = p.Damage * 1.334
         end
         if data.chariot then
-            if IsSoulHeartMarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
+            if helper.IsSoulHeartMarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
                 p.Damage = p.Damage + (0.25 * p:GetSoulHearts())
             else
                 p.Damage = p.Damage + (0.25 * p:GetHearts())
