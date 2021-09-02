@@ -1,10 +1,7 @@
 local H = {}
 
-local game = lootdeck.game
-local sfx = lootdeck.sfx
-
 function H.PlayQuick(sound)
-	sfx:Play(sound, 1, 0)
+	lootdeck.sfx:Play(sound, 1, 0)
 end
 
 -- helper function for using findRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
@@ -40,21 +37,18 @@ function H.findRandomEnemy(pos, noDupes)
 end
 
 -- function for registering basic loot cards that spawn items
-function H.SimpleLootCardSpawn(cardID, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
-    lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-        room = game:GetRoom()
-        for i = 1,(uses or 1) do
-            Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+function H.SimpleLootCardSpawn(p, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
+    for i = 1,(uses or 1) do
+        Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+    end
+    if effect then
+        for i=1,(effectAmount or 1) do
+            Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
         end
-        if effect then
-            for i=1,(effectAmount or 1) do
-                Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-            end
-        end
-        if sound then
-            sfx:Play(sound)
-        end
-    end, cardID)
+    end
+    if sound then
+        lootdeck.sfx:Play(sound)
+    end
 end
 
 function H.FormatDataKey(key)
@@ -94,7 +88,7 @@ function H.SimpleLootCardEffect(cardID, itemEffect, sound)
     lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
         p:UseActiveItem(itemEffect, false)
         if sound then
-            sfx:Play(sound,1,0)
+            lootdeck.sfx:Play(sound,1,0)
         end
     end, cardID)
 end
@@ -104,7 +98,7 @@ function H.SimpleLootCardItem(cardID, itemID, sound)
     lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
         p:AddCollectible(itemID)
         if sound then
-            sfx:Play(sound,1,0)
+            lootdeck.sfx:Play(sound,1,0)
         end
     end, cardID)
 end
@@ -221,7 +215,7 @@ function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
     end
     p:AddMaxHearts(hp)
     p:AddHearts(hp)
-    sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
+    lootdeck.sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
 end
 
 return H

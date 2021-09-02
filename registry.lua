@@ -1,12 +1,6 @@
 local R = {}
 
 R.cards = {
-    penny = "A Penny!", -- spawns a penny
-    twoCents = "2 Cents!", -- spawns a double penny
-    threeCents = "3 Cents!", -- spawns 3 pennies
-    fourCents = "4 Cents!", -- spawns 4 pennies
-    nickel = "A Nickel!", -- spawns a nickel
-    dime = "A Dime!!", -- spawns a dime
     butterBean = "Butter Bean!", -- butter bean effect
     redPill = "Pills! Red", -- 33% damage buff for the room, 33% hp buff for the room, 33% take 1 heart of dmg
     bluePill = "Pills! Blue", -- 33% gain a loot card, 33% gain 3 loot cards, 33% lose a key, coin, and bomb
@@ -79,6 +73,14 @@ R.costumes = {
 }
 
 R.testCards = {
+    penny = include("cards/penny"),
+    twoCents = include("cards/twoCents"),
+    threeCents = include("cards/threeCents"),
+    fourCents = include("cards/fourCents"),
+    nickel = include("cards/nickel"),
+    dime = include("cards/dime"),
+    lilBattery = include("cards/lilBattery"),
+    megaBattery = include("cards/megaBattery"),
     theTower = include("cards/theTower")
 }
 

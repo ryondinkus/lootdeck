@@ -88,13 +88,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
 end)
 
-helper.SimpleLootCardSpawn(k.penny, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 1)
-helper.SimpleLootCardSpawn(k.twoCents, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_DOUBLEPACK, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 2)
-helper.SimpleLootCardSpawn(k.threeCents, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, 3, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 3)
-helper.SimpleLootCardSpawn(k.fourCents, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, 4, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 4)
-helper.SimpleLootCardSpawn(k.nickel, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_NICKEL, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.CRACKED_ORB_POOF, 1)
-helper.SimpleLootCardSpawn(k.dime, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_DIME, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.CRACKED_ORB_POOF, 1)
-
 helper.SimpleLootCardEffect(k.butterBean, CollectibleType.COLLECTIBLE_BUTTER_BEAN)
 
 callback.UseCard(k.redPill, function(p)
@@ -127,9 +120,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
 		end
 	end)
 end)
-
-helper.SimpleLootCardSpawn(k.lilBattery, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL)
-helper.SimpleLootCardSpawn(k.megaBattery, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_MEGA)
 
 local blackOverlay = Sprite()
 blackOverlay:Load("gfx/overlay.anm2")
