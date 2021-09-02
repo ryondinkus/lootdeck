@@ -1,5 +1,7 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
+local registry = include("registry")
+
 lootdeck.game = Game()
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
@@ -26,57 +28,29 @@ lootdeck.f = {
     map = false
 }
 
-local registry = include("registry")
 local helper = include("helper_functions")
 local callback = include("callback_functions")
+
+lootdeck.k = helper.ConvertRegistryToContent(registry.cards, "K")
+lootdeck.t = helper.ConvertRegistryToContent(registry.items, "I")
+lootdeck.ev = helper.ConvertRegistryToContent(registry.entityVariants, "EV")
+lootdeck.c = helper.ConvertRegistryToContent(registry.costumes, "C")
+
 local card = include("cards")
 
 local game = lootdeck.game
 local rng = lootdeck.rng
 local sfx = lootdeck.sfx
-local level = lootdeck.level
-local room = lootdeck.room
-
--- TODO: Combine callbacks, create functions for repetitive code, comment shit, standardize some variable names,
--- plenty of audio visual shit, make sure self damage is categorized as such
--- fix self damage stuff to ignore i-frames, ideally theres a function but if not, simply remove health and play hurt animation
--- update those staggered spawns so the first spawn happens instantly
-
-local function convert(tbl, contentType)
-    local ret = {}
-    for k, v in pairs(tbl) do
-        local id
-        if contentType == "I" then
-            id = Isaac.GetItemIdByName(v)
-        elseif contentType == "K" then
-        	id = Isaac.GetCardIdByName(v)
-        elseif contentType == "ET" then
-        	id = Isaac.GetEntityTypeByName(v)
-        elseif contentType == "EV" then
-        	id = Isaac.GetEntityVariantByName(v)
-		elseif contentType == "C" then
-			id = Isaac.GetCostumeIdByPath("gfx/characters/costumes/".. v ..".anm2")
-		end
-
-        if id ~= -1 then
-            ret[k] = id
-        else
-            Isaac.DebugString(k .. " invalid name!")
-            ret[k] = id
-        end
-    end
-
-    return ret
-end
-
-local k = convert(registry.cards, "K")
-local t = convert(registry.items, "I")
-local ev = convert(registry.entityVariants, "EV")
-local c = convert(registry.costumes, "C")
+local f = lootdeck.f
+local k = lootdeck.k
+local t = lootdeck.t
+local ev = lootdeck.ev
+local c = lootdeck.c
 
 -- set rng seed
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
+	lootdeck.room = Game():GetRoom()
     f.oldPennies = Isaac.GetPlayer(0):GetNumCoins()
     f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
 end)
@@ -98,29 +72,9 @@ callback.UseCard(k.bluePill, function(p)
 	card.BluePill(p)
 end)
 
--- TODO: Sound effects and visuals for result
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local effect = rng:RandomInt(3)
-    if effect == 0 then
-        sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-        sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
-        p:AddCoins(4)
-    elseif effect == 1 then
-        sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-        sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
-        p:AddCoins(7)
-    else
-        sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-        for i=1,4 do
-            if p:GetNumCoins() > 0 then
-                Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostPenny, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, nil)
-                p:AddCoins(-1)
-            end
-        end
-    end
-end, k.yellowPill)
+callback.UseCard(k.yellowPill, function(p)
+	card.YellowPill(p)
+end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local target = helper.findRandomEnemy(p.Position) or p
@@ -128,31 +82,17 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 end, k.bomb)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    if data.goldBomb then data.goldBomb = 1 end
-    if data.goldBombTimer then data.goldBombTimer = 0 end
-    if data.goldBombCounter then data.goldBombCounter = 3 end
+	local data = p:GetData()
+	data[helper.FormatDataKey(k.goldBomb)] = 1
 end, k.goldBomb)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-    local data = p:GetData()
-    if not data.goldBomb then data.goldBomb = 0 end
-    if not data.goldBombTimer then data.goldBombTimer = 0 end
-    if not data.goldBombCounter then data.goldBombCounter = 0 end
-    if data.goldBomb == 1 then
-        data.goldBombTimer = data.goldBombTimer - 1
-        if data.goldBombTimer <= 0 then
-            local target = helper.findRandomEnemy(p.Position) or 0
-            if target ~= 0 then
-                Isaac.Explode(target.Position, nil, 40)
-            end
-            data.goldBombTimer = 15
-            data.goldBombCounter = data.goldBombCounter - 1
-            if data.goldBombCounter <= 0 then
-                data.goldBomb = 0
-            end
-        end
-    end
+	helper.StaggerSpawn(k.goldBomb, p, 15, 3, function(p)
+		local target = helper.findRandomEnemy(p.Position) or 0
+		if target ~= 0 then
+			Isaac.Explode(target.Position, nil, 40)
+		end
+	end)
 end)
 
 helper.SimpleLootCardSpawn(k.lilBattery, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL)
@@ -616,36 +556,20 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, function(_, t)
     end
 end)
 
--- TODO: Audio visual indicator
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    if data.highPriestess then data.highPriestess = 1 end
-    if data.highPriestessTimer then data.highPriestessTimer = 0 end
-    if data.highPriestessCounter then data.highPriestessCounter = rng:RandomInt(6) end
+	local data = p:GetData()
+	data[helper.FormatDataKey(k.theHighPriestess)] = 1
 end, k.theHighPriestess)
 
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-    local data = p:GetData()
-    if not data.highPriestess then data.highPriestess = 0 end
-    if not data.highPriestessTimer then data.highPriestessTimer = 0 end
-    if not data.highPriestessCounter then data.highPriestessCounter = 0 end
-    if data.highPriestess == 1 then
-        data.highPriestessTimer = data.highPriestessTimer - 1
-        if data.highPriestessTimer <= 0 then
-            local target = helper.findRandomEnemy(p.Position) or 0
-            if target ~= 0 then
-                local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.momsFinger, 0, target.Position, Vector(0,0), p)
-                local fingerData = finger:GetData()
-                fingerData.target = target
-            end
-            data.highPriestessTimer = 15
-            data.highPriestessCounter = data.highPriestessCounter - 1
-            if data.highPriestessCounter <= 0 then
-                data.highPriestess = 0
-            end
-        end
-    end
+	helper.StaggerSpawn(k.theHighPriestess, p, 15, rng:RandomInt(6)+1, function(p)
+		local target = helper.findRandomEnemy(p.Position) or 0
+		if target ~= 0 then
+            local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.momsFinger, 0, target.Position, Vector(0,0), p)
+            local fingerData = finger:GetData()
+            fingerData.target = target
+		end
+	end)
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
@@ -857,27 +781,30 @@ end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()
-    if data.tower then data.tower = 1 end
-    if data.towerTimer then data.towerTimer = 7 end
+	data[helper.FormatDataKey(k.theTower)] = 1
 end, k.theTower)
 
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-    local data = p:GetData()
-    if not data.tower then data.tower = 0 end
-    if not data.towerTimer then data.towerTimer = 0 end
-    if data.tower == 1 then
-        data.towerTimer = data.towerTimer - 1
-        if data.towerTimer <= 0 then
-            local target = helper.findRandomEnemy(p.Position, true) or p
-            Isaac.Explode(target.Position, nil, 40)
-            if target == p then
-                data.tower = 0
-                helper.clearChosens(p.Position)
-            end
-            data.towerTimer = 7
-        end
-    end
+	local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true) + 1
+    helper.StaggerSpawn(k.theTower, p, 7, numberOfEnemies, function(player, counterName)
+		local data = p:GetData()
+		if data[counterName] > numberOfEnemies then
+			data[counterName] = numberOfEnemies
+		end
+		local target
+
+		if data[counterName] == 1 then
+			target = p
+		else
+			target = helper.findRandomEnemy(p.Position, true) or p
+		end
+		Isaac.Explode(target.Position, nil, 40)
+		data[counterName] = data[counterName] - 1
+	end,
+	function(p)
+		helper.clearChosens(p.Position)
+	end,
+	1)
 end)
 
 -- TODO: visual audio cues
@@ -940,32 +867,19 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 end, k.theStars)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    if data.moon then data.moon = 1 end
-    if data.moonTimer then data.moonTimer = 7 end
-    if data.moonCounter then data.moonCounter = rng:RandomInt(6)+5 end
+	local data = p:GetData()
+	data[helper.FormatDataKey(k.theMoon)] = 1
 end, k.theMoon)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-    local data = p:GetData()
-    room = game:GetRoom()
-    if not data.moon then data.moon = 0 end
-    if not data.moonTimer then data.moonTimer = 0 end
-    if not data.moonCounter then data.moonCounter = 0 end
-    if data.moon == 1 then
-        data.moonTimer = data.moonTimer - 1
-        if data.moonTimer <= 0 then
-            local spawnPos = room:GetRandomPosition(0)
-            Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, nil)
-            data.moonCounter = data.moonCounter - 1
-            if data.moonCounter <= 0 then
-                data.moon = 0
-            end
-            data.moonTimer = 7
-        end
-    end
+	helper.StaggerSpawn(k.theMoon, p, 7, rng:RandomInt(6)+5, function(p)
+		room = game:GetRoom()
+		local spawnPos = room:GetRandomPosition(0)
+		Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)
+		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, nil)
+	end)
 end)
+
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()
     f.sunUsed = true

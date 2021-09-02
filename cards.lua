@@ -5,7 +5,7 @@ local helper = include("helper_functions")
 local game = lootdeck.game
 local rng = lootdeck.rng
 local sfx = lootdeck.sfx
-local room = lootdeck.room
+local ev = lootdeck.ev
 
 function K.RedPill(p)
 	local effect = rng:RandomInt(3)
@@ -39,13 +39,14 @@ end
 function K.BluePill(p)
 	local effect = rng:RandomInt(3)
 	local sprite = p:GetSprite()
+	local room = game:GetRoom()
 	if effect == 0 then
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-		Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, lootdeck.room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
+		Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
 	elseif effect == 1 then
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		for i=0,2 do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, lootdeck.room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
 		end
 	else
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
@@ -60,6 +61,29 @@ function K.BluePill(p)
 		if p:GetNumKeys() > 0 then
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostKey, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
 			p:AddKeys(-1)
+		end
+	end
+end
+
+function K.YellowPill()
+	local effect = rng:RandomInt(3)
+	if effect == 0 then
+		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+		sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
+		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
+		p:AddCoins(4)
+	elseif effect == 1 then
+		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+		sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
+		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
+		p:AddCoins(7)
+	else
+		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+		for i=1,4 do
+			if p:GetNumCoins() > 0 then
+				Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostPenny, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, nil)
+				p:AddCoins(-1)
+			end
 		end
 	end
 end

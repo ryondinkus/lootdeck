@@ -20,17 +20,22 @@ function H.clearChosens(pos)
     end
 end
 
+function H.ListEnemiesInRoom(pos)
+	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
+	local enemies = {}
+	local key = 1;
+	for i, entity in pairs(entities) do
+		if entity:IsVulnerableEnemy() and not entity:GetData().chosen then
+			enemies[key] = entities[i]
+			key = key + 1;
+		end
+	end
+	return enemies
+end
+
 -- function for finding target enemy, then calculating the angle/position the fire will spawn
 function H.findRandomEnemy(pos, noDupes)
-    local entities = Isaac.FindInRadius(pos, 875, EntityPartition.ENEMY)
-    local enemies = {}
-    local key = 1;
-    for i, entity in pairs(entities) do
-        if entity:IsVulnerableEnemy() and not entity:GetData().chosen then
-            enemies[key] = entities[i]
-            key = key + 1;
-        end
-    end
+	local enemies = H.ListEnemiesInRoom(pos)
     local chosenEnt = enemies[rng:RandomInt(#enemies)+1]
     if chosenEnt then chosenEnt:GetData().chosen = noDupes end
     return chosenEnt
@@ -52,6 +57,38 @@ function H.SimpleLootCardSpawn(cardID, spawnType, spawnVariant, spawnSubtype, us
             sfx:Play(sound)
         end
     end, cardID)
+end
+
+function H.FormatDataKey(key)
+	return string.gsub(key, "%s+", "")
+end
+
+function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
+	key = H.FormatDataKey(key)
+	local data = p:GetData()
+    if data[key] == 1 then
+		local timerName = string.format("%sTimer", key)
+		local counterName = string.format("%sCounter", key)
+		if not data[timerName] then data[timerName] = 0 end
+		if not data[counterName] then data[counterName] = occurences end
+
+        data[timerName] = data[timerName] - 1
+        if data[timerName] <= 0 then
+			callback(p, counterName)
+            data[timerName] = interval
+			if noAutoDecrement ~= 1 then
+				data[counterName] = data[counterName] - 1
+			end
+            if data[counterName] <= 0 then
+                data[key] = nil
+				data[timerName] = nil
+				data[counterName] = nil
+				if onEnd then
+					onEnd(p)
+				end
+            end
+        end
+    end
 end
 
 -- function for registering basic loot cards that copy item effects
@@ -176,6 +213,33 @@ function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
     p:AddMaxHearts(hp)
     p:AddHearts(hp)
     sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
+end
+
+function H.ConvertRegistryToContent(tbl, contentType)
+    local ret = {}
+    for k, v in pairs(tbl) do
+        local id
+        if contentType == "I" then
+            id = Isaac.GetItemIdByName(v)
+        elseif contentType == "K" then
+        	id = Isaac.GetCardIdByName(v)
+        elseif contentType == "ET" then
+        	id = Isaac.GetEntityTypeByName(v)
+        elseif contentType == "EV" then
+        	id = Isaac.GetEntityVariantByName(v)
+		elseif contentType == "C" then
+			id = Isaac.GetCostumeIdByPath("gfx/characters/costumes/".. v ..".anm2")
+		end
+
+        if id ~= -1 then
+            ret[k] = id
+        else
+            Isaac.DebugString(k .. " invalid name!")
+            ret[k] = id
+        end
+    end
+
+    return ret
 end
 
 return H
