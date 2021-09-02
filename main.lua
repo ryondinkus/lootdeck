@@ -29,7 +29,6 @@ lootdeck.f = {
 }
 
 local helper = include("helper_functions")
-local callback = include("callback_functions")
 
 function ConvertRegistryToContent(tbl, contentType)
     local ret = {}
@@ -63,8 +62,6 @@ lootdeck.t = ConvertRegistryToContent(registry.items, "I")
 lootdeck.ev = ConvertRegistryToContent(registry.entityVariants, "EV")
 lootdeck.c = ConvertRegistryToContent(registry.costumes, "C")
 
-local card = include("cards")
-
 local game = lootdeck.game
 local rng = lootdeck.rng
 local sfx = lootdeck.sfx
@@ -86,18 +83,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
 	lootdeck.room = Game():GetRoom()
     f.oldPennies = Isaac.GetPlayer(0):GetNumCoins()
     f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
-end)
-
-callback.UseCard(k.redPill, function(p)
-	card.RedPill(p)
-end)
-
-callback.UseCard(k.bluePill, function(p)
-	card.BluePill(p)
-end)
-
-callback.UseCard(k.yellowPill, function(p)
-	card.YellowPill(p)
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)

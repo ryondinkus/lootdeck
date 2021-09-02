@@ -1,9 +1,6 @@
 local R = {}
 
 R.cards = {
-    redPill = "Pills! Red", -- 33% damage buff for the room, 33% hp buff for the room, 33% take 1 heart of dmg
-    bluePill = "Pills! Blue", -- 33% gain a loot card, 33% gain 3 loot cards, 33% lose a key, coin, and bomb
-    yellowPill = "Pills! Yellow", -- 33% +4c, 33% +7c, 33% -4c
     bomb = "Bomb!", -- explode a random enemy in the room, explode on player if there are none
     goldBomb = "Gold Bomb!!", -- explode three random enemies in the room, explode on player if there are none
     diceShard = "Dice Shard", -- glowing hourglass effect, respawn in current room
@@ -30,7 +27,6 @@ R.cards = {
     justice = "VIII. Justice", -- gain a bomb, key, or coin for every enemy in the room
     theHermit = "IX. The Hermit", -- spawns a 15c item from the current pool
     wheelOfFortune = "X. Wheel of Fortune", -- 1/6 chances, 1c, 2dmg, loot 3, -4c, 5c, 1 "arcade" item
-    strength = "XI. Strength", -- D7 effect, +0.5 damage increase for the floor
     theHangedMan = "XII. The Hanged Man", -- Destroy all consumables in room, get an item (quality based on quality of consumables eaten)
     death = "XIII. Death", -- Die, respawn with 3 bone hearts
     theTower = "XIV. The Tower", -- explode on player 1-2 times, or explode all room enemies
@@ -75,6 +71,9 @@ R.testCards = {
     nickel = include("cards/nickel"),
     dime = include("cards/dime"),
     butterBean = include("cards/butterBean"),
+    redPill = include("cards/redPill"),
+    bluePill = include("cards/bluePill"),
+    yellowPill = include("cards/yellowPill"),
     ehwaz = include("cards/ehwaz"),
     lilBattery = include("cards/lilBattery"),
     megaBattery = include("cards/megaBattery"),
