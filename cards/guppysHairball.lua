@@ -12,8 +12,8 @@ end
 
 local function MC_ENTITY_TAKE_DMG(_, e)
     local p = e:ToPlayer()
-    if p:HasCollectible(Id) then
-        local effectNum = p:GetCollectibleNum(Id)
+    if p:HasCollectible(items.guppysHairball) then
+        local effectNum = p:GetCollectibleNum(items.guppysHairball)
         local effect = lootdeck.rng:RandomInt(6)
         local threshold = 0
         if effectNum > 0 then threshold = 1 end

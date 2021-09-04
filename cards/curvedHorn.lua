@@ -16,8 +16,8 @@ local function MC_POST_NEW_ROOM()
     for x=0,game:GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(x)
         local data = p:GetData()
-        if p:HasCollectible(Id) then
-            data.curvedHornTearAmount = p:GetCollectibleNum(Id) or 1
+        if p:HasCollectible(items.curvedHorn) then
+            data.curvedHornTearAmount = p:GetCollectibleNum(items.curvedHorn) or 1
         end
     end
 end
@@ -25,8 +25,8 @@ end
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()
     local data = p:GetData()
-    if p:HasCollectible(Id) then
-        if data.curvedHornTearAmount > 0 then
+    if p:HasCollectible(items.curvedHorn) then
+        if data.curvedHornTearAmount and data.curvedHornTearAmount > 0 then
             tear.CollisionDamage = tear.CollisionDamage * 4
             tear.Size = tear.Size * 4
             tear.Scale = tear.Scale * 4

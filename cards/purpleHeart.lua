@@ -17,8 +17,8 @@ local function MC_POST_NEW_ROOM()
     local room = game:GetRoom()
     for x=0,game:GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(x)
-        if p:HasCollectible(Id) and not room:IsClear() then
-            for y=1,p:GetCollectibleNum(Id) do
+        if p:HasCollectible(items.purpleHeart) and not room:IsClear() then
+            for y=1,p:GetCollectibleNum(items.purpleHeart) do
                 lootdeck.f.rerollEnemy = lootdeck.f.rerollEnemy + 1
                 if room:GetType() ~= RoomType.ROOM_BOSS then
                     lootdeck.f.spawnExtraReward = lootdeck.f.spawnExtraReward + 1

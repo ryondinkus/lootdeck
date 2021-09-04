@@ -1,4 +1,3 @@
-
 local helper = include("helper_functions")
 local items = include("items/registry")
 
@@ -18,9 +17,9 @@ local function MC_POST_PLAYER_UPDATE(_, p)
     local sprite = p:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
-    if ( sprite:IsPlaying("Death") and sprite:GetFrame() >= 55) or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() >= 37) or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() >= 19) then
-        if p:HasCollectible(Id) then
-            local effectNum = p:GetCollectibleNum(Id)
+    if (sprite:IsPlaying("Death") and sprite:GetFrame() >= 55) or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() >= 37) or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() >= 19) then
+        if p:HasCollectible(items.brokenAnkh) then
+            local effectNum = p:GetCollectibleNum(items.brokenAnkh)
             local effect = 0--rng:RandomInt(6)
             local threshold = 0
             if effectNum > 0 then threshold = 1 end

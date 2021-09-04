@@ -16,7 +16,7 @@ local function MC_POST_NEW_ROOM()
     local room = game:GetRoom()
     for x=0,game:GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(x)
-        if p:HasCollectible(Id) and room:GetType() == RoomType.ROOM_TREASURE and lootdeck.f.spawnGlitchItem then
+        if p:HasCollectible(items.goldenHorseshoe) and room:GetType() == RoomType.ROOM_TREASURE and lootdeck.f.spawnGlitchItem then
             p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, nil)
             p:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
