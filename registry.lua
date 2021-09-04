@@ -80,7 +80,8 @@ R.testCards = {
     theTower = include("cards/theTower"),
     theDevil = include("cards/theDevil"),
     temperance = include("cards/temperance"),
-    theStars = include("cards/theStars")
+    theStars = include("cards/theStars"),
+    theMoon = include("cards/theMoon")
 }
 
 -- for wheel of fortune

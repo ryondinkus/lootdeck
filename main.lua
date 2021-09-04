@@ -126,20 +126,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
 end, ev.momsFinger)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-	local data = p:GetData()
-	data[helper.FormatDataKey(k.theMoon)] = 1
-end, k.theMoon)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-	helper.StaggerSpawn(k.theMoon, p, 7, rng:RandomInt(6)+5, function(p)
-		room = game:GetRoom()
-		local spawnPos = room:GetRandomPosition(0)
-		Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)
-		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, nil)
-	end)
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()
     f.sunUsed = true
     f.removeSun = true
