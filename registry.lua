@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    theLovers = "VI. The Lovers", -- grants 2 heart containers for the room
     theChariot = "VII. The Chariot", -- +1 heart container, +0.25 dmg for every heart
     justice = "VIII. Justice", -- gain a bomb, key, or coin for every enemy in the room
     theHermit = "IX. The Hermit", -- spawns a 15c item from the current pool
@@ -78,6 +77,7 @@ R.testCards = {
     theEmpress = include("cards/theEmpress"),
     theEmperor = include("cards/theEmperor"),
     theHierophant = include("cards/theHierophant"),
+    theLovers = include("cards/theLovers"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }

@@ -158,10 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    helper.AddTemporaryHealth(p, 4)
-end, k.theLovers)
-
 -- TODO: Add compatibility for Tainted Forgotten
 -- T. Forgor gets the extra heart but no damage, because the damage scales based on pile-o-bones
 -- Needs twin() shenanigans to fix
