@@ -2,8 +2,9 @@ lootdeck = RegisterMod("Loot Deck", 1)
 
 local registry = include("registry")
 local cards = include("cards/registry")
+local entityVariants = include("entityVariants/registry")
+local costumes = include("costumes/registry")
 
-lootdeck.game = Game()
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
 lootdeck.level = 0
@@ -31,45 +32,21 @@ lootdeck.f = {
 
 local helper = include("helper_functions")
 
-function ConvertRegistryToContent(tbl, contentType)
-    local ret = {}
-    for k, v in pairs(tbl) do
-        local id
-        if contentType == "I" then
-            id = Isaac.GetItemIdByName(v)
-        elseif contentType == "K" then
-        	id = Isaac.GetCardIdByName(v)
-        elseif contentType == "ET" then
-        	id = Isaac.GetEntityTypeByName(v)
-        elseif contentType == "EV" then
-        	id = Isaac.GetEntityVariantByName(v)
-		elseif contentType == "C" then
-			id = Isaac.GetCostumeIdByPath("gfx/characters/costumes/".. v ..".anm2")
-		end
-
-        if id ~= -1 then
-            ret[k] = id
-        else
-            Isaac.DebugString(k .. " invalid name!")
-            ret[k] = id
-        end
-    end
-
-    return ret
-end
-
-lootdeck.ev = ConvertRegistryToContent(registry.entityVariants, "EV")
-lootdeck.c = ConvertRegistryToContent(registry.costumes, "C")
-
-local game = lootdeck.game
+local game = Game()
 local rng = lootdeck.rng
 local f = lootdeck.f
-local ev = lootdeck.ev
-local c = lootdeck.c
 
 for _, card in pairs(cards) do
     if card.callbacks then
         for _, callback in pairs(card.callbacks) do
+        lootdeck:AddCallback(table.unpack(callback)) 
+        end
+    end
+end
+
+for _, variant in pairs(entityVariants) do
+    if variant.callbacks then
+        for _, callback in pairs(variant.callbacks) do
         lootdeck:AddCallback(table.unpack(callback)) 
         end
     end
@@ -104,25 +81,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
-    local data = e:GetData()
-    local sprite = e:GetSprite()
-    if data.target then
-        local target = data.target
-        e.Position = target.Position
-        if sprite:IsEventTriggered("Land") then
-            target:TakeDamage(40, 0, EntityRef(e), 0)
-            data.target = nil
-        end
-    end
-    if sprite:IsFinished("JumpDown") then
-        sprite:Play("JumpUp", true)
-    end
-    if sprite:IsFinished("JumpUp") then
-        e:Remove()
-    end
-end, ev.momsFinger)
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
@@ -140,26 +98,12 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
     if f.sunUsed then
         for i=0,game:GetNumPlayers()-1 do
-            Isaac.GetPlayer(i):TryRemoveNullCostume(c.sun)
+            Isaac.GetPlayer(i):TryRemoveNullCostume(costumes.sun)
         end
     end
     f.sunUsed = false
     f.floorBossCleared = false
 end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
-    local sprite = e:GetSprite()
-    if sprite:IsEventTriggered("Remove") then
-        e:Remove()
-    end
-end, ev.lostKey)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
-    local sprite = e:GetSprite()
-    if sprite:IsEventTriggered("Remove") then
-        e:Remove()
-    end
-end, ev.lostBomb)
 
 lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
     local data = p:GetData()

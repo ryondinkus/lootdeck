@@ -1,3 +1,5 @@
+local entityVariants = include("entityVariants/registry")
+
 local Name = "Pills! Blue"
 local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)
@@ -5,7 +7,6 @@ local Id = Isaac.GetCardIdByName(Name)
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
-	local ev = lootdeck.ev
 	local effect = rng:RandomInt(3)
 	local room = Game():GetRoom()
 	if effect == 0 then
@@ -19,15 +20,15 @@ local function MC_USE_CARD(_, c, p)
 	else
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
 		if p:GetNumCoins() > 0 then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostPenny, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
+			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostPenny.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
 			p:AddCoins(-1)
 		end
 		if p:GetNumBombs() > 0 then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostBomb, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
+			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostBomb.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
 			p:AddBombs(-1)
 		end
 		if p:GetNumKeys() > 0 then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.lostKey, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
+			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostKey.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
 			p:AddKeys(-1)
 		end
 	end

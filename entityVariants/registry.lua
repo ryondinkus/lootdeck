@@ -1,12 +1,6 @@
-local EV = {
-    lostPenny = "Lost Penny",
-    lostKey = "Lost Key",
-    lostBomb = "Lost Bomb",
-    momsFinger = "Mom's Finger"
+return {
+    lostPenny = include("entityVariants/lostPenny"),
+    lostKey = include("entityVariants/lostKey"),
+    lostBomb = include("entityVariants/lostBomb"),
+    momsFinger = include("entityVariants/momsFinger")
 }
-
-for key, name in pairs(EV) do
-    EV[key] = Isaac.GetEntityVariantByName(name)
-end
-
-return EV
