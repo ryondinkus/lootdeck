@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    theEmperor = "IV. The Emperor", -- charms everything in the room, chance to permacharm
     theHierophant = "V. The Hierophant", -- grants two mantles for the room
     theLovers = "VI. The Lovers", -- grants 2 heart containers for the room
     theChariot = "VII. The Chariot", -- +1 heart container, +0.25 dmg for every heart
@@ -78,6 +77,7 @@ R.testCards = {
     theMagician = include("cards/theMagician"),
     theHighPriestess = include("cards/theHighPriestess"),
     theEmpress = include("cards/theEmpress"),
+    theEmperor = include("cards/theEmperor"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }

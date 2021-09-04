@@ -158,16 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: audio visual?
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    for i, entity in ipairs(Isaac.GetRoomEntities()) do
-        if not entity:IsBoss() then
-            entity:AddCharmed(EntityRef(p), -1)
-        end
-    end
-    sfx:Play(SoundEffect.SOUND_HAPPY_RAINBOW, 1, 0)
-end, k.theEmperor)
-
 -- TODO: based on our discoveries with guppy's hairball, emulate a mantle effect
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     -- BUGGED: when AddCollectibleEffect() is fixed, this will give two Holy Mantle effects for the room.
