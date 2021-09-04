@@ -41,6 +41,30 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
+local function MC_POST_UPDATE()
+    local level = Game():GetLevel()
+    local room = level:GetCurrentRoom()
+    local roomDesc = level:GetCurrentRoomDesc()
+
+    if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
+        lootdeck.f.floorBossCleared = true
+    end
+
+    if lootdeck.f.floorBossCleared and lootdeck.f.sunUsed then
+        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
+    end
+end
+
+local function MC_POST_NEW_LEVEL()
+    if lootdeck.f.sunUsed then
+        for i=0,Game():GetNumPlayers()-1 do
+            Isaac.GetPlayer(i):TryRemoveNullCostume(costumes.sun)
+        end
+    end
+    lootdeck.f.sunUsed = false
+    lootdeck.f.floorBossCleared = false
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -54,6 +78,14 @@ return {
         {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
+        },
+        {
+            ModCallbacks.MC_POST_UPDATE,
+            MC_POST_UPDATE
+        },
+        {
+            ModCallbacks.MC_POST_NEW_LEVEL,
+            MC_POST_NEW_LEVEL
         }
     }
 }

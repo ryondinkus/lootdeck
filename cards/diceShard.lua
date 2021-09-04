@@ -29,6 +29,11 @@ end
 local function MC_POST_NEW_ROOM()
 	local game = Game()
 	local f = lootdeck.f
+
+    if f.firstEnteredLevel then
+        f.firstEnteredLevel = false
+    end
+
     if f.checkEm then
         for i=0,game:GetNumPlayers()-1 do
             local p = Isaac.GetPlayer(i)
@@ -71,6 +76,10 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
+local function MC_POST_NEW_LEVEL()
+    lootdeck.f.firstEnteredLevel = true
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -84,6 +93,10 @@ return {
 		{
 			ModCallbacks.MC_POST_NEW_ROOM,
 			MC_POST_NEW_ROOM
-		}
+		},
+        {
+            ModCallbacks.MC_POST_NEW_LEVEL,
+            MC_POST_NEW_LEVEL
+        }
     }
 }

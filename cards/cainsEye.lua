@@ -14,10 +14,10 @@ end
 local function MC_POST_NEW_LEVEL()
     local game = Game()
     local rng = lootdeck.rng
-    lootdeck.f.blueMap = false
-    lootdeck.f.compass = false
-    lootdeck.f.map = false
     local f = lootdeck.f
+    f.blueMap = false
+    f.compass = false
+    f.map = false
     for x=0,game:GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         local data = p:GetData()

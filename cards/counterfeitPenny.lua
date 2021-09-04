@@ -13,12 +13,12 @@ end
 
 local function MC_POST_UPDATE()
     local game = Game()
+    local f = lootdeck.f
     for x=0,game:GetNumPlayers() do
         if Isaac.GetPlayer(x):HasCollectible(items.counterfeitPenny) then
-            lootdeck.f.newPennies = Isaac.GetPlayer(0):GetNumCoins()
-            if Isaac.GetPlayer(0):GetNumCoins() > (lootdeck.f.pennyCount or 0) then
+            if Isaac.GetPlayer(0):GetNumCoins() > (f.pennyCount or 0) then
                 Isaac.GetPlayer(0):AddCoins(1)
-                lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
+                f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
             end
         end
     end

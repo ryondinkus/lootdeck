@@ -1,9 +1,7 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
-local registry = include("registry")
 local cards = include("cards/registry")
 local entityVariants = include("entityVariants/registry")
-local costumes = include("costumes/registry")
 
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
@@ -12,7 +10,6 @@ lootdeck.room = 0
 lootdeck.f = {
     bloodyPenny = 0,
     oldPennies = 0,
-    newPennies = 0,
     rerollEnemy = 0,
     spawnExtraReward = 0,
     spawnGlitchItem = false,
@@ -69,40 +66,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
     if f.showOverlay then
          blackOverlay:RenderLayer(0, Vector.Zero)
      end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
-    f.firstEnteredLevel = true
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-    if f.firstEnteredLevel then
-        f.firstEnteredLevel = false
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
-    local level = game:GetLevel()
-    local room = level:GetCurrentRoom()
-    local roomDesc = level:GetCurrentRoomDesc()
-
-    if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
-        f.floorBossCleared = true
-    end
-
-    if f.floorBossCleared and f.sunUsed then
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
-    if f.sunUsed then
-        for i=0,game:GetNumPlayers()-1 do
-            Isaac.GetPlayer(i):TryRemoveNullCostume(costumes.sun)
-        end
-    end
-    f.sunUsed = false
-    f.floorBossCleared = false
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
