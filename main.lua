@@ -158,37 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: Add compatibility for Tainted Forgotten
--- T. Forgor gets the extra heart but no damage, because the damage scales based on pile-o-bones
--- Needs twin() shenanigans to fix
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    helper.AddTemporaryHealth(p, 2)
-    local data = p:GetData()
-    if not data.chariot then data.chariot = true end
-    p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-    p:EvaluateItems()
-end, k.theChariot)
-
--- TODO: audio/visual effects, stagger a bit
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    for i, entity in ipairs(Isaac.GetRoomEntities()) do
-        if entity:IsActiveEnemy() then
-            local effect = rng:RandomInt(3)
-            if effect == 0 then
-                p:AddKeys(1)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
-            elseif effect == 1 then
-                p:AddBombs(1)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
-            else
-                p:AddCoins(1)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
-            end
-        end
-    end
-    sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-end, k.justice)
-
 -- TODO: visual audio cues
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local itemPool = game:GetItemPool()
@@ -543,13 +512,6 @@ lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
         if data.redDamage then
             p.Damage = p.Damage + (2 * data.redDamage)
         end
-        if data.chariot then
-            if helper.IsSoulHeartMarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
-                p.Damage = p.Damage + (0.25 * p:GetSoulHearts())
-            else
-                p.Damage = p.Damage + (0.25 * p:GetHearts())
-            end
-        end
         if data.strength then
             p.Damage = p.Damage + (0.5 * data.strength)
         end
@@ -579,11 +541,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             data.soulHp = nil
         end
         if data.curvedHornTear then data.curvedHornTear = 1 end
-        if data.chariot then
-            data.chariot = false
-            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-            p:EvaluateItems()
-        end
         if data.hangedMan then
             for i=1,data.hangedMan do
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
