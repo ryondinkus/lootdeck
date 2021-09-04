@@ -56,7 +56,6 @@ function H.FormatDataKey(key)
 end
 
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
-	key = H.FormatDataKey(key)
 	local data = p:GetData()
     if data[key] == 1 then
 		local timerName = string.format("%sTimer", key)

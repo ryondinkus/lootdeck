@@ -77,8 +77,9 @@ R.testCards = {
     goldenHorseshoe = include("cards/goldenHorseshoe"),
     guppysHairball = include("cards/guppysHairball"),
     lostSoul = include("cards/lostSoul"),
-    theMagician = include("cards/theMagician"),
     theFool = include("cards/theFool"),
+    theMagician = include("cards/theMagician"),
+    theHighPriestess = include("cards/theHighPriestess"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }

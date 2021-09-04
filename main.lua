@@ -139,22 +139,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-	local data = p:GetData()
-	data[helper.FormatDataKey(k.theHighPriestess)] = 1
-end, k.theHighPriestess)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, p)
-	helper.StaggerSpawn(k.theHighPriestess, p, 15, rng:RandomInt(6)+1, function(p)
-		local target = helper.findRandomEnemy(p.Position) or 0
-		if target ~= 0 then
-            local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, ev.momsFinger, 0, target.Position, Vector(0,0), p)
-            local fingerData = finger:GetData()
-            fingerData.target = target
-		end
-	end)
-end)
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     local data = e:GetData()
     local sprite = e:GetSprite()
