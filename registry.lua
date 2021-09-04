@@ -1,9 +1,6 @@
 local R = {}
 
 R.cards = {
-    death = "XIII. Death", -- Die, respawn with 3 bone hearts
-    theTower = "XIV. The Tower", -- explode on player 1-2 times, or explode all room enemies
-    theDevil = "XV. The Devil", -- spawn a devil deal from the current pool
     temperance = "XVI. Temperance", -- take 1-2 damage, 4c for each damage
     theStars = "XVII. The Stars", -- instantly grants 1 treasure item
     theMoon = "XVIII. The Moon", -- fills a room with shopkeepers
@@ -80,7 +77,8 @@ R.testCards = {
     strength = include("cards/strength"),
     theHangedMan = include("cards/theHangedMan"),
     death = include("cards/death"),
-    theTower = include("cards/theTower")
+    theTower = include("cards/theTower"),
+    theDevil = include("cards/theDevil")
 }
 
 -- for wheel of fortune

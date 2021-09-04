@@ -125,25 +125,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: visual audio cues
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local itemPool = game:GetItemPool()
-    local room = game:GetRoom()
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed()))
-    local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
-    local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
-    spawnedItem.AutoUpdatePrice = false
-    if helper.IsSoulHeartMarty(p) then
-        spawnedItem.Price = -3
-    elseif p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
-        spawnedItem.Price = 15
-    else
-        spawnedItem.Price = -1
-    end
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
-    sfx:Play(SoundEffect.SOUND_SATAN_GROW, 1, 0)
-end, k.theDevil)
-
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local effect = rng:RandomInt(2)
     if effect == 0 then
