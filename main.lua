@@ -139,11 +139,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    -- BUG: Purgatory ghost crashes on spawn, need API update to fix
-    --Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PURGATORY, 1, p.Position, Vector.Zero, nil)
-end, k.lostSoul)
-
 -- If it ever gets fixed, AddTrinketEffect() would be better here
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()

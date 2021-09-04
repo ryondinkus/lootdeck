@@ -79,6 +79,7 @@ R.testCards = {
     purpleHeart = include("cards/purpleHeart"),
     goldenHorseshoe = include("cards/goldenHorseshoe"),
     guppysHairball = include("cards/guppysHairball"),
+    lostSoul = include("cards/lostSoul"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
