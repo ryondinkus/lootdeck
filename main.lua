@@ -1,6 +1,7 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
 local registry = include("registry")
+local cards = include("cards/registry")
 
 lootdeck.game = Game()
 lootdeck.rng = RNG()
@@ -57,23 +58,20 @@ function ConvertRegistryToContent(tbl, contentType)
     return ret
 end
 
-lootdeck.k = ConvertRegistryToContent(registry.cards, "K")
-lootdeck.t = ConvertRegistryToContent(registry.items, "I")
 lootdeck.ev = ConvertRegistryToContent(registry.entityVariants, "EV")
 lootdeck.c = ConvertRegistryToContent(registry.costumes, "C")
 
 local game = lootdeck.game
 local rng = lootdeck.rng
-local sfx = lootdeck.sfx
 local f = lootdeck.f
-local k = lootdeck.k
-local t = lootdeck.t
 local ev = lootdeck.ev
 local c = lootdeck.c
 
-for _, card in pairs(registry.testCards) do
-    for _, callback in pairs(card.callbacks) do
-       lootdeck:AddCallback(table.unpack(callback)) 
+for _, card in pairs(cards) do
+    if card.callbacks then
+        for _, callback in pairs(card.callbacks) do
+        lootdeck:AddCallback(table.unpack(callback)) 
+        end
     end
 end
 
@@ -148,94 +146,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
     f.sunUsed = false
     f.floorBossCleared = false
 end)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    f.world = 300
-    f.savedTime = game.TimeCounter
-    game:AddPixelation(15)
-    sfx:Play(SoundEffect.SOUND_DOGMA_BRIMSTONE_SHOOT, 1, 0)
-end, k.theWorld)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
-    if f.world then
-        if f.world % 30 == 0 then
-            sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
-        end
-        if f.world == 300 then
-            local entities = Isaac.GetRoomEntities()
-            for i, entity in pairs(entities) do
-                if entity:IsEnemy() then
-                    if not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
-                        entity:AddEntityFlags(EntityFlag.FLAG_FREEZE)
-                    end
-                end
-            end
-        end
-        if f.world > 1 then
-            game.TimeCounter = f.savedTime
-            f.world = f.world - 1
-        end
-        if f.world == 1 then
-            local entities = Isaac.GetRoomEntities()
-            for i, entity in pairs(entities) do
-                if entity:IsEnemy() then
-                    if entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
-                        entity:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
-                    end
-                end
-            end
-            sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
-            f.world = nil
-        end
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_PROJECTILE_UPDATE, function(_, p)
-    local data = p:GetData()
-    if f.world then
-        if f.world >= 300 then
-            data.Velocity = p.Velocity
-            data.FallingSpeed = p.FallingSpeed
-            data.FallingAccel = p.FallingAccel
-            data.frozen = true
-        end
-        if f.world > 1 then
-            p.Velocity = Vector(0,0)
-            p.FallingSpeed = 0
-            p.FallingAccel = -0.1
-        end
-        if f.world == 1 and data.frozen then
-            p.Velocity = data.Velocity
-            p.FallingSpeed = data.FallingSpeed
-            p.FallingAccel = data.FallingAccel
-            data.frozen = nil
-        end
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_NPC_UPDATE, function(_, entity)
-    if f.world then
-        if f.world > 0 and entity.FrameCount == 1 then
-            if not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
-                entity:AddEntityFlags(EntityFlag.FLAG_FREEZE)
-            end
-        end
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-    if f.world then
-        f.world = nil
-        sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
-    end
-end)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
-    local sprite = e:GetSprite()
-    if sprite:IsEventTriggered("Remove") then
-        e:Remove()
-    end
-end, ev.lostPenny)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     local sprite = e:GetSprite()
