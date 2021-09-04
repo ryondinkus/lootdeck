@@ -139,27 +139,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
--- If it ever gets fixed, AddTrinketEffect() would be better here
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    if not data.magician then data.magician = 1
-    else data.magician = data.magician + 1 end
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MIND)
-    if not p:HasCollectible(CollectibleType.COLLECTIBLE_MIND) then
-        p:AddCostume(itemConfig, true)
-    end
-    p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
-    p:EvaluateItems()
-end, k.theMagician)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, function(_, t)
-    local p = t:GetLastParent():ToPlayer()
-    local data = p:GetData()
-    if data.magician then
-        t:AddTearFlags(helper.NewTearflag(71)) -- brain worm effect
-    end
-end)
-
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 	local data = p:GetData()
 	data[helper.FormatDataKey(k.theHighPriestess)] = 1
@@ -631,23 +610,6 @@ lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
             p.Damage = p.Damage + (0.5 * data.strength)
         end
     end
-    if f == CacheFlag.CACHE_FIREDELAY then
-        if data.magician then
-            p.MaxFireDelay = p.MaxFireDelay - (data.magician)
-        end
-    end
-    if f == CacheFlag.CACHE_TEARCOLOR then
-        if data.magician then
-            local color = Color(1,1,1,1,0,0,0)
-            color:SetColorize(1,1,1,1)
-            p.TearColor = color
-        end
-        if data.empress then
-            local color = Color(1,1,1,1,0,0,0)
-            color:SetColorize(0.8,0,0,1)
-            p.TearColor = color
-        end
-    end
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
@@ -673,11 +635,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             data.soulHp = nil
         end
         if data.curvedHornTear then data.curvedHornTear = 1 end
-        if data.magician then
-            data.magician = nil
-            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
-            p:EvaluateItems()
-        end
         if data.empress then
             for i=1,data.empress do
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_20_20)

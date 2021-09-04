@@ -1,9 +1,6 @@
 local R = {}
 
 R.cards = {
-    goldenHorseshoe = "Golden Horseshoe", -- passive, every treasure room has an extra glitch item
-    guppysHairball = "Guppy's Hairball", -- passive, 1/6 chance to block damage
-    lostSoul = "Lost Soul", -- spawns a ghost bomb familiar
     theMagician = "I. The Magician", -- brain worm for the room
     theHighPriestess = "II. The High Priestess", -- deal 40 damage to random enemy 1-6 times
     theEmpress = "III. The Empress", -- grants double shot and increased damage
@@ -80,6 +77,7 @@ R.testCards = {
     goldenHorseshoe = include("cards/goldenHorseshoe"),
     guppysHairball = include("cards/guppysHairball"),
     lostSoul = include("cards/lostSoul"),
+    theMagician = include("cards/theMagician"),
     theFool = include("cards/theFool"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
