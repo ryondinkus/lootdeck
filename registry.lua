@@ -78,6 +78,7 @@ R.testCards = {
     theHighPriestess = include("cards/theHighPriestess"),
     theEmpress = include("cards/theEmpress"),
     theEmperor = include("cards/theEmperor"),
+    theHierophant = include("cards/theHierophant"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }

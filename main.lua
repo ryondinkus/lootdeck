@@ -158,13 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: based on our discoveries with guppy's hairball, emulate a mantle effect
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    -- BUGGED: when AddCollectibleEffect() is fixed, this will give two Holy Mantle effects for the room.
-    -- p:GetEffects():AddCollectibleEffect(5, false)
-    p:AddSoulHearts(4)
-end, k.theHierophant)
-
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     helper.AddTemporaryHealth(p, 4)
 end, k.theLovers)
