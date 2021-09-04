@@ -158,20 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: visual audio cues
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local itemPool = game:GetItemPool()
-    local room = game:GetRoom()
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed()))
-    local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
-    local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
-    spawnedItem.AutoUpdatePrice = true
-    spawnedItem.Price = 1
-    spawnedItem.ShopItemId = 1
-    sfx:Play(SoundEffect.SOUND_CASH_REGISTER, 1, 0)
-end, k.theHermit)
-
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     room = game:GetRoom()
     local effect = rng:RandomInt(6)

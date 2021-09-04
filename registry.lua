@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    theHermit = "IX. The Hermit", -- spawns a 15c item from the current pool
     wheelOfFortune = "X. Wheel of Fortune", -- 1/6 chances, 1c, 2dmg, loot 3, -4c, 5c, 1 "arcade" item
     theHangedMan = "XII. The Hanged Man", -- Destroy all consumables in room, get an item (quality based on quality of consumables eaten)
     death = "XIII. Death", -- Die, respawn with 3 bone hearts
@@ -78,6 +77,7 @@ R.testCards = {
     theLovers = include("cards/theLovers"),
     theChariot = include("cards/theChariot"),
     justice = include("cards/justice"),
+    theHermit = include("cards/theHermit"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }
