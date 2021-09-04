@@ -9,13 +9,10 @@ local function MC_USE_CARD(_, c, p)
         if entity:IsActiveEnemy() then
             local effect = rng:RandomInt(3)
             if effect == 0 then
-                p:AddKeys(1)
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
             elseif effect == 1 then
-                p:AddBombs(1)
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
             else
-                p:AddCoins(1)
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, entity.Position, Vector.FromAngle(rng:RandomInt(360)), p)
             end
         end
