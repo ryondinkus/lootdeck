@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    judgement = "XX. Judgement", -- grants a few consumables of which you have least, glyph of balance style
     theWorld = "XXI. The World" -- pauses everything in the room for 10 seconds
 }
 
@@ -78,7 +77,8 @@ R.testCards = {
     temperance = include("cards/temperance"),
     theStars = include("cards/theStars"),
     theMoon = include("cards/theMoon"),
-    theSun = include("cards/theSun")
+    theSun = include("cards/theSun"),
+    judgement = include("cards/judgement")
 }
 
 -- for wheel of fortune

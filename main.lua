@@ -150,14 +150,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local reward = helper.glyphOfBalance(p)
-    local room = game:GetRoom()
-    for i=0,rng:RandomInt(3) do
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, reward[1], reward[2], room:FindFreePickupSpawnPosition(p.Position), Vector.Zero, nil)
-    end
-end, k.judgement)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     f.world = 300
     f.savedTime = game.TimeCounter
     game:AddPixelation(15)
