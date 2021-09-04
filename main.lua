@@ -160,21 +160,6 @@ end, ev.momsFinger)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local data = p:GetData()
-    local magnetoConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
-    local soulConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_SOUL)
-    p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
-    if not data.hangedMan then data.hangedMan = 1
-    else data.hangedMan = data.hangedMan + 1 end
-    if data.hangedMan >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_MAGNETO) then
-        p:RemoveCostume(magnetoConfig)
-    end
-    if not p:HasCollectible(CollectibleType.COLLECTIBLE_SOUL) then
-        p:AddCostume(soulConfig, true)
-    end
-end, k.theHangedMan)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
     if not data.death then data.death = true end
     game:ShakeScreen(15)
     sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
@@ -482,12 +467,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             data.soulHp = nil
         end
         if data.curvedHornTear then data.curvedHornTear = 1 end
-        if data.hangedMan then
-            for i=1,data.hangedMan do
-                p:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
-            end
-            data.hangedMan = nil
-        end
     end
     if f.bloodyPenny > 0 then f.bloodyPenny = 0 end
 end)
