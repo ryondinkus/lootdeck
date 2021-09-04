@@ -106,39 +106,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end
 end)
 
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-    for i=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
-        if data.reviveDeath then
-            p:AddMaxHearts(-24)
-            p:AddSoulHearts(-24)
-            p:AddBoneHearts(-12)
-            p:AddBoneHearts(3)
-            if p:GetOtherTwin() then
-                p:GetOtherTwin():AddMaxHearts(-24)
-                p:GetOtherTwin():AddSoulHearts(-24)
-                p:GetOtherTwin():AddBoneHearts(-12)
-                p:GetOtherTwin():AddBoneHearts(3)
-            end
-            if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
-                p:AddMaxHearts(2, false)
-                p:AddHearts(2)
-            end
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN or p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
-                while p:GetBoneHearts() > 3 do
-                    p:AddBoneHearts(-1)
-                end
-                p:AddSoulHearts(1)
-            end
-            p:AnimateCard(k.death)
-            sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
-            data.death = nil
-            data.reviveDeath = nil
-        end
-    end
-end)
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     local data = e:GetData()
     local sprite = e:GetSprite()
@@ -157,37 +124,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
         e:Remove()
     end
 end, ev.momsFinger)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    if not data.death then data.death = true end
-    game:ShakeScreen(15)
-    sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
-    p:Die()
-end, k.death)
-
--- TODO: add visual/audio indicators
--- keeper should revive with one coin heart and the flies of 3 bone hearts
-lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, function(_, p)
-    local data = p:GetData()
-    local sprite = p:GetSprite()
-    local level = game:GetLevel()
-    if ( sprite:IsPlaying("Death") and sprite:GetFrame() >= 55) or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() >= 37) or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() >= 19) then
-        if data.death then
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
-                p:AddBoneHearts(1)
-            end
-            p:Revive()
-            if p:GetOtherTwin() then p:GetOtherTwin():Revive() end
-            data.reviveDeath = true
-            local enterDoor = level.EnterDoor
-            local door = room:GetDoor(enterDoor)
-            local direction = door and door.Direction or Direction.NO_DIRECTION
-            game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
-            level.LeaveDoor = enterDoor
-        end
-    end
-end)
 
 -- TODO: visual audio cues
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
