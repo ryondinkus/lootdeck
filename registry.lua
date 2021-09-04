@@ -78,6 +78,7 @@ R.testCards = {
     theChariot = include("cards/theChariot"),
     justice = include("cards/justice"),
     theHermit = include("cards/theHermit"),
+    wheelOfFortune = include("cards/wheelOfFortune"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }
