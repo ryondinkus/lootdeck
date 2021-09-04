@@ -126,29 +126,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
 end, ev.momsFinger)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local room = game:GetRoom()
-    local itemPool = game:GetItemPool()
-    local effect = rng:RandomInt(99)
-    local roomType = RoomType.ROOM_TREASURE
-    if effect == 0 then
-        roomType = RoomType.ROOM_PLANETARIUM
-    end
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(roomType, rng:GetSeed()))
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
-    if itemConfig.Type == ItemType.ITEM_ACTIVE then
-        if p:GetActiveItem() ~= 0 then
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, p:GetActiveItem(), room:FindFreePickupSpawnPosition(p.Position), Vector(0,0), p)
-            p:RemoveCollectible(p:GetActiveItem(), false, ActiveSlot.SLOT_PRIMARY)
-        end
-    end
-    local hud = game:GetHUD()
-    hud:ShowItemText(p, itemConfig)
-    p:AnimateCollectible(collectible)
-    sfx:Play(SoundEffect.SOUND_POWERUP1, 1, 0)
-    p:AddCollectible(collectible)
-end, k.theStars)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 	local data = p:GetData()
 	data[helper.FormatDataKey(k.theMoon)] = 1
 end, k.theMoon)

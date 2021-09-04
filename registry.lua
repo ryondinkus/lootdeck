@@ -79,7 +79,8 @@ R.testCards = {
     death = include("cards/death"),
     theTower = include("cards/theTower"),
     theDevil = include("cards/theDevil"),
-    temperance = include("cards/temperance")
+    temperance = include("cards/temperance"),
+    theStars = include("cards/theStars")
 }
 
 -- for wheel of fortune
