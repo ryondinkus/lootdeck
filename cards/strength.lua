@@ -23,6 +23,15 @@ local function MC_USE_CARD(_, c, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_LAZARUS_FLIP_ALIVE, 1, 0)
 end
 
+local function MC_EVALUATE_CACHE(_, p, f)
+    local data = p:GetData()
+    if f == CacheFlag.CACHE_DAMAGE then
+        if data.strength then
+            p.Damage = p.Damage + (0.5 * data.strength)
+        end
+    end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -32,6 +41,10 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
+        },
+        {
+            ModCallbacks.MC_EVALUATE_CACHE,
+            MC_EVALUATE_CACHE
         }
     }
 }

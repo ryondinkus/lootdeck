@@ -456,9 +456,6 @@ lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
         if data.redDamage then
             p.Damage = p.Damage + (2 * data.redDamage)
         end
-        if data.strength then
-            p.Damage = p.Damage + (0.5 * data.strength)
-        end
     end
 end)
 
