@@ -1,7 +1,6 @@
 local R = {}
 
 R.cards = {
-    theHierophant = "V. The Hierophant", -- grants two mantles for the room
     theLovers = "VI. The Lovers", -- grants 2 heart containers for the room
     theChariot = "VII. The Chariot", -- +1 heart container, +0.25 dmg for every heart
     justice = "VIII. Justice", -- gain a bomb, key, or coin for every enemy in the room
