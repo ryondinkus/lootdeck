@@ -1,9 +1,6 @@
 local R = {}
 
 R.cards = {
-    theMagician = "I. The Magician", -- brain worm for the room
-    theHighPriestess = "II. The High Priestess", -- deal 40 damage to random enemy 1-6 times
-    theEmpress = "III. The Empress", -- grants double shot and increased damage
     theEmperor = "IV. The Emperor", -- charms everything in the room, chance to permacharm
     theHierophant = "V. The Hierophant", -- grants two mantles for the room
     theLovers = "VI. The Lovers", -- grants 2 heart containers for the room
@@ -80,6 +77,7 @@ R.testCards = {
     theFool = include("cards/theFool"),
     theMagician = include("cards/theMagician"),
     theHighPriestess = include("cards/theHighPriestess"),
+    theEmpress = include("cards/theEmpress"),
     strength = include("cards/strength"),
     theTower = include("cards/theTower")
 }

@@ -158,22 +158,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
--- TODO: Costume?
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_20_20)
-    p:AddCollectible(CollectibleType.COLLECTIBLE_20_20)
-    if not data.empress then data.empress = 1
-    else data.empress = data.empress + 1 end
-    if data.empress >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_20_20) then
-        p:RemoveCostume(itemConfig)
-    end
-    sfx:Play(SoundEffect.SOUND_MONSTER_YELL_A, 1, 0)
-    p:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/empress.anm2"))
-    p:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
-    p:EvaluateItems()
-end, k.theEmpress)
-
 -- TODO: audio visual?
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     for i, entity in ipairs(Isaac.GetRoomEntities()) do
@@ -580,9 +564,6 @@ lootdeck:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, function(_, p, f)
         if data.redDamage then
             p.Damage = p.Damage + (2 * data.redDamage)
         end
-        if data.empress and p:GetCollectibleNum(CollectibleType.COLLECTIBLE_20_20) <= data.empress then
-            p.Damage = p.Damage * 1.334
-        end
         if data.chariot then
             if helper.IsSoulHeartMarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
                 p.Damage = p.Damage + (0.25 * p:GetSoulHearts())
@@ -619,15 +600,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             data.soulHp = nil
         end
         if data.curvedHornTear then data.curvedHornTear = 1 end
-        if data.empress then
-            for i=1,data.empress do
-                p:RemoveCollectible(CollectibleType.COLLECTIBLE_20_20)
-            end
-            data.empress = nil
-            p:TryRemoveNullCostume(c.empress)
-            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
-            p:EvaluateItems()
-        end
         if data.chariot then
             data.chariot = false
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
