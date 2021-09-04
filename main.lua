@@ -126,23 +126,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
 end, ev.momsFinger)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local effect = rng:RandomInt(2)
-    if effect == 0 then
-        p:TakeDamage(1,0,EntityRef(p),0)
-        for i=0,3 do
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
-        end
-    else
-        p:TakeDamage(2,0,EntityRef(p),0)
-        for i=0,7 do
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
-        end
-    end
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, p)
-    sfx:Play(SoundEffect.SOUND_BLOODBANK_SPAWN, 1, 0)
-end, k.temperance)
-
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
     local effect = rng:RandomInt(99)
