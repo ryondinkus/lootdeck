@@ -1,10 +1,6 @@
 local R = {}
 
 R.cards = {
-    temperance = "XVI. Temperance", -- take 1-2 damage, 4c for each damage
-    theStars = "XVII. The Stars", -- instantly grants 1 treasure item
-    theMoon = "XVIII. The Moon", -- fills a room with shopkeepers
-    theSun = "XIX. The Sun", -- when boss of floor is dead, activate forget me now effect. cannot spawn ever again once used, destroy self even with blank card
     judgement = "XX. Judgement", -- grants a few consumables of which you have least, glyph of balance style
     theWorld = "XXI. The World" -- pauses everything in the room for 10 seconds
 }
@@ -81,7 +77,8 @@ R.testCards = {
     theDevil = include("cards/theDevil"),
     temperance = include("cards/temperance"),
     theStars = include("cards/theStars"),
-    theMoon = include("cards/theMoon")
+    theMoon = include("cards/theMoon"),
+    theSun = include("cards/theSun")
 }
 
 -- for wheel of fortune

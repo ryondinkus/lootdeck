@@ -125,43 +125,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_EFFECT_UPDATE, function(_, e)
     end
 end, ev.momsFinger)
 
-lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
-    f.sunUsed = true
-    f.removeSun = true
-    for i=0,3 do
-        if p:GetCard(i) == k.theSun then
-            p:SetCard(i, 0)
-        end
-    end
-    local entities = Isaac.GetRoomEntities()
-    for i, entity in pairs(entities) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_TAROTCARD
-        and entity.SubType == k.theSun then
-            entity:Remove()
-        end
-    end
-    if f.floorBossCleared then
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
-    end
-    p:AddNullCostume(c.sun)
-    sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
-end, k.theSun)
-
-lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-    if f.removeSun then
-        local entities = Isaac.GetRoomEntities()
-        for i, entity in pairs(entities) do
-            if entity.Type == EntityType.ENTITY_PICKUP
-            and entity.Variant == PickupVariant.PICKUP_TAROTCARD
-            and entity.SubType == k.theSun then
-                entity:Remove()
-            end
-        end
-    end
-end)
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
