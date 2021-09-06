@@ -1,7 +1,7 @@
 local helper = include('helper_functions')
 
 -- A 1 in 3 chance of gaining the book of belial effect for the room,
--- gaining a heart canister for the room, or losing half a heart (if that would be lethal, refilling health)
+-- gaining a heart canister for the room, or losing half a heart
 local Name = "Pills! Red"
 local Tag = "redPill"
 local Id = Isaac.GetCardIdByName(Name)
