@@ -17,8 +17,7 @@ local function MC_USE_CARD(_, c, p)
 		local entity = v:ToNPC()
 		if entity then
 			local parent = entity.SpawnerType or 0
-			print(parent)
-	        if entity:GetBossID() == 0 and not helper.TableContains(illegalParents, parent) then
+	        if not entity:IsBoss() and entity:IsVulnerableEnemy() and not helper.TableContains(illegalParents, parent) then
 				entity:AddCharmed(EntityRef(p), -1)
 	        end
 		end

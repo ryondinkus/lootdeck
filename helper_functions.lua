@@ -223,12 +223,6 @@ end
 
 function H.IsEntityInTable(table, entity)
 	for _,v in pairs(table) do
-		-- print(entity.Type)
-		-- print(v[1])
-		-- print(entity.Variant)
-		-- print(v[2])
-		-- print(entity.SubType)
-		-- print(v[3])
 		if entity.Type == v[1]
 		and entity.Variant == v[2] or nil
 		and entity.SubType == v[3] or nil then
