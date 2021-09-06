@@ -1,3 +1,5 @@
+local helper = include('helper_functions')
+
 -- A 1 in 6 chance of gaining a penny, spawning 2 tarotcards, take one heart of damage (or heal fully if fatal), gain 4 coins, spawn 5 tarotcards, or gain 6 coins
 local Name = "Blank Rune"
 local Tag = "blankRune"
@@ -22,16 +24,8 @@ local function MC_USE_CARD(_, c, p)
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
             end
         elseif effect == 2 then
-            -- if player would die, do full health effect instead
-            if p:GetHearts() <= 2 and p:GetSoulHearts() <= 2 then
-                sfx:Play(SoundEffect.SOUND_POWERUP_SPEWER,1,0)
-                p:SetFullHearts()
-            else
-                sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-                local flags = (DamageFlag.DAMAGE_NOKILL | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES)
-                p:TakeDamage(2,flags,EntityRef(p),0)
-                p:ResetDamageCooldown()
-            end
+			helper.TakeSelfDamage(p, 2)
+			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
         elseif effect == 3 then
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)

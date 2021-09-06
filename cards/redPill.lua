@@ -23,16 +23,8 @@ local function MC_USE_CARD(_, c, p)
 		helper.AddTemporaryHealth(p, 2)
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 	else
-		-- if player would die, do full health effect instead
-		if p:GetHearts() <= 1 and p:GetSoulHearts() <= 1 then
-			sfx:Play(SoundEffect.SOUND_POWERUP_SPEWER,1,0)
-			p:SetFullHearts()
-		else
-			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-			local flags = (DamageFlag.DAMAGE_NOKILL | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES)
-			p:TakeDamage(1,flags,EntityRef(p),0)
-			p:ResetDamageCooldown()
-		end
+		helper.TakeSelfDamage(p, 1)
+		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
 	end
 end
 
