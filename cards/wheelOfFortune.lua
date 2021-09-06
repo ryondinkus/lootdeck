@@ -40,10 +40,14 @@ local function MC_USE_CARD(_, c, p)
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     elseif effect == 3 then
-        p:AddCoins(-4)
         sfx:Play(SoundEffect.SOUND_THUMBS_DOWN, 1, 0)
         for i=0,3 do
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostPenny.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)), p)
+            if p:GetNumCoins() > 0 then
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostPenny.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)), p)
+                p:AddCoins(-1)
+            else
+                break
+            end
         end
     elseif effect == 4 then
         p:AddCoins(5)
