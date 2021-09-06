@@ -207,9 +207,7 @@ end
 
 function H.TakeSelfDamage(p, dmg, canKill)
 	local flags = (DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES)
-	if p:GetHearts() <= 1 and p:GetSoulHearts() <= 1 and not canKill then
-		flags = flags | DamageFlag.DAMAGE_NOKILL
-	end
+	if not canKill then flags = flags | DamageFlag.DAMAGE_NOKILL end
 	p:TakeDamage(dmg,flags,EntityRef(p),0)
 	p:ResetDamageCooldown()
 end
