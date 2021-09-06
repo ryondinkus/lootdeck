@@ -205,4 +205,11 @@ function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
     lootdeck.sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
 end
 
+function H.TakeSelfDamage(p, dmg, canKill)
+	local flags = (DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES)
+	if not canKill then flags = flags | DamageFlag.DAMAGE_NOKILL end
+	p:TakeDamage(dmg,flags,EntityRef(p),0)
+	p:ResetDamageCooldown()
+end
+
 return H
