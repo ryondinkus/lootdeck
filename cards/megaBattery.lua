@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Spawns a mega battery
 local Name = "Mega Battery"
 local Tag = "megaBattery"
 local Id = Isaac.GetCardIdByName(Name)

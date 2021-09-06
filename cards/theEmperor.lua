@@ -1,3 +1,4 @@
+-- Permacharms all enemies in the room
 local Name = "IV. The Emperor"
 local Tag = "theEmperor"
 local Id = Isaac.GetCardIdByName(Name)

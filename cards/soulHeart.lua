@@ -1,3 +1,4 @@
+-- Gives the player a soul heart
 local Name = "Soul Heart"
 local Tag = "soulHeart"
 local Id = Isaac.GetCardIdByName(Name)

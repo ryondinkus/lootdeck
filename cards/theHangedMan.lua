@@ -1,3 +1,4 @@
+-- Gives magneto effect for the room and a glowing costume
 local Name = "XII. The Hanged Man"
 local Tag = "theHangedMan"
 local Id = Isaac.GetCardIdByName(Name)

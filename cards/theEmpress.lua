@@ -1,5 +1,6 @@
 local costumes = include("costumes/registry")
 
+-- Fires two tears at once with a demon costume and red tears for the room
 local Name = "III. The Empress"
 local Tag = "theEmpress"
 local Id = Isaac.GetCardIdByName(Name)

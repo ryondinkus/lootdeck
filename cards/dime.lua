@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Spawns a dime
 local Name = "A Dime!!"
 local Tag = "dime"
 local Id = Isaac.GetCardIdByName(Name)

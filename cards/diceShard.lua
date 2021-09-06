@@ -1,3 +1,5 @@
+-- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
+-- If not possible, like at the beginning of the level, give the player a penny
 local Name = "Dice Shard"
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)

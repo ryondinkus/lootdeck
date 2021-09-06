@@ -1,5 +1,6 @@
 local helper = include("helper_functions")
 
+-- Spawns a devil deal item
 local Name = "XV. The Devil"
 local Tag = "theDevil"
 local Id = Isaac.GetCardIdByName(Name)

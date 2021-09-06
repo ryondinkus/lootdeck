@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Spawns four pennies
 local Name = "4 Cents!"
 local Tag = "fourCents"
 local Id = Isaac.GetCardIdByName(Name)

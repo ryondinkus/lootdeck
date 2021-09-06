@@ -1,5 +1,6 @@
 local entityVariants = include("entityVariants/registry")
 
+-- A 1 in 3 chance of spawning a tarotcard, thee tarotcards, or losing one coin, bomb, and key
 local Name = "Pills! Blue"
 local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)

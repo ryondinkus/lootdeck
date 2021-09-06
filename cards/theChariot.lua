@@ -1,5 +1,6 @@
 local helper = include("helper_functions")
 
+-- Gain .50 damage for the room for each heart
 local Name = "VII. The Chariot"
 local Tag = "theChariot"
 local Id = Isaac.GetCardIdByName(Name)

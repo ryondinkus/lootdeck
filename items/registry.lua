@@ -1,11 +1,11 @@
 return {
-    bloodyPenny = Isaac.GetItemIdByName("Bloody Penny"),
-    swallowedPenny = Isaac.GetItemIdByName("Swallowed Penny"),
-    counterfeitPenny = Isaac.GetItemIdByName("Counterfeit Penny"),
-    cainsEye = Isaac.GetItemIdByName("Cain's Eye"),
-    brokenAnkh = Isaac.GetItemIdByName("Broken Ankh"),
-    curvedHorn = Isaac.GetItemIdByName("Curved Horn"),
-    purpleHeart = Isaac.GetItemIdByName("Purple Heart"),
-    goldenHorseshoe = Isaac.GetItemIdByName("Golden Horseshoe"),
-    guppysHairball = Isaac.GetItemIdByName("Guppy's Hairball")
+    bloodyPenny = include("items/bloodyPenny"),
+    swallowedPenny = include("items/swallowedPenny"),
+    counterfeitPenny = include("items/counterfeitPenny"),
+    cainsEye = include("items/cainsEye"),
+    brokenAnkh = include("items/brokenAnkh"),
+    curvedHorn = include("items/curvedHorn"),
+    purpleHeart = include("items/purpleHeart"),
+    goldenHorseshoe = include("items/goldenHorseshoe"),
+    guppysHairball = include("items/guppysHairball")
 }

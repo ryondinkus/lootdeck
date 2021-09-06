@@ -1,5 +1,7 @@
 local helper = include('helper_functions')
 
+-- A 1 in 3 chance of gaining the book of belial effect for the room,
+-- gaining a heart canister for the room, or losing half a heart (if that would be lethal, refilling health)
 local Name = "Pills! Red"
 local Tag = "redPill"
 local Id = Isaac.GetCardIdByName(Name)
@@ -34,6 +36,18 @@ local function MC_USE_CARD(_, c, p)
 	end
 end
 
+local function MC_POST_NEW_ROOM()
+	for i=0,Game():GetNumPlayers()-1 do
+        local p = Isaac.GetPlayer(i)
+        local data = p:GetData()
+        if data.redDamage then
+            data.redDamage = nil
+            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+            p:EvaluateItems()
+        end
+	end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -43,6 +57,10 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
-        }
+        },
+		{
+			ModCallbacks.MC_POST_NEW_ROOM,
+			MC_POST_NEW_ROOM
+		}
     }
 }

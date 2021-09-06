@@ -1,27 +1,14 @@
-
 local helper = include("helper_functions")
 local items = include("items/registry")
 
+-- Gives the cointerfeit penny item
 local Name = "Counterfeit Penny"
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetCardIdByName(Name)
 
 -- TODO: Stacking support? extra pennies
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardItem(p, items.counterfeitPenny, SoundEffect.SOUND_VAMP_GULP)
-end
-
-local function MC_POST_UPDATE()
-    local game = Game()
-    local f = lootdeck.f
-    for x=0,game:GetNumPlayers() do
-        if Isaac.GetPlayer(x):HasCollectible(items.counterfeitPenny) then
-            if Isaac.GetPlayer(0):GetNumCoins() > (f.pennyCount or 0) then
-                Isaac.GetPlayer(0):AddCoins(1)
-                f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
-            end
-        end
-    end
+	helper.SimpleLootCardItem(p, items.counterfeitPenny.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {
@@ -33,10 +20,6 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
-        },
-        {
-            ModCallbacks.MC_POST_UPDATE,
-            MC_POST_UPDATE,
         }
     }
 }

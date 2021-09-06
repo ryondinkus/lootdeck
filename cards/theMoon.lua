@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Spawns 5-10 shopkeepers around the room
 local Name = "XVIII. The Moon"
 local Tag = "theMoon"
 local Id = Isaac.GetCardIdByName(Name)

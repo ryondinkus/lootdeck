@@ -1,3 +1,4 @@
+-- Spawn a coin, bomb, or key for every enemy in the room
 local Name = "VIII. Justice"
 local Tag = "justice"
 local Id = Isaac.GetCardIdByName(Name)

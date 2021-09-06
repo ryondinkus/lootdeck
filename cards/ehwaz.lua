@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Rerolls the enemies in the room using the D10
 local Name = "Ehwaz"
 local Tag = "ehwaz"
 local Id = Isaac.GetCardIdByName(Name)

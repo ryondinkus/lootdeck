@@ -1,5 +1,7 @@
 local costumes = include("costumes/registry")
 
+-- As soon as the floor boss is defeated, the floor will be restarted using the "Forget Me Now" effect
+-- This card is only usable once per run
 local Name = "XIX. The Sun"
 local Tag = "theSun"
 local Id = Isaac.GetCardIdByName(Name)

@@ -1,3 +1,4 @@
+-- Kills the player and revives them in the previous room with 3 bone hearts
 local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)

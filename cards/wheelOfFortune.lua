@@ -1,5 +1,6 @@
 local entityVariants = include("entityVariants/registry")
 
+-- A 1 in 6 chance of gaining 1 coin, deal half a heart of damage (if lethal, heal to full health), spawn 3 tarotcards, lost 4 coins, gain 5 coins, or spawn an item from the arcade list
 local Name = "X. Wheel of Fortune"
 local Tag = "wheelOfFortune"
 local Id = Isaac.GetCardIdByName(Name)
@@ -24,7 +25,7 @@ local function MC_USE_CARD(_, c, p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     elseif effect == 1 then
-        if p:GetHearts() <= 2 and p:GetSoulHearts() <= 2 then
+        if p:GetHearts() < 2 and p:GetSoulHearts() < 2 then
             p:SetFullHearts()
             sfx:Play(SoundEffect.SOUND_POWERUP_SPEWER, 1, 0)
         else
@@ -52,7 +53,7 @@ local function MC_USE_CARD(_, c, p)
         local room = game:GetRoom()
         local collectible = arcadeItems[rng:RandomInt(#arcadeItems)+1]
         local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
-        local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     end

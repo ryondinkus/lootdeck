@@ -1,5 +1,6 @@
 local helper = include("helper_functions")
 
+-- Temporary tears up and brain worm effect for the room, as well as a brain costume
 local Name = "I. The Magician"
 local Tag = "theMagician"
 local Id = Isaac.GetCardIdByName(Name)

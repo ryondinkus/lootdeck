@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- TODO add description
 local Name = "XI. Strength"
 local Tag = "strength"
 local Id = Isaac.GetCardIdByName(Name)

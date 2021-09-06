@@ -1,3 +1,4 @@
+-- A 1 in 6 chance of gaining a penny, spawning 2 tarotcards, take one heart of damage (or heal fully if fatal), gain 4 coins, spawn 5 tarotcards, or gain 6 coins
 local Name = "Blank Rune"
 local Tag = "blankRune"
 local Id = Isaac.GetCardIdByName(Name)

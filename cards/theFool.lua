@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Teleport 2.0 effect
 local Name = "O. The Fool"
 local Tag = "theFool"
 local Id = Isaac.GetCardIdByName(Name)

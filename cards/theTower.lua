@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Explodes each enemy in the room and then the player
 local Name = "XIV. The Tower"
 local Tag = "theTower"
 local Id = Isaac.GetCardIdByName(Name)
@@ -21,13 +22,13 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		if data[counterName] == 1 then
 			target = player
 		else
-			target = helper.findRandomEnemy(player.Position, true) or player
+			target = helper.FindRandomEnemy(player.Position, true) or player
 		end
 		Isaac.Explode(target.Position, nil, 40)
 		data[counterName] = data[counterName] - 1
 	end,
 	function(player)
-		helper.clearChosens(player.Position)
+		helper.ClearChosens(player.Position)
 	end,
 	1)
 end

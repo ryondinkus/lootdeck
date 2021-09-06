@@ -1,3 +1,4 @@
+-- Grants an item from the item pool or (1% chance) possibly the planitarium pool
 local Name = "XVII. The Stars"
 local Tag = "theStars"
 local Id = Isaac.GetCardIdByName(Name)

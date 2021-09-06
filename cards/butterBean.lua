@@ -1,5 +1,6 @@
 local helper = include('helper_functions')
 
+-- Farts
 local Name = "Butter Bean!"
 local Tag = "butterBean"
 local Id = Isaac.GetCardIdByName(Name)

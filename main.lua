@@ -1,6 +1,7 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
 local cards = include("cards/registry")
+local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 
 lootdeck.rng = RNG()
@@ -49,6 +50,14 @@ for _, variant in pairs(entityVariants) do
     end
 end
 
+for _, item in pairs(items) do
+    if item.callbacks then
+        for _, callback in pairs(item.callbacks) do
+        lootdeck:AddCallback(table.unpack(callback)) 
+        end
+    end
+end
+
 -- set rng seed
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
@@ -84,11 +93,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     for i=0,game:GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(i)
         local data = p:GetData()
-        if data.redDamage then
-            data.redDamage = nil
-            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-            p:EvaluateItems()
-        end
         if data.redHp then
             if (p:GetSubPlayer() == nil) then
                 helper.RemoveHeartsOnNewRoomEnter(p, data.redHp)
@@ -101,7 +105,5 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             helper.RemoveHeartsOnNewRoomEnter(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
             data.soulHp = nil
         end
-        if data.curvedHornTear then data.curvedHornTear = 1 end
     end
-    if f.bloodyPenny > 0 then f.bloodyPenny = 0 end
 end)

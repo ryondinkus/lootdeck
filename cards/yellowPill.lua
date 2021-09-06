@@ -1,5 +1,6 @@
 local entityVariants = include("entityVariants/registry")
 
+-- A 1 in 3 chance of gaining 4 coins, gaining 7 coins, or losing 4 coins
 local Name = "Pills! Yellow"
 local Tag = "yellowPill"
 local Id = Isaac.GetCardIdByName(Name)
@@ -7,17 +8,16 @@ local Id = Isaac.GetCardIdByName(Name)
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
-	local effect = 5--rng:RandomInt(3)
-	if effect == 0 then
+	local effect = rng:RandomInt(3)
+	if effect <= 1 then
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
 		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
-		p:AddCoins(4)
-	elseif effect == 1 then
-		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-		sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
-		p:AddCoins(7)
+		if effect == 0 then
+			p:AddCoins(4)
+		else
+			p:AddCoins(7)
+		end
 	else
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
 		for i=1,4 do

@@ -1,3 +1,4 @@
+-- Gain two spirit hearts
 local Name = "V. The Hierophant"
 local Tag = "theHierophant"
 local Id = Isaac.GetCardIdByName(Name)

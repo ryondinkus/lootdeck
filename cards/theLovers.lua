@@ -1,5 +1,6 @@
 local helper = include("helper_functions")
 
+-- Gain two temporary hearts for the room
 local Name = "VI. The Lovers"
 local Tag = "theLovers"
 local Id = Isaac.GetCardIdByName(Name)

@@ -1,3 +1,4 @@
+-- Spawns a 15c item from the item pool
 local Name = "IX. The Hermit"
 local Tag = "theHermit"
 local Id = Isaac.GetCardIdByName(Name)

@@ -1,3 +1,4 @@
+-- A 1 in 2 chance of losing half a heart and gaining 4 coins or losing a full heart and gaining 8 coins
 local Name = "XVI. Temperance"
 local Tag = "temperance"
 local Id = Isaac.GetCardIdByName(Name)

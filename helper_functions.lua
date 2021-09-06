@@ -1,11 +1,7 @@
 local H = {}
 
-function H.PlayQuick(sound)
-	lootdeck.sfx:Play(sound, 1, 0)
-end
-
--- helper function for using findRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
-function H.clearChosens(pos)
+-- helper function for using FindRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
+function H.ClearChosens(pos)
     local entities = Isaac.FindInRadius(pos, 875, EntityPartition.ENEMY)
     for i, entity in pairs(entities) do
         local data = entity:GetData()
@@ -29,7 +25,7 @@ function H.ListEnemiesInRoom(pos)
 end
 
 -- function for finding target enemy, then calculating the angle/position the fire will spawn
-function H.findRandomEnemy(pos, noDupes)
+function H.FindRandomEnemy(pos, noDupes)
 	local enemies = H.ListEnemiesInRoom(pos)
     local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
     if chosenEnt then chosenEnt:GetData().chosen = noDupes end
@@ -49,10 +45,6 @@ function H.SimpleLootCardSpawn(p, spawnType, spawnVariant, spawnSubtype, uses, p
     if sound then
         lootdeck.sfx:Play(sound)
     end
-end
-
-function H.FormatDataKey(key)
-	return string.gsub(key, "%s+", "")
 end
 
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
@@ -124,8 +116,8 @@ function H.IsSoulHeartMarty(p)
     return false
 end
 
--- helper function for glyphOfBalance(), makes shit less ocopmlicationsed
-function H.trinketsOnGround()
+-- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
+function H.AreTrinketsOnGround()
     local entities = Isaac.GetRoomEntities()
     for i, entity in pairs(entities) do
         if entity.Type == EntityType.ENTITY_PICKUP
@@ -137,7 +129,7 @@ function H.trinketsOnGround()
 end
 
 -- function that returns a consumable based on what glyph of balance would drop
-function H.glyphOfBalance(p)
+function H.GlyphOfBalance(p)
     if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     elseif p:GetHearts() <= 1 then
@@ -154,7 +146,7 @@ function H.glyphOfBalance(p)
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
     elseif p:GetNumBombs() < 5 then
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-    elseif p:GetTrinket(0) == 0 and not H.trinketsOnGround() then
+    elseif p:GetTrinket(0) == 0 and not H.AreTrinketsOnGround() then
         return {PickupVariant.PICKUP_TRINKET, 0}
     elseif p:GetHearts() + p:GetSoulHearts() < 12 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
