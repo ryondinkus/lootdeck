@@ -13,7 +13,7 @@ lootdeck.f = {
     oldPennies = 0,
     rerollEnemy = 0,
     spawnExtraReward = 0,
-    spawnGlitchItem = false,
+    visitedItemRooms = {},
     sunUsed = false,
     removeSun = false,
     floorBossCleared = false,
@@ -37,7 +37,7 @@ local f = lootdeck.f
 for _, card in pairs(cards) do
     if card.callbacks then
         for _, callback in pairs(card.callbacks) do
-        lootdeck:AddCallback(table.unpack(callback)) 
+        lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
@@ -45,7 +45,7 @@ end
 for _, variant in pairs(entityVariants) do
     if variant.callbacks then
         for _, callback in pairs(variant.callbacks) do
-        lootdeck:AddCallback(table.unpack(callback)) 
+        lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
@@ -53,7 +53,7 @@ end
 for _, item in pairs(items) do
     if item.callbacks then
         for _, callback in pairs(item.callbacks) do
-        lootdeck:AddCallback(table.unpack(callback)) 
+        lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end

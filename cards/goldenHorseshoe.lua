@@ -8,7 +8,6 @@ local Id = Isaac.GetCardIdByName(Name)
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.goldenHorseshoe.Id, SoundEffect.SOUND_VAMP_GULP)
-    lootdeck.f.spawnGlitchItem = true
 end
 
 return {
