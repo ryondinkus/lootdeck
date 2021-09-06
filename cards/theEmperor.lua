@@ -5,10 +5,15 @@ local Id = Isaac.GetCardIdByName(Name)
 
 -- TODO: audio visual?
 local function MC_USE_CARD(_, c, p)
-    for i, entity in ipairs(Isaac.GetRoomEntities()) do
-        if not entity:IsBoss() then
-            entity:AddCharmed(EntityRef(p), -1)
-        end
+    for i, v in ipairs(Isaac.GetRoomEntities()) do
+		local entity = v:ToNPC()
+		if entity then
+	        if entity:GetBossID() == 0 then
+	            entity:AddCharmed(EntityRef(p), -1)
+				print(entity:GetBossID())
+				print(entity:IsBoss())
+	        end
+		end
     end
     lootdeck.sfx:Play(SoundEffect.SOUND_HAPPY_RAINBOW, 1, 0)
 end
