@@ -39,7 +39,6 @@ local function MC_POST_NEW_ROOM()
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_20_20)
             end
             data.empress = nil
-            print(costumes.empress)
             p:TryRemoveNullCostume(costumes.empress)
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
             p:EvaluateItems()
