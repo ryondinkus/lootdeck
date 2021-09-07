@@ -11,22 +11,24 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos)
+function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
 	local key = 1;
 	for i, entity in pairs(entities) do
-		if entity:IsVulnerableEnemy() and not entity:GetData().chosen then
-			enemies[key] = entities[i]
-			key = key + 1;
+		if entity:IsVulnerableEnemy() and (ignoreChosen or not entity:GetData().chosen) then
+            if not tag or entity:GetData()[tag] then
+                enemies[key] = entities[i]
+                key = key + 1;
+            end
 		end
 	end
 	return enemies
 end
 
 -- function for finding target enemy, then calculating the angle/position the fire will spawn
-function H.FindRandomEnemy(pos, noDupes)
-	local enemies = H.ListEnemiesInRoom(pos)
+function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag)
+	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag)
     local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
     if chosenEnt then chosenEnt:GetData().chosen = noDupes end
     return chosenEnt
