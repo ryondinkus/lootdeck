@@ -58,7 +58,11 @@ local function MC_POST_PLAYER_UPDATE(_, p)
                 p:AddBoneHearts(1)
             end
             p:Revive()
-            if p:GetOtherTwin() then p:GetOtherTwin():Revive() end
+			p:SetMinDamageCooldown(60)
+            if p:GetOtherTwin() then 
+				p:GetOtherTwin():Revive()
+				p:GetOtherTwin():SetMinDamageCooldown(60)
+			end
             data.reviveDeath = true
             local enterDoor = level.EnterDoor
             local door = room:GetDoor(enterDoor)
