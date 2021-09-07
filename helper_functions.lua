@@ -221,4 +221,15 @@ function H.TakeSelfDamage(p, dmg, canKill)
 	p:ResetDamageCooldown()
 end
 
+function H.IsEntityInTable(table, entity)
+	for _,v in pairs(table) do
+		if entity.Type == v[1]
+		and entity.Variant == v[2] or nil
+		and entity.SubType == v[3] or nil then
+			return true
+		end
+	end
+	return false
+end
+
 return H

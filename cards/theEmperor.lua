@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 -- Permacharms all enemies in the room
 local Name = "IV. The Emperor"
 local Tag = "theEmperor"
@@ -5,10 +7,20 @@ local Id = Isaac.GetCardIdByName(Name)
 
 -- TODO: audio visual?
 local function MC_USE_CARD(_, c, p)
-    for i, entity in ipairs(Isaac.GetRoomEntities()) do
-        if not entity:IsBoss() then
-            entity:AddCharmed(EntityRef(p), -1)
-        end
+	local illegalParents = {
+		EntityType.ENTITY_GEMINI, -- gemini's umbilical cord
+		EntityType.ENTITY_THE_HAUNT, -- the haunt's minions
+		EntityType.ENTITY_FORSAKEN, -- the forsaken's minions
+		EntityType.ENTITY_HERETIC, -- the forsaken's minions
+	}
+    for i, v in ipairs(Isaac.GetRoomEntities()) do
+		local entity = v:ToNPC()
+		if entity then
+			local parent = entity.SpawnerType or 0
+	        if not entity:IsBoss() and entity:IsVulnerableEnemy() and not helper.TableContains(illegalParents, parent) then
+				entity:AddCharmed(EntityRef(p), -1)
+	        end
+		end
     end
     lootdeck.sfx:Play(SoundEffect.SOUND_HAPPY_RAINBOW, 1, 0)
 end
