@@ -24,4 +24,7 @@
 	type="none"
 	hasSkinAlt="true"
 	hasOverlay="true" />
+<costume
+	 anm2path="hangedMan.anm2"
+	 type="none" />
 </costumes>

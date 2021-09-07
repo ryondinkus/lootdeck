@@ -1,3 +1,5 @@
+local costumes = include("costumes/registry")
+
 -- Gives magneto effect for the room and a glowing costume
 local Name = "XII. The Hanged Man"
 local Tag = "theHangedMan"
@@ -6,16 +8,13 @@ local Id = Isaac.GetCardIdByName(Name)
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     local magnetoConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
-    local soulConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_SOUL)
     p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
     if not data.hangedMan then data.hangedMan = 1
     else data.hangedMan = data.hangedMan + 1 end
     if data.hangedMan >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_MAGNETO) then
         p:RemoveCostume(magnetoConfig)
     end
-    if not p:HasCollectible(CollectibleType.COLLECTIBLE_SOUL) then
-        p:AddCostume(soulConfig, true)
-    end
+	p:AddNullCostume(costumes.hangedMan)
 end
 
 local function MC_POST_NEW_ROOM()
@@ -24,8 +23,9 @@ local function MC_POST_NEW_ROOM()
         local data = p:GetData()
         if data.hangedMan then
             for j=1,data.hangedMan do
-                p:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
+				p:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
             end
+			p:TryRemoveNullCostume(costumes.hangedMan)
             data.hangedMan = nil
         end
     end
