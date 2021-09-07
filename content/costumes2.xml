@@ -22,5 +22,6 @@
 <costume
 	anm2path="magician.anm2"
 	type="none"
-	hasSkinAlt="true" />
+	hasSkinAlt="true"
+	hasOverlay="true" />
 </costumes>
