@@ -36,7 +36,7 @@ local function MC_POST_NEW_ROOM()
                 end
                 p:AddSoulHearts(1)
             end
-            p:AnimateCard(Id)
+			p:AnimateCollectible(Id)
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
             data.death = nil
             data.reviveDeath = nil
@@ -59,7 +59,7 @@ local function MC_POST_PLAYER_UPDATE(_, p)
             end
             p:Revive()
 			p:SetMinDamageCooldown(60)
-            if p:GetOtherTwin() then 
+            if p:GetOtherTwin() then
 				p:GetOtherTwin():Revive()
 				p:GetOtherTwin():SetMinDamageCooldown(60)
 			end
