@@ -1,4 +1,6 @@
--- A 1 in 6 chance of negating damage
+local helper = include("helper_functions")
+
+-- A 1 in 6 chance of negating damage with the Holy Mantle effect
 local Name = "Guppy's Hairball"
 local Tag = "guppysHairball"
 local Id = Isaac.GetItemIdByName(Name)
@@ -13,9 +15,7 @@ local function MC_ENTITY_TAKE_DMG(_, e)
         threshold = threshold + (effectNum - 1)
         if threshold > 2 then threshold = 2 end
         if effect <= threshold then
-            lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0)
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 11, p.Position, Vector.Zero, p)
-            p:SetMinDamageCooldown(30)
+            helper.HolyMantleEffect(p)
             return false
         end
     end

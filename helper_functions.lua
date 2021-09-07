@@ -232,4 +232,10 @@ function H.IsEntityInTable(table, entity)
 	return false
 end
 
+function H.HolyMantleEffect(p, damageCooldown)
+    lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0)
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 11, p.Position, Vector.Zero, p)
+    p:SetMinDamageCooldown(damageCooldown or 30)
+end
+
 return H
