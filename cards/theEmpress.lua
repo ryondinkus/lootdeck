@@ -16,7 +16,7 @@ local function MC_USE_CARD(_, c, p)
         p:RemoveCostume(itemConfig)
     end
     lootdeck.sfx:Play(SoundEffect.SOUND_MONSTER_YELL_A, 1, 0)
-    p:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/empress.anm2"))
+    p:AddNullCostume(costumes.empress)
     p:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
     p:EvaluateItems()
 end
@@ -28,6 +28,13 @@ local function MC_EVALUATE_CACHE(_, p, f)
             p.Damage = p.Damage * 1.334
         end
     end
+	if f == CacheFlag.CACHE_TEARCOLOR then
+		if data.empress then
+			local color = Color(1,1,1,1,0,0,0)
+			color:SetColorize(0.8,0,0,1)
+			p.TearColor = color
+		end
+	end
 end
 
 local function MC_POST_NEW_ROOM()
