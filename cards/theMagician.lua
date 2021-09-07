@@ -1,4 +1,5 @@
 local helper = include("helper_functions")
+local costumes = include("costumes/registry")
 
 -- Temporary tears up and brain worm effect for the room, as well as a brain costume
 local Name = "I. The Magician"
@@ -10,10 +11,7 @@ local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     if not data.magician then data.magician = 1
     else data.magician = data.magician + 1 end
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MIND)
-    if not p:HasCollectible(CollectibleType.COLLECTIBLE_MIND) then
-        p:AddCostume(itemConfig, true)
-    end
+	p:AddNullCostume(costumes.magician)
     p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
     p:EvaluateItems()
 end
@@ -39,11 +37,6 @@ local function MC_EVALUATE_CACHE(_, p, f)
             color:SetColorize(1,1,1,1)
             p.TearColor = color
         end
-        if data.empress then
-            local color = Color(1,1,1,1,0,0,0)
-            color:SetColorize(0.8,0,0,1)
-            p.TearColor = color
-        end
     end
 end
 
@@ -53,6 +46,7 @@ local function MC_POST_NEW_ROOM()
         local data = p:GetData()
         if data.magician then
             data.magician = nil
+			p:TryRemoveNullCostume(costumes.magician)
             p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
             p:EvaluateItems()
         end

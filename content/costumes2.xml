@@ -19,4 +19,8 @@
 	  priority="10"
     type="none"
 />
+<costume
+	anm2path="magician.anm2"
+	type="none"
+	hasSkinAlt="true" />
 </costumes>

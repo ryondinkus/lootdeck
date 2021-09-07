@@ -4,5 +4,6 @@ end
 
 return {
     empress = CostumePathToId("empress"),
-    sun = CostumePathToId("sun")
+    sun = CostumePathToId("sun"),
+	magician = CostumePathToId("magician")
 }
