@@ -17,7 +17,6 @@ lootdeck.f = {
     sunUsed = false,
     removeSun = false,
     floorBossCleared = 0,
-	forgetMeNow = false,
     newRoom = false,
     foolRoom = false,
     world = nil,
