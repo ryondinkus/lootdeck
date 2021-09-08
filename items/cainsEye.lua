@@ -6,10 +6,9 @@ local Id = Isaac.GetItemIdByName(Name)
 local function MC_POST_NEW_LEVEL()
     local game = Game()
     local rng = lootdeck.rng
-    local f = lootdeck.f
-    f.blueMap = false
-    f.compass = false
-    f.map = false
+    lootdeck.f.blueMap = false
+    lootdeck.f.compass = false
+    lootdeck.f.map = false
     for x=0,game:GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         local data = p:GetData()
@@ -20,17 +19,19 @@ local function MC_POST_NEW_LEVEL()
             if effectAmount > 3 then effectAmount = 3 end
             while effects < effectAmount do
                 local effect = rng:RandomInt(3)
-                if effect == 0 and not f.blueMap then
+                if effect == 0 and not lootdeck.f.blueMap then
                     level:ApplyBlueMapEffect()
-                    f.blueMap = true
-                elseif effect == 1 and not f.compass then
+                    lootdeck.f.blueMap = true
+                elseif effect == 1 and not lootdeck.f.compass then
                     level:ApplyCompassEffect(true)
-                    f.compass = true
-                elseif effect == 2 and not f.map then
+                    lootdeck.f.compass = true
+                elseif effect == 2 and not lootdeck.f.map then
                     level:ApplyMapEffect()
-                    f.map = true
-                end
-                effects = effects + 1
+                    lootdeck.f.map = true
+                else
+					effects = effects - 1
+				end
+				effects = effects + 1
             end
         end
         -- TODO move to own file
