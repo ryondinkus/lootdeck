@@ -11,7 +11,7 @@ local function MC_USE_CARD(_, c, p)
     local itemPool = game:GetItemPool()
     local room = game:GetRoom()
     local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
-    local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
+    local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
     local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     spawnedItem.AutoUpdatePrice = false
     if helper.IsSoulHeartMarty(p) then
