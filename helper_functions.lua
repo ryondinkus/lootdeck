@@ -240,4 +240,14 @@ function H.HolyMantleEffect(p, damageCooldown)
     p:SetMinDamageCooldown(damageCooldown or 30)
 end
 
+function H.CheckFinalFloorBossKilled()
+	local level = Game():GetLevel()
+	local labyrinth = level:GetCurses() & LevelCurse.CURSE_OF_LABYRINTH > 0
+	if (lootdeck.f.floorBossCleared == 1 and not labyrinth)
+	or (lootdeck.f.floorBossCleared == 2 and labyrinth) then
+		return true
+	end
+	return false
+end
+
 return H

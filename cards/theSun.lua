@@ -1,4 +1,5 @@
 local costumes = include("costumes/registry")
+local helper = include("helper_functions")
 
 -- As soon as the floor boss is defeated, the floor will be restarted using the "Forget Me Now" effect
 -- This card is only usable once per run
@@ -23,7 +24,7 @@ local function MC_USE_CARD(_, c, p)
             entity:Remove()
         end
     end
-    if lootdeck.f.floorBossCleared then
+    if helper.CheckFinalFloorBossKilled() then
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
     end
     p:AddNullCostume(costumes.sun)
@@ -43,18 +44,18 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
-local function MC_POST_UPDATE()
-    local level = Game():GetLevel()
-    local room = level:GetCurrentRoom()
-    local roomDesc = level:GetCurrentRoomDesc()
+local function MC_PRE_SPAWN_CLEAN_AWARD()
+	local level = Game():GetLevel()
+	local room = level:GetCurrentRoom()
+	local roomDesc = level:GetCurrentRoomDesc()
 
-    if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
-        lootdeck.f.floorBossCleared = true
-    end
+	if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
+		lootdeck.f.floorBossCleared = lootdeck.f.floorBossCleared + 1
+	end
 
-    if lootdeck.f.floorBossCleared and lootdeck.f.sunUsed then
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
-    end
+	if helper.CheckFinalFloorBossKilled() and lootdeck.f.sunUsed then
+		Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
+	end
 end
 
 local function MC_POST_NEW_LEVEL()
@@ -64,7 +65,7 @@ local function MC_POST_NEW_LEVEL()
         end
     end
     lootdeck.f.sunUsed = false
-    lootdeck.f.floorBossCleared = false
+	lootdeck.f.floorBossCleared = 0
 end
 
 return {
@@ -82,8 +83,8 @@ return {
             MC_POST_NEW_ROOM
         },
         {
-            ModCallbacks.MC_POST_UPDATE,
-            MC_POST_UPDATE
+            ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,
+            MC_PRE_SPAWN_CLEAN_AWARD
         },
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
