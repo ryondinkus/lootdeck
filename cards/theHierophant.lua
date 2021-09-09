@@ -8,6 +8,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     data[Tag] = 2
+	p:AddNullCostume(costumes.mantle)
 end
 
 local function MC_ENTITY_TAKE_DMG(_, e)
@@ -30,13 +31,13 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
-local function MC_POST_NEW_LEVEL()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
-        data[Tag] = nil
-    end
-end
+-- local function MC_POST_NEW_LEVEL()
+--     for i=0,Game():GetNumPlayers()-1 do
+--         local p = Isaac.GetPlayer(i)
+--         local data = p:GetData()
+--         data[Tag] = nil
+--     end
+-- end
 
 return {
     Name = Name,
@@ -56,10 +57,11 @@ return {
         {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
-        },
-        {
-            ModCallbacks.MC_POST_NEW_LEVEL,
-            MC_POST_NEW_LEVEL
-        }
+		}
+        -- },
+        -- {
+        --     ModCallbacks.MC_POST_NEW_LEVEL,
+        --     MC_POST_NEW_LEVEL
+        -- }
     }
 }
