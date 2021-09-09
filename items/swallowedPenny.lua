@@ -10,7 +10,8 @@ local function MC_ENTITY_TAKE_DMG(_, e)
             local effect = rng:RandomInt(2)
             if effect == 0 then
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, (e.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
-            end
+				break
+			end
         end
     end
 end
