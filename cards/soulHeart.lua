@@ -32,14 +32,6 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
--- local function MC_POST_NEW_LEVEL()
---     for i=0,Game():GetNumPlayers()-1 do
---         local p = Isaac.GetPlayer(i)
---         local data = p:GetData()
---         data[Tag] = nil
---     end
--- end
-
 return {
     Name = Name,
     Tag = Tag,
@@ -59,10 +51,5 @@ return {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
 		}
-        -- },
-        -- {
-        --     ModCallbacks.MC_POST_NEW_LEVEL,
-        --     MC_POST_NEW_LEVEL
-        -- }
     }
 }
