@@ -12,16 +12,8 @@ local function MC_USE_CARD(_, c, p)
     if not data.magician then data.magician = 1
     else data.magician = data.magician + 1 end
 	p:AddNullCostume(costumes.magician)
-    p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
+    p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR | CacheFlag.CACHE_TEARFLAG)
     p:EvaluateItems()
-end
-
-local function MC_POST_FIRE_TEAR(_, t)
-    local p = t:GetLastParent():ToPlayer()
-    local data = p:GetData()
-    if data.magician then
-        t:AddTearFlags(helper.NewTearflag(71)) -- brain worm effect
-    end
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
@@ -33,9 +25,16 @@ local function MC_EVALUATE_CACHE(_, p, f)
     end
     if f == CacheFlag.CACHE_TEARCOLOR then
         if data.magician then
-            local color = Color(1,1,1,1,0,0,0)
-            color:SetColorize(1,1,1,1)
-            p.TearColor = color
+            local tearColor = Color(1,1,1,1,0,0,0)
+            tearColor:SetColorize(1,1,1,1)
+			local laserColor = Color(1,1,1,1,1,1,1)
+            p.TearColor = tearColor
+			p.LaserColor = laserColor
+        end
+    end
+	if f == CacheFlag.CACHE_TEARFLAG then
+        if data.magician then
+            p.TearFlags = p.TearFlags | helper.NewTearflag(71)
         end
     end
 end
@@ -47,7 +46,7 @@ local function MC_POST_NEW_ROOM()
         if data.magician then
             data.magician = nil
 			p:TryRemoveNullCostume(costumes.magician)
-            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR)
+            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_TEARCOLOR | CacheFlag.CACHE_TEARFLAG)
             p:EvaluateItems()
         end
     end
@@ -62,10 +61,6 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
-        },
-        {
-            ModCallbacks.MC_POST_FIRE_TEAR,
-            MC_POST_FIRE_TEAR
         },
         {
             ModCallbacks.MC_EVALUATE_CACHE,
