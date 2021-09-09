@@ -1,4 +1,5 @@
 local helper = include("helper_functions")
+local costumes = include("costumes/registry")
 
 -- Gives two Holy Mantle effects for the room (negates damage twice with minimal cooldown)
 local Name = "V. The Hierophant"
@@ -17,6 +18,11 @@ local function MC_ENTITY_TAKE_DMG(_, e)
     if data[Tag] and data[Tag] > 0 then
         helper.HolyMantleEffect(p)
         data[Tag] = data[Tag] - 1
+		p:TryRemoveNullCostume(costumes.mantle)
+		p:TryRemoveNullCostume(costumes.mantleBroken)
+		if data[Tag] == 1 then
+			p:AddNullCostume(costumes.mantleBroken)
+		end
         return false
     else
         data[Tag] = nil
@@ -28,6 +34,8 @@ local function MC_POST_NEW_ROOM()
         local p = Isaac.GetPlayer(i)
         local data = p:GetData()
         data[Tag] = nil
+		p:TryRemoveNullCostume(costumes.mantle)
+		p:TryRemoveNullCostume(costumes.mantleBroken)
     end
 end
 
