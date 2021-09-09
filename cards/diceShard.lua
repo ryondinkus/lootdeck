@@ -6,10 +6,11 @@ local Id = Isaac.GetCardIdByName(Name)
 
 local function MC_USE_CARD(_, c, p, flags)
 	local game = Game()
+	local level = game:GetLevel()
+	local room = game:GetRoom()
 	local sfx = lootdeck.sfx
     local f = lootdeck.f
     if not f.firstEnteredLevel then
-        local level = game:GetLevel()
         local data = p:GetData()
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS)
         f.newRoom = level:GetCurrentRoomIndex()
@@ -22,7 +23,6 @@ local function MC_USE_CARD(_, c, p, flags)
             data.dischargeVoid = true
         end
     else
-        local room = game:GetRoom()
         sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ	,1,0)
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, room:FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
     end
@@ -30,6 +30,8 @@ end
 
 local function MC_POST_NEW_ROOM()
 	local game = Game()
+	local level = game:GetLevel()
+	local room = game:GetRoom()
 	local f = lootdeck.f
 
     if f.firstEnteredLevel then
@@ -66,12 +68,13 @@ local function MC_POST_NEW_ROOM()
         f.checkEm = false
         f.showOverlay = false
     end
+	print("break")
     if f.newRoom then
         f.showOverlay = true
-        local level = game:GetLevel()
         local enterDoor = level.EnterDoor
-        local direction = Direction.NO_DIRECTION
-        game:StartRoomTransition(f.newRoom,direction,0)
+		local door = room:GetDoor(enterDoor)
+		local direction = door and door.Direction or Direction.NO_DIRECTION
+        game:StartRoomTransition(f.newRoom,direction,1)
         level.LeaveDoor = enterDoor
         f.newRoom = nil
         f.checkEm = true
