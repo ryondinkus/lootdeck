@@ -6,5 +6,7 @@ return {
     empress = CostumePathToId("empress"),
     sun = CostumePathToId("sun"),
 	magician = CostumePathToId("magician"),
-	hangedMan = CostumePathToId("hangedMan")
+	hangedMan = CostumePathToId("hangedMan"),
+	mantle = CostumePathToId("mantle"),
+	mantleBroken = CostumePathToId("mantleBroken")
 }

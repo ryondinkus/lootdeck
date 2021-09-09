@@ -8,15 +8,15 @@
 -->
 <costumes anm2root="gfx/">
 <costume
-	  anm2path="empress.anm2"
-	  priority="1"
+	anm2path="empress.anm2"
+	priority="1"
     type="none"
     skinColor="1"
     overwriteColor="true"
 />
 <costume
-	  anm2path="sun.anm2"
-	  priority="10"
+	anm2path="sun.anm2"
+	priority="10"
     type="none"
 />
 <costume
@@ -25,6 +25,13 @@
 	hasSkinAlt="true"
 	hasOverlay="true" />
 <costume
-	 anm2path="hangedMan.anm2"
-	 type="none" />
+	anm2path="hangedMan.anm2"
+	type="none" />
+<costume
+	anm2path="mantle.anm2"
+	type="none"
+	hasOverlay="true" />
+<costume
+	anm2path="mantleBroken.anm2"
+	type="none" />
 </costumes>
