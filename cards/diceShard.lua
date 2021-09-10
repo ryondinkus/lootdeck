@@ -68,7 +68,6 @@ local function MC_POST_NEW_ROOM()
         f.checkEm = false
         f.showOverlay = false
     end
-	print("break")
     if f.newRoom then
         f.showOverlay = true
         local enterDoor = level.EnterDoor
