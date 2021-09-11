@@ -3,6 +3,7 @@ lootdeck = RegisterMod("Loot Deck", 1)
 local cards = include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
+local weights = include("cards/weights")
 
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
@@ -106,4 +107,15 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             data.soulHp = nil
         end
     end
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(r, id, playing, rune, runeOnly)
+	if not runeOnly then
+		local roll = rng:RandomInt(99)+1
+		local threshold = 5
+		if roll <= threshold then
+			local selected = rng:RandomInt(#weights) + 1
+			return weights[selected]
+		end
+	end
 end)
