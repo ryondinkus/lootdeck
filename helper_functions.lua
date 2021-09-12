@@ -250,4 +250,36 @@ function H.CheckFinalFloorBossKilled()
 	return false
 end
 
+function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
+    local game = Game()
+    local data = p:GetData()
+    local sprite = p:GetSprite()
+    local level = game:GetLevel()
+    local room = level:GetCurrentRoom()
+    if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
+	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
+	or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() == 19) then
+        if data[reviveTag] then
+            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
+                p:AddBoneHearts(1)
+            end
+            p:Revive()
+			p:SetMinDamageCooldown(60)
+			if p:GetOtherTwin() then
+				p:GetOtherTwin():Revive()
+				p:GetOtherTwin():SetMinDamageCooldown(60)
+			end
+            data[tag] = true
+            local enterDoor = level.EnterDoor
+            local door = room:GetDoor(enterDoor)
+            local direction = door and door.Direction or Direction.NO_DIRECTION
+            game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
+            level.LeaveDoor = enterDoor
+            if callback then
+                callback()
+            end
+        end
+    end
+end
+
 return H

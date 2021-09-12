@@ -1,11 +1,15 @@
+local helper = include("helper_functions")
+
 -- Kills the player and revives them in the previous room with 3 bone hearts
 local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
 
+local ReviveTag = string.format("%sRevive", Tag)
+
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
-    if not data.death then data.death = true end
+    if not data[Tag] then data[Tag] = true end
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
     p:Die()
@@ -15,7 +19,7 @@ local function MC_POST_NEW_ROOM()
     for i=0,Game():GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(i)
         local data = p:GetData()
-        if data.reviveDeath then
+        if data[ReviveTag] then
             p:AddMaxHearts(-24)
             p:AddSoulHearts(-24)
             p:AddBoneHearts(-12)
@@ -38,8 +42,8 @@ local function MC_POST_NEW_ROOM()
             end
 			p:AnimateCollectible(Id)
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
-            data.death = nil
-            data.reviveDeath = nil
+            data[Tag] = nil
+            data[ReviveTag] = nil
         end
     end
 end
@@ -47,30 +51,7 @@ end
 -- TODO: add visual/audio indicators
 -- keeper should revive with one coin heart and the flies of 3 bone hearts
 local function MC_POST_PLAYER_UPDATE(_, p)
-    local game = Game()
-    local room = game:GetRoom()
-    local data = p:GetData()
-    local sprite = p:GetSprite()
-    local level = game:GetLevel()
-    if ( sprite:IsPlaying("Death") and sprite:GetFrame() >= 55) or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() >= 37) or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() >= 19) then
-        if data.death then
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
-                p:AddBoneHearts(1)
-            end
-            p:Revive()
-			p:SetMinDamageCooldown(60)
-            if p:GetOtherTwin() then
-				p:GetOtherTwin():Revive()
-				p:GetOtherTwin():SetMinDamageCooldown(60)
-			end
-            data.reviveDeath = true
-            local enterDoor = level.EnterDoor
-            local door = room:GetDoor(enterDoor)
-            local direction = door and door.Direction or Direction.NO_DIRECTION
-            game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
-            level.LeaveDoor = enterDoor
-        end
-    end
+    helper.RevivePlayerPostPlayerUpdate(p, ReviveTag, Tag)
 end
 
 return {
