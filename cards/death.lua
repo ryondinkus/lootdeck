@@ -40,7 +40,7 @@ local function MC_POST_NEW_ROOM()
                 end
                 p:AddSoulHearts(1)
             end
-			p:AnimateCollectible(Id)
+			p:AnimateCard(Id)
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
             data[Tag] = nil
             data[ReviveTag] = nil
