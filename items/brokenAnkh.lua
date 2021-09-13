@@ -24,18 +24,12 @@ local function MC_POST_NEW_ROOM()
 			if effect <= threshold then
 				data[ReviveTag] = true
 			end
-            data[ReviveTag] = true
 		end
 
         if data[Tag] then
             if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
                 p:AddHearts(-1)
                 p:AddHearts(1)
-            end
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
-                while p:GetBoneHearts() > 1 do
-                    p:AddBoneHearts(-1)
-                end
             end
             p:AnimateCollectible(Id)
             sfx:Play(SoundEffect.SOUND_HOLY,1,0)
