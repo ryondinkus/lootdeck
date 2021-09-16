@@ -262,6 +262,8 @@ function H.FindItemInTableByKey(table, key, value)
     for _, item in pairs(table) do
         if item[key] == value then
             return item
+        end
+    end
 end
 
 function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
@@ -293,6 +295,22 @@ function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
                 callback()
             end
         end
+    end
+end
+
+function H.GetWeightedLootCardId(cards)
+    if H.LengthOfTable(cards) > 0 then
+        local csum = 0
+        local outcome = cards[0]
+        for _, card in pairs(cards) do
+            local weight = card.Weight
+            local r = lootdeck.rng:RandomInt(csum + weight)
+            if r >= csum then
+                outcome = card
+            end
+            csum = csum + weight
+        end
+        return outcome.Id
     end
 end
 
