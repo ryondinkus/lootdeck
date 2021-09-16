@@ -1,4 +1,5 @@
 local helper = include("helper_functions")
+local entityVariants = include("entityVariants/registry")
 
 -- Explodes a random enemy or (if there are no enemies in the room) explodes the player
 local Name = "Joker"
@@ -20,9 +21,12 @@ local function MC_USE_CARD(_, c, p)
 	end
 	if #itemsList > 0 then
 		local selectedItem = itemsList[rng:RandomInt(#itemsList)+1]:ToPickup()
-		local newItem = Isaac.Spawn(selectedItem.Type, selectedItem.Variant, selectedItem.SubType, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p):ToPickup()
-		newItem.OptionsPickupIndex = selectedItem.OptionsPickupIndex
-		selectedItem:Remove()
+		local devilHand = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.devilHand.Id, 0, p.Position, Vector.Zero, p)
+		local handData = devilHand:GetData()
+		handData.target = selectedItem
+		handData.playerPos = p.Position
+		-- newItem.OptionsPickupIndex = selectedItem.OptionsPickupIndex
+		-- selectedItem:Remove()
 	end
 end
 
