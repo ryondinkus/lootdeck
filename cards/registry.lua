@@ -49,5 +49,7 @@ return {
     theMoon = include("cards/theMoon"),
     theSun = include("cards/theSun"),
     judgement = include("cards/judgement"),
-    theWorld = include("cards/theWorld")
+    theWorld = include("cards/theWorld"),
+    chargedPenny = include("cards/chargedPenny"),
+    joker = include("cards/joker")
 }
