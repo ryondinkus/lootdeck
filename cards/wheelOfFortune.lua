@@ -5,6 +5,7 @@ local helper = include('helper_functions')
 local Name = "X. Wheel of Fortune"
 local Tag = "wheelOfFortune"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 local arcadeItems = {
     CollectibleType.COLLECTIBLE_DOLLAR,
@@ -61,6 +62,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

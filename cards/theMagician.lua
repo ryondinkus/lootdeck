@@ -5,6 +5,7 @@ local costumes = include("costumes/registry")
 local Name = "I. The Magician"
 local Tag = "theMagician"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- If it ever gets fixed, AddTrinketEffect() would be better here
 local function MC_USE_CARD(_, c, p)
@@ -56,6 +57,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

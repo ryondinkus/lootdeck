@@ -4,6 +4,7 @@ local helper = include('helper_functions')
 local Name = "Ehwaz"
 local Tag = "ehwaz"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D10, SoundEffect.SOUND_LAZARUS_FLIP_DEAD)
@@ -13,6 +14,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,

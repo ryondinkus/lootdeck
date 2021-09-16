@@ -5,6 +5,7 @@ local items = include("items/registry")
 local Name = "Purple Heart"
 local Tag = "purpleHeart"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- BUG: Our standard helper.FindRandomEnemy(_, noDupes) doesn't work here since rerolled enemies don't preserve their data tables
 -- can't really think of a good way to track rerolled enemies right now
@@ -16,6 +17,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

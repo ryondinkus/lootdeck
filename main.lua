@@ -3,7 +3,6 @@ lootdeck = RegisterMod("Loot Deck", 1)
 local cards = include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
-local weights = include("cards/weights")
 
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
@@ -110,12 +109,24 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(r, id, playing, rune, runeOnly)
+    -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
 		local roll = rng:RandomInt(99)+1
 		local threshold = 5
-		if roll <= threshold then
-			local selected = rng:RandomInt(#weights) + 1
-			return weights[selected]
+		if roll <= threshold or (helper.FindItemInTableByKey(cards, "Id", id) ~= nil) then
+            if helper.LengthOfTable(cards) > 0 then
+                local csum = 0
+                local outcome = cards[0]
+                for _, card in pairs(cards) do
+                    local weight = card.Weight
+                    local r = lootdeck.rng:RandomInt(csum + weight)
+                    if r >= csum then
+                        outcome = card
+                    end
+                    csum = csum + weight
+                end
+                return outcome.Id
+            end
 		end
 	end
 end)

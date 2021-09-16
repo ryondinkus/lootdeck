@@ -4,6 +4,7 @@ local helper = include("helper_functions")
 local Name = "Bomb!"
 local Tag = "bomb"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 4
 
 local function MC_USE_CARD(_, c, p)
 	local target = helper.FindRandomEnemy(p.Position) or p
@@ -14,6 +15,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -250,4 +250,20 @@ function H.CheckFinalFloorBossKilled()
 	return false
 end
 
+function H.LengthOfTable(t)
+    local num = 0
+    for _ in pairs(t) do
+        num = num + 1
+    end
+    return num
+end
+
+function H.FindItemInTableByKey(table, key, value)
+    for _, item in pairs(table) do
+        if item[key] == value then
+            return item
+        end
+    end
+end
+
 return H

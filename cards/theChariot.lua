@@ -4,6 +4,7 @@ local helper = include("helper_functions")
 local Name = "VII. The Chariot"
 local Tag = "theChariot"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- TODO: Add compatibility for Tainted Forgotten
 -- T. Forgor gets the extra heart but no damage, because the damage scales based on pile-o-bones
@@ -45,6 +46,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

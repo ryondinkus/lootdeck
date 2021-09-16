@@ -2,6 +2,7 @@
 local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -77,6 +78,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

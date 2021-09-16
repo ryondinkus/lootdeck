@@ -2,6 +2,7 @@
 local Name = "VIII. Justice"
 local Tag = "justice"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- TODO: audio/visual effects, stagger a bit
 local function MC_USE_CARD(_, c, p)
@@ -25,6 +26,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
