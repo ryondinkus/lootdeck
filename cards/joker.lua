@@ -13,13 +13,15 @@ local function MC_USE_CARD(_, c, p)
 	local itemsList = {}
 	for i, entity in ipairs(entities) do
 		if entity.Type == EntityType.ENTITY_PICKUP
-		and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE then
+		and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
+		and entity.SubType ~= 0 then
 			table.insert(itemsList, entity)
 		end
 	end
-	local selectedItem = itemsList[rng:RandomInt(#itemsList)+1] or 0
-	if selectedItem ~= 0 then
-		Isaac.Spawn(selectedItem.Type, selectedItem.Variant, selectedItem.SubType, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
+	if #itemsList > 0 then
+		local selectedItem = itemsList[rng:RandomInt(#itemsList)+1]:ToPickup()
+		local newItem = Isaac.Spawn(selectedItem.Type, selectedItem.Variant, selectedItem.SubType, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p):ToPickup()
+		newItem.OptionsPickupIndex = selectedItem.OptionsPickupIndex
 		selectedItem:Remove()
 	end
 end
