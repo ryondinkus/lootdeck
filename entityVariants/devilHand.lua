@@ -38,18 +38,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     end
 end
 
-local function MC_PRE_FAMILIAR_COLLISION(_, f, collide)
-    print(collide.Type)
-    local data = f:GetData()
-    local pi = collide:ToPickup() or 0
-    if pi ~= 0 then
-        if data.target.InitSeed == pi.InitSeed then
-            sprite:Play("Grab", true)
-            f.Velocity = Vector.Zero
-        end
-    end
-end
-
 return {
     Name = Name,
     Tag = Tag,
@@ -58,11 +46,6 @@ return {
         {
             ModCallbacks.MC_FAMILIAR_UPDATE,
             MC_FAMILIAR_UPDATE,
-            Id
-        },
-        {
-            ModCallbacks.MC_PRE_FAMILIAR_COLLISION,
-            MC_PRE_FAMILIAR_COLLISION,
             Id
         }
     }
