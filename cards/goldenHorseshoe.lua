@@ -5,6 +5,7 @@ local items = include("items/registry")
 local Name = "Golden Horseshoe"
 local Tag = "goldenHorseshoe"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.goldenHorseshoe.Id, SoundEffect.SOUND_VAMP_GULP)
@@ -14,6 +15,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

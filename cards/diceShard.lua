@@ -3,6 +3,7 @@
 local Name = "Dice Shard"
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 3
 
 local function MC_USE_CARD(_, c, p, flags)
 	local game = Game()
@@ -88,6 +89,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

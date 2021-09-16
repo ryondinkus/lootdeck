@@ -6,6 +6,7 @@ local items = include("items/registry")
 local Name = "Swallowed Penny"
 local Tag = "swallowedPenny"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- TODO: Stacking support for multiple 50/50 rolls
 local function MC_USE_CARD(_, c, p)
@@ -16,6 +17,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

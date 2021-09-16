@@ -4,6 +4,7 @@ local helper = include("helper_functions")
 local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 local ReviveTag = string.format("%sRevive", Tag)
 
@@ -58,6 +59,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

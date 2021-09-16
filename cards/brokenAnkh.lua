@@ -5,6 +5,7 @@ local items = include("items/registry")
 local Name = "Broken Ankh"
 local Tag = "brokenAnkh"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- BUG: When you revive, your streak is still lost, and saving/continuing is disabled. this is because Revive() is bugged and the game still thinks you're dead
 -- due to how poorly extra lives are supported in the API, this is probably the best we're getting without massive overcomplications
@@ -16,6 +17,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

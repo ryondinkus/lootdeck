@@ -5,6 +5,7 @@ local items = include("items/registry")
 local Name = "Curved Horn"
 local Tag = "curvedHorn"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- TODO: Stacking on a single player = more inital shots that are big, audio/visual indicators
 local function MC_USE_CARD(_, c, p)
@@ -15,6 +16,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

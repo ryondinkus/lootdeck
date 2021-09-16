@@ -4,6 +4,7 @@ local helper = include('helper_functions')
 local Name = "XVI. Temperance"
 local Tag = "temperance"
 local Id = Isaac.GetCardIdByName(Name)
+local Weight = 1
 
 -- TODO: Visual and audio indicator for results, card spawns based on lootdeck weights
 local function MC_USE_CARD(_, c, p)
@@ -28,6 +29,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Weight = Weight,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
