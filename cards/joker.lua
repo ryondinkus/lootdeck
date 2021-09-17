@@ -9,10 +9,10 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local rng = lootdeck.rng
-	local room = Game():GetRoom()
+	local sfx = lootdeck.sfx
 	local entities = Isaac.GetRoomEntities()
 	local itemsList = {}
-	for i, entity in ipairs(entities) do
+	for _, entity in ipairs(entities) do
 		if entity.Type == EntityType.ENTITY_PICKUP
 		and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
 		and entity.SubType ~= 0
@@ -29,7 +29,9 @@ local function MC_USE_CARD(_, c, p)
 		poof.Color = Color(0,0,0,1,0,0,0)
 		local handData = devilHand:GetData()
 		handData.target = selectedItem
-		handData.playerPos = p.Position
+		handData.jokerPlayerIndex = p.Index
+	else
+		helper.FuckYou(p)
 	end
 end
 
