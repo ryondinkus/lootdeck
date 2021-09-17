@@ -1,4 +1,4 @@
-return {
+lootcards = {
     penny = include("cards/penny"),
     twoCents = include("cards/twoCents"),
     threeCents = include("cards/threeCents"),
@@ -51,5 +51,6 @@ return {
     judgement = include("cards/judgement"),
     theWorld = include("cards/theWorld"),
     chargedPenny = include("cards/chargedPenny"),
-    joker = include("cards/joker")
+    joker = include("cards/joker"),
+    aSack = include("cards/aSack")
 }

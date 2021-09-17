@@ -298,7 +298,8 @@ function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
     end
 end
 
-function H.GetWeightedLootCardId(cards)
+function H.GetWeightedLootCardId()
+    local cards = lootcards
     if H.LengthOfTable(cards) > 0 then
         local csum = 0
         local outcome = cards[0]

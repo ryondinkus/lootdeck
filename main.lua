@@ -1,6 +1,6 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
-local cards = include("cards/registry")
+include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 
@@ -34,7 +34,7 @@ local game = Game()
 local rng = lootdeck.rng
 local f = lootdeck.f
 
-for _, card in pairs(cards) do
+for _, card in pairs(lootcards) do
     if card.callbacks then
         for _, callback in pairs(card.callbacks) do
         lootdeck:AddCallback(table.unpack(callback))
@@ -113,9 +113,9 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	if not runeOnly then
 		local roll = rng:RandomInt(99)+1
 		local threshold = 5
-        local isLootCard = helper.FindItemInTableByKey(cards, "Id", id) ~= nil
+        local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
 		if roll <= threshold or isLootCard then
-            return helper.GetWeightedLootCardId(cards)
+            return helper.GetWeightedLootCardId()
 		end
 	end
 end)
