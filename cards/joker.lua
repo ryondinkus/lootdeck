@@ -15,12 +15,14 @@ local function MC_USE_CARD(_, c, p)
 	for i, entity in ipairs(entities) do
 		if entity.Type == EntityType.ENTITY_PICKUP
 		and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
-		and entity.SubType ~= 0 then
+		and entity.SubType ~= 0
+		and not entity:GetData().selected then
 			table.insert(itemsList, entity)
 		end
 	end
 	if #itemsList > 0 then
 		local selectedItem = itemsList[rng:RandomInt(#itemsList)+1]:ToPickup()
+		selectedItem:GetData().selected = true
 		local devilHand = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.devilHand.Id, 0, p.Position, Vector.Zero, p)
 		devilHand:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 		local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
@@ -28,8 +30,6 @@ local function MC_USE_CARD(_, c, p)
 		local handData = devilHand:GetData()
 		handData.target = selectedItem
 		handData.playerPos = p.Position
-		-- newItem.OptionsPickupIndex = selectedItem.OptionsPickupIndex
-		-- selectedItem:Remove()
 	end
 end
 
