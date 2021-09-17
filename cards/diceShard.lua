@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 -- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
 -- If not possible, like at the beginning of the level, give the player a penny
 local Name = "Dice Shard"
@@ -8,8 +10,6 @@ local Weight = 3
 local function MC_USE_CARD(_, c, p, flags)
 	local game = Game()
 	local level = game:GetLevel()
-	local room = game:GetRoom()
-	local sfx = lootdeck.sfx
     local f = lootdeck.f
     if not f.firstEnteredLevel then
         local data = p:GetData()
@@ -24,8 +24,7 @@ local function MC_USE_CARD(_, c, p, flags)
             data.dischargeVoid = true
         end
     else
-        sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ	,1,0)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, room:FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
+        helper.FuckYou(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY)
     end
 end
 
@@ -33,13 +32,12 @@ local function MC_POST_NEW_ROOM()
 	local game = Game()
 	local level = game:GetLevel()
 	local room = game:GetRoom()
-	local f = lootdeck.f
 
-    if f.firstEnteredLevel then
-        f.firstEnteredLevel = false
+    if lootdeck.f.firstEnteredLevel then
+        lootdeck.f.firstEnteredLevel = false
     end
 
-    if f.checkEm then
+    if lootdeck.f.checkEm then
         for i=0,game:GetNumPlayers()-1 do
             local p = Isaac.GetPlayer(i)
             local data = p:GetData()
@@ -66,18 +64,18 @@ local function MC_POST_NEW_ROOM()
                 end
             end
         end
-        f.checkEm = false
-        f.showOverlay = false
+        lootdeck.f.checkEm = false
+        lootdeck.f.showOverlay = false
     end
-    if f.newRoom then
-        f.showOverlay = true
+    if lootdeck.f.newRoom then
+        lootdeck.f.showOverlay = true
         local enterDoor = level.EnterDoor
 		local door = room:GetDoor(enterDoor)
 		local direction = door and door.Direction or Direction.NO_DIRECTION
-        game:StartRoomTransition(f.newRoom,direction,1)
+        game:StartRoomTransition(lootdeck.f.newRoom,direction,1)
         level.LeaveDoor = enterDoor
-        f.newRoom = nil
-        f.checkEm = true
+        lootdeck.f.newRoom = nil
+        lootdeck.f.checkEm = true
     end
 end
 

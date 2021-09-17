@@ -50,5 +50,6 @@ return {
     theSun = include("cards/theSun"),
     judgement = include("cards/judgement"),
     theWorld = include("cards/theWorld"),
-    chargedPenny = include("cards/chargedPenny")
+    chargedPenny = include("cards/chargedPenny"),
+    joker = include("cards/joker")
 }
