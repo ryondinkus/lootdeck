@@ -22,6 +22,9 @@ local function MC_USE_CARD(_, c, p)
 	if #itemsList > 0 then
 		local selectedItem = itemsList[rng:RandomInt(#itemsList)+1]:ToPickup()
 		local devilHand = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.devilHand.Id, 0, p.Position, Vector.Zero, p)
+		devilHand:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+		local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
+		poof.Color = Color(0,0,0,1,0,0,0)
 		local handData = devilHand:GetData()
 		handData.target = selectedItem
 		handData.playerPos = p.Position
