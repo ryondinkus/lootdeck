@@ -368,21 +368,21 @@
 				pickup="904"
 		/>
 	<card name="Joker"
-				description="The thief"
+				description="Item thief"
 				hud="Joker"
 				type="special"
 				mimiccharge="6"
 				pickup="904"
 		/>
 	<card name="Holy Card"
-				description="Second chance"
+				description="A second chance"
 				hud="Holy Card"
 				type="special"
 				mimiccharge="12"
 				pickup="904"
 		/>
 	<card name="Two of Diamonds"
-				description="Half cost"
+				description="Half the cost"
 				hud="Two of Diamonds"
 				type="special"
 				mimiccharge="6"
@@ -417,7 +417,7 @@
 				pickup="904"
 		/>
 	<card name="Pink Eye"
-				description="Contact Damage"
+				description="Contact damage"
 				hud="Pink Eye"
 				type="special"
 				mimiccharge="12"

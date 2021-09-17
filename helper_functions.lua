@@ -315,4 +315,13 @@ function H.GetWeightedLootCardId()
     end
 end
 
+function H.FuckYou(p, type, variant, subtype, uses)
+    lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
+    if type then
+        for i = 1,(uses or 1) do
+            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p) 
+        end
+    end
+end
+
 return H
