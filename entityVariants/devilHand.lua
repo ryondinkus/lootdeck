@@ -1,5 +1,5 @@
 local Name = "Devil Hand"
-local Tag = "Devil Hand"
+local Tag = "devilHand"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 -- Familiar update for Joker card

@@ -1,3 +1,4 @@
+
 -- Freezes the room for 10 seconds
 local Name = "XXI. The World"
 local Tag = "theWorld"
@@ -13,7 +14,6 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_UPDATE()
-    print(lootdeck.f.world)
     local sfx = lootdeck.sfx
     if lootdeck.f.world then
         if lootdeck.f.world % 30 == 0 then
