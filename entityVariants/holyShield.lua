@@ -12,7 +12,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     if f.FrameCount == 1 then
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
     end
-    print(f.EntityCollisionClass)
     f.OrbitDistance = Vector(50, 50)
     f.OrbitSpeed = -0.05
     f.Velocity = f:GetOrbitPosition(f.Player.Position + f.Player.Velocity) - f.Position
@@ -24,9 +23,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
 end
 
 local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
-    print("woah")
     if e.Type == EntityType.ENTITY_PROJECTILE then
-        print("ehe")
         e:Die()
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         f:GetData().hit = true
