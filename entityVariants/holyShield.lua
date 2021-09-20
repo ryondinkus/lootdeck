@@ -3,7 +3,7 @@ local Tag = "holyShield"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_FAMILIAR_INIT(_, f)
-    f:AddToOrbit(5)
+    f:AddToOrbit(0)
     f:GetSprite():Play("Spawn", true)
 end
 
@@ -33,6 +33,16 @@ local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
     end
 end
 
+local function MC_POST_NEW_ROOM()
+    for _,entity in pairs(Isaac.GetRoomEntities()) do
+        if entity.Type == EntityType.ENTITY_FAMILIAR
+        and entity.Variant == Id
+        and entity:GetData().hit == true then
+            entity:Remove()
+        end
+    end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -52,6 +62,10 @@ return {
             ModCallbacks.MC_PRE_FAMILIAR_COLLISION,
             MC_PRE_FAMILIAR_COLLISION,
             Id
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         }
     }
 }
