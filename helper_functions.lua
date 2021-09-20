@@ -36,9 +36,6 @@ end
 
 -- function for registering basic loot cards that spawn items
 function H.SimpleLootCardSpawn(p, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
-    for i = 1,(uses or 1) do
-        Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-    end
     if effect then
         for i=1,(effectAmount or 1) do
             Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
@@ -47,11 +44,15 @@ function H.SimpleLootCardSpawn(p, spawnType, spawnVariant, spawnSubtype, uses, p
     if sound then
         lootdeck.sfx:Play(sound)
     end
+    for i = 1,(uses or 1) do
+        Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+    end
 end
 
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = p:GetData()
     if data[key] == 1 then
+        print("hi")
 		local timerName = string.format("%sTimer", key)
 		local counterName = string.format("%sCounter", key)
 		if not data[timerName] then data[timerName] = 0 end
@@ -319,7 +320,7 @@ function H.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p) 
+            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
         end
     end
 end

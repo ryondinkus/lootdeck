@@ -4,15 +4,16 @@ local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_FAMILIAR_INIT(_, f)
     f:AddToOrbit(5)
-    f:GetSprite():Play("Idle", true)
+    f:GetSprite():Play("Spawn", true)
 end
 
 -- Familiar update for Joker card
 local function MC_FAMILIAR_UPDATE(_, f)
-    if f.FrameCount == 1 then
+    if f.FrameCount == 8 then
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
+        f:GetSprite():Play("Idle", true)
     end
-    f.OrbitDistance = Vector(50, 50)
+    f.OrbitDistance = Vector(20, 20)
     f.OrbitSpeed = -0.05
     f.Velocity = f:GetOrbitPosition(f.Player.Position + f.Player.Velocity) - f.Position
     if f:GetSprite():IsFinished("Poof") then
