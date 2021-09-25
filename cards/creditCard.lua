@@ -7,8 +7,12 @@ local Tag = "creditCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
+-- TODO: Add future stacking support
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
+	if not data.credit then
+		data.familiar = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.creditCardBaby.Id, 0, p.Position, Vector.Zero, p)
+	end
     data.credit = true
 end
 
@@ -17,20 +21,9 @@ local function MC_PRE_PLAYER_COLLISION(_, p, e)
     if data.credit and e.Type == EntityType.ENTITY_PICKUP then
         pickup = e:ToPickup()
         if helper.CanBuyPickup(p, pickup) then
-            data.refund = pickup.Price
-			if pickup.Price < 0 then
-				local toSpawn = helper.DevilRefund(pickup.Price)
-				for i=1,toSpawn[4] do
-					Isaac.Spawn(toSpawn[1], toSpawn[2], toSpawn[3], p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-				end
-				for i=1,(toSpawn[8] or 0) do
-					Isaac.Spawn(toSpawn[5], toSpawn[6], toSpawn[7], p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-				end
-			else
-				for i=1,data.refund do
-	                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-	            end
-			end
+			famData = data.familiar:GetData()
+			famData.toSpawn = helper.CalculateRefund(pickup.Price)
+			famData.state = "STATE_SPAWN"
             data.credit = nil
         end
     end

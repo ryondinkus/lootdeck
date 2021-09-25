@@ -348,7 +348,7 @@ function H.CanBuyPickup(player, pickup)
 	return false
 end
 
-function H.DevilRefund(price)
+function H.CalculateRefund(price)
 	if price == -1 then
 		return {
 			EntityType.ENTITY_PICKUP,
@@ -393,6 +393,12 @@ function H.DevilRefund(price)
 			1
 		}
 	end
+	return {
+		EntityType.ENTITY_PICKUP,
+		PickupVariant.PICKUP_COIN,
+		CoinSubType.COIN_PENNY,
+		price
+	}
 end
 
 return H

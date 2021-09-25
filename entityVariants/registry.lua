@@ -4,5 +4,6 @@ return {
     lostBomb = include("entityVariants/lostBomb"),
     momsFinger = include("entityVariants/momsFinger"),
     devilHand = include("entityVariants/devilHand"),
-    chargedPenny = include("entityVariants/chargedPenny")
+    chargedPenny = include("entityVariants/chargedPenny"),
+	creditCardBaby = include("entityVariants/creditCardBaby")
 }
