@@ -1,7 +1,7 @@
 local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
--- Explodes a random enemy or (if there are no enemies in the room) explodes the player
+-- Adds a familiar, the familiar refunds you for the next shop/devil item you buy
 local Name = "Credit Card"
 local Tag = "creditCard"
 local Id = Isaac.GetCardIdByName(Name)
