@@ -1,7 +1,7 @@
 local helper = include('helper_functions')
 local entityVariants = include("entityVariants/registry")
 
--- Spawns a mega battery
+-- Spawns 10 "Holy Shield" familiars that block bullets and die after blocking
 local Name = "Holy Card"
 local Tag = "holyCard"
 local Id = Isaac.GetCardIdByName(Name)
