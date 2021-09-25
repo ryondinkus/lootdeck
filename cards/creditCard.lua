@@ -18,9 +18,19 @@ local function MC_PRE_PLAYER_COLLISION(_, p, e)
         pickup = e:ToPickup()
         if helper.CanBuyPickup(p, pickup) then
             data.refund = pickup.Price
-			for i=1,data.refund do
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-            end
+			if pickup.Price < 0 then
+				local toSpawn = helper.DevilRefund(pickup.Price)
+				for i=1,toSpawn[4] do
+					Isaac.Spawn(toSpawn[1], toSpawn[2], toSpawn[3], p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+				end
+				for i=1,(toSpawn[8] or 0) do
+					Isaac.Spawn(toSpawn[5], toSpawn[6], toSpawn[7], p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+				end
+			else
+				for i=1,data.refund do
+	                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+	            end
+			end
             data.credit = nil
         end
     end
