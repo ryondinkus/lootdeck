@@ -375,7 +375,7 @@
 				pickup="904"
 		/>
 	<card name="Holy Card"
-				description="A second chance"
+				description="Holy shields"
 				hud="Holy Card"
 				type="special"
 				mimiccharge="12"
@@ -389,7 +389,7 @@
 				pickup="904"
 		/>
 	<card name="A Sack"
-				description="Bundle of cash"
+				description="Bundle of goodies"
 				hud="A Sack"
 				type="special"
 				mimiccharge="4"
