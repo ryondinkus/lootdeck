@@ -1,4 +1,4 @@
-local costumes = include("costumes/registry")
+local entityVariants = include("entityVariants/registry")
 
 -- Fires two tears at once with a demon costume and red tears for the room
 local Name = "Two of Diamonds"
@@ -16,6 +16,7 @@ local function MC_USE_CARD(_, c, p)
         p:RemoveCostume(itemConfig)
     end
     lootdeck.sfx:Play(SoundEffect.SOUND_CASH_REGISTER, 1, 0)
+	Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.diamondBaby.Id, 0, p.Position, Vector.Zero, p)
 end
 
 local function MC_POST_NEW_LEVEL()
