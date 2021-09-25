@@ -16,25 +16,12 @@ local function MC_PRE_PLAYER_COLLISION(_, p, e)
     local data = p:GetData()
     if data.credit and e.Type == EntityType.ENTITY_PICKUP then
         pickup = e:ToPickup()
-        if pickup.Price > 0 and p:GetNumCoins() >= pickup.Price and not p:IsHoldingItem() and pickup.Wait <= 0 then
-            data.canBuy = true
+        if helper.CanBuyPickup(p, pickup) then
             data.refund = pickup.Price
-            data.boughtEntity = pickup
-        end
-    end
-end
-
-local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData()
-    if data.canBuy and data.boughtEntity then
-        if not data.boughtEntity:Exists() then
-            for i=1,data.refund do
+			for i=1,data.refund do
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
             end
             data.credit = nil
-            data.canBuy = nil
-            data.refund = nil
-            data.boughtEntity = nil
         end
     end
 end
@@ -53,10 +40,6 @@ return {
         {
             ModCallbacks.MC_PRE_PLAYER_COLLISION,
             MC_PRE_PLAYER_COLLISION,
-        },
-        {
-            ModCallbacks.MC_POST_PEFFECT_UPDATE,
-            MC_POST_PEFFECT_UPDATE,
-        }
+		}
     }
 }

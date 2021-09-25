@@ -319,9 +319,28 @@ function H.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p) 
+            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
         end
     end
+end
+
+function H.CanBuyPickup(player, pickup)
+	if pickup.Price > -6 and pickup.Price ~= 0 and not player:IsHoldingItem() then
+        if (pickup.Price == -1 and player:GetMaxHearts() >= 2)
+        or (pickup.Price == -2 and player:GetMaxHearts() >= 4)
+        or (pickup.Price == -3 and player:GetSoulHearts() >= 6)
+        or (pickup.Price == -4 and player:GetMaxHearts() >= 2 and player:GetSoulHearts() >= 4)    -- this devil deal is affordable
+        then
+            return true
+        elseif pickup.Price > 0 and player:GetNumCoins() >= pickup.Price    -- this shop item is affordable
+        and not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2)))
+        and not (pickup.Variant == 10 and pickup.SubType == 1 and player:GetHearts() == player:GetMaxHearts())
+        and not (pickup.Variant == 10 and pickup.SubType == 3 and player:GetMaxHearts() + player:GetSoulHearts() == 12)
+        then
+            return true
+        end
+    end
+	return false
 end
 
 return H
