@@ -8,6 +8,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
+    helper.RemoveHitFamiliars(entityVariants.holyShield.Id)
 	local data = p:GetData()
 	data[Tag] = 1
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_FAMILIAR, entityVariants.holyShield.Id, 0, 10, Vector.Zero, SoundEffect.SOUND_HOLY)

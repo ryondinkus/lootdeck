@@ -325,4 +325,14 @@ function H.FuckYou(p, type, variant, subtype, uses)
     end
 end
 
+function H.RemoveHitFamiliars(id, hitTag)
+    for _,entity in pairs(Isaac.GetRoomEntities()) do
+        if entity.Type == EntityType.ENTITY_FAMILIAR
+        and entity.Variant == id
+        and entity:GetData()[hitTag or 'hit'] == true then
+            entity:Remove()
+        end
+    end
+end
+
 return H

@@ -1,3 +1,5 @@
+local helper = include('helper_functions')
+
 local Name = "Holy Shield"
 local Tag = "holyShield"
 local Id = Isaac.GetEntityVariantByName(Name)
@@ -7,7 +9,7 @@ local function MC_FAMILIAR_INIT(_, f)
     f:GetSprite():Play("Spawn", true)
 end
 
--- Familiar update for Joker card
+-- Familiar update for Holy Shield card
 local function MC_FAMILIAR_UPDATE(_, f)
     if f.FrameCount == 8 then
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
@@ -17,8 +19,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     f.OrbitSpeed = -0.05
     f.Velocity = f:GetOrbitPosition(f.Player.Position + f.Player.Velocity) - f.Position
     if f:GetSprite():IsFinished("Poof") then
-        -- TODO: remove orbitals when all others are hidden
-        --f:Remove()
         f.SpriteScale = Vector.Zero
     end
 end
@@ -34,13 +34,7 @@ local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
 end
 
 local function MC_POST_NEW_ROOM()
-    for _,entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == Id
-        and entity:GetData().hit == true then
-            entity:Remove()
-        end
-    end
+    helper.RemoveHitFamiliars(Id)
 end
 
 return {
