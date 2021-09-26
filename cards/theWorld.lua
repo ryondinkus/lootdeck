@@ -9,11 +9,13 @@ local function MC_USE_CARD(_, c, p)
     lootdeck.f.world = 300
     lootdeck.f.savedTime = game.TimeCounter
     game:AddPixelation(15)
+    lootdeck.mus:Disable()
     lootdeck.sfx:Play(SoundEffect.SOUND_DOGMA_BRIMSTONE_SHOOT, 1, 0)
 end
 
 local function MC_POST_UPDATE()
     local sfx = lootdeck.sfx
+    local mus = lootdeck.mus
     if lootdeck.f.world then
         if lootdeck.f.world % 30 == 0 then
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
@@ -41,6 +43,7 @@ local function MC_POST_UPDATE()
                     end
                 end
             end
+            mus:Enable()
             sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
         end
         if lootdeck.f.world <= 0 then
@@ -86,6 +89,7 @@ end
 local function MC_POST_NEW_ROOM()
     if lootdeck.f.world then
         lootdeck.f.world = nil
+        lootdeck.mus:Enable()
         lootdeck.sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
     end
 end
