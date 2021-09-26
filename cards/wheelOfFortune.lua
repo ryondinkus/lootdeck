@@ -31,7 +31,8 @@ local function MC_USE_CARD(_, c, p)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
     elseif effect == 2 then
         for j=1,3 do
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
+            local cardId = helper.GetWeightedLootCardId()
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     elseif effect == 3 then

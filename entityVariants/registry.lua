@@ -5,5 +5,7 @@ return {
     momsFinger = include("entityVariants/momsFinger"),
     devilHand = include("entityVariants/devilHand"),
     chargedPenny = include("entityVariants/chargedPenny"),
-	diamondBaby = include("entityVariants/diamondBaby")
+	  diamondBaby = include("entityVariants/diamondBaby"),
+	  creditCardBaby = include("entityVariants/creditCardBaby"),
+    holyShield = include("entityVariants/holyShield")
 }

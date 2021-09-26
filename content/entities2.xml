@@ -19,4 +19,10 @@
   <entity anm2path="two of diamonds.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Diamond Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="8321">
 	  <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
+  <entity anm2path="credit card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Credit Card Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="4953">
+	  <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="holy shield.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="2" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Holy Shield" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="2122">
+      <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
 </entities>

@@ -1,4 +1,5 @@
 local entityVariants = include("entityVariants/registry")
+local helper = include("helper_functions")
 
 -- A 1 in 3 chance of spawning a tarotcard, thee tarotcards, or losing one coin, bomb, and key
 local Name = "Pills! Blue"
@@ -13,11 +14,13 @@ local function MC_USE_CARD(_, c, p)
 	local room = Game():GetRoom()
 	if effect == 0 then
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-		Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
+		local cardId = helper.GetWeightedLootCardId()
+		Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 	elseif effect == 1 then
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		for i=0,2 do
-			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), p)
+			local cardId = helper.GetWeightedLootCardId()
+			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 		end
 	else
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
