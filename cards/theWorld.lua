@@ -1,3 +1,4 @@
+
 -- Freezes the room for 10 seconds
 local Name = "XXI. The World"
 local Tag = "theWorld"
