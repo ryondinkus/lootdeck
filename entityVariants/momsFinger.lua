@@ -1,5 +1,5 @@
 local Name = "Mom's Finger"
-local Tag = "lostBomb"
+local Tag = "momsFinger"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_POST_EFFECT_UPDATE(_, e)

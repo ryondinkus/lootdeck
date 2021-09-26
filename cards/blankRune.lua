@@ -22,8 +22,9 @@ local function MC_USE_CARD(_, c, p)
         elseif effect == 1 then
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             for j=1,2 do
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
-            end
+				local cardId = helper.GetWeightedLootCardId()
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+			end
         elseif effect == 2 then
 			helper.TakeSelfDamage(p, 2)
 			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
@@ -35,7 +36,8 @@ local function MC_USE_CARD(_, c, p)
         elseif effect == 4 then
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             for j=1,5 do
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+				local cardId = helper.GetWeightedLootCardId()
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
             end
         elseif effect == 5 then
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
