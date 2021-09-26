@@ -335,4 +335,85 @@ function H.RemoveHitFamiliars(id, hitTag)
     end
 end
 
+function H.FeckDechoEdmundMcmillen(player, pickup)
+    return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2)))
+        and not (pickup.Variant == 10 and (pickup.SubType == 1 or 2 or 5 or 9) and player:CanPickRedHearts())
+        and not (pickup.Variant == 10 and (pickup.SubType == 3 or 8 or 10) and player:CanPickSoulHearts())
+		and not (pickup.Variant == 10 and pickup.SubType == 6 and player:CanPickBlackHearts())
+		and not (pickup.Variant == 10 and pickup.SubType == 7 and player:CanPickGoldenHearts())
+		and not (pickup.Variant == 10 and pickup.SubType == 11 and player:CanPickBoneHearts())
+		and not (pickup.Variant == 10 and pickup.SubType == 12 and player:CanPickRottenHearts())
+end
+
+function H.CanBuyPickup(player, pickup)
+    print(H.FeckDechoEdmundMcmillen(player, pickup))
+	if pickup.Price > -6 and pickup.Price ~= 0 and not player:IsHoldingItem() then
+        if (pickup.Price == -1 and player:GetMaxHearts() >= 2)
+        or (pickup.Price == -2 and player:GetMaxHearts() >= 4)
+        or (pickup.Price == -3 and player:GetSoulHearts() >= 6)
+        or (pickup.Price == -4 and player:GetMaxHearts() >= 2 and player:GetSoulHearts() >= 4)    -- this devil deal is affordable--and player:GetDamageCooldown() <= 0)
+		then
+            return true
+        elseif pickup.Price > 0 and player:GetNumCoins() >= pickup.Price    -- this shop item is affordable
+        and H.FeckDechoEdmundMcmillen(player, pickup)
+		then
+            return true
+        end
+    end
+	return false
+end
+
+function H.CalculateRefund(price)
+	if price == -1 then
+		return {
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_PILL,
+			Isaac.AddPillEffectToPool(PillEffect.PILLEFFECT_HEALTH_UP),
+			1
+		}
+	end
+	if price == -2 then
+		return {
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_PILL,
+			Isaac.AddPillEffectToPool(PillEffect.PILLEFFECT_HEALTH_UP),
+			2
+		}
+	end
+	if price == -3 then
+		return {
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_HEART,
+			HeartSubType.HEART_SOUL,
+			3
+		}
+	end
+	if price == -4 then
+		return {
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_PILL,
+			Isaac.AddPillEffectToPool(PillEffect.PILLEFFECT_HEALTH_UP),
+			1,
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_HEART,
+			HeartSubType.HEART_SOUL,
+			2
+		}
+	end
+	if price == -5 then
+		return {
+			EntityType.ENTITY_PICKUP,
+			PickupVariant.PICKUP_HEART,
+			HeartSubType.HEART_BLENDED,
+			1
+		}
+	end
+	return {
+		EntityType.ENTITY_PICKUP,
+		PickupVariant.PICKUP_COIN,
+		CoinSubType.COIN_PENNY,
+		price
+	}
+end
+
 return H
