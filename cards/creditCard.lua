@@ -19,9 +19,9 @@ end
 local function MC_PRE_PLAYER_COLLISION(_, p, e)
     local data = p:GetData()
     if data.credit and e.Type == EntityType.ENTITY_PICKUP then
-        pickup = e:ToPickup()
+        local pickup = e:ToPickup()
         if helper.CanBuyPickup(p, pickup) then
-			famData = data.familiar:GetData()
+			local famData = data.familiar:GetData()
 			famData.toSpawn = helper.CalculateRefund(pickup.Price)
 			famData.state = "STATE_SPAWN"
             data.credit = nil
