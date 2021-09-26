@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 -- Gives a chance for killing an enemy to drop a tarotcard
 local Name = "Bloody Penny"
 local Tag = "bloodyPenny"
@@ -15,14 +17,15 @@ local function MC_POST_ENTITY_KILL(_, e)
         local p = Isaac.GetPlayer(x)
         effectNum = effectNum + p:GetCollectibleNum(Id)
     end
-    local effect = rng:RandomInt(10)
+    local effect = rng:RandomInt(20)
 
     local threshold = 0
     if effectNum > 0 then threshold = 1 end
     threshold = threshold + (effectNum - 1)
     if threshold >= 5 then threshold = 4 end
     if effect <= threshold then
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, 0, (e.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+        local cardId = helper.GetWeightedLootCardId()
+        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
     end
 end
 
