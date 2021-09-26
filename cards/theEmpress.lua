@@ -6,7 +6,6 @@ local Tag = "theEmpress"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Costume?
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_20_20)
