@@ -35,4 +35,8 @@
       description="Prevent damage?"
       gfx="guppyshairball.png"
   />
+  <passive name="Pink Eye"
+      description="Poisonous ooze"
+      gfx="pinkeye.png"
+  />
 </items>
