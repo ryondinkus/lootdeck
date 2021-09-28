@@ -17,15 +17,20 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
         if effect <= threshold then
             local target = source
             if source.Type == EntityType.ENTITY_PROJECTILE then
-                local target = source.Entity:GetLastParent()
+                target = source.Entity.SpawnerEntity
             end
-            local targetDir = (p.Position - target.Position):Normalized()
-            local tear = p:FireTear(p.Position, targetDir * -5, false, true, false, p, 4)
+
+            if target == nil then
+                return
+            end
+
+            local targetDir = (target.Position - p.Position):Normalized() * 5
+            local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.EYE_BLOOD, 0, p.Position, targetDir, nil):ToTear()
+            tear.CollisionDamage = tear.CollisionDamage * 2
+            tear.Size = tear.Size * 2
+            tear.Scale = tear.Scale * 2
             local poisonFlags = helper.NewTearflag(4) | helper.NewTearflag(62) | helper.NewTearflag(33)
             tear:GetData().arc = true
-            local tearColor = Color(0,1,0,1,0,0,0)
-            tearColor:SetColorize(0,1,0,1)
-            tear:GetSprite().Color = tearColor
             tear:AddTearFlags(poisonFlags)
             tear.FallingSpeed = -20
         end
