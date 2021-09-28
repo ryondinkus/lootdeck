@@ -2,7 +2,7 @@ local helper = include("helper_functions")
 local items = include("items/registry")
 
 -- Gives the Cancer item
-local Name = "Cancer"
+local Name = "Cancer!"
 local Tag = "cancer"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1

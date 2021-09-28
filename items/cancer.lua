@@ -1,5 +1,5 @@
 -- Gives massive firerate increase on room entry, quickly decreases over time
-local Name = "Cancer"
+local Name = "Cancer!"
 local Tag = "cancer"
 local Id = Isaac.GetItemIdByName(Name)
 
@@ -32,8 +32,6 @@ local function MC_EVALUATE_CACHE(_, p, f)
         if data.cancer then
             local newDelay = p.MaxFireDelay - 10 + (data.cancer/(p.MaxFireDelay))
             if newDelay < data.originalFireDelay then
-                -- print(p.MaxFireDelay)
-                -- print(data.originalFireDelay)
                 p.MaxFireDelay = newDelay
             else
                 data.cancer = nil
