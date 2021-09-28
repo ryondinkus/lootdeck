@@ -35,4 +35,8 @@
       description="Prevent damage?"
       gfx="guppyshairball.png"
   />
+  <passive name="Cancer"
+      description="The waterworks"
+      gfx="cancer.png"
+  />
 </items>
