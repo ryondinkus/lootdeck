@@ -1,3 +1,4 @@
+
 -- Freezes the room for 10 seconds
 local Name = "XXI. The World"
 local Tag = "theWorld"
@@ -9,11 +10,13 @@ local function MC_USE_CARD(_, c, p)
     lootdeck.f.world = 300
     lootdeck.f.savedTime = game.TimeCounter
     game:AddPixelation(15)
+    lootdeck.mus:Disable()
     lootdeck.sfx:Play(SoundEffect.SOUND_DOGMA_BRIMSTONE_SHOOT, 1, 0)
 end
 
 local function MC_POST_UPDATE()
     local sfx = lootdeck.sfx
+    local mus = lootdeck.mus
     if lootdeck.f.world then
         if lootdeck.f.world % 30 == 0 then
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
@@ -28,7 +31,7 @@ local function MC_POST_UPDATE()
                 end
             end
         end
-        if lootdeck.f.world > 1 then
+        if lootdeck.f.world >= 1 then
             Game().TimeCounter = lootdeck.f.savedTime
             lootdeck.f.world = lootdeck.f.world - 1
         end
@@ -41,7 +44,10 @@ local function MC_POST_UPDATE()
                     end
                 end
             end
+            mus:Enable()
             sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
+        end
+        if lootdeck.f.world <= 0 then
             lootdeck.f.world = nil
         end
     end
@@ -49,20 +55,19 @@ end
 
 local function MC_POST_PROJECTILE_UPDATE(_, p)
     local data = p:GetData()
-    local f = lootdeck.f
-    if f.world then
-        if f.world >= 300 then
+    if lootdeck.f.world then
+        if lootdeck.f.world >= 300 then
             data.Velocity = p.Velocity
             data.FallingSpeed = p.FallingSpeed
             data.FallingAccel = p.FallingAccel
             data.frozen = true
         end
-        if f.world > 1 then
+        if lootdeck.f.world > 1 then
             p.Velocity = Vector(0,0)
             p.FallingSpeed = 0
             p.FallingAccel = -0.1
         end
-        if f.world == 1 and data.frozen then
+        if lootdeck.f.world == 1 and data.frozen then
             p.Velocity = data.Velocity
             p.FallingSpeed = data.FallingSpeed
             p.FallingAccel = data.FallingAccel
@@ -73,8 +78,8 @@ end
 
 local function MC_NPC_UPDATE(_, entity)
     local f = lootdeck.f
-    if f.world then
-        if f.world > 0 and entity.FrameCount == 1 then
+    if lootdeck.f.world then
+        if lootdeck.f.world > 0 and entity.FrameCount == 1 then
             if not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
                 entity:AddEntityFlags(EntityFlag.FLAG_FREEZE)
             end
@@ -85,6 +90,7 @@ end
 local function MC_POST_NEW_ROOM()
     if lootdeck.f.world then
         lootdeck.f.world = nil
+        lootdeck.mus:Enable()
         lootdeck.sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
     end
 end

@@ -375,7 +375,7 @@
 				pickup="904"
 		/>
 	<card name="Holy Card"
-				description="A second chance"
+				description="Holy shields"
 				hud="Holy Card"
 				type="special"
 				mimiccharge="12"
@@ -389,7 +389,7 @@
 				pickup="904"
 		/>
 	<card name="A Sack"
-				description="Bundle of cash"
+				description="Bundle of goodies"
 				hud="A Sack"
 				type="special"
 				mimiccharge="4"
@@ -417,7 +417,7 @@
 				pickup="904"
 		/>
 	<card name="Pink Eye"
-				description="Contact damage"
+				description="Poisonous ooze"
 				hud="Pink Eye"
 				type="special"
 				mimiccharge="12"
@@ -425,7 +425,7 @@
 		/>
 	<card name="Cancer"
 				description="The waterworks"
-				hud="Cancer"
+				hud="Cancer!"
 				type="special"
 				mimiccharge="12"
 				pickup="904"

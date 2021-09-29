@@ -6,6 +6,7 @@ local entityVariants = include("entityVariants/registry")
 
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
+lootdeck.mus = MusicManager()
 lootdeck.level = 0
 lootdeck.room = 0
 lootdeck.f = {

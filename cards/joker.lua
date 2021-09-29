@@ -1,7 +1,7 @@
 local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
--- Explodes a random enemy or (if there are no enemies in the room) explodes the player
+-- Spawns a Devil Hand that "steals" any item and brings it next to the player
 local Name = "Joker"
 local Tag = "joker"
 local Id = Isaac.GetCardIdByName(Name)
