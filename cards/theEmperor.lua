@@ -6,7 +6,6 @@ local Tag = "theEmperor"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: audio visual?
 local function MC_USE_CARD(_, c, p)
 	local illegalParents = {
 		EntityType.ENTITY_GEMINI, -- gemini's umbilical cord

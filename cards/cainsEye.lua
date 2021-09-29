@@ -7,7 +7,6 @@ local Tag = "cainsEye"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Stacking support adds multiple mapping effects
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.cainsEye.Id, SoundEffect.SOUND_VAMP_GULP)
 end
