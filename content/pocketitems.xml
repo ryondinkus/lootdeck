@@ -425,7 +425,7 @@
 		/>
 	<card name="Cancer"
 				description="The waterworks"
-				hud="Cancer"
+				hud="Cancer!"
 				type="special"
 				mimiccharge="12"
 				pickup="904"

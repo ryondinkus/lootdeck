@@ -8,5 +8,6 @@ return {
     purpleHeart = include("items/purpleHeart"),
     goldenHorseshoe = include("items/goldenHorseshoe"),
     guppysHairball = include("items/guppysHairball"),
+    cancer = include("items/cancer"),
     pinkEye = include("items/pinkEye")
 }
