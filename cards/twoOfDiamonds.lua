@@ -1,6 +1,6 @@
 local entityVariants = include("entityVariants/registry")
 
--- Fires two tears at once with a demon costume and red tears for the room
+-- Grants Steam Sale effect for the floor + little card familiar
 local Name = "Two of Diamonds"
 local Tag = "twoOfDiamonds"
 local Id = Isaac.GetCardIdByName(Name)
