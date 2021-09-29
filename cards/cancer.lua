@@ -9,6 +9,7 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.cancer.Id, SoundEffect.SOUND_VAMP_GULP)
+    items.cancer.helpers.Initialize(p)
 end
 
 return {

@@ -416,4 +416,8 @@ function H.CalculateRefund(price)
 	}
 end
 
+function H.AreEnemiesInRoom(room)
+    return room:GetAliveEnemiesCount() ~= 0
+end
+
 return H
