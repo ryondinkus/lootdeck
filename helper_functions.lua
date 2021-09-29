@@ -420,4 +420,13 @@ function H.AreEnemiesInRoom(room)
     return room:GetAliveEnemiesCount() ~= 0
 end
 
+function H.HasActiveItem(p)
+    for i=0,3 do
+        if p:GetActiveItem(i) ~= 0 then
+            return true
+        end
+    end
+    return false
+end
+
 return H

@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 -- A 1 in 3 chance of recharging your active item, +1 firerate, or -1 firerate
 local Name = "Pills! Purple"
 local Tag = "purplePill"
@@ -6,10 +8,18 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
-	local effect = 0-- rng:RandomInt(3)
+	local effect = 0--lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
 	if effect == 0 then
-		p:FullCharge()
+        for i=0,3 do
+            if p:GetActiveItem(i) ~= 0 then
+                if p:NeedsCharge(i) then
+                    p:FullCharge(i)
+                    return
+                end
+            end
+        end
+        helper.FuckYou(p)
 	else
         local change = 1
 		if effect == 1 then
