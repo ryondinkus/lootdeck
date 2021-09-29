@@ -7,7 +7,6 @@ local Tag = "counterfeitPenny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Stacking support? extra pennies
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.counterfeitPenny.Id, SoundEffect.SOUND_VAMP_GULP)
 end

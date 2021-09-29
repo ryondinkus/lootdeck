@@ -6,9 +6,6 @@ local Tag = "theChariot"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Add compatibility for Tainted Forgotten
--- T. Forgor gets the extra heart but no damage, because the damage scales based on pile-o-bones
--- Needs twin() shenanigans to fix
 local function MC_USE_CARD(_, c, p)
     helper.AddTemporaryHealth(p, 2)
     local data = p:GetData()

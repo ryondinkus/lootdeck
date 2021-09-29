@@ -4,7 +4,6 @@ local Tag = "theHermit"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: visual audio cues
 local function MC_USE_CARD(_, c, p)
     local game = Game()
     local itemPool = game:GetItemPool()

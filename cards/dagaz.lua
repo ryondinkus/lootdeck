@@ -4,7 +4,6 @@ local Tag = "dagaz"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Audio/visual indicators
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng

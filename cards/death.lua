@@ -49,8 +49,6 @@ local function MC_POST_NEW_ROOM()
     end
 end
 
--- TODO: add visual/audio indicators
--- keeper should revive with one coin heart and the flies of 3 bone hearts
 local function MC_POST_PLAYER_UPDATE(_, p)
     helper.RevivePlayerPostPlayerUpdate(p, ReviveTag, Tag)
 end

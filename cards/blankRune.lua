@@ -6,7 +6,6 @@ local Tag = "blankRune"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Visual and audio indicator for results, card spawns based on lootdeck weights
 local function MC_USE_CARD(_, c, p)
 	local game = Game()
 	local sfx = lootdeck.sfx

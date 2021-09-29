@@ -4,7 +4,7 @@ local Tag = "justice"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: audio/visual effects, stagger a bit
+-- TODO: completely rework the bitch
 local function MC_USE_CARD(_, c, p)
     local rng = lootdeck.rng
     for i, entity in ipairs(Isaac.GetRoomEntities()) do

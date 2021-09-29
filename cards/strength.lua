@@ -1,6 +1,5 @@
 local helper = include('helper_functions')
 
--- TODO add description
 local Name = "XI. Strength"
 local Tag = "strength"
 local Id = Isaac.GetCardIdByName(Name)
@@ -17,7 +16,6 @@ local function MC_USE_CARD(_, c, p)
     end
     for i=1,data.strength or 0 do
         local color = Color(1,1,1,1,data.strength/10,0,0)
-        --color:SetColorize(0.1,0,0,1)
         sprite.Color = color
     end
     p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
