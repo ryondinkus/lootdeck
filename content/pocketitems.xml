@@ -417,7 +417,7 @@
 				pickup="904"
 		/>
 	<card name="Pink Eye"
-				description="Contact damage"
+				description="Poisonous ooze"
 				hud="Pink Eye"
 				type="special"
 				mimiccharge="12"
