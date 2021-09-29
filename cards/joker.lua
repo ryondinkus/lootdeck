@@ -9,7 +9,6 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local rng = lootdeck.rng
-	local sfx = lootdeck.sfx
 	local entities = Isaac.GetRoomEntities()
 	local itemsList = {}
 	for _, entity in ipairs(entities) do

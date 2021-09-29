@@ -53,6 +53,7 @@ lootcards = {
     chargedPenny = include("cards/chargedPenny"),
     joker = include("cards/joker"),
     aSack = include("cards/aSack"),
+    purplePill = include("cards/purplePill"),
 	  twoOfDiamonds = include("cards/twoOfDiamonds"),
 	  jera = include("cards/jera"),
     creditCard = include("cards/creditCard"),
