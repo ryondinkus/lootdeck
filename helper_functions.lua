@@ -335,13 +335,13 @@ function H.RemoveHitFamiliars(id, hitTag)
 end
 
 function H.FeckDechoEdmundMcmillen(player, pickup)
-    return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2)))
-        and not (pickup.Variant == 10 and (pickup.SubType == 1 or 2 or 5 or 9) and player:CanPickRedHearts())
-        and not (pickup.Variant == 10 and (pickup.SubType == 3 or 8 or 10) and player:CanPickSoulHearts())
-		and not (pickup.Variant == 10 and pickup.SubType == 6 and player:CanPickBlackHearts())
-		and not (pickup.Variant == 10 and pickup.SubType == 7 and player:CanPickGoldenHearts())
-		and not (pickup.Variant == 10 and pickup.SubType == 11 and player:CanPickBoneHearts())
-		and not (pickup.Variant == 10 and pickup.SubType == 12 and player:CanPickRottenHearts())
+    return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3)))
+    and not (pickup.Variant == 10 and (pickup.SubType == 1 or pickup.SubType == 2 or pickup.SubType == 5 or pickup.SubType == 9) and not player:CanPickRedHearts())
+    and not (pickup.Variant == 10 and (pickup.SubType == 3 or pickup.SubType == 8 or pickup.SubType == 10) and not player:CanPickSoulHearts())
+    and not (pickup.Variant == 10 and pickup.SubType == 6 and not player:CanPickBlackHearts())
+    and not (pickup.Variant == 10 and pickup.SubType == 7 and not player:CanPickGoldenHearts())
+    and not (pickup.Variant == 10 and pickup.SubType == 11 and not player:CanPickBoneHearts())
+    and not (pickup.Variant == 10 and pickup.SubType == 12 and not player:CanPickRottenHearts())
 end
 
 function H.CanBuyPickup(player, pickup)
@@ -353,8 +353,7 @@ function H.CanBuyPickup(player, pickup)
 		then
             return true
         elseif pickup.Price > 0 and player:GetNumCoins() >= pickup.Price    -- this shop item is affordable
-        and H.FeckDechoEdmundMcmillen(player, pickup)
-		then
+        and H.FeckDechoEdmundMcmillen(player, pickup) then
             return true
         end
     end
