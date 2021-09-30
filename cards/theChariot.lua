@@ -1,4 +1,5 @@
 local helper = include("helper_functions")
+local costumes = include("costumes/registry")
 
 -- Gain .50 damage for the room for each heart
 local Name = "VII. The Chariot"
@@ -10,6 +11,7 @@ local function MC_USE_CARD(_, c, p)
     helper.AddTemporaryHealth(p, 2)
     local data = p:GetData()
     if not data.chariot then data.chariot = true end
+    p:AddNullCostume(costumes.chariot)
     p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
     p:EvaluateItems()
 end
@@ -32,7 +34,8 @@ local function MC_POST_NEW_ROOM()
         local p = Isaac.GetPlayer(i)
         local data = p:GetData()
         if data.chariot then
-            data.chariot = false
+            data.chariot = nil
+            p:TryRemoveNullCostume(costumes.chariot)
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
