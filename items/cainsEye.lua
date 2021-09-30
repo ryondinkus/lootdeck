@@ -34,14 +34,6 @@ local function MC_POST_NEW_LEVEL()
 				effects = effects + 1
             end
         end
-        -- TODO move to own file
-        if data.strength then
-            data.strength = nil
-            local color = Color(1,1,1,1,0,0,0)
-            p.Color = color
-            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-            p:EvaluateItems()
-        end
     end
 end
 
