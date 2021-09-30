@@ -27,7 +27,6 @@ local function MC_PRE_PLAYER_COLLISION(_, p, e)
 			familiar.state = "STATE_SPAWN"
             table.remove(data[Tag], 1)
         end
-        print(helper.FeckDechoEdmundMcmillen(p, e:ToPickup()))
     end
 end
 
