@@ -7,24 +7,25 @@ local Tag = "creditCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Add future stacking support
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
-	if not data.credit then
-		data.familiar = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.creditCardBaby.Id, 0, p.Position, Vector.Zero, p)
-	end
-    data.credit = true
+
+    if not data[Tag] then
+        data[Tag] = {}
+    end
+
+    table.insert(data[Tag], Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.creditCardBaby.Id, 0, p.Position, Vector.Zero, p))
 end
 
 local function MC_PRE_PLAYER_COLLISION(_, p, e)
     local data = p:GetData()
-    if data.credit and e.Type == EntityType.ENTITY_PICKUP then
+    if data[Tag] and #data[Tag] > 0 and e.Type == EntityType.ENTITY_PICKUP then
         local pickup = e:ToPickup()
         if helper.CanBuyPickup(p, pickup) then
-			local famData = data.familiar:GetData()
-			famData.toSpawn = helper.CalculateRefund(pickup.Price)
-			famData.state = "STATE_SPAWN"
-            data.credit = nil
+            local familiar = data[Tag][1]:GetData()
+			familiar.toSpawn = helper.CalculateRefund(pickup.Price)
+			familiar.state = "STATE_SPAWN"
+            table.remove(data[Tag], 1)
         end
     end
 end

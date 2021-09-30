@@ -52,7 +52,6 @@ end
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = p:GetData()
     if data[key] == 1 then
-        print("hi")
 		local timerName = string.format("%sTimer", key)
 		local counterName = string.format("%sCounter", key)
 		if not data[timerName] then data[timerName] = 0 end
@@ -346,7 +345,6 @@ function H.FeckDechoEdmundMcmillen(player, pickup)
 end
 
 function H.CanBuyPickup(player, pickup)
-    print(H.FeckDechoEdmundMcmillen(player, pickup))
 	if pickup.Price > -6 and pickup.Price ~= 0 and not player:IsHoldingItem() then
         if (pickup.Price == -1 and player:GetMaxHearts() >= 2)
         or (pickup.Price == -2 and player:GetMaxHearts() >= 4)
