@@ -32,6 +32,20 @@ local function MC_EVALUATE_CACHE(_, p, f)
     end
 end
 
+local function MC_POST_NEW_LEVEL()
+    for x=0,Game():GetNumPlayers() - 1 do
+        local p = Isaac.GetPlayer(x)
+        local data = p:GetData()
+        if data.strength then
+            data.strength = nil
+            local color = Color(1,1,1,1,0,0,0)
+            p.Color = color
+            p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+            p:EvaluateItems()
+        end
+    end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -46,6 +60,10 @@ return {
         {
             ModCallbacks.MC_EVALUATE_CACHE,
             MC_EVALUATE_CACHE
+        },
+        {
+            ModCallbacks.MC_POST_NEW_LEVEL,
+            MC_POST_NEW_LEVEL
         }
     }
 }
