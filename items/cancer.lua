@@ -33,7 +33,8 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
     if not data.roomCleared and not helper.AreEnemiesInRoom(Game():GetRoom()) then
         data.roomCleared = true
     end
-    if (data.finishedCancer or data.finishedCancer == nil) and data.roomCleared and helper.AreEnemiesInRoom(Game():GetRoom()) then
+    if p:HasCollectible(Id) and (data.finishedCancer or data.finishedCancer == nil) and data.roomCleared and helper.AreEnemiesInRoom(Game():GetRoom()) then
+        print("I'm shitting my panties rn lol")
         Initialize(p)
     end
     if data.cancer then
