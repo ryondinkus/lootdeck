@@ -29,7 +29,7 @@ local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
     if f == CacheFlag.CACHE_DAMAGE then
         if data.strength then
-            p.Damage = p.Damage + (0.5 * data.strength)
+            p.Damage = p.Damage + (data.strength)
         end
     end
 end
