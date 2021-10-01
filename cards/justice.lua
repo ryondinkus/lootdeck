@@ -1,12 +1,11 @@
 local entityVariants = include("entityVariants/registry")
 
--- Spawn a coin, bomb, or key for every enemy in the room
+-- Spawn a Justice Haunt that attacks a random enemy and confuses them, steals 4 pickups from them, then dies
 local Name = "VIII. Justice"
 local Tag = "justice"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: completely rework the bitch
 local function MC_USE_CARD(_, c, p)
     Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.justiceHaunt.Id, 0, p.Position, Vector.Zero, p)
 end
