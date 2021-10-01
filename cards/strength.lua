@@ -77,8 +77,8 @@ return {
             MC_EVALUATE_CACHE
         },
         {
-          ModCallbacks.MC_POST_NEW_ROOM,
-          MC_POST_NEW_ROOM
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         },
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
