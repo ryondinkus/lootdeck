@@ -53,8 +53,8 @@ local function MC_POST_NEW_LEVEL()
             data.strength = nil
             local color = Color(1,1,1,1,0,0,0)
             p.Color = color
-			p:TryRemoveNullCostume(costumes.strengthFire)
-			p:TryRemoveNullCostume(costumes.strengthGlow)
+            p:TryRemoveNullCostume(costumes.strengthFire)
+            p:TryRemoveNullCostume(costumes.strengthGlow)
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
@@ -76,10 +76,10 @@ return {
             ModCallbacks.MC_EVALUATE_CACHE,
             MC_EVALUATE_CACHE
         },
-		{
-			ModCallbacks.MC_POST_NEW_ROOM,
-			MC_POST_NEW_ROOM
-		},
+        {
+          ModCallbacks.MC_POST_NEW_ROOM,
+          MC_POST_NEW_ROOM
+        },
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
