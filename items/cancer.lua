@@ -5,13 +5,23 @@ local Name = "Cancer!"
 local Tag = "cancer"
 local Id = Isaac.GetItemIdByName(Name)
 
+local originalFireDelayTag = string.format("%sOriginalFireDelay", Tag)
+local finishedTag = string.format("%sFinished", Tag)
+local roomClearedTag = string.format("%sRoomCleared", Tag)
+local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
+local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
+
 local function Initialize(p)
-    if helper.AreEnemiesInRoom(Game():GetRoom()) then
+    local game = Game()
+    if helper.AreEnemiesInRoom(game:GetRoom()) then
         local data = p:GetData()
-        data.originalFireDelay = p.MaxFireDelay
-        data.cancer = 0
-        data.finishedCancer = false
-        data.roomCleared = nil
+        data[originalFireDelayTag] = p.MaxFireDelay
+        data[Tag] = 0
+        data[finishedTag] = false
+        data[roomClearedTag] = nil
+        if game:IsGreedMode() then
+            data[greedModeWaveTag] = 0
+        end
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
         p:EvaluateItems()
     end
@@ -22,23 +32,61 @@ local function MC_POST_NEW_ROOM()
     for x=0,game:GetNumPlayers()-1 do
         local p = Isaac.GetPlayer(x)
         if p:HasCollectible(Id) then
+            local data = p:GetData()
+            data[Tag] = nil
+            data[finishedTag] = nil
+            data[roomClearedTag] = not helper.AreEnemiesInRoom(game:GetRoom())
+            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
+            p:EvaluateItems()
             Initialize(p)
         end
     end
 end
 
--- TODO check when a wave in greed mode starts
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local data = p:GetData()
-    if not data.roomCleared and not helper.AreEnemiesInRoom(Game():GetRoom()) then
-        data.roomCleared = true
+    local game = Game()
+    if not data[roomClearedTag] and not helper.AreEnemiesInRoom(game:GetRoom()) then
+        data[roomClearedTag] = true
     end
-    if p:HasCollectible(Id) and (data.finishedCancer or data.finishedCancer == nil) and data.roomCleared and helper.AreEnemiesInRoom(Game():GetRoom()) then
-        print("I'm shitting my panties rn lol")
+
+    local isFinished = (data[finishedTag] or data[finishedTag] == nil)
+    local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
+
+    local currentBosses = helper.ListBossesInRoom(p.Position)
+
+    local shouldInitializeBecauseOfBossRush = true
+
+    if isBossRush and (data[bossRushBossesTag] == nil or (data[bossRushBossesTag] and data[bossRushBossesTag] == 0)) and #currentBosses ~= 0 then
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            if bossData[Tag] == true then
+                shouldInitializeBecauseOfBossRush = false
+                break
+            end
+        end
+    else
+        shouldInitializeBecauseOfBossRush = false
+    end
+
+    if p:HasCollectible(Id) and ((not isBossRush and isFinished and (data[roomClearedTag] and helper.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
         Initialize(p)
     end
-    if data.cancer then
-        data.cancer = data.cancer + 1
+
+    if game:IsGreedMode() then
+        data[greedModeWaveTag] = game:GetLevel().GreedModeWave
+    end
+
+    if isBossRush then
+        data[bossRushBossesTag] = #currentBosses
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            bossData[Tag] = true
+        end
+    end
+
+    if data[Tag] then
+        data[Tag] = data[Tag] + 1
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
         p:EvaluateItems()
     end
@@ -47,13 +95,13 @@ end
 local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
     if f == CacheFlag.CACHE_FIREDELAY then
-        if data.cancer then
-            local newDelay = p.MaxFireDelay - 10 + (data.cancer/(p.MaxFireDelay))
-            if newDelay < data.originalFireDelay then
+        if data[Tag] then
+            local newDelay = p.MaxFireDelay - 10 + (data[Tag]/(p.MaxFireDelay))
+            if newDelay < data[originalFireDelayTag] then
                 p.MaxFireDelay = newDelay
             else
-                data.cancer = nil
-                data.finishedCancer = true
+                data[Tag] = nil
+                data[finishedTag] = true
             end
         end
     end

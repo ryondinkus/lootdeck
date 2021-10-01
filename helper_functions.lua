@@ -26,6 +26,19 @@ function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
 	return enemies
 end
 
+function H.ListBossesInRoom(pos)
+	local enemies = H.ListEnemiesInRoom(pos, true)
+    local bosses = {}
+
+    for _, enemy in pairs(enemies) do
+        if enemy:IsBoss() and enemy:IsVulnerableEnemy() then
+            table.insert(bosses, enemy)
+        end
+    end
+
+    return bosses
+end
+
 -- function for finding target enemy, then calculating the angle/position the fire will spawn
 function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag)
 	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag)
