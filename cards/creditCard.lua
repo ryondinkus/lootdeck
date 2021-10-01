@@ -30,18 +30,6 @@ local function MC_PRE_PLAYER_COLLISION(_, p, e)
     end
 end
 
-local function MC_POST_GAME_STARTED() -- cool test code
-    local room = Game():GetRoom()
-    for i=1,12 do
-        local heart = Isaac.Spawn(5,10,i,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil):ToPickup()
-        heart.Price = 5
-        heart.AutoUpdatePrice = true
-    end
-    local battery = Isaac.Spawn(5,90,1,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil):ToPickup()
-    battery.Price = 5
-    battery.AutoUpdatePrice = true
-end
-
 return {
     Name = Name,
     Tag = Tag,
@@ -56,10 +44,6 @@ return {
         {
             ModCallbacks.MC_PRE_PLAYER_COLLISION,
             MC_PRE_PLAYER_COLLISION,
-		},
-        {
-            ModCallbacks.MC_POST_GAME_STARTED,
-            MC_POST_GAME_STARTED
-        }
+		}
     }
 }
