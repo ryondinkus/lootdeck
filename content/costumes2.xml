@@ -38,4 +38,8 @@
 	anm2path="chariot.anm2"
 	type="none"
 	hasSkinAlt="true" />
+<costume
+	anm2path="strength.anm2"
+	type="none"
+	/>
 </costumes>

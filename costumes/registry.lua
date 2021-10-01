@@ -9,5 +9,6 @@ return {
 	hangedMan = CostumePathToId("hangedMan"),
 	mantle = CostumePathToId("mantle"),
 	mantleBroken = CostumePathToId("mantleBroken"),
-    chariot = CostumePathToId("chariot")
+    chariot = CostumePathToId("chariot"),
+    strength = CostumePathToId("strength")
 }
