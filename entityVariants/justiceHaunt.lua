@@ -60,13 +60,14 @@ local function MC_FAMILIAR_UPDATE(_, f)
             end
             data.spawnCountdown = data.spawnCountdown - 1
             if data.spawnCountdown <= 0 then
+                if data.spawnAmount < 1 then
+                    data.state = "STATE_DEAD"
+                    return
+                end
                 local chosenVariant = (rng:RandomInt(4) + 1) * 10
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
                 data.spawnAmount = data.spawnAmount - 1
                 data.spawnCountdown = 30
-                if data.spawnAmount < 0 then
-                    data.state = "STATE_DEAD"
-                end
             end
         end
     end
