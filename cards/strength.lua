@@ -19,7 +19,7 @@ local function MC_USE_CARD(_, c, p)
         local color = Color(1,1,1,1,data.strength/10,0,0)
         sprite.Color = color
     end
-	p:AddNullCostume(costumes.strength)
+	p:AddNullCostume(costumes.strengthFire)
     p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
     p:EvaluateItems()
     lootdeck.sfx:Play(SoundEffect.SOUND_LAZARUS_FLIP_ALIVE, 1, 0)
@@ -34,6 +34,17 @@ local function MC_EVALUATE_CACHE(_, p, f)
     end
 end
 
+local function MC_POST_NEW_ROOM()
+	for x=0,Game():GetNumPlayers() - 1 do
+        local p = Isaac.GetPlayer(x)
+        local data = p:GetData()
+        if data.strength then
+			p:TryRemoveNullCostume(costumes.strengthFire)
+			p:AddNullCostume(costumes.strengthGlow)
+        end
+    end
+end
+
 local function MC_POST_NEW_LEVEL()
     for x=0,Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
@@ -42,7 +53,8 @@ local function MC_POST_NEW_LEVEL()
             data.strength = nil
             local color = Color(1,1,1,1,0,0,0)
             p.Color = color
-			p:TryRemoveNullCostume(costumes.strength)
+			p:TryRemoveNullCostume(costumes.strengthFire)
+			p:TryRemoveNullCostume(costumes.strengthGlow)
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
@@ -64,6 +76,10 @@ return {
             ModCallbacks.MC_EVALUATE_CACHE,
             MC_EVALUATE_CACHE
         },
+		{
+			ModCallbacks.MC_POST_NEW_ROOM,
+			MC_POST_NEW_ROOM
+		},
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL

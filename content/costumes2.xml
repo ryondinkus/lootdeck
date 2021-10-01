@@ -39,7 +39,11 @@
 	type="none"
 	hasSkinAlt="true" />
 <costume
-	anm2path="strength.anm2"
+	anm2path="strength fire.anm2"
+	type="none"
+	/>
+<costume
+	anm2path="strength glow.anm2"
 	type="none"
 	/>
 </costumes>
