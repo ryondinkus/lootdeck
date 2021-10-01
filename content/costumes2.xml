@@ -34,4 +34,8 @@
 <costume
 	anm2path="mantleBroken.anm2"
 	type="none" />
+<costume
+	anm2path="chariot.anm2"
+	type="none"
+	hasSkinAlt="true" />
 </costumes>
