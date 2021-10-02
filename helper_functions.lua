@@ -31,8 +31,7 @@ function H.ListBossesInRoom(pos, ignoreMiniBosses)
     local bosses = {}
 
     for _, enemy in pairs(enemies) do
-        -- Mask of infamy (97) and heart of infamy (98) hard-coded
-        if enemy:IsBoss() and (enemy.Type == 97 or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == 97))) then
+        if enemy:IsBoss() and (enemy.Type == EntityType.ENTITY_THE_HAUNT or enemy.Type == EntityType.ENTITY_MASK_OF_INFAMY or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == EntityType.ENTITY_MASK_OF_INFAMY or enemy.SpawnerType == EntityType.ENTITY_THE_HAUNT))) then
             table.insert(bosses, enemy)
         end
     end
