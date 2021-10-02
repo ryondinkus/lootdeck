@@ -4,10 +4,7 @@ include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 
-lootdeck.rng = RNG()
-lootdeck.sfx = SFXManager()
-lootdeck.mus = MusicManager()
-lootdeck.f = {
+local defaultStartupValues = {
     rerollEnemy = 0,
     spawnExtraReward = 0,
     visitedItemRooms = {},
@@ -24,6 +21,11 @@ lootdeck.f = {
     map = false,
     lostSoul = false
 }
+
+lootdeck.rng = RNG()
+lootdeck.sfx = SFXManager()
+lootdeck.mus = MusicManager()
+lootdeck.f = defaultStartupValues
 
 local helper = include("helper_functions")
 
@@ -56,6 +58,7 @@ end
 -- set rng seed
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
+    lootdeck.f = defaultStartupValues
 end)
 
 -- Temporary health callback
