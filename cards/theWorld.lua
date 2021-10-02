@@ -1,3 +1,4 @@
+local helper = include("helper_functions")
 
 -- Freezes the room for 10 seconds
 local Name = "XXI. The World"
@@ -22,28 +23,18 @@ local function MC_POST_UPDATE()
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
         end
         if lootdeck.f.world == 300 then
-            local entities = Isaac.GetRoomEntities()
-            for i, entity in pairs(entities) do
-                if entity:IsEnemy() then
-                    if not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
-                        entity:AddEntityFlags(EntityFlag.FLAG_FREEZE)
-                    end
-                end
-            end
+            helper.ForEachEntityInRoom(function(entity) entity:AddEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
+                return entity:IsEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
+            end)
         end
         if lootdeck.f.world >= 1 then
             Game().TimeCounter = lootdeck.f.savedTime
             lootdeck.f.world = lootdeck.f.world - 1
         end
         if lootdeck.f.world == 1 then
-            local entities = Isaac.GetRoomEntities()
-            for i, entity in pairs(entities) do
-                if entity:IsEnemy() then
-                    if entity:HasEntityFlags(EntityFlag.FLAG_FREEZE) then
-                        entity:ClearEntityFlags(EntityFlag.FLAG_FREEZE)
-                    end
-                end
-            end
+            helper.ForEachEntityInRoom(function(entity) entity:ClearEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
+                return entity:IsEnemy() and entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
+            end)
             mus:Enable()
             sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
         end

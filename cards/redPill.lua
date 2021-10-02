@@ -30,15 +30,13 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_NEW_ROOM()
-	for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+	helper.ForEachPlayer(function(p, data)
         if data.redDamage then
             data.redDamage = nil
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
-	end
+    end)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)

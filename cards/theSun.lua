@@ -17,14 +17,7 @@ local function MC_USE_CARD(_, c, p)
             p:SetCard(i, 0)
         end
     end
-    local entities = Isaac.GetRoomEntities()
-    for i, entity in pairs(entities) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_TAROTCARD
-        and entity.SubType == Id then
-            entity:Remove()
-        end
-    end
+    helper.ForEachEntityInRoom(function(entity) entity:Remove() end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
     if helper.CheckFinalFloorBossKilled() then
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
     end
@@ -32,16 +25,9 @@ local function MC_USE_CARD(_, c, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
 end
 
-local function MC_POST_NEW_ROOM()
+local function MC_POST_UPDATE()
     if lootdeck.f.removeSun then
-        local entities = Isaac.GetRoomEntities()
-        for i, entity in pairs(entities) do
-            if entity.Type == EntityType.ENTITY_PICKUP
-            and entity.Variant == PickupVariant.PICKUP_TAROTCARD
-            and entity.SubType == Id then
-                entity:Remove()
-            end
-        end
+        helper.ForEachEntityInRoom(function(entity) entity:Remove() end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
     end
 end
 
@@ -61,9 +47,9 @@ end
 
 local function MC_POST_NEW_LEVEL()
     if lootdeck.f.sunUsed then
-        for i=0,Game():GetNumPlayers()-1 do
-            Isaac.GetPlayer(i):TryRemoveNullCostume(costumes.sun)
-        end
+        helper.ForEachPlayer(function(p)
+            p:TryRemoveNullCostume(costumes.sun)
+        end)
     end
     lootdeck.f.sunUsed = false
 	lootdeck.f.floorBossCleared = 0
@@ -81,8 +67,8 @@ return {
             Id
         },
         {
-            ModCallbacks.MC_POST_NEW_ROOM,
-            MC_POST_NEW_ROOM
+            ModCallbacks.MC_POST_UPDATE,
+            MC_POST_UPDATE
         },
         {
             ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,

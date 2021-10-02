@@ -26,7 +26,6 @@ lootdeck.f = {
 
 local helper = include("helper_functions")
 
-local game = Game()
 local rng = lootdeck.rng
 
 for _, card in pairs(lootcards) do
@@ -60,9 +59,7 @@ end)
 
 -- Temporary health callback
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-    for i=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.redHp then
             if (p:GetSubPlayer() == nil) then
                 helper.RemoveHeartsOnNewRoomEnter(p, data.redHp)
@@ -75,7 +72,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             helper.RemoveHeartsOnNewRoomEnter(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
             data.soulHp = nil
         end
-    end
+    end)
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)

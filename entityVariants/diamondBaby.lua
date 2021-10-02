@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 local Name = "Diamond Baby"
 local Tag = "diamondBaby"
 local Id = Isaac.GetEntityVariantByName(Name)
@@ -12,14 +14,11 @@ local function MC_FAMILIAR_UPDATE(_, f)
 end
 
 local function MC_POST_NEW_LEVEL()
-	for _,entity in pairs(Isaac.GetRoomEntities()) do
-		if entity.Type == EntityType.ENTITY_FAMILIAR
-		and entity.Variant == Id then
-			local f = entity:ToFamiliar()
-			f:RemoveFromFollowers()
-			f:Remove()
-		end
-	end
+    helper.ForEachEntityInRoom(function(entity)
+        local f = entity:ToFamiliar()
+        f:RemoveFromFollowers()
+        f:Remove()
+    end, EntityType.ENTITY_FAMILIAR, Id, nil)
 end
 
 return {

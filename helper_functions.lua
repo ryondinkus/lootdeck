@@ -488,9 +488,45 @@ function H.ForEachPlayer(callback, collectibleId)
     for x = 0, Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
-            callback(Isaac.GetPlayer(x), collectibleId and p:HasCollectible(collectibleId))
+            local p = Isaac.GetPlayer(x)
+            callback(p, p:GetData())
         end
     end
+end
+
+function H.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)
+    local filters = {
+        Type = entityType,
+        Variant = entityVariant,
+        SubType = entitySubType
+    }
+
+    local initialEntities = Isaac.GetRoomEntities()
+
+    for _, entity in ipairs(initialEntities) do
+        local shouldReturn = true
+        for entityKey, filter in pairs(filters) do
+            if not shouldReturn then
+                break
+            end
+
+            if filter ~= nil then
+                if type(filter) == "function" then
+                    shouldReturn = filter(entity[entityKey])
+                else
+                    shouldReturn = entity[entityKey] == filter
+                end
+            end
+        end
+
+        if shouldReturn and extraFilters ~= nil then
+            shouldReturn = extraFilters(entity)
+        end
+
+        if shouldReturn then
+            callback(entity)
+        end
+	end
 end
 
 return H

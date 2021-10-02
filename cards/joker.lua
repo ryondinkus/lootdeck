@@ -9,16 +9,16 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local rng = lootdeck.rng
-	local entities = Isaac.GetRoomEntities()
 	local itemsList = {}
-	for _, entity in ipairs(entities) do
-		if entity.Type == EntityType.ENTITY_PICKUP
-		and entity.Variant == PickupVariant.PICKUP_COLLECTIBLE
-		and entity.SubType ~= 0
-		and not entity:GetData().selected then
-			table.insert(itemsList, entity)
-		end
-	end
+
+	helper.ForEachEntityInRoom(function(entity)
+		table.insert(itemsList, entity)
+	end,
+	EntityType.ENTITY_PICKUP,
+	PickupVariant.PICKUP_COLLECTIBLE,
+	function(entitySubType) return entitySubType ~= 0 end,
+	function(entity) return not entity:GetData().selected end)
+
 	if #itemsList > 0 then
 		local selectedItem = itemsList[rng:RandomInt(#itemsList)+1]:ToPickup()
 		selectedItem:GetData().selected = true

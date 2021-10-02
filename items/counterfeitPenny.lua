@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 -- Gives an extra penny for each penny picked up
 local Name = "Counterfeit Penny"
 local Tag = "counterfeitPenny"
@@ -8,16 +10,13 @@ local function MC_POST_GAME_STARTED()
 end
 
 local function MC_POST_UPDATE()
-    local game = Game()
     local f = lootdeck.f
-    for x=0,game:GetNumPlayers() do
-        if Isaac.GetPlayer(x):HasCollectible(Id) then
-            if Isaac.GetPlayer(0):GetNumCoins() > (f.pennyCount or 0) then
-                Isaac.GetPlayer(0):AddCoins(1)
-                f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
-            end
+    helper.ForEachPlayer(function(p)
+        if p:GetNumCoins() > (f.pennyCount or 0) then
+            p:AddCoins(1)
+            f.pennyCount = p:GetNumCoins()
         end
-    end
+    end, Id)
 end
 
 return {

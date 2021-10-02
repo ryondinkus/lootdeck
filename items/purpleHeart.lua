@@ -8,9 +8,8 @@ local Id = Isaac.GetItemIdByName(Name)
 local function MC_POST_NEW_ROOM()
     local game = Game()
     local room = game:GetRoom()
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
-        if p:HasCollectible(Id) and not room:IsClear() then
+    helper.ForEachPlayer(function(p)
+        if not room:IsClear() then
             for y=1,p:GetCollectibleNum(Id) do
                 lootdeck.f.rerollEnemy = lootdeck.f.rerollEnemy + 1
                 if room:GetType() ~= RoomType.ROOM_BOSS then
@@ -18,7 +17,7 @@ local function MC_POST_NEW_ROOM()
                 end
             end
         end
-    end
+    end, Id)
 end
 
 local function MC_POST_UPDATE(_, e)

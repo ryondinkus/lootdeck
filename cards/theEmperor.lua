@@ -13,15 +13,13 @@ local function MC_USE_CARD(_, c, p)
 		EntityType.ENTITY_FORSAKEN, -- the forsaken's minions
 		EntityType.ENTITY_HERETIC, -- the forsaken's minions
 	}
-    for i, v in ipairs(Isaac.GetRoomEntities()) do
-		local entity = v:ToNPC()
-		if entity then
-			local parent = entity.SpawnerType or 0
-	        if not entity:IsBoss() and entity:IsVulnerableEnemy() and not helper.TableContains(illegalParents, parent) then
-				entity:AddCharmed(EntityRef(p), -1)
-	        end
-		end
-    end
+	helper.ForEachEntityInRoom(function(entity)
+		entity:AddCharmed(EntityRef(p), -1)
+	end, nil, nil, nil,
+	function(entity)
+		local npc = entity:ToNPC()
+		return npc and not npc:IsBoss() and npc:IsVulnerableEnemy() and not helper.TableContains(illegalParents, npc.SpawnerType or 0)
+	end)
     lootdeck.sfx:Play(SoundEffect.SOUND_HAPPY_RAINBOW, 1, 0)
 end
 
