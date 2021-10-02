@@ -11,12 +11,12 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
+function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
 	local key = 1;
 	for i, entity in pairs(entities) do
-		if entity:IsVulnerableEnemy() and (ignoreChosen or not entity:GetData().chosen) then
+		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData().chosen) then
             if not tag or entity:GetData()[tag] then
                 enemies[key] = entities[i]
                 key = key + 1;
@@ -26,12 +26,15 @@ function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
 	return enemies
 end
 
-function H.ListBossesInRoom(pos)
-	local enemies = H.ListEnemiesInRoom(pos, true)
+function H.ListBossesInRoom(pos, ignoreMiniBosses)
+	local enemies = H.ListEnemiesInRoom(pos, true, nil, true)
     local bosses = {}
 
     for _, enemy in pairs(enemies) do
-        if enemy:IsBoss() and enemy:IsVulnerableEnemy() then
+        print(string.format("parent type (%s): %s", enemy.Type, enemy:GetLastParent().Type))
+        print(string.format("spawner type (%s): %s", enemy.Type, enemy.SpawnerType))
+        -- Mask of infamy (97) and heart of infamy (98) hard-coded
+        if enemy:IsBoss() and (enemy.Type == 97 or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == 97))) then
             table.insert(bosses, enemy)
         end
     end

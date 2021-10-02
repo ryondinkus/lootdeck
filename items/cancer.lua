@@ -55,7 +55,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
     local isFinished = (data[finishedTag] or data[finishedTag] == nil)
     local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
 
-    local currentBosses = helper.ListBossesInRoom(p.Position)
+    local currentBosses = helper.ListBossesInRoom(p.Position, true)
 
     local shouldInitializeBecauseOfBossRush = true
 
