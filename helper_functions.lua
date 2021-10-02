@@ -426,4 +426,26 @@ function H.HasActiveItem(p)
     return false
 end
 
+function H.CheckForSecretRooms(room)
+    for i=0,7 do
+        local door = room:GetDoor(i)
+        if door ~= nil then
+            if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+                return door.Position
+            end
+        end
+    end
+end
+
+function H.CheckForTintedRocks(room)
+    for i=0,room:GetGridSize() do
+        local rock = room:GetGridEntity(i)
+        if rock then
+            if rock.CollisionClass ~= 0 and (rock:GetType() == GridEntityType.GRID_ROCKT or rock:GetType() == GridEntityType.GRID_ROCK_SS) then
+                return room:GetGridPosition(i)
+            end
+        end
+    end
+end
+
 return H
