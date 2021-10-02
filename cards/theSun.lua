@@ -25,7 +25,7 @@ local function MC_USE_CARD(_, c, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
 end
 
-local function MC_POST_NEW_ROOM()
+local function MC_POST_UPDATE()
     if lootdeck.f.removeSun then
         helper.ForEachEntityInRoom(function(entity) entity:Remove() end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
     end
@@ -67,8 +67,8 @@ return {
             Id
         },
         {
-            ModCallbacks.MC_POST_NEW_ROOM,
-            MC_POST_NEW_ROOM
+            ModCallbacks.MC_POST_UPDATE,
+            MC_POST_UPDATE
         },
         {
             ModCallbacks.MC_PRE_SPAWN_CLEAN_AWARD,
