@@ -1,7 +1,7 @@
 local helper = include("helper_functions")
 
 local Name = "Lost Soul Baby"
-local Tag = "lostSoulDefault"
+local Tag = "lostSoulBaby"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_FAMILIAR_INIT(_, f)
@@ -14,28 +14,44 @@ local function MC_FAMILIAR_UPDATE(_, f)
     local room = Game():GetRoom()
     local rng = lootdeck.rng
     local sfx = lootdeck.sfx
+    local lostSoulLove = nil
     if not data.state then
         sprite:Play("Float", true)
+        sfx:Play(SoundEffect.SOUND_FLOATY_BABY_ROAR, 1, 0, false, 2)
         data.state = "STATE_IDLE"
+    end
+    for _, entity in pairs(Isaac.GetRoomEntities()) do
+        if entity.Type == EntityType.ENTITY_FAMILIAR
+        and entity.Variant == 1297 then
+            lostSoulLove = entity.Position
+            data.inLove = true
+        end
     end
     if data.state == "STATE_IDLE" then
         f:FollowParent()
-        data.targetPos = helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
+        data.targetPos = lostSoulLove or helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
         if data.targetPos then
             data.state = "STATE_ACTIVE"
         end
     end
     if data.state == "STATE_ACTIVE" then
-        data.targetPos = helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
+        data.targetPos = lostSoulLove or helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
         if data.targetPos then
             f:RemoveFromFollowers()
             local dir = (data.targetPos - f.Position):Normalized()
             f.Velocity = dir * 3
-            if math.abs(f.Position.X - data.targetPos.X) < 4
-            and math.abs(f.Position.Y - data.targetPos.Y) < 4 then
-                sprite:Play("Explode", true)
-                f.Velocity = Vector.Zero
-                data.state = "STATE_EXPLODE"
+            if math.abs(f.Position.X - data.targetPos.X) < 20
+            and math.abs(f.Position.Y - data.targetPos.Y) < 20 then
+                if data.inLove then
+                    sprite:Play("Fly", true)
+                    f.Velocity = Vector.Zero
+                    data.state = "STATE_ASCEND"
+                    sfx:Play(SoundEffect.SOUND_SUPERHOLY, 1, 0)
+                else
+                    sprite:Play("Explode", true)
+                    f.Velocity = Vector.Zero
+                    data.state = "STATE_EXPLODE"
+                end
             end
         else
             f:AddToFollowers()
@@ -53,7 +69,20 @@ local function MC_FAMILIAR_UPDATE(_, f)
             end
         end
     end
+    if data.state == "STATE_ASCEND" then
+        if data.targetPos then
+            if sprite:IsEventTriggered("Spawn") then
+                sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+            end
+            if sprite:IsFinished("Fly") then
+                lootdeck.f.lostSoul = false
+                f:Remove()
+            end
+        end
+    end
     if data.state == "STATE_DEAD" then
+        lootdeck.f.lostSoul = false
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, f.Position, Vector.Zero, f)
         poof.Color = Color(1,1,1,1,1,1,1)
         sfx:Play(SoundEffect.SOUND_DEMON_HIT, 1, 0)

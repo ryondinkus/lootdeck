@@ -8,5 +8,6 @@ return {
 	diamondBaby = include("entityVariants/diamondBaby"),
 	creditCardBaby = include("entityVariants/creditCardBaby"),
     holyShield = include("entityVariants/holyShield"),
-    lostSoulBaby = include("entityVariants/lostSoulBaby")
+    lostSoulBaby = include("entityVariants/lostSoulBaby"),
+    lostSoulLove = include("entityVariants/lostSoulLove")
 }
