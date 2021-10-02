@@ -5,18 +5,12 @@ local Name = "Bloody Penny"
 local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
 
-local function MC_POST_NEW_ROOM()
-    if lootdeck.f.bloodyPenny > 0 then lootdeck.f.bloodyPenny = 0 end
-end
-
 local function MC_POST_ENTITY_KILL(_, e)
-    local game = Game()
     local rng = lootdeck.rng
     local effectNum = 0
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
+    helper.ForEachPlayer(function(p)
         effectNum = effectNum + p:GetCollectibleNum(Id)
-    end
+    end)
     local effect = rng:RandomInt(20)
 
     local threshold = 0
@@ -34,10 +28,6 @@ return {
     Tag = Tag,
 	Id = Id,
     callbacks = {
-        {
-            ModCallbacks.MC_POST_NEW_ROOM,
-            MC_POST_NEW_ROOM
-        },
         {
             ModCallbacks.MC_POST_ENTITY_KILL,
             MC_POST_ENTITY_KILL

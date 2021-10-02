@@ -1,3 +1,4 @@
+local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Gives magneto effect for the room and a glowing costume
@@ -19,9 +20,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.hangedMan then
             for j=1,data.hangedMan do
 				p:RemoveCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
@@ -29,7 +28,7 @@ local function MC_POST_NEW_ROOM()
 			p:TryRemoveNullCostume(costumes.hangedMan)
             data.hangedMan = nil
         end
-    end
+    end)
 end
 
 return {

@@ -1,3 +1,4 @@
+local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Fires two tears at once with a demon costume and red tears for the room
@@ -38,9 +39,7 @@ local function MC_EVALUATE_CACHE(_, p, f)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.empress then
             for j=1,data.empress do
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_20_20)
@@ -50,7 +49,7 @@ local function MC_POST_NEW_ROOM()
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
             p:EvaluateItems()
         end
-    end
+    end)
 end
 
 return {

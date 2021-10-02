@@ -7,6 +7,12 @@ local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 3
 
+local blackOverlay = Sprite()
+blackOverlay:Load("gfx/overlay.anm2")
+blackOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
+blackOverlay:LoadGraphics()
+blackOverlay:Play("Idle", true)
+
 local function MC_USE_CARD(_, c, p, flags)
 	local game = Game()
 	local level = game:GetLevel()
@@ -38,9 +44,7 @@ local function MC_POST_NEW_ROOM()
     end
 
     if lootdeck.f.checkEm then
-        for i=0,game:GetNumPlayers()-1 do
-            local p = Isaac.GetPlayer(i)
-            local data = p:GetData()
+        helper.ForEachPlayer(function(p, data)
             for j=0,3 do
                 if p:GetCard(j) == Id and data.removeCard then
                     p:SetCard(j, 0)
@@ -63,7 +67,7 @@ local function MC_POST_NEW_ROOM()
                     end
                 end
             end
-        end
+        end)
         lootdeck.f.checkEm = false
         lootdeck.f.showOverlay = false
     end
@@ -81,6 +85,12 @@ end
 
 local function MC_POST_NEW_LEVEL()
     lootdeck.f.firstEnteredLevel = true
+end
+
+local function MC_POST_RENDER()
+    if lootdeck.f.showOverlay then
+         blackOverlay:RenderLayer(0, Vector.Zero)
+     end
 end
 
 return {
@@ -101,6 +111,10 @@ return {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
+        },
+        {
+            ModCallbacks.MC_POST_RENDER,
+            MC_POST_RENDER
         }
     }
 }

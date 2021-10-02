@@ -17,9 +17,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data[ReviveTag] then
             p:AddMaxHearts(-24)
             p:AddSoulHearts(-24)
@@ -46,7 +44,7 @@ local function MC_POST_NEW_ROOM()
             data[Tag] = nil
             data[ReviveTag] = nil
         end
-    end
+    end)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)

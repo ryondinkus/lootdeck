@@ -8,7 +8,7 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
-	local effect = 0--lootdeck.rng:RandomInt(3)
+	local effect = lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
 	if effect == 0 then
         for i=0,3 do
@@ -38,13 +38,11 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         data[Tag] = nil
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
         p:EvaluateItems()
-    end
+    end)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
