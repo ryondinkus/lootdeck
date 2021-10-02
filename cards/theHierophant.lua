@@ -31,13 +31,11 @@ local function MC_ENTITY_TAKE_DMG(_, e)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         data[Tag] = nil
 		p:TryRemoveNullCostume(costumes.mantle)
 		p:TryRemoveNullCostume(costumes.mantleBroken)
-    end
+    end)
 end
 
 return {

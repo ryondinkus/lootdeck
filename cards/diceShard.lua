@@ -44,9 +44,7 @@ local function MC_POST_NEW_ROOM()
     end
 
     if lootdeck.f.checkEm then
-        for i=0,game:GetNumPlayers()-1 do
-            local p = Isaac.GetPlayer(i)
-            local data = p:GetData()
+        helper.ForEachPlayer(function(p, data)
             for j=0,3 do
                 if p:GetCard(j) == Id and data.removeCard then
                     p:SetCard(j, 0)
@@ -69,7 +67,7 @@ local function MC_POST_NEW_ROOM()
                     end
                 end
             end
-        end
+        end)
         lootdeck.f.checkEm = false
         lootdeck.f.showOverlay = false
     end

@@ -35,20 +35,16 @@ local function MC_EVALUATE_CACHE(_, p, f)
 end
 
 local function MC_POST_NEW_ROOM()
-	for x=0,Game():GetNumPlayers() - 1 do
-        local p = Isaac.GetPlayer(x)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.strength then
 			p:TryRemoveNullCostume(costumes.strengthFire)
 			p:AddNullCostume(costumes.strengthGlow)
         end
-    end
+    end)
 end
 
 local function MC_POST_NEW_LEVEL()
-    for x=0,Game():GetNumPlayers() - 1 do
-        local p = Isaac.GetPlayer(x)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.strength then
             data.strength = nil
             local color = Color(1,1,1,1,0,0,0)
@@ -58,7 +54,7 @@ local function MC_POST_NEW_LEVEL()
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
-    end
+    end)
 end
 
 return {

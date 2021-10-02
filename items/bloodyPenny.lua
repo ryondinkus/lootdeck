@@ -6,13 +6,11 @@ local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
 
 local function MC_POST_ENTITY_KILL(_, e)
-    local game = Game()
     local rng = lootdeck.rng
     local effectNum = 0
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
+    helper.ForEachPlayer(function(p)
         effectNum = effectNum + p:GetCollectibleNum(Id)
-    end
+    end)
     local effect = rng:RandomInt(20)
 
     local threshold = 0

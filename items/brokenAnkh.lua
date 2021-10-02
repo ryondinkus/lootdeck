@@ -8,12 +8,8 @@ local Id = Isaac.GetItemIdByName(Name)
 local ReviveTag = string.format("%sRevive", Tag)
 
 local function MC_POST_NEW_ROOM()
-    local game = Game()
     local sfx = lootdeck.sfx
-    for i=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
-
+    helper.ForEachPlayer(function(p, data)
 		if p:HasCollectible(Id) then
 			local effectNum = p:GetCollectibleNum(Id)
 			local effect = lootdeck.rng:RandomInt(6)
@@ -35,7 +31,7 @@ local function MC_POST_NEW_ROOM()
             sfx:Play(SoundEffect.SOUND_HOLY,1,0)
             data[Tag] = nil
         end
-    end
+    end)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)

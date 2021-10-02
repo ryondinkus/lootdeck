@@ -1,3 +1,4 @@
+local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
 -- Grants Steam Sale effect for the floor + little card familiar
@@ -20,16 +21,14 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_NEW_LEVEL()
-    for i=0,Game():GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(i)
-        local data = p:GetData()
+    helper.ForEachPlayer(function(p, data)
         if data.sale then
             for j=1,data.sale do
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)
             end
             data.sale = nil
         end
-    end
+    end)
 end
 
 return {
