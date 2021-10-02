@@ -11,12 +11,12 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
+function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
 	local key = 1;
 	for i, entity in pairs(entities) do
-		if entity:IsVulnerableEnemy() and (ignoreChosen or not entity:GetData().chosen) then
+		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData().chosen) then
             if not tag or entity:GetData()[tag] then
                 enemies[key] = entities[i]
                 key = key + 1;
@@ -24,6 +24,19 @@ function H.ListEnemiesInRoom(pos, ignoreChosen, tag)
 		end
 	end
 	return enemies
+end
+
+function H.ListBossesInRoom(pos, ignoreMiniBosses)
+	local enemies = H.ListEnemiesInRoom(pos, true, nil, true)
+    local bosses = {}
+
+    for _, enemy in pairs(enemies) do
+        if enemy:IsBoss() and (enemy.Type == EntityType.ENTITY_THE_HAUNT or enemy.Type == EntityType.ENTITY_MASK_OF_INFAMY or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == EntityType.ENTITY_MASK_OF_INFAMY or enemy.SpawnerType == EntityType.ENTITY_THE_HAUNT))) then
+            table.insert(bosses, enemy)
+        end
+    end
+
+    return bosses
 end
 
 -- function for finding random enemy in the room
@@ -424,6 +437,60 @@ function H.HasActiveItem(p)
         end
     end
     return false
+end
+
+function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
+    local data = p:GetData()
+    local game = Game()
+    if not data[roomClearedTag] and not H.AreEnemiesInRoom(game:GetRoom()) then
+        data[roomClearedTag] = true
+    end
+
+    local isFinished = (data[finishedTag] or data[finishedTag] == nil)
+    local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
+
+    local currentBosses = H.ListBossesInRoom(p.Position, true)
+
+    local shouldInitializeBecauseOfBossRush = true
+
+    if isBossRush and (data[bossRushBossesTag] == nil or (data[bossRushBossesTag] and data[bossRushBossesTag] == 0)) and #currentBosses ~= 0 then
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            if bossData[tag] == true then
+                shouldInitializeBecauseOfBossRush = false
+                break
+            end
+        end
+    else
+        shouldInitializeBecauseOfBossRush = false
+    end
+
+    if p:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and H.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
+        initialize(p)
+    end
+
+    if game:IsGreedMode() then
+        data[greedModeWaveTag] = game:GetLevel().GreedModeWave
+    end
+
+    if isBossRush then
+        data[bossRushBossesTag] = #currentBosses
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            bossData[tag] = true
+        end
+    end
+
+    callback()
+end
+
+function H.ForEachPlayer(callback, collectibleId)
+    for x = 0, Game():GetNumPlayers() - 1 do
+        local p = Isaac.GetPlayer(x)
+        if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
+            callback(Isaac.GetPlayer(x), collectibleId and p:HasCollectible(collectibleId))
+        end
+    end
 end
 
 return H

@@ -5,55 +5,62 @@ local Name = "Cancer!"
 local Tag = "cancer"
 local Id = Isaac.GetItemIdByName(Name)
 
+local originalFireDelayTag = string.format("%sOriginalFireDelay", Tag)
+local finishedTag = string.format("%sFinished", Tag)
+local roomClearedTag = string.format("%sRoomCleared", Tag)
+local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
+local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
+
 local function Initialize(p)
-    if helper.AreEnemiesInRoom(Game():GetRoom()) then
+    local game = Game()
+    if helper.AreEnemiesInRoom(game:GetRoom()) then
         local data = p:GetData()
-        data.originalFireDelay = p.MaxFireDelay
-        data.cancer = 0
-        data.finishedCancer = false
-        data.roomCleared = nil
+        if data[finishedTag] or data[finishedTag] == nil then
+            data[originalFireDelayTag] = p.MaxFireDelay
+        end
+        data[Tag] = 0
+        data[finishedTag] = false
+        data[roomClearedTag] = nil
+        if game:IsGreedMode() then
+            data[greedModeWaveTag] = 0
+        end
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
         p:EvaluateItems()
     end
 end
 
 local function MC_POST_NEW_ROOM()
-    local game = Game()
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
-        if p:HasCollectible(Id) then
-            Initialize(p)
-        end
-    end
-end
-
--- TODO check when a wave in greed mode starts
-local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData()
-    if not data.roomCleared and not helper.AreEnemiesInRoom(Game():GetRoom()) then
-        data.roomCleared = true
-    end
-    if p:HasCollectible(Id) and (data.finishedCancer or data.finishedCancer == nil) and data.roomCleared and helper.AreEnemiesInRoom(Game():GetRoom()) then
-        print("I'm shitting my panties rn lol")
-        Initialize(p)
-    end
-    if data.cancer then
-        data.cancer = data.cancer + 1
+    helper.ForEachPlayer(function(p)
+        local data = p:GetData()
+        data[Tag] = nil
+        data[finishedTag] = nil
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
         p:EvaluateItems()
-    end
+        Initialize(p)
+    end, Id)
+end
+
+local function MC_POST_PEFFECT_UPDATE(_, p)
+    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function()
+        local data = p:GetData()
+        if data[Tag] then
+            data[Tag] = data[Tag] + 1
+            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
+            p:EvaluateItems()
+        end
+    end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
     if f == CacheFlag.CACHE_FIREDELAY then
-        if data.cancer then
-            local newDelay = p.MaxFireDelay - 10 + (data.cancer/(p.MaxFireDelay))
-            if newDelay < data.originalFireDelay then
+        if data[Tag] then
+            local newDelay = p.MaxFireDelay - 10 + (data[Tag]/(p.MaxFireDelay))
+            if newDelay < data[originalFireDelayTag] then
                 p.MaxFireDelay = newDelay
             else
-                data.cancer = nil
-                data.finishedCancer = true
+                data[Tag] = nil
+                data[finishedTag] = true
             end
         end
     end
