@@ -30,68 +30,25 @@ local function Initialize(p)
 end
 
 local function MC_POST_NEW_ROOM()
-    local game = Game()
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
-        if p:HasCollectible(Id) then
-            local data = p:GetData()
-            data[Tag] = nil
-            data[finishedTag] = nil
-            data[roomClearedTag] = not helper.AreEnemiesInRoom(game:GetRoom())
-            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
-            p:EvaluateItems()
-            Initialize(p)
-        end
-    end
+    helper.ForEachPlayer(function(p)
+        local data = p:GetData()
+        data[Tag] = nil
+        data[finishedTag] = nil
+        p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
+        p:EvaluateItems()
+        Initialize(p)
+    end, Id)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData()
-    local game = Game()
-    if not data[roomClearedTag] and not helper.AreEnemiesInRoom(game:GetRoom()) then
-        data[roomClearedTag] = true
-    end
-
-    local isFinished = (data[finishedTag] or data[finishedTag] == nil)
-    local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
-
-    local currentBosses = helper.ListBossesInRoom(p.Position, true)
-
-    local shouldInitializeBecauseOfBossRush = true
-
-    if isBossRush and (data[bossRushBossesTag] == nil or (data[bossRushBossesTag] and data[bossRushBossesTag] == 0)) and #currentBosses ~= 0 then
-        for _, boss in pairs(currentBosses) do
-            local bossData = boss:GetData()
-            if bossData[Tag] == true then
-                shouldInitializeBecauseOfBossRush = false
-                break
-            end
+    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function()
+        local data = p:GetData()
+        if data[Tag] then
+            data[Tag] = data[Tag] + 1
+            p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
+            p:EvaluateItems()
         end
-    else
-        shouldInitializeBecauseOfBossRush = false
-    end
-
-    if p:HasCollectible(Id) and ((not isBossRush and isFinished and (data[roomClearedTag] and helper.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
-        Initialize(p)
-    end
-
-    if game:IsGreedMode() then
-        data[greedModeWaveTag] = game:GetLevel().GreedModeWave
-    end
-
-    if isBossRush then
-        data[bossRushBossesTag] = #currentBosses
-        for _, boss in pairs(currentBosses) do
-            local bossData = boss:GetData()
-            bossData[Tag] = true
-        end
-    end
-
-    if data[Tag] then
-        data[Tag] = data[Tag] + 1
-        p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
-        p:EvaluateItems()
-    end
+    end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)

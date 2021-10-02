@@ -31,8 +31,6 @@ function H.ListBossesInRoom(pos, ignoreMiniBosses)
     local bosses = {}
 
     for _, enemy in pairs(enemies) do
-        print(string.format("parent type (%s): %s", enemy.Type, enemy:GetLastParent().Type))
-        print(string.format("spawner type (%s): %s", enemy.Type, enemy.SpawnerType))
         -- Mask of infamy (97) and heart of infamy (98) hard-coded
         if enemy:IsBoss() and (enemy.Type == 97 or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == 97))) then
             table.insert(bosses, enemy)
@@ -440,6 +438,60 @@ function H.HasActiveItem(p)
         end
     end
     return false
+end
+
+function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
+    local data = p:GetData()
+    local game = Game()
+    if not data[roomClearedTag] and not H.AreEnemiesInRoom(game:GetRoom()) then
+        data[roomClearedTag] = true
+    end
+
+    local isFinished = (data[finishedTag] or data[finishedTag] == nil)
+    local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
+
+    local currentBosses = H.ListBossesInRoom(p.Position, true)
+
+    local shouldInitializeBecauseOfBossRush = true
+
+    if isBossRush and (data[bossRushBossesTag] == nil or (data[bossRushBossesTag] and data[bossRushBossesTag] == 0)) and #currentBosses ~= 0 then
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            if bossData[tag] == true then
+                shouldInitializeBecauseOfBossRush = false
+                break
+            end
+        end
+    else
+        shouldInitializeBecauseOfBossRush = false
+    end
+
+    if p:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and H.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
+        initialize(p)
+    end
+
+    if game:IsGreedMode() then
+        data[greedModeWaveTag] = game:GetLevel().GreedModeWave
+    end
+
+    if isBossRush then
+        data[bossRushBossesTag] = #currentBosses
+        for _, boss in pairs(currentBosses) do
+            local bossData = boss:GetData()
+            bossData[tag] = true
+        end
+    end
+
+    callback()
+end
+
+function H.ForEachPlayer(callback, collectibleId)
+    for x = 0, Game():GetNumPlayers() - 1 do
+        local p = Isaac.GetPlayer(x)
+        if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
+            callback(Isaac.GetPlayer(x), collectibleId and p:HasCollectible(collectibleId))
+        end
+    end
 end
 
 return H
