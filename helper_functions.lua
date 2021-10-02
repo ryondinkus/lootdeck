@@ -131,18 +131,6 @@ function H.IsSoulHeartMarty(p)
     return false
 end
 
--- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
-function H.AreTrinketsOnGround()
-    local entities = Isaac.GetRoomEntities()
-    for i, entity in pairs(entities) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_TRINKET then
-            return true
-        end
-    end
-    return false
-end
-
 -- function that returns a consumable based on what glyph of balance would drop
 function H.GlyphOfBalance(p)
     if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 then
@@ -333,16 +321,6 @@ function H.FuckYou(p, type, variant, subtype, uses)
     if type then
         for i = 1,(uses or 1) do
             Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
-        end
-    end
-end
-
-function H.RemoveHitFamiliars(id, hitTag)
-    for _,entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == id
-        and entity:GetData()[hitTag or 'hit'] == true then
-            entity:Remove()
         end
     end
 end
@@ -549,6 +527,23 @@ function H.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubTyp
             callback(entity)
         end
 	  end
+end
+
+-- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
+function H.AreTrinketsOnGround()
+    local isTrinketOnGround = false
+    H.ForEachEntityInRoom(function()
+        isTrinketOnGround = true
+    end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET)
+    return isTrinketOnGround
+end
+
+function H.RemoveHitFamiliars(id, hitTag)
+    H.ForEachEntityInRoom(function(entity)
+        entity:Remove()
+    end, EntityType.ENTITY_FAMILIAR, id, nil, function(entity)
+        return entity:GetData()[hitTag or 'hit'] == true
+    end)
 end
 
 return H

@@ -16,13 +16,10 @@ local function MC_FAMILIAR_UPDATE(_, f)
         sfx:Play(SoundEffect.SOUND_FLOATY_BABY_ROAR, 1, 0, false, 2)
         data.state = "STATE_IDLE"
     end
-    for _, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == 1296 then
-            lostSoulLove = entity.Position
-            data.inLove = true
-        end
-    end
+    helper.ForEachEntityInRoom(function(entity)
+        lostSoulLove = entity.Position
+        data.inLove = true
+    end, EntityType.ENTITY_FAMILIAR, 1296)
     if data.state == "STATE_IDLE" then
         data.targetPos = lostSoulLove
         if data.targetPos then

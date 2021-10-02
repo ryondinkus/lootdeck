@@ -20,13 +20,11 @@ local function MC_FAMILIAR_UPDATE(_, f)
         sfx:Play(SoundEffect.SOUND_FLOATY_BABY_ROAR, 1, 0, false, 2)
         data.state = "STATE_IDLE"
     end
-    for _, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == 1297 then
-            lostSoulLove = entity.Position
-            data.inLove = true
-        end
-    end
+    -- TODO make entity variants global
+    helper.ForEachEntityInRoom(function(entity)
+        lostSoulLove = entity.Position
+        data.inLove = true
+    end, EntityType.ENTITY_FAMILIAR, 1297)
     if data.state == "STATE_IDLE" then
         f:FollowParent()
         data.targetPos = lostSoulLove or helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
@@ -91,16 +89,13 @@ local function MC_FAMILIAR_UPDATE(_, f)
 end
 
 local function MC_POST_NEW_ROOM()
-    for _, entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == Id then
-            local data = entity:GetData()
-            local sprite = entity:GetSprite()
-            data.state = "STATE_IDLE"
-            sprite:Play("Float", true)
-            data.target = nil
-        end
-    end
+    helper.ForEachEntityInRoom(function(entity)
+        local data = entity:GetData()
+        local sprite = entity:GetSprite()
+        data.state = "STATE_IDLE"
+        sprite:Play("Float", true)
+        data.target = nil
+    end, EntityType.ENTITY_FAMILIAR, Id)
 end
 
 return {
