@@ -39,7 +39,7 @@ function H.ListBossesInRoom(pos, ignoreMiniBosses)
     return bosses
 end
 
--- function for finding target enemy, then calculating the angle/position the fire will spawn
+-- function for finding random enemy in the room
 function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag)
 	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag)
     local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
