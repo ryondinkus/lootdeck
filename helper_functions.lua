@@ -131,18 +131,6 @@ function H.IsSoulHeartMarty(p)
     return false
 end
 
--- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
-function H.AreTrinketsOnGround()
-    local entities = Isaac.GetRoomEntities()
-    for i, entity in pairs(entities) do
-        if entity.Type == EntityType.ENTITY_PICKUP
-        and entity.Variant == PickupVariant.PICKUP_TRINKET then
-            return true
-        end
-    end
-    return false
-end
-
 -- function that returns a consumable based on what glyph of balance would drop
 function H.GlyphOfBalance(p)
     if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 then
@@ -337,16 +325,6 @@ function H.FuckYou(p, type, variant, subtype, uses)
     end
 end
 
-function H.RemoveHitFamiliars(id, hitTag)
-    for _,entity in pairs(Isaac.GetRoomEntities()) do
-        if entity.Type == EntityType.ENTITY_FAMILIAR
-        and entity.Variant == id
-        and entity:GetData()[hitTag or 'hit'] == true then
-            entity:Remove()
-        end
-    end
-end
-
 function H.FeckDechoEdmundMcmillen(player, pickup)
     return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3)))
     and not (pickup.Variant == 10 and (pickup.SubType == 1 or pickup.SubType == 2 or pickup.SubType == 5 or pickup.SubType == 9) and not player:CanPickRedHearts())
@@ -439,6 +417,28 @@ function H.HasActiveItem(p)
     return false
 end
 
+function H.CheckForSecretRooms(room)
+    for i=0,7 do
+        local door = room:GetDoor(i)
+        if door ~= nil then
+            if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+                return door.Position
+            end
+        end
+    end
+end
+
+function H.CheckForTintedRocks(room)
+    for i=0,room:GetGridSize() do
+        local rock = room:GetGridEntity(i)
+        if rock then
+            if rock.CollisionClass ~= 0 and (rock:GetType() == GridEntityType.GRID_ROCKT or rock:GetType() == GridEntityType.GRID_ROCK_SS) then
+                return room:GetGridPosition(i)
+            end
+        end
+    end
+end
+  
 function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
     local data = p:GetData()
     local game = Game()
@@ -526,7 +526,24 @@ function H.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubTyp
         if shouldReturn then
             callback(entity)
         end
-	end
+	  end
+end
+
+-- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
+function H.AreTrinketsOnGround()
+    local isTrinketOnGround = false
+    H.ForEachEntityInRoom(function()
+        isTrinketOnGround = true
+    end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET)
+    return isTrinketOnGround
+end
+
+function H.RemoveHitFamiliars(id, hitTag)
+    H.ForEachEntityInRoom(function(entity)
+        entity:Remove()
+    end, EntityType.ENTITY_FAMILIAR, id, nil, function(entity)
+        return entity:GetData()[hitTag or 'hit'] == true
+    end)
 end
 
 return H

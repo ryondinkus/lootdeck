@@ -21,7 +21,8 @@ lootdeck.f = {
     firstEnteredLevel = false,
     blueMap = false,
     compass = false,
-    map = false
+    map = false,
+    lostSoul = false
 }
 
 local helper = include("helper_functions")
@@ -86,3 +87,12 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 		end
 	end
 end)
+
+-- sound effect printer
+-- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+--     for soundEffectName, soundEffect in pairs(SoundEffect) do
+--         if lootdeck.sfx:IsPlaying(soundEffect) then
+--             print(soundEffectName)
+--         end
+--     end
+-- end)
