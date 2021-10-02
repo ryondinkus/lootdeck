@@ -7,6 +7,12 @@ local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 3
 
+local blackOverlay = Sprite()
+blackOverlay:Load("gfx/overlay.anm2")
+blackOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
+blackOverlay:LoadGraphics()
+blackOverlay:Play("Idle", true)
+
 local function MC_USE_CARD(_, c, p, flags)
 	local game = Game()
 	local level = game:GetLevel()
@@ -83,6 +89,12 @@ local function MC_POST_NEW_LEVEL()
     lootdeck.f.firstEnteredLevel = true
 end
 
+local function MC_POST_RENDER()
+    if lootdeck.f.showOverlay then
+         blackOverlay:RenderLayer(0, Vector.Zero)
+     end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -101,6 +113,10 @@ return {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
+        },
+        {
+            ModCallbacks.MC_POST_RENDER,
+            MC_POST_RENDER
         }
     }
 }
