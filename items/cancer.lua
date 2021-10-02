@@ -15,7 +15,9 @@ local function Initialize(p)
     local game = Game()
     if helper.AreEnemiesInRoom(game:GetRoom()) then
         local data = p:GetData()
-        data[originalFireDelayTag] = p.MaxFireDelay
+        if data[finishedTag] or data[finishedTag] == nil then
+            data[originalFireDelayTag] = p.MaxFireDelay
+        end
         data[Tag] = 0
         data[finishedTag] = false
         data[roomClearedTag] = nil
