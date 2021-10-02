@@ -41,6 +41,16 @@ local function MC_POST_NEW_ROOM()
 	end
 end
 
+local function MC_EVALUATE_CACHE(_, p, f)
+	local data = p:GetData()
+    if not data.redDamage then data.redDamage = 0 end
+    if f == CacheFlag.CACHE_DAMAGE then
+        if data.redDamage then
+            p.Damage = p.Damage + (2 * data.redDamage)
+        end
+    end
+end
+
 return {
     Name = Name,
     Tag = Tag,
@@ -55,6 +65,10 @@ return {
 		{
 			ModCallbacks.MC_POST_NEW_ROOM,
 			MC_POST_NEW_ROOM
+		},
+		{
+			ModCallbacks.MC_EVALUATE_CACHE,
+			MC_EVALUATE_CACHE
 		}
     }
 }

@@ -3,6 +3,10 @@ local Name = "Counterfeit Penny"
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetItemIdByName(Name)
 
+local function MC_POST_GAME_STARTED()
+    lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
+end
+
 local function MC_POST_UPDATE()
     local game = Game()
     local f = lootdeck.f
@@ -21,6 +25,10 @@ return {
     Tag = Tag,
 	Id = Id,
     callbacks = {
+        {
+            ModCallbacks.MC_POST_GAME_STARTED,
+            MC_POST_GAME_STARTED
+        },
         {
             ModCallbacks.MC_POST_UPDATE,
             MC_POST_UPDATE
