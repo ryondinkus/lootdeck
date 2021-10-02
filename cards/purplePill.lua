@@ -8,7 +8,7 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
-	local effect = 0--lootdeck.rng:RandomInt(3)
+	local effect = lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
 	if effect == 0 then
         for i=0,3 do
