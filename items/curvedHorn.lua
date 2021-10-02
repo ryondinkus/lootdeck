@@ -1,18 +1,34 @@
+local helper = include("helper_functions")
+
 -- Gives an extra large and damage-boosted tear in each new room, the number of tears in each room being the number of curved horns
 local Name = "Curved Horn"
 local Tag = "curvedHorn"
 local Id = Isaac.GetItemIdByName(Name)
 
-local function MC_POST_NEW_ROOM()
+local finishedTag = string.format("%sFinished", Tag)
+local roomClearedTag = string.format("%sRoomCleared", Tag)
+local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
+local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
+
+local function Initialize(p)
     local game = Game()
-    for x=0,game:GetNumPlayers()-1 do
-        local p = Isaac.GetPlayer(x)
+    if helper.AreEnemiesInRoom(game:GetRoom()) then
         local data = p:GetData()
-        if p:HasCollectible(Id) then
-            data.curvedHornTearAmount = p:GetCollectibleNum(Id) or 1
+        data[finishedTag] = false
+        data[roomClearedTag] = nil
+        if game:IsGreedMode() then
+            data[greedModeWaveTag] = 0
         end
-        if data.curvedHornTear then data.curvedHornTear = 1 end
+        data.curvedHornTearAmount = p:GetCollectibleNum(Id) or 1
     end
+end
+
+local function MC_POST_NEW_ROOM()
+    helper.ForEachPlayer(Initialize, Id)
+end
+
+local function MC_POST_PEFFECT_UPDATE(_, p)
+    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function() end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
 end
 
 local function MC_POST_FIRE_TEAR(_, tear)
@@ -25,6 +41,8 @@ local function MC_POST_FIRE_TEAR(_, tear)
             tear.Scale = tear.Scale * 4
             data.curvedHornTearAmount = data.curvedHornTearAmount - 1
             lootdeck.sfx:Play(SoundEffect.SOUND_EXPLOSION_WEAK,1,0)
+        else
+            data[finishedTag] = true
         end
     end
 end
@@ -37,6 +55,10 @@ return {
         {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
+        },
+        {
+            ModCallbacks.MC_POST_PEFFECT_UPDATE,
+            MC_POST_PEFFECT_UPDATE
         },
         {
             ModCallbacks.MC_POST_FIRE_TEAR,
