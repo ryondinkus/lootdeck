@@ -79,10 +79,8 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
-		local roll = rng:RandomInt(99)+1
-		local threshold = 5
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if roll <= threshold or isLootCard then
+		if helper.PercentageChance(5) or isLootCard then
             return helper.GetWeightedLootCardId()
 		end
 	end

@@ -8,13 +8,7 @@ local Id = Isaac.GetItemIdByName(Name)
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local p = e:ToPlayer()
     if p:HasCollectible(Id) then
-        local effectNum = p:GetCollectibleNum(Id)
-        local effect = lootdeck.rng:RandomInt(20)
-        local threshold = 0
-        if effectNum > 0 then threshold = 1 end
-        threshold = threshold + (effectNum - 1)
-        if threshold >= 5 then threshold = 4 end
-        if effect <= threshold then
+        if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
             local target = source
             if source.Type == EntityType.ENTITY_PROJECTILE then
                 target = source.Entity.SpawnerEntity

@@ -11,13 +11,8 @@ local function MC_POST_NEW_ROOM()
     local sfx = lootdeck.sfx
     helper.ForEachPlayer(function(p, data)
 		if p:HasCollectible(Id) then
-			local effectNum = p:GetCollectibleNum(Id)
-			local effect = lootdeck.rng:RandomInt(6)
-			local threshold = 0
-			threshold = threshold + (effectNum - 1)
-			if threshold > 2 then threshold = 2 end
 			data[ReviveTag] = false
-			if effect <= threshold then
+			if helper.PercentageChance(100 / 6 * p:GetCollectibleNum(Id), 50) then
 				data[ReviveTag] = true
 			end
 		end
