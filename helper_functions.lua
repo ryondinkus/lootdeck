@@ -11,12 +11,12 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability)
+function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability, chosenTag)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
 	local key = 1;
 	for i, entity in pairs(entities) do
-		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData().chosen) then
+		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData()[chosenTag or "chosen"]) then
             if not tag or entity:GetData()[tag] then
                 enemies[key] = entities[i]
                 key = key + 1;
