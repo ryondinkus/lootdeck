@@ -5,40 +5,66 @@ local Name = "Purple Heart"
 local Tag = "purpleHeart"
 local Id = Isaac.GetItemIdByName(Name)
 
+local shouldRerollEnemyTag = string.format("%sShouldRerollEnemy", Tag)
+local preRerollEnemySeedList = string.format("%sPreRerollEnemySeedList", Tag)
+local rerolledEnemy = string.format("%sRerolledEnemy", Tag)
+local chosenEnemy = string.format("%sChosenEnemy", Tag)
+
 local function MC_POST_NEW_ROOM()
     local game = Game()
     local room = game:GetRoom()
-    helper.ForEachPlayer(function(p)
+    helper.ForEachPlayer(function(_, data)
         if not room:IsClear() then
-            for y=1,p:GetCollectibleNum(Id) do
-                lootdeck.f.rerollEnemy = lootdeck.f.rerollEnemy + 1
-                if room:GetType() ~= RoomType.ROOM_BOSS then
-                    lootdeck.f.spawnExtraReward = lootdeck.f.spawnExtraReward + 1
-                end
-            end
+            -- TODO add percentage chance
+            data[shouldRerollEnemyTag] = true
+            data[preRerollEnemySeedList] = {}
+            print("running on room!")
         end
     end, Id)
 end
 
-local function MC_POST_UPDATE(_, e)
+local function MC_POST_UPDATE()
     local game = Game()
-    local room = game:GetRoom()
-    if lootdeck.f.rerollEnemy > 0 then
-        local p = Isaac.GetPlayer(0)
-        for i=1,lootdeck.f.rerollEnemy do
-            local target = helper.FindRandomEnemy(p.Position, false) or 0
-            if target ~= 0 then
-                game:RerollEnemy(target)
+    helper.ForEachPlayer(function(p, data)
+        if data[preRerollEnemySeedList] and #data[preRerollEnemySeedList] > 0 then
+            for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, nil, false, chosenEnemy)) do
+                local isRerolledEnemy = true
+                for _, initSeed in ipairs(data[preRerollEnemySeedList]) do
+                    if enemy.InitSeed == initSeed then
+                        isRerolledEnemy = false
+                        break
+                    end
+                end
+
+                if isRerolledEnemy then
+                    data[preRerollEnemySeedList] = nil
+                    enemy:GetData()[chosenEnemy] = true
+                    data[rerolledEnemy] = enemy
+                    break
+                end
             end
         end
-        lootdeck.f.rerollEnemy = 0
-    end
-    if lootdeck.f.spawnExtraReward > 0 and room:GetAliveEnemiesCount() == 0 then
-        for i=1,lootdeck.f.spawnExtraReward do
-    		room:SpawnClearAward()
+
+        if data[shouldRerollEnemyTag] then
+            local target = helper.FindRandomEnemy(p.Position, false) or 0
+            if target ~= 0 then
+                local enemyInitSeeds = {}
+                for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, nil, false, chosenEnemy)) do
+                    table.insert(enemyInitSeeds, enemy.InitSeed)
+                end
+                data[preRerollEnemySeedList] = enemyInitSeeds
+                target:GetData()[chosenEnemy] = true
+                game:RerollEnemy(target)
+            end
+            data[shouldRerollEnemyTag] = nil
         end
-        lootdeck.f.spawnExtraReward = 0
-	end
+
+        if data[rerolledEnemy] and data[rerolledEnemy]:HasMortalDamage() then
+            local itemToSpawn = helper.GlyphOfBalance(p)
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, itemToSpawn[1], itemToSpawn[2], data[rerolledEnemy].Position, Vector.Zero, nil)
+            data[rerolledEnemy] = nil
+        end
+    end, Id)
 end
 
 return {
