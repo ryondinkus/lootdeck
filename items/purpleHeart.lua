@@ -18,7 +18,6 @@ local function MC_POST_NEW_ROOM()
             -- TODO add percentage chance
             data[shouldRerollEnemyTag] = true
             data[preRerollEnemySeedList] = {}
-            print("running on room!")
         end
     end, Id)
 end
