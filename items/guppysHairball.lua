@@ -8,13 +8,7 @@ local Id = Isaac.GetItemIdByName(Name)
 local function MC_ENTITY_TAKE_DMG(_, e)
     local p = e:ToPlayer()
     if p:HasCollectible(Id) then
-        local effectNum = p:GetCollectibleNum(Id)
-        local effect = lootdeck.rng:RandomInt(6)
-        local threshold = 0
-        if effectNum > 0 then threshold = 1 end
-        threshold = threshold + (effectNum - 1)
-        if threshold > 2 then threshold = 2 end
-        if effect <= threshold then
+        if helper.PercentageChance(100 / 6 * p:GetCollectibleNum(Id), 50) then
             helper.HolyMantleEffect(p)
             return false
         end

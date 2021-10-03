@@ -5,21 +5,29 @@ local Name = "Bloody Penny"
 local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
 
-local function MC_POST_ENTITY_KILL(_, e)
-    local rng = lootdeck.rng
-    local effectNum = 0
-    helper.ForEachPlayer(function(p)
-        effectNum = effectNum + p:GetCollectibleNum(Id)
-    end)
-    local effect = rng:RandomInt(20)
+local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
+    local shouldRun = false
+    helper.ForEachPlayer(function()
+        shouldRun = true
+    end, Id)
+    
+    if shouldRun then
+        local rng = lootdeck.rng
 
-    local threshold = 0
-    if effectNum > 0 then threshold = 1 end
-    threshold = threshold + (effectNum - 1)
-    if threshold >= 5 then threshold = 4 end
-    if effect <= threshold then
-        local cardId = helper.GetWeightedLootCardId()
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
+        local p
+        if source and source.Entity then
+            if source.Entity.Type == EntityType.ENTITY_PLAYER then
+                p = source.Entity:ToPlayer()
+            elseif source.Entity:GetLastParent() and source.Entity:GetLastParent().Type == EntityType.ENTITY_PLAYER then
+                p = source.Entity:GetLastParent():ToPlayer()
+            end
+        end
+        if e:IsEnemy() and amount >= e.MaxHitPoints and p then
+            if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
+                local cardId = helper.GetWeightedLootCardId()
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
+            end
+        end
     end
 end
 
@@ -29,8 +37,8 @@ return {
 	Id = Id,
     callbacks = {
         {
-            ModCallbacks.MC_POST_ENTITY_KILL,
-            MC_POST_ENTITY_KILL
+            ModCallbacks.MC_ENTITY_TAKE_DMG,
+            MC_ENTITY_TAKE_DMG
         }
     }
 }

@@ -546,4 +546,14 @@ function H.RemoveHitFamiliars(id, hitTag)
     end)
 end
 
+function H.PercentageChance(percent, max)
+    local value
+    if percent > (max or 100) then
+        value = max
+    else
+        value = percent
+    end
+    return lootdeck.rng:RandomInt(99) <= value
+end
+
 return H
