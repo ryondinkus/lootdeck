@@ -15,10 +15,12 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
         local rng = lootdeck.rng
 
         local p
-        if source.Entity.Type == EntityType.ENTITY_PLAYER then
-            p = source.Entity:ToPlayer()
-        elseif source.Entity:GetLastParent() and source.Entity:GetLastParent().Type == EntityType.ENTITY_PLAYER then
-            p = source.Entity:GetLastParent():ToPlayer()
+        if source and source.Entity then
+            if source.Entity.Type == EntityType.ENTITY_PLAYER then
+                p = source.Entity:ToPlayer()
+            elseif source.Entity:GetLastParent() and source.Entity:GetLastParent().Type == EntityType.ENTITY_PLAYER then
+                p = source.Entity:GetLastParent():ToPlayer()
+            end
         end
         if e:IsEnemy() and amount >= e.MaxHitPoints and p then
             if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
