@@ -1,15 +1,21 @@
 lootdeck = RegisterMod("Loot Deck", 1)
 
+function table.deepCopy(original)
+	local copy = {}
+	for k, v in pairs(original) do
+		if type(v) == "table" then
+			v = table.deepCopy(v)
+		end
+		copy[k] = v
+	end
+	return copy
+end
+
 include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 
-lootdeck.rng = RNG()
-lootdeck.sfx = SFXManager()
-lootdeck.mus = MusicManager()
-lootdeck.f = {
-    rerollEnemy = 0,
-    spawnExtraReward = 0,
+local defaultStartupValues = {
     visitedItemRooms = {},
     sunUsed = false,
     removeSun = false,
@@ -24,6 +30,11 @@ lootdeck.f = {
     map = false,
     lostSoul = false
 }
+
+lootdeck.rng = RNG()
+lootdeck.sfx = SFXManager()
+lootdeck.mus = MusicManager()
+lootdeck.f = table.deepCopy(defaultStartupValues)
 
 local helper = include("helper_functions")
 
@@ -56,6 +67,7 @@ end
 -- set rng seed
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
+    lootdeck.f = table.deepCopy(defaultStartupValues)
 end)
 
 -- Temporary health callback
