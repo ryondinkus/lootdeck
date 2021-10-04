@@ -556,4 +556,57 @@ function H.PercentageChance(percent, max)
     return lootdeck.rng:RandomInt(99) <= value
 end
 
+-- https://github.com/IsaacScript/isaacscript-common/blob/main/src/functions/ui.ts#L7-L49
+function H.GetHUDOffsetVector()
+    local defaultVector = Vector.Zero
+
+    if ModConfigMenu and ModConfigMenu.Config and ModConfigMenu.Config.General then
+        local hudOffset = ModConfigMenu.Config.General.HudOffset
+
+        if hudOffset and type(hudOffset) == "number" and hudOffset >= 1 and hudOffset <= 10 then
+            local x  = hudOffset * 2
+            local y = hudOffset
+
+            if y >= 4 then
+                y = y + 1
+            end
+            if y >= 9 then
+                y = y + 1
+            end
+
+            return Vector(x, y)
+        end
+    end
+    return defaultVector
+end
+
+function H.GetLootcardById(id)
+    for _, card in pairs(lootcards) do
+        if card.Id == id then
+            return card
+        end
+    end
+end
+
+function H.RegisterSprite(anm2Root, sprRoot, anmName)
+	local sprite = Sprite()
+	sprite:Load(anm2Root, true)
+	sprite:Play(anmName and anmName or sprite:GetDefaultAnimationName(), true)
+	sprite:Update()
+	if sprRoot then sprite:ReplaceSpritesheet(0, sprRoot) end
+	sprite:LoadGraphics()
+	
+	return sprite
+end
+
+function H.GetScreenSize()
+    local room = Game():GetRoom()
+    local pos = Isaac.WorldToScreen(Vector.Zero) - room:GetRenderScrollOffset() - Game().ScreenShakeOffset
+    
+    local rx = pos.X + 60 * 26 / 40
+    local ry = pos.Y + 140 * (26 / 40)
+    
+    return Vector(rx*2 + 13*26, ry*2 + 7*26)
+end
+
 return H

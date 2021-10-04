@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="10/3/2021 5:47:10 PM" Version="35" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/4/2021 6:02:37 PM" Version="36" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="ui\ui_cardfronts.png" Id="0"/>
+			<Spritesheet Path="ui\new_cardfronts.png" Id="0"/>
 			<Spritesheet Path="ui\sparkle.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
