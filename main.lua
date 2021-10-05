@@ -158,7 +158,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", lootcard.Tag))
             lootcardAnimationContainer:LoadGraphics()
             lootcardAnimationContainer:Update()
-            lootcardAnimationContainer:Play("Idle", true)
+            lootcardAnimationContainer:Play("IdleSparkle", true)
             data.isHoldingLootcard = true
         end
 	end
