@@ -609,7 +609,25 @@ function H.GetScreenSize(customX, customY)
     return Vector(customX or rx*2 + 13*26, customY or ry*2 + 7*26)
 end
 
+function H.GetPlayerControllerIndex(p)
+    local controllerIndexes = {}
+    H.ForEachPlayer(function(player)
+        for _, index in pairs(controllerIndexes) do
+            if index == player.ControllerIndex then
+                return
+            end
+        end
+        table.insert(controllerIndexes, player.ControllerIndex)
+    end)
+    for i, index in pairs(controllerIndexes) do
+        if index == p.ControllerIndex then
+            return i - 1
+        end
+    end
+end
+
 function H.GetCardPositionWithHUDOffset(p, sprite)
+    local controllerIndex = H.GetPlayerControllerIndex(p)
     local defaultVector = Vector.Zero
     local BottomRight = H.GetScreenSize()
     local BottomLeft = H.GetScreenSize(0)
@@ -627,10 +645,8 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
 
     local hudOffsetVector = Vector.Zero
 
-    print(p.ControllerIndex)
-
     -- Jacob in first player slot
-    if p.ControllerIndex == 0 and p.SubType == PlayerType.PLAYER_JACOB then
+    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_JACOB then
         if hudOffset then
             if hudOffset == 1 then
                 hudOffsetVector = Vector(2, 1)
@@ -657,8 +673,8 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
         return Vector(11, 41) + hudOffsetVector
     end
 
-        -- Esau in second player slot
-    if p.ControllerIndex == 0 and p.SubType == PlayerType.PLAYER_ESAU then
+    -- Esau in second player slot
+    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_ESAU then
         if hudOffset then
             if hudOffset == 1 then
                 hudOffsetVector = Vector(1.5, 0.5)
@@ -686,7 +702,7 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     end
 
     -- Player 2 (top right)
-    if p.ControllerIndex == 1 and p.SubType ~= PlayerType.PLAYER_ESAU then
+    if controllerIndex == 1 and p.SubType ~= PlayerType.PLAYER_ESAU then
         sprite.Scale = Vector(0.5, 0.5)
         if hudOffset then
             if hudOffset == 1 then
@@ -715,7 +731,7 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     end
 
     -- Player 3 (bottom left)
-    if p.ControllerIndex == 2 and p.SubType ~= PlayerType.PLAYER_ESAU then
+    if controllerIndex == 2 and p.SubType ~= PlayerType.PLAYER_ESAU then
         sprite.Scale = Vector(0.5, 0.5)
         if hudOffset then
             if hudOffset == 1 then
@@ -744,33 +760,32 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     end
 
     -- Player 4 (bottom right)
-    if p.ControllerIndex == 3 and p.SubType ~= PlayerType.PLAYER_ESAU then
-        print("found fourth player")
+    if controllerIndex == 3 and p.SubType ~= PlayerType.PLAYER_ESAU then
         sprite.Scale = Vector(0.5, 0.5)
         if hudOffset then
             if hudOffset == 1 then
-                hudOffsetVector = Vector(2.5, 0.5)
+                hudOffsetVector = Vector(2.5, 1)
             elseif hudOffset == 2 then
-                hudOffsetVector = Vector(5, 1)
+                hudOffsetVector = Vector(4, 1.5)
             elseif hudOffset == 3 then
-                hudOffsetVector = Vector(7, 2)
+                hudOffsetVector = Vector(6, 2.5)
             elseif hudOffset == 4 then
-                hudOffsetVector = Vector(9.5, 2.5)
+                hudOffsetVector = Vector(7.5, 3)
             elseif hudOffset == 5 then
-                hudOffsetVector = Vector(11.5, 3)
+                hudOffsetVector = Vector(9, 3.5)
             elseif hudOffset == 6 then
-                hudOffsetVector = Vector(13.5, 3.5)
+                hudOffsetVector = Vector(10.5, 4)
             elseif hudOffset == 7 then
-                hudOffsetVector = Vector(16, 4)
+                hudOffsetVector = Vector(12, 4.5)
             elseif hudOffset == 8 then
-                hudOffsetVector = Vector(18, 5)
+                hudOffsetVector = Vector(14, 5.5)
             elseif hudOffset == 9 then
-                hudOffsetVector = Vector(20.5, 5.5)
+                hudOffsetVector = Vector(15.5, 6)
             elseif hudOffset == 10 then
-                hudOffsetVector = Vector(22.5, 6)
+                hudOffsetVector = Vector(17, 6.5)
             end
         end
-        return Vector(BottomRight.X - 40, BottomRight.Y - 30) - hudOffsetVector
+        return Vector(BottomRight.X - 154, BottomRight.Y + 5.5) - hudOffsetVector
     end
 
     if hudOffset then

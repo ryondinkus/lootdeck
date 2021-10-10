@@ -176,12 +176,12 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     lootcardAnimationContainer = data.lootcardHUDAnimation
                 end
 
-                lootcardAnimationContainer:SetFrame("penny", 0)
+                lootcardAnimationContainer:SetFrame(heldLootcard.Tag, 0)
                 lootcardAnimationContainer:Update()
 
                 local cardPositionVector = helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer)
 
-                lootcardAnimationContainer:Render(cardPositionVector, Vector.Zero, Vector.Zero) -- TODO work with hud offset
+                lootcardAnimationContainer:Render(cardPositionVector, Vector.Zero, Vector.Zero)
             end
         end
     end)
