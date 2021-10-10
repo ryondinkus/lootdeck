@@ -118,20 +118,19 @@ end)
 -- end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
-	helper.ForEachPlayer(function(p, data)
-		if not data.isHoldingLootcard then
-			return
-		end
+    local data = p:GetData()
+    if not data.isHoldingLootcard then
+        return
+    end
 
-        local lootcardAnimationContainer = data.lootcardPickupAnimation
+    local lootcardAnimationContainer = data.lootcardPickupAnimation
 
-		if not p:IsExtraAnimationFinished() then
-			if Isaac.GetFrameCount() % 2 == 0 then
-                lootcardAnimationContainer:Update()
-			end
-            lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
-		end
-	end)
+    if not p:IsExtraAnimationFinished() then
+        if Isaac.GetFrameCount() % 2 == 0 then
+            lootcardAnimationContainer:Update()
+        end
+        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
+    end
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, collider)
@@ -158,7 +157,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", lootcard.Tag))
             lootcardAnimationContainer:LoadGraphics()
             lootcardAnimationContainer:Update()
-            lootcardAnimationContainer:Play("Idle", true)
+            lootcardAnimationContainer:Play("IdleSparkle", true)
             data.isHoldingLootcard = true
         end
 	end
@@ -166,11 +165,10 @@ end, PickupVariant.PICKUP_TAROTCARD)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
     helper.ForEachPlayer(function(p, data)
-        if (not lootdeck.sfx:IsPlaying(SoundEffect.SOUND_CASTLEPORTCULLIS)) or (p.ControlsEnabled) then
+        if lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled then
             local heldCardId = p:GetCard(0)
             local heldLootcard = helper.GetLootcardById(heldCardId)
             if heldLootcard then
-                local BottomRight = helper.GetScreenSize()
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 if not lootcardAnimationContainer then
@@ -178,9 +176,12 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     lootcardAnimationContainer = data.lootcardHUDAnimation
                 end
 
-                lootcardAnimationContainer:SetFrame(heldLootcard.Tag, 0)
+                lootcardAnimationContainer:SetFrame("penny", 0)
                 lootcardAnimationContainer:Update()
-                lootcardAnimationContainer:Render(Vector(BottomRight.X - 13, BottomRight.Y - 15), Vector.Zero, Vector.Zero) -- TODO work with hud offset
+
+                local cardPositionVector = helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer)
+
+                lootcardAnimationContainer:Render(cardPositionVector, Vector.Zero, Vector.Zero) -- TODO work with hud offset
             end
         end
     end)
