@@ -172,14 +172,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 if not lootcardAnimationContainer then
-                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/new_cardfronts.anm2", nil, "Idle")
+                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/lootcard_cardfronts.anm2", nil, "Idle")
                     lootcardAnimationContainer = data.lootcardHUDAnimation
                     local color = data.lootcardHUDAnimation.Color
-                    data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                        data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                    end
                 end
-
-                lootcardAnimationContainer:SetFrame(heldLootcard.Tag, 0)
-                lootcardAnimationContainer:Update()
                 
                 if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                     local color = lootcardAnimationContainer.Color
@@ -190,13 +189,18 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     end
                 end
 
-                local cardPositionVector = helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer)
+                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", heldLootcard.Tag))
+                lootcardAnimationContainer:LoadGraphics()
+                lootcardAnimationContainer:Update()
+                lootcardAnimationContainer:Play("Idle", true)
 
-                lootcardAnimationContainer:Render(cardPositionVector, Vector.Zero, Vector.Zero)
+                lootcardAnimationContainer:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation then
-                    local color = data.lootcardHUDAnimation.Color
-                    data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                        local color = data.lootcardHUDAnimation.Color
+                        data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                    end
                 end
             end
         end
