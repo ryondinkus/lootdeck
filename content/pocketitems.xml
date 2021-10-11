@@ -521,4 +521,11 @@
 				mimiccharge="12"
 				pickup="904"
 		/>
+	<card name="Rainbow Tapeworm"
+				description="Copycat"
+				hud="Rainbow Tapeworm"
+				type="special"
+				mimiccharge="12"
+				pickup="904"
+		/>
 </pocketitems>
