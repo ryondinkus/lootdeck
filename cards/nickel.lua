@@ -2,7 +2,7 @@ local helper = include('helper_functions')
 
 -- Spawns a nickel
 local Name = "A Nickel!"
-local Tag = "fourCents"
+local Tag = "nickel"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 5
 
