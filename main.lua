@@ -126,7 +126,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local lootcardAnimationContainer = data.lootcardPickupAnimation
 
     if not p:IsExtraAnimationFinished() then
-        if Isaac.GetFrameCount() % 2 == 0 then
+        if (Isaac.GetFrameCount() % 2) == 1 then
             lootcardAnimationContainer:Update()
         end
         lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
@@ -178,6 +178,15 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 
                 lootcardAnimationContainer:SetFrame(heldLootcard.Tag, 0)
                 lootcardAnimationContainer:Update()
+                
+                if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    local color = lootcardAnimationContainer.Color
+                    if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
+                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
+                    else
+                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.max(color.A - 0.07, 0.5))
+                    end
+                end
 
                 local cardPositionVector = helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer)
 
