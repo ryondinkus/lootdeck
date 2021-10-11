@@ -438,7 +438,7 @@ function H.CheckForTintedRocks(room)
         end
     end
 end
-  
+
 function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
     local data = p:GetData()
     local game = Game()
@@ -595,17 +595,17 @@ function H.RegisterSprite(anm2Root, sprRoot, anmName)
 	sprite:Update()
 	if sprRoot then sprite:ReplaceSpritesheet(0, sprRoot) end
 	sprite:LoadGraphics()
-	
+
 	return sprite
 end
 
 function H.GetScreenSize(customX, customY)
     local room = Game():GetRoom()
     local pos = Isaac.WorldToScreen(Vector.Zero) - room:GetRenderScrollOffset() - Game().ScreenShakeOffset
-    
+
     local rx = pos.X + 60 * 26 / 40
     local ry = pos.Y + 140 * (26 / 40)
-    
+
     return Vector(customX or rx*2 + 13*26, customY or ry*2 + 7*26)
 end
 
