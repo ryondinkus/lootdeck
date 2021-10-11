@@ -628,10 +628,10 @@ end
 
 function H.GetCardPositionWithHUDOffset(p, sprite)
     local controllerIndex = H.GetPlayerControllerIndex(p)
-    local defaultVector = Vector.Zero
     local BottomRight = H.GetScreenSize()
     local BottomLeft = H.GetScreenSize(0)
     local TopRight = H.GetScreenSize(nil, 0)
+    local fuckOffVector = Vector(5000, 5000)
 
     local hudOffset = nil
 
@@ -644,6 +644,10 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     end
 
     local hudOffsetVector = Vector.Zero
+
+    if controllerIndex ~= 0 and p.SubType == PlayerType.PLAYER_ESAU then
+        return fuckOffVector
+    end
 
     -- Jacob in first player slot
     if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_JACOB then
