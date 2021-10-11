@@ -126,7 +126,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local lootcardAnimationContainer = data.lootcardPickupAnimation
 
     if not p:IsExtraAnimationFinished() then
-        if (Isaac.GetFrameCount() % 2) == 1 then
+        if (Isaac.GetFrameCount() % 2) == 0 then
             lootcardAnimationContainer:Update()
         end
         lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
@@ -174,6 +174,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 if not lootcardAnimationContainer then
                     data.lootcardHUDAnimation = helper.RegisterSprite("gfx/new_cardfronts.anm2", nil, "Idle")
                     lootcardAnimationContainer = data.lootcardHUDAnimation
+                    local color = data.lootcardHUDAnimation.Color
+                    data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
                 end
 
                 lootcardAnimationContainer:SetFrame(heldLootcard.Tag, 0)
@@ -191,6 +193,11 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 local cardPositionVector = helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer)
 
                 lootcardAnimationContainer:Render(cardPositionVector, Vector.Zero, Vector.Zero)
+            else
+                if data.lootcardHUDAnimation then
+                    local color = data.lootcardHUDAnimation.Color
+                    data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                end
             end
         end
     end)
