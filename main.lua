@@ -47,7 +47,8 @@ for _, card in pairs(lootcards) do
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     callback[2](_, c, p, f)
                     local data = p:GetData()
-                    data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
+					print(card.Tag)
+                    data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag))
                     data.lootcardPickupAnimation:LoadGraphics()
                     data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
                 end, callback[3])
@@ -165,7 +166,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
                 lootcardAnimationContainer = data.lootcardPickupAnimation
             end
 
-            lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", lootcard.Tag))
+            lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcard.Tag))
             lootcardAnimationContainer:LoadGraphics()
             lootcardAnimationContainer:Update()
             lootcardAnimationContainer:Play("IdleSparkle", true)
@@ -200,7 +201,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     end
                 end
 
-                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", heldLootcard.Tag))
+                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", heldLootcard.Tag))
                 lootcardAnimationContainer:LoadGraphics()
                 lootcardAnimationContainer:Update()
                 lootcardAnimationContainer:Play("Idle", true)
