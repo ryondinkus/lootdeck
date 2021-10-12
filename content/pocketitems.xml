@@ -472,9 +472,9 @@
 				mimiccharge="12"
 				pickup="904"
 		/>
-	<card name="Left Hand"
+	<card name="The Left Hand"
 				description="Dark treasure"
-				hud="Left Hand"
+				hud="The Left Hand"
 				type="special"
 				mimiccharge="12"
 				pickup="904"
@@ -507,7 +507,7 @@
 				mimiccharge="12"
 				pickup="904"
 		/>
-	<card name="Get out of Jail Free"
+	<card name="Get out of Jail Card"
 				description="Escape plan"
 				hud="Get out of Jail Free"
 				type="special"
