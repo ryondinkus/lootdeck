@@ -119,6 +119,7 @@ end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
+
     if not data.isHoldingLootcard then
         return
     end
@@ -129,8 +130,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
         if (Isaac.GetFrameCount() % 2) == 0 then
             lootcardAnimationContainer:Update()
         end
-        
-        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - (Vector(0, 12) - p.PositionOffset)), Vector.Zero, Vector.Zero) -- TODO mess with
+
+		local flyingOffset = p:GetFlyingOffset()
+		if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
+			flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
+		end
+		local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
+
+        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
     end
 end)
 
@@ -183,7 +190,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                         data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end
-                
+
                 if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                     local color = lootcardAnimationContainer.Color
                     if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
