@@ -1,6 +1,6 @@
 local helper = include('helper_functions')
 
--- Swap the pools of Red Chests and Gold Chests
+-- trinket; Swap the pools of Red Chests and Gold Chests
 local Name = "The Left Hand"
 local Tag = "leftHand"
 local Id = Isaac.GetCardIdByName(Name)

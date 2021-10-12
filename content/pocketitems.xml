@@ -452,7 +452,7 @@
 				pickup="904"
 		/>
 	<card name="Tape Worm"
-				description="???"
+				description="Wormy Tears"
 				hud="Tape Worm"
 				type="special"
 				mimiccharge="12"
@@ -509,14 +509,14 @@
 		/>
 	<card name="Get out of Jail Card"
 				description="Escape plan"
-				hud="Get out of Jail Free"
+				hud="Get out of Jail Card"
 				type="special"
 				mimiccharge="12"
 				pickup="904"
 		/>
-	<card name="Golden Key"
+	<card name="Gold Key"
 				description="Open the gate"
-				hud="Golden Key"
+				hud="Gold Key"
 				type="special"
 				mimiccharge="12"
 				pickup="904"

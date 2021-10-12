@@ -1,46 +1,66 @@
 <items gfxroot="gfx/items/" version="1">
   <passive name="Bloody Penny"
       description="Loot the dead"
-      gfx="bloodypenny.png"
+      gfx="bloodyPenny.png"
   />
   <passive name="Swallowed Penny"
       description="Take damage, gain 1c"
-      gfx="swallowedpenny.png"
+      gfx="swallowedPenny.png"
   />
   <passive name="Counterfeit Penny"
       description="Gain an additional 1c"
-      gfx="counterfeitpenny.png"
+      gfx="counterfeitPenny.png"
   />
   <passive name="Cain's Eye"
       description="Look at the top"
-      gfx="cainseye.png"
+      gfx="cainsEye.png"
   />
   <passive name="Broken Ankh"
       description="Prevent death?"
-      gfx="brokenankh.png"
+      gfx="brokenAnkh.png"
   />
   <passive name="Curved Horn"
       description="Stronger first attack"
-      gfx="curvedhorn.png"
+      gfx="curvedHorn.png"
   />
   <passive name="Purple Heart"
       description="Monsters from the bottom"
-      gfx="purpleheart.png"
+      gfx="purpleHeart.png"
   />
   <passive name="Golden Horseshoe"
       description="Treasure from the bottom"
-      gfx="goldenhorseshoe.png"
+      gfx="goldenHorseshoe.png"
   />
   <passive name="Guppy's Hairball"
       description="Prevent damage?"
-      gfx="guppyshairball.png"
+      gfx="guppysHairball.png"
+  />
+  <passive name="Pink Eye"
+      description="Poisonous ooze"
+      gfx="pinkEye.png"
   />
   <passive name="Cancer!"
       description="The waterworks"
       gfx="cancer.png"
   />
-  <passive name="Pink Eye"
-      description="Poisonous ooze"
-      gfx="pinkeye.png"
+  <passive name="Tape Worm"
+      description="Wormy tears"
+      gfx="tapeWorm.png"
+  />
+  <passive name="AAA Battery"
+      description="Multi-purpose charger"
+      gfx="aaaBattery.png"
+  />
+  <passive name="Poker Chip"
+      description="Nothing or double"
+      gfx="pokerChip.png"
+  />
+  <passive name="The Left Hand"
+      description="Dark treasure"
+      gfx="leftHand.png"
+  />
+  <passive name="Rainbow Tapeworm"
+      description="Copycat"
+      gfx="rainbowTapeworm.png"
   />
 </items>
