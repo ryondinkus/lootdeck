@@ -49,7 +49,7 @@ for _, card in pairs(lootcards) do
                     local data = p:GetData()
                     data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
                     data.lootcardPickupAnimation:LoadGraphics()
-                    data.lootcardPickupAnimation:Play("Idle", true)
+                    data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
                 end, callback[3])
             else
                 lootdeck:AddCallback(table.unpack(callback))
@@ -119,6 +119,7 @@ end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
+
     if not data.isHoldingLootcard then
         return
     end
@@ -126,10 +127,17 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local lootcardAnimationContainer = data.lootcardPickupAnimation
 
     if not p:IsExtraAnimationFinished() then
-        if (Isaac.GetFrameCount() % 2) == 0 then
+        if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
             lootcardAnimationContainer:Update()
         end
-        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
+
+		local flyingOffset = p:GetFlyingOffset()
+		if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
+			flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
+		end
+		local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
+
+        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
     end
 end)
 
@@ -138,6 +146,9 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 		return
 	end
 	local p = collider:ToPlayer()
+    if p.SubType == PlayerType.PLAYER_THESOUL_B then
+        p = p:GetOtherTwin()
+    end
 	if not p:IsExtraAnimationFinished() then
 		return
 	end
@@ -150,7 +161,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
             if not lootcardAnimationContainer then
-                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "Idle")
+                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkle")
                 lootcardAnimationContainer = data.lootcardPickupAnimation
             end
 
@@ -179,7 +190,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                         data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end
-                
+
                 if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                     local color = lootcardAnimationContainer.Color
                     if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
