@@ -129,7 +129,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
         if (Isaac.GetFrameCount() % 2) == 0 then
             lootcardAnimationContainer:Update()
         end
-        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - Vector(0, 12)), Vector.Zero, Vector.Zero)
+        
+        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - (Vector(0, 12) - p.PositionOffset)), Vector.Zero, Vector.Zero) -- TODO mess with
     end
 end)
 
@@ -138,6 +139,9 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 		return
 	end
 	local p = collider:ToPlayer()
+    if p.SubType == PlayerType.PLAYER_THESOUL_B then
+        p = p:GetOtherTwin()
+    end
 	if not p:IsExtraAnimationFinished() then
 		return
 	end
