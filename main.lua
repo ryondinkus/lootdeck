@@ -127,7 +127,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local lootcardAnimationContainer = data.lootcardPickupAnimation
 
     if not p:IsExtraAnimationFinished() then
-        if (Isaac.GetFrameCount() % 2) == 0 then
+        if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
             lootcardAnimationContainer:Update()
         end
 
