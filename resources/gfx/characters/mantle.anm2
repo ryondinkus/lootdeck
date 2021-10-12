@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/9/2021 1:44:21 PM" Version="14" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/12/2021 5:31:22 PM" Version="14" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="characters\costumes\mantleBroken.png" Id="0"/>
+			<Spritesheet Path="costumes\mantle.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="glow" Id="0" SpritesheetId="0"/>

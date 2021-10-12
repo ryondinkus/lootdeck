@@ -1,9 +1,9 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="8/29/2021 6:10:40 PM" Version="113" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:07:32 PM" Version="114" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="characters\costumes\costume_019_brimstone body.png" Id="0"/>
-			<Spritesheet Path="characters\costumes\costume_empress.png" Id="1"/>
+			<Spritesheet Path="costumes\costume_019_brimstone body.png" Id="0"/>
+			<Spritesheet Path="costumes\costume_empress.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

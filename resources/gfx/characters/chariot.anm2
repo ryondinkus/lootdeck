@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/30/2021 2:14:23 PM" Version="5" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/12/2021 4:55:43 PM" Version="6" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="characters\costumes\costume_chariot.png" Id="0"/>
+			<Spritesheet Path="costumes\costume_chariot.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="head" Id="0" SpritesheetId="0"/>

@@ -1,9 +1,9 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="10/12/2021 12:09:32 PM" Version="129" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:15:04 PM" Version="130" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="ui\new_cardfronts.png" Id="0"/>
-			<Spritesheet Path="ui\sparkle.png" Id="1"/>
+			<Spritesheet Path="lootcard_fronts\penny.png" Id="0"/>
+			<Spritesheet Path="sparkle.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

@@ -1,10 +1,10 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="8/20/2021 8:39:58 PM" Version="105" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:18:03 PM" Version="106" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="items\pickups\loot card.png" Id="0"/>
-			<Spritesheet Path="ui\ui_lootcard.png" Id="1"/>
-			<Spritesheet Path="..\..\content\gfx\sparkle.png" Id="2"/>
+			<Spritesheet Path="loot card.png" Id="0"/>
+			<Spritesheet Path="..\..\ui\ui_lootcard.png" Id="1"/>
+			<Spritesheet Path="..\..\..\..\content\gfx\sparkle.png" Id="2"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

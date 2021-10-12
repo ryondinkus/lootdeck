@@ -8,7 +8,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 3
 
 local blackOverlay = Sprite()
-blackOverlay:Load("gfx/overlay.anm2")
+blackOverlay:Load("gfx/coloroverlays/overlay.anm2")
 blackOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
 blackOverlay:LoadGraphics()
 blackOverlay:Play("Idle", true)

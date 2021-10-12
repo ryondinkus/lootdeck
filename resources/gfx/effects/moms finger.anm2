@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="8/29/2021 5:49:15 PM" Version="7" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/12/2021 5:31:46 PM" Version="8" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="effects\moms_finger.png" Id="0"/>
+			<Spritesheet Path="moms_finger.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

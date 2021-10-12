@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="8/27/2021 12:02:29 AM" Version="108" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:25:15 PM" Version="111" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="effects\pickup_003_key.png" Id="0"/>
+			<Spritesheet Path="lost key.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

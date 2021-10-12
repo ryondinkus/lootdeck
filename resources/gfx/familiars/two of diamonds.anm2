@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="9/25/2021 12:39:15 PM" Version="110" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:42:36 PM" Version="111" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="familiars\two of diamonds.png" Id="0"/>
+			<Spritesheet Path="two of diamonds.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

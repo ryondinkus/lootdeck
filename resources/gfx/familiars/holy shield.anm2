@@ -1,9 +1,9 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/19/2021 7:29:22 PM" Version="8" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/12/2021 5:10:42 PM" Version="9" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="familiars\holy shields.png" Id="0"/>
-			<Spritesheet Path="familiars\holy shield glow.png" Id="1"/>
+			<Spritesheet Path="holy shields.png" Id="0"/>
+			<Spritesheet Path="holy shield glow.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="Body" Id="0" SpritesheetId="0"/>

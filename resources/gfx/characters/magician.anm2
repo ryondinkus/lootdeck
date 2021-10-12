@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="9/7/2021 2:27:49 PM" Version="107" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/12/2021 5:30:53 PM" Version="108" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="characters\costumes\costume_magician.png" Id="0"/>
+			<Spritesheet Path="costumes\costume_magician.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="head" Id="0" SpritesheetId="0"/>

@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/9/2021 3:51:59 PM" Version="4" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/12/2021 5:43:02 PM" Version="5" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="coloroverlays\black_overlay.png" Id="0"/>
+			<Spritesheet Path="black_overlay.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="Body" Id="0" SpritesheetId="0"/>

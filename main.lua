@@ -162,7 +162,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
             if not lootcardAnimationContainer then
-                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkle")
+                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/ui/item_dummy_animation.anm2", nil, "IdleSparkle")
                 lootcardAnimationContainer = data.lootcardPickupAnimation
             end
 
@@ -184,7 +184,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 if not lootcardAnimationContainer then
-                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/lootcard_cardfronts.anm2", nil, "Idle")
+                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/ui/lootcard_fronts.anm2", nil, "Idle")
                     lootcardAnimationContainer = data.lootcardHUDAnimation
                     local color = data.lootcardHUDAnimation.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
