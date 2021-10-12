@@ -49,7 +49,7 @@ for _, card in pairs(lootcards) do
                     local data = p:GetData()
                     data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
                     data.lootcardPickupAnimation:LoadGraphics()
-                    data.lootcardPickupAnimation:Play("Idle", true)
+                    data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
                 end, callback[3])
             else
                 lootdeck:AddCallback(table.unpack(callback))
@@ -161,7 +161,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
             if not lootcardAnimationContainer then
-                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "Idle")
+                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkle")
                 lootcardAnimationContainer = data.lootcardPickupAnimation
             end
 
