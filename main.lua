@@ -47,7 +47,6 @@ for _, card in pairs(lootcards) do
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     callback[2](_, c, p, f)
                     local data = p:GetData()
-					print(card.Tag)
                     data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag))
                     data.lootcardPickupAnimation:LoadGraphics()
                     data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
