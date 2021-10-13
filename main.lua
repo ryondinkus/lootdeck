@@ -186,15 +186,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
-                lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle")
-                data.lootcardHUDAnimation = lootcardAnimationContainer
-
-                if not lootcardAnimationContainer then
-                    local color = data.lootcardHUDAnimation.Color
+                lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle", function(lac)
+                    local color = lac.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
-                        data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                        lac.Color = Color(color.R, color.G, color.B, 0.5)
                     end
-                end
+                end)
+                data.lootcardHUDAnimation = lootcardAnimationContainer
 
                 if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                     local color = lootcardAnimationContainer.Color

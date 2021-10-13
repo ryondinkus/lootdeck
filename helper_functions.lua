@@ -818,9 +818,12 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
-function H.RegisterLootcardAnimation(lootcardAnimationContainer, animationPath, animationName)
+function H.RegisterLootcardAnimation(lootcardAnimationContainer, animationPath, animationName, callback)
     if not lootcardAnimationContainer then
         lootcardAnimationContainer = H.RegisterSprite(animationPath, nil, animationName)
+        if callback then
+            callback(lootcardAnimationContainer)
+        end
     end
     return lootcardAnimationContainer
 end
