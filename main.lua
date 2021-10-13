@@ -51,14 +51,10 @@ for _, card in pairs(lootcards) do
 
                         local lootcardAnimationContainer = data.lootcardPickupAnimation
 
-                        if not lootcardAnimationContainer then
-                            data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkleFast")
-                            lootcardAnimationContainer = data.lootcardPickupAnimation
-                        end
+                        lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkleFast")
+                        data.lootcardPickupAnimation = lootcardAnimationContainer
 
-                        lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag))
-                        lootcardAnimationContainer:LoadGraphics()
-                        lootcardAnimationContainer:Play("IdleSparkleFast", true)
+                        helper.StartLootcardAnimation(lootcardAnimationContainer, card.Tag, "IdleSparkleFast")
                         data.isHoldingLootcard = true
                     end
                 end, callback[3])
@@ -128,6 +124,8 @@ end)
 --     end
 -- end)
 
+--========== LOOTCARD HUD RENDERING ==========
+
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
 
@@ -168,18 +166,12 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
-            if not lootcardAnimationContainer then
-                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/ui/item_dummy_animation.anm2", nil, "IdleSparkle")
-                lootcardAnimationContainer = data.lootcardPickupAnimation
-            end
+            lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkle")
+            data.lootcardPickupAnimation = lootcardAnimationContainer
 
-            lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcard.Tag))
-            lootcardAnimationContainer:LoadGraphics()
-            lootcardAnimationContainer:Update()
-            lootcardAnimationContainer:Play("IdleSparkle", true)
+            helper.StartLootcardAnimation(lootcardAnimationContainer, lootcard.Tag, "IdleSparkle")
             data.isHoldingLootcard = true
         end
 	end
@@ -191,11 +183,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
             local heldCardId = p:GetCard(0)
             local heldLootcard = helper.GetLootcardById(heldCardId)
             if heldLootcard then
+
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
+                lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle")
+                data.lootcardHUDAnimation = lootcardAnimationContainer
+
                 if not lootcardAnimationContainer then
-                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/ui/lootcard_fronts.anm2", nil, "Idle")
-                    lootcardAnimationContainer = data.lootcardHUDAnimation
                     local color = data.lootcardHUDAnimation.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                         data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
@@ -211,10 +205,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     end
                 end
 
-                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", heldLootcard.Tag))
-                lootcardAnimationContainer:LoadGraphics()
-                lootcardAnimationContainer:Update()
-                lootcardAnimationContainer:Play("Idle", true)
+                helper.StartLootcardAnimation(lootcardAnimationContainer, heldLootcard.Tag, "Idle")
 
                 lootcardAnimationContainer:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else

@@ -818,4 +818,17 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
+function H.RegisterLootcardAnimation(lootcardAnimationContainer, animationPath, animationName)
+    if not lootcardAnimationContainer then
+        lootcardAnimationContainer = H.RegisterSprite(animationPath, nil, animationName)
+    end
+    return lootcardAnimationContainer
+end
+
+function H.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
+    lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag))
+    lootcardAnimationContainer:LoadGraphics()
+    lootcardAnimationContainer:Play(animationName, true)
+end
+
 return H
