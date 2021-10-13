@@ -47,7 +47,7 @@ for _, card in pairs(lootcards) do
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     callback[2](_, c, p, f)
                     local data = p:GetData()
-                    data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
+                    data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag))
                     data.lootcardPickupAnimation:LoadGraphics()
                     data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
                 end, callback[3])
@@ -161,11 +161,11 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
             if not lootcardAnimationContainer then
-                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkle")
+                data.lootcardPickupAnimation = helper.RegisterSprite("gfx/ui/item_dummy_animation.anm2", nil, "IdleSparkle")
                 lootcardAnimationContainer = data.lootcardPickupAnimation
             end
 
-            lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", lootcard.Tag))
+            lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcard.Tag))
             lootcardAnimationContainer:LoadGraphics()
             lootcardAnimationContainer:Update()
             lootcardAnimationContainer:Play("IdleSparkle", true)
@@ -183,7 +183,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 if not lootcardAnimationContainer then
-                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/lootcard_cardfronts.anm2", nil, "Idle")
+                    data.lootcardHUDAnimation = helper.RegisterSprite("gfx/ui/lootcard_fronts.anm2", nil, "Idle")
                     lootcardAnimationContainer = data.lootcardHUDAnimation
                     local color = data.lootcardHUDAnimation.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
@@ -200,7 +200,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     end
                 end
 
-                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", heldLootcard.Tag))
+                lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", heldLootcard.Tag))
                 lootcardAnimationContainer:LoadGraphics()
                 lootcardAnimationContainer:Update()
                 lootcardAnimationContainer:Play("Idle", true)

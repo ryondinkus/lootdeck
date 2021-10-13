@@ -6,7 +6,7 @@
    for exemple, priority="1" would put the costum behind isaac's head, and
    priority="99" would put the costum in front of all other costums
 -->
-<costumes anm2root="gfx/">
+<costumes anm2root="gfx/characters/">
 <costume
 	anm2path="empress.anm2"
 	priority="1"

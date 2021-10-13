@@ -1,5 +1,5 @@
 local function CostumePathToId(path)
-    return Isaac.GetCostumeIdByPath(string.format("gfx/%s.anm2", path))
+    return Isaac.GetCostumeIdByPath(string.format("gfx/characters/%s.anm2", path))
 end
 
 return {
