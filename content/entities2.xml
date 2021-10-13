@@ -1,37 +1,37 @@
 <entities anm2root="gfx/" version="5">
-  <entity anm2path="loot card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Loot Card" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="904">
+  <entity anm2path="items/pickups/loot card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Loot Card" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="904">
          <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
   </entity>
-  <entity anm2path="lost penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Penny" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7452">
+  <entity anm2path="effects/lost penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Penny" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7452">
   </entity>
-  <entity anm2path="lost key.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Key" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7453">
+  <entity anm2path="effects/lost key.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Key" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7453">
   </entity>
-  <entity anm2path="lost bomb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Bomb" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7454">
+  <entity anm2path="effects/lost bomb.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Lost Bomb" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="7454">
   </entity>
-  <entity anm2path="moms finger.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Mom's Finger" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="8292">
+  <entity anm2path="effects/moms finger.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Mom's Finger" numGridCollisionPoints="0" shadowSize="16" stageHP="0" variant="8292">
   </entity>
-  <entity anm2path="devil hand.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="14" collisionMass="1" collisionRadius="13" friction="1" id="3" name="Devil Hand" numGridCollisionPoints="12" shadowSize="22" stageHP="0" variant="6447">
+  <entity anm2path="familiars/devil hand.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="14" collisionMass="1" collisionRadius="13" friction="1" id="3" name="Devil Hand" numGridCollisionPoints="12" shadowSize="22" stageHP="0" variant="6447">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="charged penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Charged Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="9192">
+  <entity anm2path="items/pickups/charged penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Charged Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="9192">
     <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="two of diamonds.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Diamond Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="8321">
+  <entity anm2path="familiars/two of diamonds.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Diamond Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="8321">
 	  <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="credit card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Credit Card Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="4953">
+  <entity anm2path="familiars/credit card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="13" friction="1" id="3" name="Credit Card Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="4953">
 	  <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="holy shield.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="2" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Holy Shield" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="2122">
+  <entity anm2path="familiars/holy shield.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="2" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Holy Shield" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="2122">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="lost soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Lost Soul Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="1296">
+  <entity anm2path="familiars/lost soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Lost Soul Baby" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="1296">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="lost soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Lost Soul Love" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="1297">
+  <entity anm2path="familiars/lost soul.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Lost Soul Love" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="1297">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
-  <entity anm2path="justice haunt.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="14" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Justice Haunt" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="7481">
+  <entity anm2path="familiars/justice haunt.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="14" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Justice Haunt" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="7481">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
 </entities>
