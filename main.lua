@@ -46,10 +46,21 @@ for _, card in pairs(lootcards) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     callback[2](_, c, p, f)
-                    local data = p:GetData()
-                    data.lootcardPickupAnimation:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
-                    data.lootcardPickupAnimation:LoadGraphics()
-                    data.lootcardPickupAnimation:Play("IdleSparkleFast", true)
+                    if (f & UseFlag.USE_MIMIC == 0) then
+                        local data = p:GetData()
+
+                        local lootcardAnimationContainer = data.lootcardPickupAnimation
+
+                        if not lootcardAnimationContainer then
+                            data.lootcardPickupAnimation = helper.RegisterSprite("gfx/item_dummy_animation.anm2", nil, "IdleSparkle")
+                            lootcardAnimationContainer = data.lootcardPickupAnimation
+                        end
+
+                        lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/characters/card_animations/%s.png", card.Tag))
+                        lootcardAnimationContainer:LoadGraphics()
+                        lootcardAnimationContainer:Play("IdleSparkleFast", true)
+                        data.isHoldingLootcard = true
+                    end
                 end, callback[3])
             else
                 lootdeck:AddCallback(table.unpack(callback))
