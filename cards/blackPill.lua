@@ -39,7 +39,7 @@ local function MC_USE_CARD(_, c, p)
         end)
 	elseif effect == 1 then
         helper.ForEachEntityInRoom(function(entity)
-            entity:AddConfusion(EntityRef(f), 150, false)
+            entity:AddConfusion(EntityRef(p), 150, false)
             local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
             poof.Color = Color(1,1,1,1,1,1,1)
         end, nil, nil, nil,
