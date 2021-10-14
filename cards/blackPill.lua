@@ -9,7 +9,6 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
 	local effect = lootdeck.rng:RandomInt(3)
-	local data = p:GetData()
 	if effect == 0 then
         sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
         local illegalParents = {
