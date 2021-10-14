@@ -818,6 +818,26 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
+function H.GetPlayerInventory(p)
+    local itemConfig = Isaac.GetItemConfig()
+    local numCollectibles = #itemConfig:GetCollectibles()
+    local inv = {}
+    for i = 1, numCollectibles do
+        if itemConfig:GetCollectible(i) then
+            inv[i] = p:GetCollectibleNum(i)
+        end
+    end
+    local allHeld = {}
+	for id, numOwned in pairs(inv) do
+		if numOwned > 0 then
+			for i = 1, numOwned do
+				allHeld[#allHeld + 1] = id
+			end
+		end
+	end
+    return allHeld
+end
+
 function H.RegisterLootcardAnimation(lootcardAnimationContainer, animationPath, animationName, callback)
     if not lootcardAnimationContainer then
         lootcardAnimationContainer = H.RegisterSprite(animationPath, nil, animationName)
