@@ -9,7 +9,6 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
     local effect = lootdeck.rng:RandomInt(3)
-    local data = p:GetData()
     if effect == 0 then
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_BEAN)
     elseif effect == 1 then
