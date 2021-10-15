@@ -34,4 +34,22 @@
   <entity anm2path="familiars/justice haunt.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionInterval="14" collisionMass="3" collisionRadius="13" friction="1" id="3" name="Justice Haunt" numGridCollisionPoints="12" shadowSize="11" stageHP="0" variant="7481">
       <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
   </entity>
+  <entity anm2path="items/pickups/double nickel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Nickel" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2252">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="items/pickups/double dime.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Dime" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2253">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="items/pickups/double lucky penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Lucky Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2254">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="items/pickups/double sticky nickel.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Sticky Nickel" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2255">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="items/pickups/double golden penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Golden Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2256">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
+  <entity anm2path="items/pickups/double charged penny.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Double Charged Penny" numGridCollisionPoints="24" shadowSize="14" stageHP="0" variant="2257">
+    <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+  </entity>
 </entities>
