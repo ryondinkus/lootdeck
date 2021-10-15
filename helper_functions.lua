@@ -18,7 +18,7 @@ function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability, chosen
 	for i, entity in pairs(entities) do
 		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData()[chosenTag or "chosen"]) then
             if not tag or entity:GetData()[tag] then
-                if filter(entity) then
+                if not filter or filter(entity) then
                     enemies[key] = entities[i]
                     key = key + 1;
                 end
