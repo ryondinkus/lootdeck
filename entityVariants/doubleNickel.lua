@@ -1,5 +1,5 @@
-local Name = "Charged Penny"
-local Tag = "chargedPenny"
+local Name = "Double Nickel"
+local Tag = "doubleNickel"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
@@ -8,8 +8,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     local sprite = pi:GetSprite()
     if p ~= 0 then
          if data.canTake then
-            p:AddCoins(1)
-            p:FullCharge()
+            p:AddCoins(10)
             lootdeck.sfx:Play(SoundEffect.SOUND_PENNYPICKUP)
             pi.Velocity = Vector.Zero
             pi.Touched = true
@@ -24,7 +23,7 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
     local data = pi:GetData()
     local sprite = pi:GetSprite()
     if sprite:IsEventTriggered("DropSound") then
-        lootdeck.sfx:Play(SoundEffect.SOUND_PENNYDROP)
+        lootdeck.sfx:Play(SoundEffect.SOUND_NICKELDROP)
     end
     if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and sprite:IsEventTriggered("DropSound") and not data.canTake then
         data.canTake = true
