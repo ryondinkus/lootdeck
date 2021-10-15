@@ -9,7 +9,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     if p ~= 0 then
          if data.canTake then
             p:AddCoins(10)
-            lootdeck.sfx:Play(SoundEffect.SOUND_PENNYPICKUP)
+            lootdeck.sfx:Play(SoundEffect.SOUND_NICKELPICKUP)
             pi.Velocity = Vector.Zero
             pi.Touched = true
             pi.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
