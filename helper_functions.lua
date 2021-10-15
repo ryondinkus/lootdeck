@@ -11,15 +11,17 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability, chosenTag)
+function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability, chosenTag, filter)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
 	local key = 1;
 	for i, entity in pairs(entities) do
 		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData()[chosenTag or "chosen"]) then
             if not tag or entity:GetData()[tag] then
-                enemies[key] = entities[i]
-                key = key + 1;
+                if not filter or filter(entity) then
+                    enemies[key] = entities[i]
+                    key = key + 1;
+                end
             end
 		end
 	end
@@ -40,8 +42,8 @@ function H.ListBossesInRoom(pos, ignoreMiniBosses)
 end
 
 -- function for finding random enemy in the room
-function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag)
-	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag)
+function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag, filter)
+	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag, false, nil, filter)
     local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
     if chosenEnt then chosenEnt:GetData().chosen = noDupes end
     return chosenEnt

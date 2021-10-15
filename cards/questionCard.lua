@@ -7,7 +7,15 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
+    local enemy = helper.FindRandomEnemy(p.Position, nil, true, nil, function(entity) return not entity:IsBoss() end)
 
+    if enemy then
+        local friend = Isaac.Spawn(enemy.Type, enemy.Variant, enemy.SubType, p.Position, Vector.Zero, p)
+        friend:AddCharmed(EntityRef(p), -1)
+    else
+        local friend = Isaac.Spawn(EntityType.ENTITY_GAPER, 1, 0, p.Position, Vector.Zero, p)
+        friend:AddCharmed(EntityRef(p), -1)
+    end
 end
 
 return {
