@@ -34,7 +34,7 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
     if sprite:IsEventTriggered("DropSound") then
         lootdeck.sfx:Play(SoundEffect.SOUND_PENNYDROP)
     end
-    if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and sprite:IsEventTriggered("DropSound") and not data.canTake then
+    if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and ((sprite:IsPlaying("Appear") and sprite:IsEventTriggered("DropSound")) or sprite:IsPlaying("Idle")) and not data.canTake then
         data.canTake = true
     end
 end
