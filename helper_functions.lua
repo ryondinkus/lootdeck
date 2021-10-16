@@ -487,13 +487,17 @@ function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callbac
 end
 
 function H.ForEachPlayer(callback, collectibleId)
+    local shouldReturn = nil
     for x = 0, Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
             local p = Isaac.GetPlayer(x)
-            callback(p, p:GetData())
+            if callback(p, p:GetData()) == false then
+                shouldReturn = false
+            end
         end
     end
+    return shouldReturn
 end
 
 function H.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)

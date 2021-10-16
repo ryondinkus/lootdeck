@@ -11,7 +11,6 @@ local function MC_USE_CARD(_, c, p)
     local rng = lootdeck.rng
     local game = Game()
     local room = game:GetRoom()
-    local roomType = room:GetType()
     local itemPool = game:GetItemPool()
     local inv = helper.GetPlayerInventory(p)
     if helper.LengthOfTable(inv) > 0 then
@@ -24,6 +23,7 @@ local function MC_USE_CARD(_, c, p)
         local collectible = itemPool:GetCollectible(currentPool)
         data[Tag .. "Collectible"] = collectible
         data[Tag] = true
+        return false
     else
         helper.FuckYou(p)
     end

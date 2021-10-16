@@ -22,6 +22,7 @@ local function MC_USE_CARD(_, c, p)
     else
         p:PlayExtraAnimation("Glitch")
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
+        return false
     end
 end
 

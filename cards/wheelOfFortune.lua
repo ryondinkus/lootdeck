@@ -29,6 +29,7 @@ local function MC_USE_CARD(_, c, p)
     elseif effect == 1 then
 		helper.TakeSelfDamage(p, 1)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+        return false
     elseif effect == 2 then
         for j=1,3 do
             local cardId = helper.GetWeightedLootCardId()
