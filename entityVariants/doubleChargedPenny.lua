@@ -1,5 +1,5 @@
-local Name = "Charged Penny"
-local Tag = "chargedPenny"
+local Name = "Double Charged Penny"
+local Tag = "doubleChargedPenny"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
@@ -8,7 +8,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     local sprite = pi:GetSprite()
     if p ~= 0 then
          if data.canTake then
-            p:AddCoins(1)
+            p:AddCoins(2)
             p:FullCharge()
             lootdeck.sfx:Play(SoundEffect.SOUND_PENNYPICKUP)
             pi.Velocity = Vector.Zero
