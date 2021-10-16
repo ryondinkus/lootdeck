@@ -11,10 +11,10 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
          if data.canTake then
             p:AddCoins(2)
             local hud = Game():GetHUD()
-            hud:ShowItemText("Lucky Penny", "Luck Up")
+            hud:ShowItemText("Lucky Pennies", "Luck Up")
             p:PlayExtraAnimation("Happy")
             lootdeck.sfx:Play(SoundEffect.SOUND_LUCKYPICKUP)
-            lootdeck.sfx:Play(SoundEffect.SOUND_THUMBSUP)
+            lootdeck.sfx:Play(SoundEffect.SOUND_THUMBSUP_AMPLIFIED)
             if playerData[Tag] then playerData[Tag] = playerData[Tag] + 1
             else playerData[Tag] = 1 end
             p:AddCacheFlags(CacheFlag.CACHE_LUCK)
