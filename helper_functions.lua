@@ -647,6 +647,8 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
         if not hudOffset or type(hudOffset) ~= "number" or hudOffset < 1 or hudOffset > 10 then
             hudOffset = nil
         end
+    else
+        hudOffset = lootdeck.f.hudOffset
     end
 
     local hudOffsetVector = Vector.Zero
@@ -844,20 +846,24 @@ function H.GetPlayerInventory(p)
     return allHeld
 end
 
-function H.RegisterLootcardAnimation(lootcardAnimationContainer, animationPath, animationName, callback)
-    if not lootcardAnimationContainer then
-        lootcardAnimationContainer = H.RegisterSprite(animationPath, nil, animationName)
+function H.RegisterAnimation(animationContainer, animationPath, animationName, callback)
+    if not animationContainer then
+        animationContainer = H.RegisterSprite(animationPath, nil, animationName)
         if callback then
-            callback(lootcardAnimationContainer)
+            callback(animationContainer)
         end
     end
-    return lootcardAnimationContainer
+    return animationContainer
 end
 
 function H.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
     lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag))
     lootcardAnimationContainer:LoadGraphics()
     lootcardAnimationContainer:Play(animationName, true)
+end
+
+function H.KeyboardTriggered(key, controllerIndex)
+	return Input.IsButtonTriggered(key, controllerIndex)
 end
 
 function H.sign(x)
