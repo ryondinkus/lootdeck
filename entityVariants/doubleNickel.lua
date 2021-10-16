@@ -1,33 +1,15 @@
+local helper = include("helper_functions")
+
 local Name = "Double Nickel"
 local Tag = "doubleNickel"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
-    local p = e:ToPlayer() or 0
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
-    if p ~= 0 then
-         if data.canTake then
-            p:AddCoins(10)
-            lootdeck.sfx:Play(SoundEffect.SOUND_NICKELPICKUP)
-            pi.Velocity = Vector.Zero
-            pi.Touched = true
-            pi.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
-            sprite:Play("Collect", true)
-            pi:Die()
-        end
-    end
+    helper.CustomCoinPrePickupCollision(pi, e, 10, SoundEffect.SOUND_NICKELPICKUP)
 end
 
 local function MC_POST_PICKUP_UPDATE(_, pi)
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
-    if sprite:IsEventTriggered("DropSound") then
-        lootdeck.sfx:Play(SoundEffect.SOUND_NICKELDROP)
-    end
-    if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and ((sprite:IsPlaying("Appear") and sprite:IsEventTriggered("DropSound")) or sprite:IsPlaying("Idle")) and not data.canTake then
-        data.canTake = true
-    end
+    helper.CustomCoinPickupUpdate(pi, SoundEffect.SOUND_NICKELDROP)
 end
 
 return {

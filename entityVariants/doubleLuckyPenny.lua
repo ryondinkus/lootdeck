@@ -1,42 +1,29 @@
+local helper = include("helper_functions")
+
 local Name = "Double Lucky Penny"
 local Tag = "doubleLuckyPenny"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
-    local p = e:ToPlayer() or 0
-    local playerData = p:GetData()
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
-    if p ~= 0 then
-         if data.canTake then
-            p:AddCoins(2)
-            local hud = Game():GetHUD()
-            hud:ShowItemText("Lucky Pennies", "Luck Up")
-            p:PlayExtraAnimation("Happy")
-            lootdeck.sfx:Play(SoundEffect.SOUND_LUCKYPICKUP)
-            lootdeck.sfx:Play(SoundEffect.SOUND_THUMBSUP_AMPLIFIED)
-            if playerData[Tag] then playerData[Tag] = playerData[Tag] + 1
-            else playerData[Tag] = 1 end
-            p:AddCacheFlags(CacheFlag.CACHE_LUCK)
-            p:EvaluateItems()
-            pi.Velocity = Vector.Zero
-            pi.Touched = true
-            pi.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
-            sprite:Play("Collect", true)
-            pi:Die()
+    helper.CustomCoinPrePickupCollision(pi, e, 2, nil, function(p)
+        local data = p:GetData()
+        local hud = Game():GetHUD()
+        hud:ShowItemText("Lucky Pennies", "Luck Up")
+        p:PlayExtraAnimation("Happy")
+        lootdeck.sfx:Play(SoundEffect.SOUND_LUCKYPICKUP)
+        lootdeck.sfx:Play(SoundEffect.SOUND_THUMBSUP_AMPLIFIED)
+        if data[Tag] then
+            data[Tag] = data[Tag] + 1
+        else
+            data[Tag] = 1
         end
-    end
+        p:AddCacheFlags(CacheFlag.CACHE_LUCK)
+        p:EvaluateItems()
+    end)
 end
 
 local function MC_POST_PICKUP_UPDATE(_, pi)
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
-    if sprite:IsEventTriggered("DropSound") then
-        lootdeck.sfx:Play(SoundEffect.SOUND_PENNYDROP)
-    end
-    if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and ((sprite:IsPlaying("Appear") and sprite:IsEventTriggered("DropSound")) or sprite:IsPlaying("Idle")) and not data.canTake then
-        data.canTake = true
-    end
+    helper.CustomCoinPickupUpdate(pi, SoundEffect.SOUND_PENNYDROP)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
