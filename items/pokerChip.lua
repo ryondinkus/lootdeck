@@ -19,7 +19,7 @@ local function MC_POST_PICKUP_INIT(_, pickup)
         and pickup.Variant ~= entityVariants.doubleNickel.Id
         and pickup.Variant ~= entityVariants.doubleDime.Id
         and pickup.Variant ~= entityVariants.doubleLuckyPenny.Id
-        and pickup.Variant ~= entityVariants.doubleStickyNickel.Id 
+        and pickup.Variant ~= entityVariants.doubleStickyNickel.Id
         and pickup.Variant ~= entityVariants.doubleGoldenPenny.Id
         and pickup.Variant ~= entityVariants.doubleChargedPenny.Id then
             if helper.PercentageChance(50) then
@@ -43,12 +43,12 @@ local function MC_POST_PICKUP_INIT(_, pickup)
                     newVariant = entityVariants.doubleChargedPenny.Id
                 end
 
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, Vector.Zero, pickup)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup)
                 pickup:Remove()
             else
                 pickup:Remove()
             end
-        end 
+        end
     end
 
 
