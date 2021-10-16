@@ -41,9 +41,7 @@ end
 
 local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
-    print(data[Tag])
     if data[Tag] then
-        print("hehe")
         p.Luck = p.Luck + (2 * data[Tag])
     end
 end
