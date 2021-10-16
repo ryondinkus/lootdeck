@@ -1,3 +1,5 @@
+local json = include("json")
+
 lootdeck = RegisterMod("Loot Deck", 1)
 
 function table.deepCopy(original)
@@ -28,7 +30,10 @@ local defaultStartupValues = {
     blueMap = false,
     compass = false,
     map = false,
-    lostSoul = false
+    lostSoul = false,
+    hudOffset = 0,
+    hudOffsetCountdown = 0,
+    hudOffsetControlsCountdown = 0
 }
 
 lootdeck.rng = RNG()
@@ -51,7 +56,7 @@ for _, card in pairs(lootcards) do
 
                         local lootcardAnimationContainer = data.lootcardPickupAnimation
 
-                        lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkleFast")
+                        lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkleFast")
                         data.lootcardPickupAnimation = lootcardAnimationContainer
 
                         helper.StartLootcardAnimation(lootcardAnimationContainer, card.Tag, "IdleSparkleFast")
@@ -81,10 +86,21 @@ for _, item in pairs(items) do
     end
 end
 
--- set rng seed
+local HUD_OFFSET_CONTROLS_WAIT_FRAMES = 4 * 60
+local HUD_OFFSET_CONTROLS_FADE_FRAMES = 2 * 60
+
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
     lootdeck.f = table.deepCopy(defaultStartupValues)
+
+    if not ModConfigMenu then
+        if lootdeck:HasData() then
+            local savedData = json.decode(lootdeck:LoadData())
+            lootdeck.f.hudOffset = savedData.hudOffset
+        end
+
+        lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
+    end
 end)
 
 -- Temporary health callback
@@ -125,6 +141,62 @@ end)
 -- end)
 
 --========== LOOTCARD HUD RENDERING ==========
+
+lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
+    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+end)
+
+
+local HUD_OFFSET_WAIT_FRAMES = 1 * 60
+local HUD_OFFSET_FADE_FRAMES = 0.5 * 60
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
+    if not ModConfigMenu then
+        if not Game():IsPaused() then
+            helper.ForEachPlayer(function(p)
+                if helper.KeyboardTriggered(Keyboard.KEY_LEFT_BRACKET, p.ControllerIndex) then
+                    lootdeck.f.hudOffset = math.max(lootdeck.f.hudOffset - 1, 0)
+                    lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
+                elseif helper.KeyboardTriggered(Keyboard.KEY_RIGHT_BRACKET, p.ControllerIndex) then
+                    lootdeck.f.hudOffset = math.min(lootdeck.f.hudOffset + 1, 10)
+                    lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
+                end
+            end)
+        end
+        lootdeck.f.hudOffsetCountdown = math.max(0, lootdeck.f.hudOffsetCountdown - 1)
+
+        if not lootdeck.f.hudOffsetPopup then
+            lootdeck.f.hudOffsetPopup = helper.RegisterAnimation(nil, "gfx/ui/hudoffsetmenu.anm2", "Idle")
+        end
+
+        if lootdeck.f.hudOffsetCountdown > 0 then
+            lootdeck.f.hudOffsetPopup:SetFrame(lootdeck.f.hudOffset)
+            local existingColor = lootdeck.f.hudOffsetPopup.Color
+            if lootdeck.f.hudOffsetCountdown - HUD_OFFSET_FADE_FRAMES > 0 then
+                lootdeck.f.hudOffsetPopup.Color = Color(existingColor.R, existingColor.G, existingColor.B, 1)
+            else
+                local normalizedOpacity = lootdeck.f.hudOffsetCountdown / HUD_OFFSET_FADE_FRAMES
+                lootdeck.f.hudOffsetPopup.Color = Color(existingColor.R, existingColor.G, existingColor.B, normalizedOpacity)
+            end
+        else
+            local existingColor = lootdeck.f.hudOffsetPopup.Color
+            lootdeck.f.hudOffsetPopup.Color = Color(existingColor.R, existingColor.G, existingColor.B, 0)
+        end
+        lootdeck.f.hudOffsetPopup:Render(Vector(helper.GetScreenSize().X / 2, helper.GetScreenSize().Y - 30), Vector.Zero, Vector.Zero)
+
+        if lootdeck.f.hudOffsetControlsCountdown > 0 then
+            local message = "You can change the mod HUD offset using \091 and \093"
+            local position = Vector(20, helper.GetScreenSize().Y - 25)
+            if lootdeck.f.hudOffsetControlsCountdown - HUD_OFFSET_CONTROLS_FADE_FRAMES > 0 then
+                Isaac.RenderText(message, position.X, position.Y, 1, 1, 1, 1)
+            else
+                local normalizedOpacity = lootdeck.f.hudOffsetControlsCountdown / HUD_OFFSET_CONTROLS_FADE_FRAMES
+                Isaac.RenderText(message, position.X, position.Y, 1, 1, 1, normalizedOpacity)
+            end
+            lootdeck.f.hudOffsetControlsCountdown = math.max(0, lootdeck.f.hudOffsetControlsCountdown - 1)
+        end
+    end
+end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
@@ -168,7 +240,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
         if lootcard then
             local lootcardAnimationContainer = data.lootcardPickupAnimation
 
-            lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkle")
+            lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkle")
             data.lootcardPickupAnimation = lootcardAnimationContainer
 
             helper.StartLootcardAnimation(lootcardAnimationContainer, lootcard.Tag, "IdleSparkle")
@@ -186,7 +258,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
-                lootcardAnimationContainer = helper.RegisterLootcardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle", function(lac)
+                lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle", function(lac)
                     local color = lac.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                         lac.Color = Color(color.R, color.G, color.B, 0.5)
