@@ -10,13 +10,12 @@ local function MC_USE_CARD(_, c, p)
 	local data = p:GetData()
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
 		Isaac.Explode(p.Position, nil, 40)
+		return false
 	else
 		data[Tag] = 1
 	end
 end
 
--- TODO make it so it only explodes once on enemies that withstand damage
--- if used with no enemies in room, explode on player (ONLY IF FIRST EXPLOSION)
 local function MC_POST_PEFFECT_UPDATE(_, p)
 	helper.StaggerSpawn(Tag, p, 15, 3, function(p)
 		local target = helper.FindRandomEnemy(p.Position) or 0

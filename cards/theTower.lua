@@ -9,9 +9,12 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
 	data[Tag] = 1
+    local noEnemies = true
 	for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, true)) do
 		enemy:GetData()[Tag] = 1
+        noEnemies = false
 	end
+    if noEnemies then return false end
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)

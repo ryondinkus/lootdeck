@@ -10,9 +10,9 @@ return {
     guppysHairball = include("items/guppysHairball"),
     cancer = include("items/cancer"),
     pinkEye = include("items/pinkEye"),
-    tapeWorm = include("cards/tapeWorm"),
-    aaaBattery = include("cards/aaaBattery"),
-    pokerChip = include("cards/pokerChip"),
-    leftHand = include("cards/leftHand"),
-    rainbowTapeworm = include("cards/rainbowTapeworm")
+    tapeWorm = include("items/tapeWorm"),
+    aaaBattery = include("items/aaaBattery"),
+    pokerChip = include("items/pokerChip"),
+    leftHand = include("items/leftHand"),
+    rainbowTapeworm = include("items/rainbowTapeworm")
 }

@@ -487,13 +487,17 @@ function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callbac
 end
 
 function H.ForEachPlayer(callback, collectibleId)
+    local shouldReturn = nil
     for x = 0, Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
             local p = Isaac.GetPlayer(x)
-            callback(p, p:GetData())
+            if callback(p, p:GetData()) == false then
+                shouldReturn = false
+            end
         end
     end
+    return shouldReturn
 end
 
 function H.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)
@@ -860,6 +864,43 @@ end
 
 function H.KeyboardTriggered(key, controllerIndex)
 	return Input.IsButtonTriggered(key, controllerIndex)
+end
+
+function H.sign(x)
+  return x > 0 and 1 or x < 0 and -1 or 0
+end
+
+function H.CustomCoinPrePickupCollision(pi, e, amount, sfx, isFinished)
+    local p = e:ToPlayer() or 0
+    local data = pi:GetData()
+    local sprite = pi:GetSprite()
+    if p ~= 0 then
+         if data.canTake then
+            p:AddCoins(amount)
+            if sfx then
+               lootdeck.sfx:Play(sfx) 
+            end
+            pi.Velocity = Vector.Zero
+            pi.Touched = true
+            pi.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+            sprite:Play("Collect", true)
+            if isFinished then
+                isFinished(p)
+            end
+            pi:Die()
+        end
+    end
+end
+
+function H.CustomCoinPickupUpdate(pi, sfx)
+    local data = pi:GetData()
+    local sprite = pi:GetSprite()
+    if sfx and sprite:IsEventTriggered("DropSound") then
+        lootdeck.sfx:Play(sfx)
+    end
+    if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and (((sprite:IsPlaying("Appear") or sprite:IsPlaying("Reappear")) and sprite:IsEventTriggered("DropSound")) or sprite:IsPlaying("Idle")) and not data.canTake then
+        data.canTake = true
+    end
 end
 
 return H

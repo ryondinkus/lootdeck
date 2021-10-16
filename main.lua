@@ -50,8 +50,8 @@ for _, card in pairs(lootcards) do
         for _, callback in pairs(card.callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    callback[2](_, c, p, f)
-                    if (f & UseFlag.USE_MIMIC == 0) then
+                    local result = callback[2](_, c, p, f)
+                    if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
                         local data = p:GetData()
 
                         local lootcardAnimationContainer = data.lootcardPickupAnimation

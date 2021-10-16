@@ -1,11 +1,11 @@
 local helper = include("helper_functions")
 
-local Name = "Charged Penny"
-local Tag = "chargedPenny"
+local Name = "Double Charged Penny"
+local Tag = "doubleChargedPenny"
 local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
-    helper.CustomCoinPrePickupCollision(pi, e, 1, SoundEffect.SOUND_PENNYPICKUP, function(p)
+    helper.CustomCoinPrePickupCollision(pi, e, 2, SoundEffect.SOUND_PENNYPICKUP, function(p)
         p:FullCharge()
     end)
 end

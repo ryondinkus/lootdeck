@@ -9,6 +9,7 @@ local Weight = 4
 local function MC_USE_CARD(_, c, p)
 	local target = helper.FindRandomEnemy(p.Position) or p
     Isaac.Explode(target.Position, nil, 40)
+	if target == p then return false end
 end
 
 return {
