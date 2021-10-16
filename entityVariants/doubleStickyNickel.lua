@@ -50,10 +50,10 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
                     directionVector = Vector(directionVector.X, -directionVector.Y)
                 end
 
-                local firstNickel = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_NICKEL, pi.Position, directionVector, pi.Parent)
+                local firstNickel = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_NICKEL, pi.Position, directionVector, pi)
                 firstNickel:GetSprite():Play("Idle", true)
                 firstNickel.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
-                local secondNickel = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_NICKEL, pi.Position, directionVector:Rotated(directionVariant), pi.Parent)
+                local secondNickel = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_NICKEL, pi.Position, directionVector:Rotated(directionVariant), pi)
                 secondNickel:GetSprite():Play("Idle", true)
                 secondNickel.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
                 pi:Remove()

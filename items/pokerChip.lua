@@ -13,7 +13,7 @@ local function MC_POST_PICKUP_INIT(_, pickup)
         hasItem = true
     end, Id)
 
-    if hasItem then
+    if pickup:GetSprite():IsPlaying("Appear") and hasItem and pickup.SpawnerVariant ~= entityVariants.doubleStickyNickel.Id then
         if (pickup.Variant == PickupVariant.PICKUP_COIN or pickup.Variant == entityVariants.chargedPenny.Id)
         and pickup.SubType ~= CoinSubType.COIN_DOUBLEPACK
         and pickup.Variant ~= entityVariants.doubleNickel.Id
