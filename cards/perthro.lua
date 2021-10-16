@@ -11,7 +11,6 @@ local function MC_USE_CARD(_, c, p)
     local rng = lootdeck.rng
     local game = Game()
     local room = game:GetRoom()
-    local roomType = room:GetType()
     local itemPool = game:GetItemPool()
     local inv = helper.GetPlayerInventory(p)
     if helper.LengthOfTable(inv) > 0 then
@@ -24,6 +23,7 @@ local function MC_USE_CARD(_, c, p)
         local collectible = itemPool:GetCollectible(currentPool)
         data[Tag .. "Collectible"] = collectible
         data[Tag] = true
+        return false
     else
         helper.FuckYou(p)
     end
@@ -35,6 +35,12 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
         if p:IsExtraAnimationFinished() then
             local collectible = data[Tag .. "Collectible"]
             local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
+            if itemConfig.Type == ItemType.ITEM_ACTIVE then
+                if p:GetActiveItem() ~= 0 then
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, p:GetActiveItem(), Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector(0,0), p)
+                    p:RemoveCollectible(p:GetActiveItem(), false, ActiveSlot.SLOT_PRIMARY)
+                end
+            end
             local hud = Game():GetHUD()
             hud:ShowItemText(p, itemConfig)
             p:AnimateCollectible(collectible)
