@@ -35,6 +35,12 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
         if p:IsExtraAnimationFinished() then
             local collectible = data[Tag .. "Collectible"]
             local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
+            if itemConfig.Type == ItemType.ITEM_ACTIVE then
+                if p:GetActiveItem() ~= 0 then
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, p:GetActiveItem(), Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector(0,0), p)
+                    p:RemoveCollectible(p:GetActiveItem(), false, ActiveSlot.SLOT_PRIMARY)
+                end
+            end
             local hud = Game():GetHUD()
             hud:ShowItemText(p, itemConfig)
             p:AnimateCollectible(collectible)
