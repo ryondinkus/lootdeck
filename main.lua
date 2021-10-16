@@ -157,10 +157,12 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 if helper.KeyboardTriggered(Keyboard.KEY_LEFT_BRACKET, p.ControllerIndex) then
                     lootdeck.f.hudOffset = math.max(lootdeck.f.hudOffset - 1, 0)
                     lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
+					lootdeck.sfx:Play(SoundEffect.SOUND_PLOP,1,0)
                 elseif helper.KeyboardTriggered(Keyboard.KEY_RIGHT_BRACKET, p.ControllerIndex) then
                     lootdeck.f.hudOffset = math.min(lootdeck.f.hudOffset + 1, 10)
                     lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
-                end
+					lootdeck.sfx:Play(SoundEffect.SOUND_PLOP,1,0)
+				end
             end)
         end
         lootdeck.f.hudOffsetCountdown = math.max(0, lootdeck.f.hudOffsetCountdown - 1)
