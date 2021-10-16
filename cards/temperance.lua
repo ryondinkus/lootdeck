@@ -22,6 +22,7 @@ local function MC_USE_CARD(_, c, p)
     end
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_BLOODBANK_SPAWN, 1, 0)
+    return false
 end
 
 return {

@@ -14,6 +14,7 @@ local function MC_USE_CARD(_, c, p)
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
     p:Die()
+    return false
 end
 
 local function MC_POST_NEW_ROOM()
