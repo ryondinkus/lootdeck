@@ -5,8 +5,22 @@ local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetItemIdByName(Name)
 
-local function MC_POST_PEFFECT_UPDATE(_, p)
+local function GivePlayerItem(p, data)
+    if not data then
+        data = p:GetData()
+    end
+    local itemPool = Game():GetItemPool()
+    local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
+    p:AddCollectible(collectibleId)
+    if data[Tag] then
+        p:RemoveCollectible(data[Tag])
+    end
+    data[Tag] = collectibleId
 
+end
+
+local function MC_POST_NEW_LEVEL()
+    helper.ForEachPlayer(GivePlayerItem, Id)
 end
 
 return {
@@ -15,8 +29,11 @@ return {
 	Id = Id,
     callbacks = {
         {
-            ModCallbacks.MC_POST_PEFFECT_UPDATE,
-            MC_POST_PEFFECT_UPDATE
+            ModCallbacks.MC_POST_NEW_LEVEL,
+            MC_POST_NEW_LEVEL
         }
+    },
+    helpers = {
+        GivePlayerItem = GivePlayerItem
     }
 }
