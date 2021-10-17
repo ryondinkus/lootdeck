@@ -5,8 +5,31 @@ local Name = "Rainbow Tapeworm"
 local Tag = "rainbowTapeworm"
 local Id = Isaac.GetItemIdByName(Name)
 
-local function MC_POST_PEFFECT_UPDATE(_, p)
+local function MC_POST_NEW_ROOM()
+    helper.ForEachPlayer(function(p, data)
 
+        if data[Tag] then
+            for _, id in pairs(data[Tag]) do
+                p:RemoveCollectible(id)
+            end
+            data[Tag] = nil
+        end
+
+        for i=1,p:GetCollectibleNum(Id) do
+            if helper.PercentageChance(50) then
+                local itemId = helper.GetRandomItemIdInInventory(p, Id)
+                if itemId then
+                    p:AddCollectible(itemId)
+
+                    if data[Tag] then
+                        table.insert(data[Tag], itemId)
+                    else
+                        data[Tag] = { itemId }
+                    end
+                end
+            end
+        end
+    end, Id)
 end
 
 return {
@@ -15,8 +38,8 @@ return {
 	Id = Id,
     callbacks = {
         {
-            ModCallbacks.MC_POST_PEFFECT_UPDATE,
-            MC_POST_PEFFECT_UPDATE
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         }
     }
 }
