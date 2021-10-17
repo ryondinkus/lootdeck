@@ -18,7 +18,6 @@ local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 
 local defaultStartupValues = {
-    visitedItemRooms = {},
     sunUsed = false,
     removeSun = false,
     floorBossCleared = 0,
