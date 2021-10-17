@@ -11,6 +11,8 @@ local function MC_POST_FIRE_TEAR(_, tear)
         tear.FallingSpeed = 0
         tear.FallingAcceleration = -0.1
         tear:GetData()[Tag] = true
+        tear:GetSprite():ReplaceSpritesheet(0, "gfx/tears/tapeworm tear.png")
+        tear:GetSprite():LoadGraphics()
     end
 end
 
