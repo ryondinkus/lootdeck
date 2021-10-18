@@ -6,7 +6,7 @@ local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     helper.CustomCoinPrePickupCollision(pi, e, 2, SoundEffect.SOUND_PENNYPICKUP, function(p)
-        p:FullCharge()
+        helper.AddActiveCharge(p, 12)
     end)
 end
 
