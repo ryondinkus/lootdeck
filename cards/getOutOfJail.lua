@@ -8,15 +8,15 @@ local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
     p:GetData()[Tag] = 5 * 60
+    --p.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
 end
 
 local function MC_PRE_PLAYER_COLLISION(_, p, collider)
     local data = p:GetData()
-
-    if data[Tag] then        
+    if data[Tag] then
         if collider.Type == EntityType.ENTITY_PROJECTILE or collider:IsEnemy() then
             return true
-        end 
+        end
     end
 end
 
