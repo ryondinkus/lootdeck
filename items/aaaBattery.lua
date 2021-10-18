@@ -25,10 +25,9 @@ end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local data = p:GetData()
-    print(data[Tag])
     if data[Tag] and not data[Tag .. "Played"] and p:IsExtraAnimationFinished() then
         p:AnimateCollectible(data[Tag])
-        lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
+        lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
         data[Tag .. "Played"] = true
     end
 end
