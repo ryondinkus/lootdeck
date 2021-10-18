@@ -20,7 +20,8 @@ local function MC_POST_NEW_ROOM()
                 local itemId = helper.GetRandomItemIdInInventory(p, Id)
                 if itemId then
                     p:AddCollectible(itemId)
-
+                    p:AnimateCollectible(itemId, "UseItem")
+                    lootdeck.sfx:Play(SoundEffect.SOUND_1UP, 1, 0)
                     if data[Tag] then
                         table.insert(data[Tag], itemId)
                     else
