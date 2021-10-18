@@ -4,7 +4,7 @@ local helper = include('helper_functions')
 local Name = "Lil Battery"
 local Tag = "lilBattery"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 4
+local Weight = 5
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL)
