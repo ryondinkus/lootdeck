@@ -5,7 +5,6 @@ local Tag = "lostSoul"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
--- TODO: Implement
 local function MC_USE_CARD(_, c, p)
     local room = Game():GetRoom()
     local f = lootdeck.f

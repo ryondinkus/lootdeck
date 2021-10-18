@@ -20,7 +20,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
         sfx:Play(SoundEffect.SOUND_FLOATY_BABY_ROAR, 1, 0, false, 2)
         data.state = "STATE_IDLE"
     end
-    -- TODO make entity variants global
     helper.ForEachEntityInRoom(function(entity)
         lostSoulLove = entity.Position
         data.inLove = true
