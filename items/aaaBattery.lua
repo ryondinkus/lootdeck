@@ -20,12 +20,15 @@ local function GivePlayerItem(p, data)
 end
 
 local function MC_POST_NEW_LEVEL()
-    helper.ForEachPlayer(GivePlayerItem, Id)
+    helper.ForEachPlayer(function(p, data)
+        for i=0,p:GetCollectibleNum(Id) do
+            GivePlayerItem(p, data)
+        end
+    end, Id)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local data = p:GetData()
-    print(data[Tag])
     if data[Tag] and not data[Tag .. "Played"] and p:IsExtraAnimationFinished() then
         p:AnimateCollectible(data[Tag])
         lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
