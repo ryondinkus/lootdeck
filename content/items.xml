@@ -63,4 +63,20 @@
       description="Copycat"
       gfx="rainbowTapeworm.png"
   />
+  <passive name="Player Card"
+      description="Play an additional loot card"
+      gfx="playerCard.png"
+      tags="offensive"
+      id="1"
+  />
+  <active name="Loot Deck"
+      description="Loot 1"
+      gfx="lootDeck.png"
+      maxcharges="6"
+      tags="offensive"
+  />
+  <trinket name="Card Sleeve"
+      description="More loot"
+      gfx="cardSleeve.png"
+  />
 </items>
