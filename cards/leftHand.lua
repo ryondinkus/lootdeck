@@ -1,4 +1,5 @@
 local helper = include('helper_functions')
+local items = include("items/registry")
 
 -- trinket; Swap the pools of Red Chests and Gold Chests
 local Name = "The Left Hand"
@@ -7,7 +8,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 
 local function MC_USE_CARD(_, c, p)
-
+    helper.SimpleLootCardItem(p, items.leftHand.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {

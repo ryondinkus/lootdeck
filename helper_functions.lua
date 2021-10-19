@@ -211,11 +211,13 @@ function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
 end
 
 function H.TableContains(table, element)
-	for _, value in pairs(table) do
-		if value == element then
-	    	return true
-	    end
-	end
+    if table then
+        for _, value in pairs(table) do
+            if value == element then
+                return true
+            end
+        end
+    end
 	return false
 end
 
