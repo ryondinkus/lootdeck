@@ -16,6 +16,7 @@ end
 include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
+local entitySubTypes = include("entitySubTypes/registry")
 
 local defaultStartupValues = {
     visitedItemRooms = {},
@@ -73,6 +74,14 @@ end
 for _, variant in pairs(entityVariants) do
     if variant.callbacks then
         for _, callback in pairs(variant.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end
+
+for _, subType in pairs(entitySubTypes) do
+    if subType.callbacks then
+        for _, callback in pairs(subType.callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
