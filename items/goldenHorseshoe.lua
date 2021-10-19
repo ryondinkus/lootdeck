@@ -7,14 +7,14 @@ local Id = Isaac.GetItemIdByName(Name)
 
 local function MC_POST_NEW_ROOM()
     local game = Game()
-	local level = game:GetLevel()
+	  local level = game:GetLevel()
     local room = game:GetRoom()
     local roomDescriptor = level:GetCurrentRoomDesc()
     local alreadySpawned = false
     helper.ForEachPlayer(function(p)
         if not alreadySpawned then
             if room:GetType() == RoomType.ROOM_TREASURE and roomDescriptor.VisitedCount <= 1 then
-                p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
+                p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, 0, false)
                 Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, nil)
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
             end

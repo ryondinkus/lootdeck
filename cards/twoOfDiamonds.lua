@@ -10,7 +10,7 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)
-    p:AddCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)
+    p:AddCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE, 0, false)
     if not data.sale then data.sale = 1
     else data.sale = data.sale + 1 end
     if data.sale >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_STEAM_SALE) then
