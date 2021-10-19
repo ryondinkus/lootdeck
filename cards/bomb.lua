@@ -4,7 +4,7 @@ local helper = include("helper_functions")
 local Name = "Bomb!"
 local Tag = "bomb"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 4
+local Weight = 6
 
 local function MC_USE_CARD(_, c, p)
 	local target = helper.FindRandomEnemy(p.Position) or p

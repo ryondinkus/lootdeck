@@ -5,7 +5,7 @@ local helper = include("helper_functions")
 local Name = "Dice Shard"
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 3
+local Weight = 4
 
 local blackOverlay = Sprite()
 blackOverlay:Load("gfx/coloroverlays/overlay.anm2")

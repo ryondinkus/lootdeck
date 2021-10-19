@@ -4,7 +4,7 @@ local helper = include('helper_functions')
 local Name = "2 Cents!"
 local Tag = "twoCents"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 12
+local Weight = 17
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_DOUBLEPACK, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 2)

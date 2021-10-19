@@ -891,7 +891,7 @@ function H.CustomCoinPrePickupCollision(pi, e, amount, sfx, isFinished)
          if data.canTake then
             p:AddCoins(amount)
             if sfx then
-               lootdeck.sfx:Play(sfx) 
+               lootdeck.sfx:Play(sfx)
             end
             pi.Velocity = Vector.Zero
             pi.Touched = true
@@ -913,6 +913,24 @@ function H.CustomCoinPickupUpdate(pi, sfx)
     end
     if not sprite:IsPlaying("Collect") and not sprite:IsFinished("Collect") and (((sprite:IsPlaying("Appear") or sprite:IsPlaying("Reappear")) and sprite:IsEventTriggered("DropSound")) or sprite:IsPlaying("Idle")) and not data.canTake then
         data.canTake = true
+    end
+end
+
+function H.AddActiveCharge(p, value)
+    for i=0,3 do
+        if p:GetActiveItem(i) ~= 0 then
+            local itemConfig = Isaac.GetItemConfig()
+            local active = p:GetActiveItem(i)
+            if p:NeedsCharge(i) then
+                p:SetActiveCharge(p:GetActiveCharge(i) + value, i)
+                if not p:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and p:GetBatteryCharge(i) > 0 then
+                    p:SetActiveCharge(p:GetActiveCharge(i), i)
+                end
+                lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
+                Game():GetHUD():FlashChargeBar(p, i)
+                return
+            end
+        end
     end
 end
 
