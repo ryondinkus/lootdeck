@@ -10,6 +10,7 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.aaaBattery.Id, SoundEffect.SOUND_VAMP_GULP)
     items.aaaBattery.helpers.GivePlayerItem(p)
+    p:GetData()[Tag .. "Played"] = false
 end
 
 return {
