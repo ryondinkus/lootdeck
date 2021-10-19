@@ -10,7 +10,7 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_20_20)
-    p:AddCollectible(CollectibleType.COLLECTIBLE_20_20)
+    p:AddCollectible(CollectibleType.COLLECTIBLE_20_20, 0, false)
     if not data.empress then data.empress = 1
     else data.empress = data.empress + 1 end
     if data.empress >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_20_20) then

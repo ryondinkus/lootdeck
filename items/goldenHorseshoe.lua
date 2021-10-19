@@ -12,7 +12,7 @@ local function MC_POST_NEW_ROOM()
 	local roomIndex = level:GetCurrentRoomIndex()
     helper.ForEachPlayer(function(p)
         if room:GetType() == RoomType.ROOM_TREASURE and not helper.TableContains(lootdeck.f.visitedItemRooms, roomIndex) then
-            p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
+            p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, 0, false)
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, nil)
             p:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
             table.insert(lootdeck.f.visitedItemRooms, roomIndex)

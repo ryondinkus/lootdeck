@@ -10,7 +10,7 @@ local Weight = 1
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
     local magnetoConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
-    p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
+    p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO, 0, false)
     if not data.hangedMan then data.hangedMan = 1
     else data.hangedMan = data.hangedMan + 1 end
     if data.hangedMan >= p:GetCollectibleNum(CollectibleType.COLLECTIBLE_MAGNETO) then

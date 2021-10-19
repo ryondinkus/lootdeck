@@ -19,7 +19,7 @@ local function MC_POST_NEW_ROOM()
             if helper.PercentageChance(50) then
                 local itemId = helper.GetRandomItemIdInInventory(p, Id, true)
                 if itemId then
-                    p:AddCollectible(itemId)
+                    p:AddCollectible(itemId, 0, false)
                     p:AnimateCollectible(itemId, "UseItem")
                     lootdeck.sfx:Play(SoundEffect.SOUND_1UP, 1, 0)
                     if data[Tag] then
