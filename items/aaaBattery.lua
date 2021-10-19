@@ -12,22 +12,39 @@ local function GivePlayerItem(p, data)
     local itemPool = Game():GetItemPool()
     local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
     p:AddCollectible(collectibleId)
-    if data[Tag] then
-        p:RemoveCollectible(data[Tag])
+    if not data[Tag] then
+        data[Tag] = {}
     end
-    data[Tag] = collectibleId
-    data[Tag .. "Played"] = false
+    table.insert(data[Tag], collectibleId)
+end
+
+local function RemovePlayerItems(p, data)
+    if not data then
+        data = p:GetData()
+    end
+    if data[Tag] then
+        for _,v in pairs(data[Tag]) do
+            p:RemoveCollectible(v)
+        end
+        data[Tag] = nil
+    end
 end
 
 local function MC_POST_NEW_LEVEL()
-    helper.ForEachPlayer(GivePlayerItem, Id)
+    helper.ForEachPlayer(function(p, data)
+        RemovePlayerItems(p, data)
+        for i=1,p:GetCollectibleNum(Id) do
+            GivePlayerItem(p, data)
+            data[Tag .. "Played"] = false
+        end
+    end, Id)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local data = p:GetData()
     if data[Tag] and not data[Tag .. "Played"] and p:IsExtraAnimationFinished() then
-        p:AnimateCollectible(data[Tag])
-        lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
+        p:AnimateCollectible(data[Tag][#data[Tag]])
+        lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
         data[Tag .. "Played"] = true
     end
 end
