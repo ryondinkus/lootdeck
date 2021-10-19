@@ -7,43 +7,53 @@
    priority="99" would put the costum in front of all other costums
 -->
 <costumes anm2root="gfx/characters/">
-<costume
-	anm2path="empress.anm2"
-	priority="1"
-    type="none"
-    skinColor="1"
-    overwriteColor="true"
-/>
-<costume
-	anm2path="sun.anm2"
-	priority="10"
-    type="none"
-/>
-<costume
-	anm2path="magician.anm2"
-	type="none"
-	hasSkinAlt="true"
-	hasOverlay="true" />
-<costume
-	anm2path="hangedMan.anm2"
-	type="none" />
-<costume
-	anm2path="mantle.anm2"
-	type="none"
-	hasOverlay="true" />
-<costume
-	anm2path="mantleBroken.anm2"
-	type="none" />
-<costume
-	anm2path="chariot.anm2"
-	type="none"
-	hasSkinAlt="true" />
-<costume
-	anm2path="strength fire.anm2"
-	type="none"
+	<costume
+		anm2path="empress.anm2"
+		priority="1"
+	    type="none"
+	    skinColor="1"
+	    overwriteColor="true"
 	/>
-<costume
-	anm2path="strength glow.anm2"
-	type="none"
+	<costume
+		anm2path="sun.anm2"
+		priority="10"
+	    type="none"
+	/>
+	<costume
+		anm2path="magician.anm2"
+		type="none"
+		hasSkinAlt="true"
+		hasOverlay="true"
+	/>
+	<costume
+		anm2path="hangedMan.anm2"
+		type="none"
+	/>
+	<costume
+		anm2path="mantle.anm2"
+		type="none"
+		hasOverlay="true"
+	/>
+	<costume
+		anm2path="mantleBroken.anm2"
+		type="none"
+	/>
+	<costume
+		anm2path="chariot.anm2"
+		type="none"
+		hasSkinAlt="true"
+	/>
+	<costume
+		anm2path="strength fire.anm2"
+		type="none"
+	/>
+	<costume
+		anm2path="strength glow.anm2"
+		type="none"
+	/>
+	<costume
+		anm2path="lovers.anm2"
+		type="none"
+		hasSkinAlt="true"
 	/>
 </costumes>

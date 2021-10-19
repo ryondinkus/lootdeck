@@ -13,11 +13,12 @@ local chosenEnemy = string.format("%sChosenEnemy", Tag)
 local function MC_POST_NEW_ROOM()
     local game = Game()
     local room = game:GetRoom()
-    helper.ForEachPlayer(function(_, data)
+    helper.ForEachPlayer(function(p, data)
         if not room:IsClear() then
-            -- TODO add percentage chance
-            data[shouldRerollEnemyTag] = true
-            data[preRerollEnemySeedList] = {}
+            if helper.PercentageChance(25*p:GetCollectibleNum(Id), 100) then
+                data[shouldRerollEnemyTag] = true
+                data[preRerollEnemySeedList] = {}
+            end
         end
     end, Id)
 end
@@ -54,6 +55,7 @@ local function MC_POST_UPDATE()
                 data[preRerollEnemySeedList] = enemyInitSeeds
                 target:GetData()[chosenEnemy] = true
                 game:RerollEnemy(target)
+                lootdeck.sfx:Play(SoundEffect.SOUND_EDEN_GLITCH, 1, 0)
             end
             data[shouldRerollEnemyTag] = nil
         end

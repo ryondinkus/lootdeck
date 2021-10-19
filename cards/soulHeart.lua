@@ -5,7 +5,7 @@ local costumes = include("costumes/registry")
 local Name = "Soul Heart"
 local Tag = "soulHeart"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 2
+local Weight = 3
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

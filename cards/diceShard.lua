@@ -5,7 +5,7 @@ local helper = include("helper_functions")
 local Name = "Dice Shard"
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 3
+local Weight = 4
 
 local blackOverlay = Sprite()
 blackOverlay:Load("gfx/coloroverlays/overlay.anm2")
@@ -29,6 +29,7 @@ local function MC_USE_CARD(_, c, p, flags)
         if (flags & UseFlag.USE_VOID == 0) then
             data.dischargeVoid = true
         end
+		return false
     else
         helper.FuckYou(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY)
     end

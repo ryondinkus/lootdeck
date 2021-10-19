@@ -11,15 +11,7 @@ local function MC_USE_CARD(_, c, p)
 	local effect = lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
 	if effect == 0 then
-        for i=0,3 do
-            if p:GetActiveItem(i) ~= 0 then
-                if p:NeedsCharge(i) then
-                    p:FullCharge(i)
-                    return
-                end
-            end
-        end
-        helper.FuckYou(p)
+		helper.AddActiveCharge(p, 6)
 	else
         local change = 1
 		if effect == 1 then
