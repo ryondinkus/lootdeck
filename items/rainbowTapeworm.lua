@@ -17,7 +17,7 @@ local function MC_POST_NEW_ROOM()
 
         for i=1,p:GetCollectibleNum(Id) do
             if helper.PercentageChance(50) then
-                local itemId = helper.GetRandomItemIdInInventory(p, Id)
+                local itemId = helper.GetRandomItemIdInInventory(p, Id, true)
                 if itemId then
                     p:AddCollectible(itemId)
                     p:AnimateCollectible(itemId, "UseItem")

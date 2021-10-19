@@ -826,12 +826,13 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
-function H.GetPlayerInventory(p, ignoreId)
+function H.GetPlayerInventory(p, ignoreId, ignoreActives)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
     for i = 1, numCollectibles do
-        if itemConfig:GetCollectible(i) then
+        local collectible = itemConfig:GetCollectible(i)
+        if collectible and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE) then
             inv[i] = p:GetCollectibleNum(i)
         end
     end
@@ -848,10 +849,10 @@ function H.GetPlayerInventory(p, ignoreId)
     return allHeld
 end
 
-function H.GetRandomItemIdInInventory(p, ignoreId)
-    local inventory = H.GetPlayerInventory(p, ignoreId)
+function H.GetRandomItemIdInInventory(p, ignoreId, ignoreActives)
+    local inventory = H.GetPlayerInventory(p, ignoreId, ignoreActives)
 
-    local itemIndex = lootdeck.rng:RandomInt(#inventory)
+    local itemIndex = lootdeck.rng:RandomInt(#inventory) + 1
 
     return inventory[itemIndex]
 end
