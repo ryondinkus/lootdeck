@@ -11,5 +11,6 @@ return {
 	mantleBroken = CostumePathToId("mantleBroken"),
     chariot = CostumePathToId("chariot"),
     strengthFire = CostumePathToId("strength fire"),
-	strengthGlow = CostumePathToId("strength glow")
+	strengthGlow = CostumePathToId("strength glow"),
+    lovers = CostumePathToId("lovers"),
 }
