@@ -46,4 +46,9 @@
 	anm2path="strength glow.anm2"
 	type="none"
 	/>
+<costume
+	id="1"
+	anm2path="playerCard.anm2"
+	type="passive"
+	/>
 </costumes>
