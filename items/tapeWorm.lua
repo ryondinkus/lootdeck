@@ -11,8 +11,25 @@ local function MC_POST_FIRE_TEAR(_, tear)
         tear.FallingSpeed = 0
         tear.FallingAcceleration = -0.1
         tear:GetData()[Tag] = true
-        tear:GetSprite():ReplaceSpritesheet(0, "gfx/tears/tapeworm tear.png")
-        tear:GetSprite():LoadGraphics()
+
+        local sprite = tear:GetSprite()
+        local spriteSheetDirection
+
+        if math.abs(tear.Velocity.X) > math.abs(tear.Velocity.Y) then
+            spriteSheetDirection = "side"
+            if tear.Velocity.X < 0 then
+                sprite.FlipX = true
+            end
+        elseif math.abs(tear.Velocity.Y) > math.abs(tear.Velocity.X) then
+            if tear.Velocity.Y < 0 then
+                spriteSheetDirection = "back"
+            else
+                spriteSheetDirection = "front"
+            end
+        end
+
+        sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", spriteSheetDirection))
+        sprite:LoadGraphics()
     end
 end
 
