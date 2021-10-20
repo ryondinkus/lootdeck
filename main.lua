@@ -37,6 +37,12 @@ local defaultStartupValues = {
     hudOffsetControlsCountdown = 0
 }
 
+local debugValues = {
+	debugGuaranteedLoot = false,
+	debugBlankCardStart = false,
+	debugJacobEsauStart = false
+}
+
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
 lootdeck.mus = MusicManager()
@@ -100,6 +106,14 @@ for _, item in pairs(items) do
     end
 end
 
+for _, trinket in pairs(trinkets) do
+    if trinket.callbacks then
+        for _, callback in pairs(trinket.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end
+
 local HUD_OFFSET_CONTROLS_WAIT_FRAMES = 4 * 60
 local HUD_OFFSET_CONTROLS_FADE_FRAMES = 2 * 60
 
@@ -115,6 +129,15 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
 
         lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
     end
+
+	if debugValues.BlankCardStart then
+		Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
+	end
+
+	if debugValues.JacobEsauStart then
+		Isaac.GetPlayer(0):ChangePlayerType(PlayerType.PLAYER_JACOB)
+	end
+
 end)
 
 -- Temporary health callback
@@ -135,12 +158,78 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     end)
 end)
 
+--========== MCM BUGTESTING SHIT ===========
+if ModConfigMenu then
+	ModConfigMenu.AddSetting(
+	"Lootdeck Beta",
+	"Settings",
+	{
+		Type = ModConfigMenu.OptionType.BOOLEAN,
+		CurrentSetting = function()
+			return debugValues.GuaranteedLoot
+		end,
+		Display = function()
+			local onOff = "Disabled"
+			if debugValues.GuaranteedLoot then
+				onOff = "Enabled"
+			end
+			return "100% Loot Drop Rate: " .. onOff
+		end,
+		OnChange = function(currentBool)
+			debugValues.GuaranteedLoot = currentBool
+		end,
+		Info = "Turns all card drops into Loot Card drops"
+	})
+
+	ModConfigMenu.AddSetting(
+	"Lootdeck Beta",
+	"Settings",
+	{
+		Type = ModConfigMenu.OptionType.BOOLEAN,
+		CurrentSetting = function()
+			return debugValues.BlankCardStart
+		end,
+		Display = function()
+			local onOff = "Disabled"
+			if debugValues.BlankCardStart then
+				onOff = "Enabled"
+			end
+			return "Start with Blank Card: " .. onOff
+		end,
+		OnChange = function(currentBool)
+			debugValues.BlankCardStart = currentBool
+		end,
+		Info = "Gives you Blank Card at the start of a new run."
+	})
+
+	ModConfigMenu.AddSetting(
+	"Lootdeck Beta",
+	"Settings",
+	{
+		Type = ModConfigMenu.OptionType.BOOLEAN,
+		CurrentSetting = function()
+			return debugValues.JacobEsauStart
+		end,
+		Display = function()
+			local onOff = "Disabled"
+			if debugValues.JacobEsauStart then
+				onOff = "Enabled"
+			end
+			return "Start as Jacob & Esau: " .. onOff
+		end,
+		OnChange = function(currentBool)
+			debugValues.JacobEsauStart = currentBool
+		end,
+		Info = "Start your next run as Jacob & Esau."
+	})
+end
+
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
-            return helper.GetWeightedLootCardId()
+		if (helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or debugValues.GuaranteedLoot then
+			return helper.GetWeightedLootCardId()
 		end
 	end
 end)
