@@ -14,5 +14,6 @@ return {
     aaaBattery = include("items/aaaBattery"),
     pokerChip = include("items/pokerChip"),
     leftHand = include("items/leftHand"),
-    rainbowTapeworm = include("items/rainbowTapeworm")
+    rainbowTapeworm = include("items/rainbowTapeworm"),
+    playerCard = include("items/playerCard")
 }
