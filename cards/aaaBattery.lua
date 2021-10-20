@@ -6,6 +6,7 @@ local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "me me me card"
 
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.aaaBattery.Id, SoundEffect.SOUND_VAMP_GULP)
@@ -18,6 +19,7 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -4,6 +4,7 @@ local helper = include("helper_functions")
 local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "me me me item"
 
 local function GivePlayerItem(p, data)
     if not data then
@@ -53,6 +54,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,

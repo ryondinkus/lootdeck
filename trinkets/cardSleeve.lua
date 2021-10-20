@@ -4,6 +4,7 @@ local helper = include("helper_functions")
 local Name = "Card Sleeve"
 local Tag = "cardSleeve"
 local Id = Isaac.GetTrinketIdByName(Name)
+local Description = "me me me twinket"
 
 local function CalculateLootcardPercentage()
     local totalPercentage = 0
@@ -18,6 +19,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
     helpers = {
         CalculateLootcardPercentage = CalculateLootcardPercentage
     }
