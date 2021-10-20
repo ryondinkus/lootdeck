@@ -76,19 +76,23 @@ for _, card in pairs(lootcards) do
     end
 
 	if EID and card.Description then
-		-- local cardFrontSprite = Sprite()
-		-- cardFrontSprite:Load("gfx/eid_inline_icons.anm2", true)
-		-- EID:addIcon(card.Id, card.Tag, -1, 9, 9, -1, 0, cardFrontSprite)
 		EID:addCard(card.Id, card.Description)
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		local cardFrontSprite = Sprite()
+        cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
+		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
+		cardFrontSprite:LoadGraphics()
+		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
 	end
 
 	if Encyclopedia and card.WikiDescription then
-		local cardFrontImage = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
-		print(cardFrontImage)
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
 		Encyclopedia.AddCard({
+			Class = "Loot Deck",
 			ID = card.Id,
 			WikiDesc = card.WikiDescription,
-			Sprite = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", "Idle", 1, cardFrontImage)
+			ModName = "Loot Deck",
+			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", "Idle", 0, cardFrontPath),
 		})
 	end
 end
