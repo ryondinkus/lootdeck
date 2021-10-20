@@ -52,6 +52,11 @@ for _, card in pairs(lootcards) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     local result = callback[2](_, c, p, f)
+
+                    if items.playerCard.helpers.ShouldRunDouble(p) then
+                        callback[2](_, c, p, f)
+                    end
+
                     if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
                         local data = p:GetData()
 
