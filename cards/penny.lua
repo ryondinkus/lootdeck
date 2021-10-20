@@ -5,10 +5,10 @@ local Name = "A Penny!"
 local Tag = "penny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 11
-local Description = "Spawns a penny"
+local Description = "Spawns a Penny"
 local WikiDescription = {{ -- Effect
 							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Spawns a penny on use."},
+							{str = "Spawns a Penny on use."},
 						}}
 
 local function MC_USE_CARD(_, c, p)
