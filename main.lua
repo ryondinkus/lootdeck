@@ -17,6 +17,7 @@ include("cards/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 local entitySubTypes = include("entitySubTypes/registry")
+local trinkets = include("trinkets/registry")
 
 local defaultStartupValues = {
     sunUsed = false,
@@ -133,7 +134,7 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if helper.PercentageChance(5) or isLootCard then
+		if helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
             return helper.GetWeightedLootCardId()
 		end
 	end

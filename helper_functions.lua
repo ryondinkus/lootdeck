@@ -557,7 +557,7 @@ end
 function H.PercentageChance(percent, max)
     local value
     if percent > (max or 100) then
-        value = max
+        value = max or 100
     else
         value = percent
     end
