@@ -293,3 +293,17 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
         end
     end)
 end)
+
+lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
+    local heldLootcard = helper.GetLootcardById(p:GetCard(0))
+
+    local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation:SetLastFrame()
+    end
+
+    if heldLootcard then
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleSparkleFast")
+    end
+end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
