@@ -128,7 +128,7 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if helper.PercentageChance(100) or isLootCard then--5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
+		if helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
             return helper.GetWeightedLootCardId()
 		end
 	end
@@ -301,6 +301,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 
     if heldLootcard then
-        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleSparkleFast")
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleSparkle")
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
