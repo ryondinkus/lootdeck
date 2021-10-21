@@ -6,6 +6,13 @@ local Name = "Credit Card"
 local Tag = "creditCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "After using, the next shop item or Devil Deal you purchase gets refunded via spawned Pennies or Health Up Pills"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, spawns a Credit Card familiar. The Credit Card familiar will refund your next purchased shop item or Devil Deal."},
+                            {str = "- Credit Card will spawn the appropriate amount of pennies on the ground. For Devil Deals, it will spawn Soul Hearts or Health Up Pills."},
+                            {str = "- It's possible for the Health Up Pills to become Health Downs via False PHD."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -37,6 +44,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

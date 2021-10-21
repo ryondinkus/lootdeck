@@ -5,6 +5,11 @@ local Name = "Get out of Jail Card"
 local Tag = "getOutOfJail"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Grants the player invincibility and the ability to phase through enemies for 5 seconds"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "For 5 seconds, the player is invincibile and can phase through enemies."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -61,6 +66,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

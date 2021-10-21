@@ -5,6 +5,11 @@ local Name = "A Sack"
 local Tag = "aSack"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{Card}} Spawns 3 Loot Cards"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, spawns 3 Loot Cards."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()
@@ -24,6 +29,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

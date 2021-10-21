@@ -6,6 +6,11 @@ local Name = "Holy Card"
 local Tag = "holyCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Spawns 10 Holy Shield orbitals, which die after blocking one projectile."
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     helper.RemoveHitFamiliars(entityVariants.holyShield.Id)
@@ -21,6 +26,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

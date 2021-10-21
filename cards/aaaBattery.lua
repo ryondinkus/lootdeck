@@ -6,7 +6,13 @@ local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "me me me card"
+local Description = "Adds a unique passive item on use# Passive: For each new floor, grants a random temporary battery item"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, grants a unique passive item."},
+							{str = "Passive effect: Grants a random temporary battery item for each new floor."},
+							{str = "- Additional copies of the passive grant extra battery items."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.aaaBattery.Id, SoundEffect.SOUND_VAMP_GULP)
@@ -20,6 +26,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -5,6 +5,14 @@ local Name = "Pills! White Spotted"
 local Tag = "whiteSpottedPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs# Rerolls all item pedestals in the room# Rerolls all of your passives"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, triggers one of three effects:"},
+                            {str = "- Swaps the amounts of your coins, keys, and bombs."},
+                            {str = "- Rerolls all pedestals in the room."},
+                            {str = "- Rerolls all of your passive items."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
@@ -31,6 +39,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

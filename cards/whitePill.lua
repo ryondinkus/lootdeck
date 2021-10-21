@@ -5,6 +5,14 @@ local Name = "Pills! White"
 local Tag = "whitePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:# Create a poison fart, similar to {{Collectible111}} The Bean# Weakens and slows all enemies in the room, similar to {{Card67}} XI - Strength?# Does nothing"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, triggers one of three effects:"},
+                            {str = "- Creates a poison fart, like The Bean effect."},
+                            {str = "- Weakens and slows all enemies in the room, similar to XI - Strength?."},
+                            {str = "- Does nothing."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
@@ -29,6 +37,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -4,7 +4,12 @@ local helper = include("helper_functions")
 local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "me me me item"
+local Description = "For each new floor, grants a random temporary battery item"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Grants a random temporary battery item for each new floor."},
+							{str = "- Additional copies of the passive grant extra battery items."},
+						}}
 
 local function GivePlayerItem(p, data)
     if not data then
@@ -55,6 +60,7 @@ return {
     Tag = Tag,
 	Id = Id,
     Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
