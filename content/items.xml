@@ -2,78 +2,96 @@
   <passive name="Bloody Penny"
       description="Loot the dead"
       gfx="bloodyPenny.png"
+      quality="3"
   />
   <passive name="Swallowed Penny"
       description="Take damage, gain 1c"
       gfx="swallowedPenny.png"
+      quality="1"
   />
   <passive name="Counterfeit Penny"
       description="Gain an additional 1c"
       gfx="counterfeitPenny.png"
+      quality="4"
   />
   <passive name="Cain's Eye"
       description="Look at the top"
       gfx="cainsEye.png"
+      quality="2"
   />
   <passive name="Broken Ankh"
       description="Prevent death?"
       gfx="brokenAnkh.png"
+      quality="1"
   />
   <passive name="Curved Horn"
       description="Stronger first attack"
       gfx="curvedHorn.png"
+      quality="3"
   />
   <passive name="Purple Heart"
       description="Monsters from the bottom"
       gfx="purpleHeart.png"
+      quality="2"
   />
   <passive name="Golden Horseshoe"
       description="Treasure from the bottom"
       gfx="goldenHorseshoe.png"
+      quality="2"
   />
   <passive name="Guppy's Hairball"
       description="Prevent damage?"
       gfx="guppysHairball.png"
+      quality="4"
   />
   <passive name="Pink Eye"
       description="Poisonous ooze"
       gfx="pinkEye.png"
+      quality="2"
   />
   <passive name="Cancer!"
       description="The waterworks"
       gfx="cancer.png"
+      quality="3"
   />
   <passive name="Tape Worm"
       description="Wormy tears"
       gfx="tapeWorm.png"
+      quality="2"
   />
   <passive name="AAA Battery"
       description="Multi-purpose charger"
       gfx="aaaBattery.png"
+      quality="3"
   />
   <passive name="Poker Chip"
       description="Nothing or double"
       gfx="pokerChip.png"
+      quality="3"
   />
   <passive name="The Left Hand"
       description="Dark treasure"
       gfx="leftHand.png"
+      quality="1"
   />
   <passive name="Rainbow Tapeworm"
       description="Copycat"
       gfx="rainbowTapeworm.png"
+      quality="2"
   />
   <passive name="Player Card"
       description="Play an additional loot card"
       gfx="playerCard.png"
       tags="offensive"
       id="1"
+      quality="2"
   />
   <active name="Loot Deck"
       description="Loot 1"
       gfx="lootDeck.png"
       maxcharges="6"
       tags="offensive"
+      quality="1"
   />
   <trinket name="Card Sleeve"
       description="More loot"
