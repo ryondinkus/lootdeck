@@ -147,8 +147,10 @@ for _, trinket in pairs(trinkets) do
 
 	if Encyclopedia and trinket.WikiDescription then
 		Encyclopedia.AddTrinket({
+			Class = "Loot Deck",
 			ID = trinket.Id,
-			WikiDesc = trinket.WikiDescription
+			WikiDesc = trinket.WikiDescription,
+			ModName = "Loot Deck"
 		})
 	end
 end
