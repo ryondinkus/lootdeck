@@ -166,6 +166,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
 					lootdeck.sfx:Play(SoundEffect.SOUND_PLOP,1,0)
 				end
+
+                helper.SaveHUDOffset()
             end)
         end
         lootdeck.f.hudOffsetCountdown = math.max(0, lootdeck.f.hudOffsetCountdown - 1)
