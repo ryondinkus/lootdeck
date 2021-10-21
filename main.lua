@@ -1,5 +1,3 @@
-local json = include("json")
-
 lootdeck = RegisterMod("Loot Deck", 1)
 
 function table.deepCopy(original)
@@ -102,10 +100,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     lootdeck.f = table.deepCopy(defaultStartupValues)
 
     if not ModConfigMenu then
-        if lootdeck:HasData() then
-            local savedData = json.decode(lootdeck:LoadData())
-            lootdeck.f.hudOffset = savedData.hudOffset
-        end
+        helper.LoadHUDOffset()
 
         lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
     end
@@ -133,7 +128,7 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
+		if helper.PercentageChance(100) or isLootCard then--5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard then
             return helper.GetWeightedLootCardId()
 		end
 	end
@@ -151,7 +146,7 @@ end)
 --========== LOOTCARD HUD RENDERING ==========
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
-    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+    helper.SaveHUDOffset()
 end)
 
 
@@ -171,6 +166,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
 					lootdeck.sfx:Play(SoundEffect.SOUND_PLOP,1,0)
 				end
+
+                helper.SaveHUDOffset()
             end)
         end
         lootdeck.f.hudOffsetCountdown = math.max(0, lootdeck.f.hudOffsetCountdown - 1)
