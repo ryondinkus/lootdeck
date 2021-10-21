@@ -60,13 +60,7 @@ for _, card in pairs(lootcards) do
                     if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
                         local data = p:GetData()
 
-                        local lootcardAnimationContainer = data.lootcardPickupAnimation
-
-                        lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkleFast")
-                        data.lootcardPickupAnimation = lootcardAnimationContainer
-
-                        helper.StartLootcardAnimation(lootcardAnimationContainer, card.Tag, "IdleSparkleFast")
-                        data.isHoldingLootcard = true
+                        helper.StartLootcardPickupAnimation(data, card.Tag, "IdleSparkleFast")
                     end
                 end, callback[3])
             else
@@ -254,13 +248,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-            local lootcardAnimationContainer = data.lootcardPickupAnimation
-
-            lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkle")
-            data.lootcardPickupAnimation = lootcardAnimationContainer
-
-            helper.StartLootcardAnimation(lootcardAnimationContainer, lootcard.Tag, "IdleSparkle")
-            data.isHoldingLootcard = true
+            helper.StartLootcardPickupAnimation(data, lootcard.Tag, "IdleSparkle")
         end
 	end
 end, PickupVariant.PICKUP_TAROTCARD)
