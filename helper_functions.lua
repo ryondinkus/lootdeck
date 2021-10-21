@@ -1,3 +1,4 @@
+local json = include("json")
 local H = {}
 
 -- helper function for using FindRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
@@ -931,6 +932,17 @@ function H.AddActiveCharge(p, value)
                 return
             end
         end
+    end
+end
+
+function H.SaveHUDOffset()
+    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+end
+
+function H.LoadHUDOffset()
+    if lootdeck:HasData() then
+        local savedData = json.decode(lootdeck:LoadData())
+        lootdeck.f.hudOffset = savedData.hudOffset
     end
 end
 
