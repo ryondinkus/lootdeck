@@ -6,6 +6,17 @@ local Name = "X. Wheel of Fortune"
 local Tag = "wheelOfFortune"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} Gain 1 Coin#{{Warning}} Take a Half Heart of damage (non-lethal)#{{Card}} Spawns 3 Loot Cards#{{Coin}}{{ArrowDown}} Lose 4 Coins#{{Coin}}{{ArrowUp}} Gain 5 Coins#{{ArcadeRoom}} Spawn a random Arcade-exclusive item"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "On use, triggers one of six effects:"},
+                            {str = "- Gain 1 Coin"},
+                            {str = "- Take a Half Heart of damage. The damage will be negated if it would kill the player."},
+                            {str = "- Spawns 3 Loot Cards"},
+							{str = "- Lose 4 Coins"},
+                            {str = "- Gain 5 Coins"},
+							{str = "- Spawn a random arcade-exclusive item"},
+						}}
 
 local arcadeItems = {
     CollectibleType.COLLECTIBLE_DOLLAR,
@@ -65,6 +76,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

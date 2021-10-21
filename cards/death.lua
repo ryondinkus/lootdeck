@@ -5,6 +5,12 @@ local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+                            {str = "Kills you on use."},
+                            {str = "You revive with 3 Empty Bones Hearts."}
+						}}
 
 local ReviveTag = string.format("%sRevive", Tag)
 
@@ -57,6 +63,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -4,6 +4,11 @@ local helper = include("helper_functions")
 local Name = "Golden Horseshoe"
 local Tag = "goldenHorseshoe"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "Every Treasure room has an additional {{Collectible721}} TMTRAINER item"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Every Treasure room has an additional TMTRAINER item."},
+						}}
 
 local function MC_POST_NEW_ROOM()
     local game = Game()
@@ -27,6 +32,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_ROOM,

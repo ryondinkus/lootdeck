@@ -6,6 +6,12 @@ local Name = "II. The High Priestess"
 local Tag = "theHighPriestess"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit."},
+							{str = "- The same enemy cannot be hit by multiple fingers."}
+						}}
 
 local function MC_USE_CARD(_, c, p)
 	local data = p:GetData()
@@ -29,6 +35,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

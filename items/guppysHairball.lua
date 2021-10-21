@@ -4,6 +4,12 @@ local helper = include("helper_functions")
 local Name = "Guppy's Hairball"
 local Tag = "guppysHairball"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "Every instance of damage taken has a 1/6 chance to be blocked"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Every instance of damage taken has a 1/6 chance to be blocked."},
+							{str = "- Additional copies of the passive add an extra 1/6 chance, up to 3/6."},
+						}}
 
 local function MC_ENTITY_TAKE_DMG(_, e)
     local p = e:ToPlayer()
@@ -19,6 +25,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,

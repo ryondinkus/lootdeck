@@ -6,13 +6,13 @@ local Name = "Pills! Red"
 local Tag = "redPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:#{{ArrowUp}} +1 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1/2 heart of damage (non-fatal)"
+local Description = "Random chance for any of these effects:#{{ArrowUp}} +1 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1 Half Heart of damage (non-fatal)"
 local WikiDescription = {{ -- Effect
 							{str = "Effect", fsize = 2, clr = 3, halign = 0},
 							{str = "On use, triggers one of three effects:"},
                             {str = "- +1 Damage up for the room"},
                             {str = "- +1 filled Heart Container for the room"},
-                            {str = "- Take 1/2 heart of damage. The damage will be negated if it would kill the player."},
+                            {str = "- Take 1 Half Heart of damage. The damage will be negated if it would kill the player."},
 						}}
 
 local function MC_USE_CARD(_, c, p)

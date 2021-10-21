@@ -126,8 +126,10 @@ for _, item in pairs(items) do
 
 	if Encyclopedia and item.WikiDescription then
 		Encyclopedia.AddItem({
+			Class = "Loot Deck",
 			ID = item.Id,
-			WikiDesc = item.WikiDescription
+			WikiDesc = item.WikiDescription,
+			ModName = "Loot Deck"
 		})
 	end
 end

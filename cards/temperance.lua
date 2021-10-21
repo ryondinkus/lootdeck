@@ -5,6 +5,13 @@ local Name = "XVI. Temperance"
 local Tag = "temperance"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Warning}} Take 1 Half Heart of damage (fatal), gain 4 Cents#{{Warning}} Take 1 Full Heart of damage (fatal), gain 8 cents"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+                            {str = "On use, triggers one of either effects:"},
+                            {str = "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player."},
+                            {str = "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local rng = lootdeck.rng
@@ -30,6 +37,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

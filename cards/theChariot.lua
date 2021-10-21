@@ -6,6 +6,12 @@ local Name = "VII. The Chariot"
 local Tag = "theChariot"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{Heart}} +1 Heart Container for the room# {{ArrowUp}} +0.5 damage for every Heart Container you have"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+                            {str = "Grants a temporary Heart Container for the room."},
+                            {str = "Adds +0.5 Damage for every Heart Container you have for the duration of the room."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     helper.AddTemporaryHealth(p, 2)
@@ -45,6 +51,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

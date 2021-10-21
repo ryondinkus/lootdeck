@@ -6,6 +6,11 @@ local Name = "V. The Hierophant"
 local Tag = "theHierophant"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits for the room"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+                            {str = "Grants a unique Holy Mantle that can absorb two hits for the duration of the room."},
+						}}
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -43,6 +48,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -6,6 +6,11 @@ local Name = "I. The Magician"
 local Tag = "theMagician"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{ArrowUp}} +0.31 Tears Up for the room# Grants the {{Trinket144}} Brain Worm effect for the room, causing your tears to turn 90 degrees and hit enemies"
+local WikiDescription = {{ -- Effect
+							{str = "Effect", fsize = 2, clr = 3, halign = 0},
+							{str = "Grants a +0.31 Tears Up and the Brain Worm effect for the room, which causes your tears to turn 90 degrees to hit enemies."},
+						}}
 
 -- If it ever gets fixed, AddTrinketEffect() would be better here
 local function MC_USE_CARD(_, c, p)
@@ -56,6 +61,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
