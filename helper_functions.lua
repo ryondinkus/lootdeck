@@ -919,8 +919,6 @@ end
 function H.AddActiveCharge(p, value)
     for i=0,3 do
         if p:GetActiveItem(i) ~= 0 then
-            local itemConfig = Isaac.GetItemConfig()
-            local active = p:GetActiveItem(i)
             if p:NeedsCharge(i) then
                 p:SetActiveCharge(p:GetActiveCharge(i) + value, i)
                 if not p:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and p:GetBatteryCharge(i) > 0 then
@@ -932,6 +930,13 @@ function H.AddActiveCharge(p, value)
             end
         end
     end
+end
+
+function H.StartLootcardPickupAnimation(data, tag, animationName)
+    data.lootcardPickupAnimation = H.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+
+    H.StartLootcardAnimation(data.lootcardPickupAnimation, tag, animationName)
+    data.isHoldingLootcard = true
 end
 
 return H
