@@ -5,6 +5,8 @@ local Name = "Mega Battery"
 local Tag = "megaBattery"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Spawns a Mega Battery"
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery on use.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_MEGA)
@@ -15,6 +17,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,

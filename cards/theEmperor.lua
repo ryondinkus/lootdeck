@@ -5,6 +5,8 @@ local Name = "IV. The Emperor"
 local Tag = "theEmperor"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Permanently charms every enemy in the room, excluding bosses"
+local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.")
 
 local function MC_USE_CARD(_, c, p)
 	local illegalParents = {
@@ -28,6 +30,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Loot Deck"
 local Tag = "lootDeck"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "{{Card}} Grants a Loot Card on use"
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants a Loot Card on use.")
 
 local function MC_USE_ITEM(_, type, rng, p)
     local lootCard = helper.GetWeightedLootCardId()
@@ -24,6 +26,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_ITEM,

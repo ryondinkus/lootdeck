@@ -66,6 +66,27 @@ for _, card in pairs(lootcards) do
             end
         end
     end
+
+	if EID and card.Description then
+		EID:addCard(card.Id, card.Description)
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		local cardFrontSprite = Sprite()
+        cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
+		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
+		cardFrontSprite:LoadGraphics()
+		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
+	end
+
+	if Encyclopedia and card.WikiDescription then
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		Encyclopedia.AddCard({
+			Class = "Loot Deck",
+			ID = card.Id,
+			WikiDesc = card.WikiDescription,
+			ModName = "Loot Deck",
+			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", "Idle", 0, cardFrontPath),
+		})
+	end
 end
 
 for _, variant in pairs(entityVariants) do
@@ -90,6 +111,40 @@ for _, item in pairs(items) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
+
+	if EID and item.Description then
+		EID:addCollectible(item.Id, item.Description)
+	end
+
+	if Encyclopedia and item.WikiDescription then
+		Encyclopedia.AddItem({
+			Class = "Loot Deck",
+			ID = item.Id,
+			WikiDesc = item.WikiDescription,
+			ModName = "Loot Deck"
+		})
+	end
+end
+
+for _, trinket in pairs(trinkets) do
+    if trinket.callbacks then
+        for _, callback in pairs(trinket.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+
+	if EID and trinket.Description then
+		EID:addTrinket(trinket.Id, trinket.Description)
+	end
+
+	if Encyclopedia and trinket.WikiDescription then
+		Encyclopedia.AddTrinket({
+			Class = "Loot Deck",
+			ID = trinket.Id,
+			WikiDesc = trinket.WikiDescription,
+			ModName = "Loot Deck"
+		})
+	end
 end
 
 local HUD_OFFSET_CONTROLS_WAIT_FRAMES = 4 * 60

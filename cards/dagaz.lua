@@ -1,8 +1,12 @@
+local helper = include("helper_functions")
+
 -- A 1 in 2 chance of removing curses for the floor or gaining a soul heart
 local Name = "Dagaz"
 local Tag = "dagaz"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for either of these effects:# Clear all curses for the floor#{{SoulHeart}} Gain a Soul Heart"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers either effect:", "- Clear all curses for the floor. This does not apply to permanent curses in Challenges.", "- Gain a Soul Heart.")
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
@@ -24,6 +28,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

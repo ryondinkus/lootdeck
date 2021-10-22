@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Card Sleeve"
 local Tag = "cardSleeve"
 local Id = Isaac.GetTrinketIdByName(Name)
+local Description = "+10% chance to replace a card spawn with a Loot Card"
+local WikiDescription = helper.GenerateEncyclopediaPage("+10% chance to replace a card spawn with a Loot Card.", "- Additional trinket copies grant an extra +10%, up to 100%.")
 
 local function CalculateLootcardPercentage()
     local totalPercentage = 0
@@ -18,6 +20,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     helpers = {
         CalculateLootcardPercentage = CalculateLootcardPercentage
     }

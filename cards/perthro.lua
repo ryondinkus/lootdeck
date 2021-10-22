@@ -5,6 +5,8 @@ local Name = "Perthro"
 local Tag = "perthro"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Destroys one of your items at random#{{Collectible}} Grants a new item from the current room pool"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -59,6 +61,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

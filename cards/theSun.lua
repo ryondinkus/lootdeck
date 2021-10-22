@@ -7,6 +7,8 @@ local Name = "XIX. The Sun"
 local Tag = "theSun"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "If used, defeating the boss of this floor triggers the {{Collectible127}} Forget Me Now effect, restarting the floor# The effect will also trigger on use if the boss of this floor is already defeated# After using, all other instances of the card are removed and cannot be found for the rest of the run"
+local WikiDescription = helper.GenerateEncyclopediaPage("After using, defeating the boss of the current floor triggers the Forget Me Now effect, which restarts the floor.", "- The effect will also trigger on use if the current floor's boss is already defeated.", "On use, all other instances of this card are removed and cannot be found for the rest of the run.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -60,6 +62,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

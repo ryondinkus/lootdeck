@@ -5,6 +5,8 @@ local Name = "Pills! Black"
 local Tag = "blackPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:# Instantly kill all enemies in the room (80 damage to bosses)# Confuses all room enemies#{{Warning}} Take a Full Heart of damage (non-fatal)"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Instantly kills all enemies in the room. Deals 80 damage to bosses.", "- Confuses all enemies in the room for 5 seconds.", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.")
 
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
@@ -60,6 +62,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

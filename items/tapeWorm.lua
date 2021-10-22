@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Tape Worm"
 local Tag = "tapeWorm"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "10% chance to fire a Worm Tear, which has endless range and spawns slowing creep"
+local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go.", "- Additional copies of the passive increase the chance up to 25%")
 
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()
@@ -44,6 +46,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_FIRE_TEAR,

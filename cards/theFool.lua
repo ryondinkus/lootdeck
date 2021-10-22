@@ -5,6 +5,8 @@ local Name = "O. The Fool"
 local Tag = "theFool"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
@@ -16,6 +18,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

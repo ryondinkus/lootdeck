@@ -933,6 +933,18 @@ function H.AddActiveCharge(p, value)
     end
 end
 
+function H.GenerateEncyclopediaPage(...)
+    local output = {
+        {str = "Effect", fsize = 2, clr = 3, halign = 0}
+    }
+
+    for _, description in pairs({...}) do
+        table.insert(output, {str = description})
+    end
+
+    return {output}
+end
+
 function H.SaveHUDOffset()
     lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
 end
