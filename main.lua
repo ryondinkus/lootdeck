@@ -1,5 +1,3 @@
-local json = include("json")
-
 lootdeck = RegisterMod("Loot Deck", 1)
 
 function table.deepCopy(original)
@@ -60,13 +58,7 @@ for _, card in pairs(lootcards) do
                     if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
                         local data = p:GetData()
 
-                        local lootcardAnimationContainer = data.lootcardPickupAnimation
-
-                        lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkleFast")
-                        data.lootcardPickupAnimation = lootcardAnimationContainer
-
-                        helper.StartLootcardAnimation(lootcardAnimationContainer, card.Tag, "IdleSparkleFast")
-                        data.isHoldingLootcard = true
+                        helper.StartLootcardPickupAnimation(data, card.Tag, "IdleSparkleFast")
                     end
                 end, callback[3])
             else
@@ -163,10 +155,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
     lootdeck.f = table.deepCopy(defaultStartupValues)
 
     if not ModConfigMenu then
-        if lootdeck:HasData() then
-            local savedData = json.decode(lootdeck:LoadData())
-            lootdeck.f.hudOffset = savedData.hudOffset
-        end
+        helper.LoadHUDOffset()
 
         lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
     end
@@ -212,7 +201,7 @@ end)
 --========== LOOTCARD HUD RENDERING ==========
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function()
-    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+    helper.SaveHUDOffset()
 end)
 
 
@@ -232,6 +221,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                     lootdeck.f.hudOffsetCountdown = HUD_OFFSET_WAIT_FRAMES + HUD_OFFSET_FADE_FRAMES
 					lootdeck.sfx:Play(SoundEffect.SOUND_PLOP,1,0)
 				end
+
+                helper.SaveHUDOffset()
             end)
         end
         lootdeck.f.hudOffsetCountdown = math.max(0, lootdeck.f.hudOffsetCountdown - 1)
@@ -309,13 +300,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-            local lootcardAnimationContainer = data.lootcardPickupAnimation
-
-            lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/item_dummy_animation.anm2", "IdleSparkle")
-            data.lootcardPickupAnimation = lootcardAnimationContainer
-
-            helper.StartLootcardAnimation(lootcardAnimationContainer, lootcard.Tag, "IdleSparkle")
-            data.isHoldingLootcard = true
+            helper.StartLootcardPickupAnimation(data, lootcard.Tag, "IdleSparkle")
         end
 	end
 end, PickupVariant.PICKUP_TAROTCARD)
@@ -360,3 +345,17 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
         end
     end)
 end)
+
+lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
+    local heldLootcard = helper.GetLootcardById(p:GetCard(0))
+
+    local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation:SetLastFrame()
+    end
+
+    if heldLootcard then
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleSparkle")
+    end
+end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
