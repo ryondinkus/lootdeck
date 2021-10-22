@@ -5,10 +5,7 @@ local Name = "Rainbow Tapeworm"
 local Tag = "rainbowTapeworm"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "On room entry, 50% chance to temporarily duplicate one of your existing passives"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "When entering a room, 50% chance to duplicate one of your passives for the rest of the room."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("When entering a room, 50% chance to duplicate one of your passives for the rest of the room.")
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)

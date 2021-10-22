@@ -6,12 +6,7 @@ local Tag = "theWorld"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Pauses all enemies and projectiles in the room# Effect wears off after 10 seconds, or when you exit the room# Stops the game clock for the duration of the effect"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-                            {str = "Pauses all enemies and projectiles in the room."},
-                            {str = "- The effect lasts for 10 seconds, or until you exit the room."},
-                            {str = "- The in-game clock does not increment for the duration of the effect."}
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds, or until you exit the room.", "- The in-game clock does not increment for the duration of the effect.")
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()

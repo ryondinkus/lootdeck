@@ -6,10 +6,7 @@ local Tag = "judgement"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Spawns 1-3 consumables based on the {{Collectible464}} Glyph of Balance algorithm, spawning whatever consumables you have the least of"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-                            {str = "Spawns 1-3 consumables based on the Glyph of Balance algorithm. This spawns whatever consumable you have least of."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 1-3 consumables based on the Glyph of Balance algorithm. This spawns whatever consumable you have least of.")
 
 local function MC_USE_CARD(_, c, p)
     local reward = helper.GlyphOfBalance(p)

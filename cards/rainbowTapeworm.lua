@@ -7,11 +7,7 @@ local Tag = "rainbowTapeworm"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Adds a unique passive item on use# Passive: On room entry, 50% chance to temporarily duplicate one of your existing passives"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On use, grants a unique passive item."},
-							{str = "Passive effect: When entering a room, 50% chance to duplicate one of your passives for the rest of the room."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: When entering a room, 50% chance to duplicate one of your passives for the rest of the room.")
 
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.rainbowTapeworm.Id, SoundEffect.SOUND_VAMP_GULP)

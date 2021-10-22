@@ -7,13 +7,7 @@ local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On use, triggers one of three effects:"},
-                            {str = "- Spawns a Loot Card."},
-                            {str = "- Spawns 3 Loot Cards"},
-                            {str = "- Lose a Coin, Key, and Bomb, if possible."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.")
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx

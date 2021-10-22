@@ -7,11 +7,7 @@ local Tag = "theHighPriestess"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit."},
-							{str = "- The same enemy cannot be hit by multiple fingers."}
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.")
 
 local function MC_USE_CARD(_, c, p)
 	local data = p:GetData()

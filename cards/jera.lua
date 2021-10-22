@@ -6,10 +6,7 @@ local Tag = "jera"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Triggers the {{Collectible631}} Meat Cleaver effect, splitting all room enemies in half with half their respective HP"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.")
 
 local function MC_USE_CARD(_, c, p)
     if #helper.ListEnemiesInRoom(p.Position, true) > 0 then

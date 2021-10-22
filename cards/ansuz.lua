@@ -1,15 +1,12 @@
+local helper = include("helper_functions")
+
 -- Teleport to Treasure Room, Shop, or Boss, with priority given to unvisited rooms
 local Name = "Ansuz"
 local Tag = "ansuz"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Teleport to either the Treasure Room, Shop, or Boss Room# Priority is given to unvisited rooms"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Random teleport to either the Treasure Room, Shop, or Boss Room."},
-                            {str = "- Unvisited rooms are prioritized."},
-                            {str = "- On floors with no Treasure Rooms, Shops, or Bosses, teleports you to a random room."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Random teleport to either the Treasure Room, Shop, or Boss Room.", "- Unvisited rooms are prioritized.", "- On floors with no Treasure Rooms, Shops, or Bosses, teleports you to a random room.")
 
 local function MC_USE_CARD(_, c, p)
     local level = Game():GetLevel()

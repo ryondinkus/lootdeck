@@ -5,11 +5,7 @@ local Name = "Broken Ankh"
 local Tag = "brokenAnkh"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "On death, 1/6 chance to revive with half a heart"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On player death, you have a 1/6 chance of reviving with half a heart."},
-							{str = "- Additional copies of the passive grant an extra revival chance up to 3/6."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On player death, you have a 1/6 chance of reviving with half a heart.", "- Additional copies of the passive grant an extra revival chance up to 3/6.")
 
 local ReviveTag = string.format("%sRevive", Tag)
 

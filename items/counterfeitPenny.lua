@@ -5,10 +5,7 @@ local Name = "Counterfeit Penny"
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "Get an additional +1 Coin every time you gain Coins"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Gain an additional +1 Coin whenever you gain coins."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Gain an additional +1 Coin whenever you gain coins.")
 
 local function MC_POST_GAME_STARTED()
     lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()

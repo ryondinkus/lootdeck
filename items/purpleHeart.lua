@@ -5,13 +5,7 @@ local Name = "Purple Heart"
 local Tag = "purpleHeart"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "25% chance to reroll a random enemy in the room# Rerolled enemies drop a consumable on death"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "25% chance to reroll a random enemy in the room."},
-							{str = "- Additional copies of the passive add an additional 25% chance, up to 100%."},
-							{str = "Rerolled enemies drop an extra consumable on death."},
-							{str = "- Consumables spawned are based on the algorithm from Glyph of Balance, granting a consumable you have the least of."}
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("25% chance to reroll a random enemy in the room.", "- Additional copies of the passive add an additional 25% chance, up to 100%.", "Rerolled enemies drop an extra consumable on death.", "- Consumables spawned are based on the algorithm from Glyph of Balance, granting a consumable you have the least of.")
 
 local shouldRerollEnemyTag = string.format("%sShouldRerollEnemy", Tag)
 local preRerollEnemySeedList = string.format("%sPreRerollEnemySeedList", Tag)

@@ -6,10 +6,7 @@ local Name = "The Left Hand"
 local Tag = "leftHand"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "Swaps the potential drops of Gold Chests and Red Chests"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Swaps the potential drops of Gold Chests and Red Chests."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Swaps the potential drops of Gold Chests and Red Chests.")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
     local f = lootdeck.f

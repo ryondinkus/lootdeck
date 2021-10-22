@@ -5,11 +5,7 @@ local Name = "Pink Eye"
 local Tag = "pinkEye"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "On damage taken, 5% chance to fire a {{Collectible531}} Haemolacria tear with poisonous green creep towards your attacker"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On damage taken, 5% chance to fire a Haemolacria tear with poisonous green creep towards the enemy that damaged you."},
-							{str = "- Additional copies of the passive grant an extra 5% chance to trigger up to 25%."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On damage taken, 5% chance to fire a Haemolacria tear with poisonous green creep towards the enemy that damaged you.", "- Additional copies of the passive grant an extra 5% chance to trigger up to 25%.")
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local p = e:ToPlayer()

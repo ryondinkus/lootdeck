@@ -7,16 +7,7 @@ local Tag = "wheelOfFortune"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} Gain 1 Coin#{{Warning}} Take a Half Heart of damage (non-lethal)#{{Card}} Spawns 3 Loot Cards#{{Coin}}{{ArrowDown}} Lose 4 Coins#{{Coin}}{{ArrowUp}} Gain 5 Coins#{{ArcadeRoom}} Spawn a random Arcade-exclusive item"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On use, triggers one of six effects:"},
-                            {str = "- Gain 1 Coin"},
-                            {str = "- Take a Half Heart of damage. The damage will be negated if it would kill the player."},
-                            {str = "- Spawns 3 Loot Cards"},
-							{str = "- Lose 4 Coins"},
-                            {str = "- Gain 5 Coins"},
-							{str = "- Spawn a random arcade-exclusive item"},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Take a Half Heart of damage. The damage will be negated if it would kill the player.", "- Spawns 3 Loot Cards", "- Lose 4 Coins", "- Gain 5 Coins", "- Spawn a random arcade-exclusive item")
 
 local arcadeItems = {
     CollectibleType.COLLECTIBLE_DOLLAR,

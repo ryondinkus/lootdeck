@@ -5,11 +5,7 @@ local Name = "Cain's Eye"
 local Tag = "cainsEye"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "Gain a random mapping effect ( {{Collectible54}} Treasure Map, {{Collectible21}} The Compass, {{Collectible246}} Blue Map) for each floor"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "On each floor, gain a random effect of either Treasure Map, The Compass, or Blue Map."},
-							{str = "- Additional copies of the passive grant extra mapping effects, avoiding duplicate effects."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("On each floor, gain a random effect of either Treasure Map, The Compass, or Blue Map.", "- Additional copies of the passive grant extra mapping effects, avoiding duplicate effects.")
 
 local function MC_POST_NEW_LEVEL()
     local game = Game()

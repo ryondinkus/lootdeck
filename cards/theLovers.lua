@@ -7,10 +7,7 @@ local Tag = "theLovers"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "{{Heart}} +2 Heart Containers for the room"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-                            {str = "Grants two temporary Heart Containers for the duration of the room."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

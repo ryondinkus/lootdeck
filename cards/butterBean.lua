@@ -6,10 +6,7 @@ local Tag = "butterBean"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 4
 local Description = "Creates a {{Collectible294}} Butter Bean fart, which knocks back enemies."
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_BUTTER_BEAN)

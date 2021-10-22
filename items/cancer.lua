@@ -5,11 +5,7 @@ local Name = "Cancer!"
 local Tag = "cancer"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "{{ArrowUp}} Massive firerate increase when entering a room with enemies#{{ArrowDown}} The firerate increase quickly diminishes over time"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "In a room with active enemies, your firerate massively increases, then decreases over time."},
-							{str = "- This effect occurs when enemies spawn after entering a room, such as when a spider spawns from a pot."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("In a room with active enemies, your firerate massively increases, then decreases over time.", "- This effect occurs when enemies spawn after entering a room, such as when a spider spawns from a pot.")
 
 local originalFireDelayTag = string.format("%sOriginalFireDelay", Tag)
 local finishedTag = string.format("%sFinished", Tag)

@@ -5,11 +5,7 @@ local Name = "Bloody Penny"
 local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "5% chance to drop a Loot Card on enemy death"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Enemies have a 5% chance to drop a Loot Card on death."},
-							{str = "- Effect stacks +5% for every instance of the passive and caps at 25%."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Enemies have a 5% chance to drop a Loot Card on death.", "- Effect stacks +5% for every instance of the passive and caps at 25%.")
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local shouldRun = false

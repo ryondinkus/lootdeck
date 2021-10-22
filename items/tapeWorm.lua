@@ -5,12 +5,7 @@ local Name = "Tape Worm"
 local Tag = "tapeWorm"
 local Id = Isaac.GetItemIdByName(Name)
 local Description = "10% chance to fire a Worm Tear, which has endless range and spawns slowing creep"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "10% chance to fire a Worm Tear."},
-							{str = "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go."},
-                            {str = "- Additional copies of the passive increase the chance up to 25%"},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go.", "- Additional copies of the passive increase the chance up to 25%")
 
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()

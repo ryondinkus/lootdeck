@@ -7,12 +7,7 @@ local Tag = "joker"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Spawns a Devil Hand familiar which steals any item in the room (shop items included) and brings it to the player# If there are no items in the room, the effect fails"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Spawns a Devil Hand familiar, which steals any item in the room and moves it next to the player."},
-							{str = "- This includes shop items and devil deals"},
-							{str = "- This can steal non-shop items trapped behind obstacles, allowing the player to access them."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Devil Hand familiar, which steals any item in the room and moves it next to the player.", "- This includes shop items and devil deals", "- This can steal non-shop items trapped behind obstacles, allowing the player to access them.")
 
 local function MC_USE_CARD(_, c, p)
 	local rng = lootdeck.rng

@@ -7,10 +7,7 @@ local Tag = "chargedPenny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Spawns a Charged Penny, which recharges your active on pickup"
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, entityVariants.chargedPenny.Id, 0, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 1)

@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 local entityVariants = include("entityVariants/registry")
 
 local Name = "Lost Soul"
@@ -5,12 +7,7 @@ local Tag = "lostSoul"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Description = "Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up# If used while a Lost Soul already exists, it will spawn a Found Soul instead. The two souls will fall in love, spawn a Red Heart, and fly away."
-local WikiDescription = {{ -- Effect
-							{str = "Effect", fsize = 2, clr = 3, halign = 0},
-							{str = "Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up."},
-                            {str = "- Lost Soul will prioritize Secret Rooms over Tinted Rocks."},
-                            {str = "If used while a Lost Soul familiar already exists, it will instead spawn a Found Soul in the center of the room. The two souls will fall in love and fly away, spawning one Red Heart."},
-						}}
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up.", "- Lost Soul will prioritize Secret Rooms over Tinted Rocks.", "If used while a Lost Soul familiar already exists, it will instead spawn a Found Soul in the center of the room. The two souls will fall in love and fly away, spawning one Red Heart.")
 
 local function MC_USE_CARD(_, c, p)
     local room = Game():GetRoom()
