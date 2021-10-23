@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Pink Eye"
 local Tag = "pinkEye"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "On damage taken, 5% chance to fire a {{Collectible531}} Haemolacria tear with poisonous green creep towards your attacker"
+local WikiDescription = helper.GenerateEncyclopediaPage("On damage taken, 5% chance to fire a Haemolacria tear with poisonous green creep towards the enemy that damaged you.", "- Additional copies of the passive grant an extra 5% chance to trigger up to 25%.")
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local p = e:ToPlayer()
@@ -42,6 +44,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,

@@ -5,6 +5,8 @@ local entityVariants = include("entityVariants/registry")
 local Name = "Poker Chip"
 local Tag = "pokerChip"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "All coin spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all"
+local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)")
 
 local function MC_POST_PICKUP_INIT(_, pickup)
     local hasItem = false
@@ -58,6 +60,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_INIT,

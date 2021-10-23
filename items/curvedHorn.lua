@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Curved Horn"
 local Tag = "curvedHorn"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "Quadruple damage for the first tear fired in a room"
+local WikiDescription = helper.GenerateEncyclopediaPage("In a room with active enemies, the first tear fired has x4 damage and size.", "- This effect occurs when enemies spawn after entering a room, such as when a spider spawns from a pot.", "- Additional copies of the passive let you fire additional x4 damage tears.")
 
 local finishedTag = string.format("%sFinished", Tag)
 local roomClearedTag = string.format("%sRoomCleared", Tag)
@@ -51,6 +53,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_ROOM,

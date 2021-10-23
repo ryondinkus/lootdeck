@@ -5,6 +5,8 @@ local Name = "XIII. Death"
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts"
+local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.")
 
 local ReviveTag = string.format("%sRevive", Tag)
 
@@ -40,10 +42,12 @@ local function MC_POST_NEW_ROOM()
                 end
                 p:AddSoulHearts(1)
             end
-			p:AnimateCard(Id)
+			p:AnimateCard(Id, "UseItem")
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
             data[Tag] = nil
             data[ReviveTag] = nil
+
+            helper.StartLootcardPickupAnimation(data, Tag, "IdleSparkleFast")
         end
     end)
 end
@@ -57,6 +61,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

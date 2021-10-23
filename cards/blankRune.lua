@@ -5,6 +5,8 @@ local Name = "Blank Rune"
 local Tag = "blankRune"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Coin}} Gain 1 Coin#{{Card}} Spawn 2 Loot Cards#{{Warning}} Take a Full Heart of damage (non-lethal)#{{Coin}} Gain 4 Coins#{{Card}} Spawns 5 Loot Cards#{{Coin}} Gain 6 Coins# The rolled effect multiplies for each player!"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten")
 
 local function MC_USE_CARD(_, c, p)
 	local game = Game()
@@ -54,6 +56,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "AAA Battery"
 local Tag = "aaaBattery"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "For each new floor, grants a random temporary battery item"
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants a random temporary battery item for each new floor.", "- Additional copies of the passive grant extra battery items.")
 
 local function GivePlayerItem(p, data)
     if not data then
@@ -53,6 +55,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,

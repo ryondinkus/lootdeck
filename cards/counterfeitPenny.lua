@@ -6,6 +6,8 @@ local Name = "Counterfeit Penny"
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Adds a unique passive item on use# Passive: Get an additional +1 Coin every time you gain Coins"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Gain an additional +1 Coin whenever you gain coins.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.counterfeitPenny.Id, SoundEffect.SOUND_VAMP_GULP)
@@ -16,6 +18,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

@@ -6,6 +6,8 @@ local Name = "Two of Diamonds"
 local Tag = "twoOfDiamonds"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price"
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -36,6 +38,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

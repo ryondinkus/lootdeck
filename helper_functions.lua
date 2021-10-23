@@ -1,3 +1,4 @@
+local json = include("json")
 local H = {}
 
 -- helper function for using FindRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
@@ -919,8 +920,6 @@ end
 function H.AddActiveCharge(p, value)
     for i=0,3 do
         if p:GetActiveItem(i) ~= 0 then
-            local itemConfig = Isaac.GetItemConfig()
-            local active = p:GetActiveItem(i)
             if p:NeedsCharge(i) then
                 p:SetActiveCharge(p:GetActiveCharge(i) + value, i)
                 if not p:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and p:GetBatteryCharge(i) > 0 then
@@ -932,6 +931,39 @@ function H.AddActiveCharge(p, value)
             end
         end
     end
+end
+
+function H.GenerateEncyclopediaPage(...)
+    local output = {
+        {str = "Effect", fsize = 2, clr = 3, halign = 0}
+    }
+
+    for _, description in pairs({...}) do
+        table.insert(output, {str = description})
+    end
+
+    return {output}
+end
+
+function H.SaveHUDOffset()
+    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+end
+
+function H.LoadHUDOffset()
+    if lootdeck:HasData() then
+        local savedData = json.decode(lootdeck:LoadData())
+        lootdeck.f.hudOffset = savedData.hudOffset
+    end
+end
+
+function H.StartLootcardPickupAnimation(data, tag, animationName)
+    if Game():GetRoom():HasWater() then
+        animationName = animationName .. "Water"
+    end
+    data.lootcardPickupAnimation = H.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+
+    H.StartLootcardAnimation(data.lootcardPickupAnimation, tag, animationName)
+    data.isHoldingLootcard = true
 end
 
 return H

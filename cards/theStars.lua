@@ -1,8 +1,12 @@
+local helper = include("helper_functions")
+
 -- Grants an item from the item pool or (1% chance) possibly the planitarium pool
 local Name = "XVII. The Stars"
 local Tag = "theStars"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Instantly grants an item from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead"
+local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.")
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()
@@ -35,6 +39,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

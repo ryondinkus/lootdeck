@@ -5,6 +5,8 @@ local Name = "XVIII. The Moon"
 local Tag = "theMoon"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Spawns 5-10 Shopkeepers"
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -25,6 +27,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,

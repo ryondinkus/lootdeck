@@ -5,6 +5,8 @@ local entitySubTypes = include("entitySubTypes/registry")
 local Name = "The Left Hand"
 local Tag = "leftHand"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "Swaps the potential drops of Gold Chests and Red Chests"
+local WikiDescription = helper.GenerateEncyclopediaPage("Swaps the potential drops of Gold Chests and Red Chests.")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
     local f = lootdeck.f
@@ -51,6 +53,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_UPDATE,

@@ -4,13 +4,15 @@ local helper = include("helper_functions")
 local Name = "Bloody Penny"
 local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "5% chance to drop a Loot Card on enemy death"
+local WikiDescription = helper.GenerateEncyclopediaPage("Enemies have a 5% chance to drop a Loot Card on death.", "- Effect stacks +5% for every instance of the passive and caps at 25%.")
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local shouldRun = false
     helper.ForEachPlayer(function()
         shouldRun = true
     end, Id)
-    
+
     if shouldRun then
         local rng = lootdeck.rng
 
@@ -35,6 +37,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,

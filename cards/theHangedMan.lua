@@ -6,6 +6,8 @@ local Name = "XII. The Hanged Man"
 local Tag = "theHangedMan"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Grants the {{Collectible53}} Magneto effect for the room, causing pickups to be drawn towards you"
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -36,6 +38,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

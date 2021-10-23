@@ -6,6 +6,8 @@ local Name = "Black Rune"
 local Tag = "blackRune"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:# Deals 40 damage to all enemies in room# Spawns a random {{Collectible660}} Card Reading portal# Lose 3 Bombs, Keys, and Coins, then spawn 3 chests"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Deals 40 damage to all room enemies.","- Spawns a random Card Reading portal, which will warp you to a random room. Higher priority is given to special room warps.", "- Lose 3 Coins, Keys, and Bombs, if possible. Spawn 3 chests.")
 
 local function MC_USE_CARD(_, c, p)
     local sfx = lootdeck.sfx
@@ -58,6 +60,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

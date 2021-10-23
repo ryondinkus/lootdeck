@@ -4,6 +4,8 @@ local helper = include("helper_functions")
 local Name = "Purple Heart"
 local Tag = "purpleHeart"
 local Id = Isaac.GetItemIdByName(Name)
+local Description = "25% chance to reroll a random enemy in the room# Rerolled enemies drop a consumable on death"
+local WikiDescription = helper.GenerateEncyclopediaPage("25% chance to reroll a random enemy in the room.", "- Additional copies of the passive add an additional 25% chance, up to 100%.", "Rerolled enemies drop an extra consumable on death.", "- Consumables spawned are based on the algorithm from Glyph of Balance, granting a consumable you have the least of.")
 
 local shouldRerollEnemyTag = string.format("%sShouldRerollEnemy", Tag)
 local preRerollEnemySeedList = string.format("%sPreRerollEnemySeedList", Tag)
@@ -72,6 +74,8 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_POST_NEW_ROOM,

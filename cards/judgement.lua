@@ -5,6 +5,8 @@ local Name = "XX. Judgement"
 local Tag = "judgement"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Spawns 1-3 consumables based on the {{Collectible464}} Glyph of Balance algorithm, spawning whatever consumables you have the least of"
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 1-3 consumables based on the Glyph of Balance algorithm. This spawns whatever consumable you have least of.")
 
 local function MC_USE_CARD(_, c, p)
     local reward = helper.GlyphOfBalance(p)
@@ -19,6 +21,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

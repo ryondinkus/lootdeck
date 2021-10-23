@@ -6,6 +6,8 @@ local Name = "VI. The Lovers"
 local Tag = "theLovers"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "{{Heart}} +2 Heart Containers for the room"
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -28,6 +30,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+    Description = Description,
+    WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

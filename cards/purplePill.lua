@@ -5,6 +5,8 @@ local Name = "Pills! Purple"
 local Tag = "purplePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Battery}} Recharge your active item#{{ArrowUp}} +0.27 Tears for the room#{{ArrowDown}} -0.27 Tears for the room"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Recharge one of your active items (+6 charge).", "- +0.27 Tears for the room.", "- -0.27 Tears for the room.")
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
@@ -51,6 +53,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

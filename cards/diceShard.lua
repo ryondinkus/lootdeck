@@ -6,6 +6,8 @@ local Name = "Dice Shard"
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 4
+local Description = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail."
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, undoes all of the events of the current room, similar to the Glowing Hourglass effect.", "- Unlike Glowing Hourglass, you will be rewinded to the start of the current room instead of the previous room. As such, this card cannot be used as a teleport.", "- If used in the starting room of a new floor, without visiting any other rooms, the effect will fail and spawn a Penny.")
 
 local blackOverlay = Sprite()
 blackOverlay:Load("gfx/coloroverlays/overlay.anm2")
@@ -99,6 +101,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

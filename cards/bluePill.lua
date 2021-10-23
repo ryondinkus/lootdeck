@@ -6,6 +6,8 @@ local Name = "Pills! Blue"
 local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.")
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
@@ -44,6 +46,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,

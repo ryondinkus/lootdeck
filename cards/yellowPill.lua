@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 local entityVariants = include("entityVariants/registry")
 
 -- A 1 in 3 chance of gaining 4 coins, gaining 7 coins, or losing 4 coins
@@ -5,6 +7,8 @@ local Name = "Pills! Yellow"
 local Tag = "yellowPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
+local Description = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} +4 Coins#{{Coin}}{{ArrowUp}} +7 Coins#{{Coin}}{{ArrowDown}} -4 Coins"
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.")
 
 local function MC_USE_CARD(_, c, p)
 	local sfx = lootdeck.sfx
@@ -35,6 +39,8 @@ return {
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
+	Description = Description,
+	WikiDescription = WikiDescription,
     callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
