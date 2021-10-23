@@ -58,7 +58,7 @@ for _, card in pairs(lootcards) do
                     if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
                         local data = p:GetData()
 
-                        helper.StartLootcardPickupAnimation(data, card.Tag, "IdleSparkleFast")
+                        helper.StartLootcardPickupAnimation(data, card.Tag, "IdleFast")
                     end
                 end, callback[3])
             else
@@ -300,7 +300,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-            helper.StartLootcardPickupAnimation(data, lootcard.Tag, "IdleSparkle")
+            helper.StartLootcardPickupAnimation(data, lootcard.Tag, "Idle")
         end
 	end
 end, PickupVariant.PICKUP_TAROTCARD)
@@ -356,6 +356,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 
     if heldLootcard then
-        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleSparkle")
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "Idle")
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
