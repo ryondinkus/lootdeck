@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="13/03/2015 6:12:16 PM" Version="103" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="10/23/2021 7:03:50 PM" Version="104" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="Items/Pick Ups/Pickup_005_Chests.png" Id="0"/>
+			<Spritesheet Path="pickup_005_chests.png" Id="0"/>
 			<Spritesheet Path="shadow.png" Id="1"/>
 		</Spritesheets>
 		<Layers>
