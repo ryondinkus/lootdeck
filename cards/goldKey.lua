@@ -10,6 +10,10 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently ch
 
 local function MC_USE_CARD(_, c, p)
     local enemy = Isaac.Spawn(EntityType.ENTITY_PORTAL, 0, 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
+    enemy:GetSprite():ReplaceSpritesheet(0, "gfx/monsters/gold_portal.png")
+    enemy:GetSprite():ReplaceSpritesheet(2, "gfx/monsters/gold_portal.png")
+    enemy:GetSprite():ReplaceSpritesheet(3, "gfx/monsters/gold_portal.png")
+    enemy:GetSprite():LoadGraphics()
     enemy:AddCharmed(EntityRef(p), -1)
 end
 
