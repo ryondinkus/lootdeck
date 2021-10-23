@@ -957,6 +957,9 @@ function H.LoadHUDOffset()
 end
 
 function H.StartLootcardPickupAnimation(data, tag, animationName)
+    if Game():GetRoom():HasWater() then
+        animationName = animationName .. "Water"
+    end
     data.lootcardPickupAnimation = H.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
     H.StartLootcardAnimation(data.lootcardPickupAnimation, tag, animationName)
