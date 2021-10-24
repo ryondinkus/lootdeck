@@ -5,7 +5,7 @@ local costumes = include("costumes/registry")
 local Name = "Soul Heart"
 local Tag = "soulHeart"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 3
+local Weight = 2
 local Description = "Grants a {{Collectible313}} Holy Mantle shield for the room, negating damage once."
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a temporary Holy Mantle shield for the room. This shield negates the next instance of damage you take in the room.")
 

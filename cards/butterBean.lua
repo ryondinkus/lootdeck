@@ -4,7 +4,7 @@ local helper = include('helper_functions')
 local Name = "Butter Bean!"
 local Tag = "butterBean"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 4
+local Weight = 2
 local Description = "Creates a {{Collectible294}} Butter Bean fart, which knocks back enemies."
 local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.")
 

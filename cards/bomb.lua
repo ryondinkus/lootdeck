@@ -4,7 +4,7 @@ local helper = include("helper_functions")
 local Name = "Bomb!"
 local Tag = "bomb"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 6
+local Weight = 2
 local Description = "Explodes on a random enemy, dealing 40 damage#{{Warning}} If no enemies are in the room, this will explode on the player"
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on a random enemy in the room, dealing 40 damage to it and all enemies around it.", "If used with no targetable enemies in the room, the explosion will spawn on the player instead.")
 

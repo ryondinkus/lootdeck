@@ -4,7 +4,7 @@ local helper = include('helper_functions')
 local Name = "A Penny!"
 local Tag = "penny"
 local Id = Isaac.GetCardIdByName(Name)
-local Weight = 11
+local Weight = 2
 local Description = "Spawns a Penny"
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Penny on use.")
 
