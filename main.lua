@@ -36,9 +36,10 @@ local defaultStartupValues = {
 }
 
 local debugValues = {
-	debugGuaranteedLoot = false,
-	debugBlankCardStart = false,
-	debugJacobEsauStart = false
+	GuaranteedLoot = false,
+	LootDeckStart = false,
+	BlankCardStart = false,
+	JacobEsauStart = false
 }
 
 lootdeck.rng = RNG()
@@ -174,8 +175,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
         lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
     end
 
+	if debugValues.LootDeckStart then
+		Isaac.GetPlayer(0):AddCollectible(items.lootDeck.Id, 6)
+	end
+
 	if debugValues.BlankCardStart then
 		Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
+		Isaac.GetPlayer(0):AddCard(helper.GetWeightedLootCardId())
 	end
 
 	if debugValues.JacobEsauStart then
@@ -222,7 +228,28 @@ if ModConfigMenu then
 		OnChange = function(currentBool)
 			debugValues.GuaranteedLoot = currentBool
 		end,
-		Info = "Turns all card drops into Loot Card drops"
+		Info = "Turns all card drops into Loot Card drops."
+	})
+
+	ModConfigMenu.AddSetting(
+	"Lootdeck Beta",
+	"Settings",
+	{
+		Type = ModConfigMenu.OptionType.BOOLEAN,
+		CurrentSetting = function()
+			return debugValues.LootDeckStart
+		end,
+		Display = function()
+			local onOff = "Disabled"
+			if debugValues.LootDeckStart then
+				onOff = "Enabled"
+			end
+			return "Start with Loot Deck: " .. onOff
+		end,
+		OnChange = function(currentBool)
+			debugValues.LootDeckStart = currentBool
+		end,
+		Info = "Gives you Loot Deck at the start of a new run. Loot Deck drops a Loot Card every 6 rooms."
 	})
 
 	ModConfigMenu.AddSetting(
@@ -243,7 +270,7 @@ if ModConfigMenu then
 		OnChange = function(currentBool)
 			debugValues.BlankCardStart = currentBool
 		end,
-		Info = "Gives you Blank Card at the start of a new run."
+		Info = "Gives you Blank Card and a random Loot Card at the start of a new run."
 	})
 
 	ModConfigMenu.AddSetting(
@@ -448,4 +475,3 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
         helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "Idle")
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
-

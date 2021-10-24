@@ -47,7 +47,7 @@ local function MC_POST_NEW_ROOM()
             data[Tag] = nil
             data[ReviveTag] = nil
 
-            helper.StartLootcardPickupAnimation(data, Tag, "IdleSparkleFast")
+            helper.StartLootcardPickupAnimation(data, Tag, "IdleFast")
         end
     end)
 end
