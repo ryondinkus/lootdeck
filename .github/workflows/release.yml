@@ -17,4 +17,4 @@ jobs:
           xml-file: "metadata.xml"
           xpath: "//version"
       - name: Output
-          run: echo ${{ steps.version.outputs.info }}
+        run: echo ${{ steps.version.outputs.info }}
