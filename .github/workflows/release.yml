@@ -1,0 +1,20 @@
+name: Create Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get version
+        id: version
+        uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: "metadata.xml"
+          xpath: "//version"
+      - name: Output
+          run: echo ${{ steps.version.outputs.info }}
