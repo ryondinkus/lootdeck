@@ -945,8 +945,11 @@ function H.GenerateEncyclopediaPage(...)
     return {output}
 end
 
-function H.SaveHUDOffset()
+function H.SaveHUDOffset(ignoreMCM)
     lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+    if not ignoreMCM and ModConfigMenu and ModConfigMenu.Config and ModConfigMenu.Config.General then
+        ModConfigMenu.Config.General.HudOffset = lootdeck.f.hudOffset
+    end
 end
 
 function H.LoadHUDOffset()
