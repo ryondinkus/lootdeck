@@ -95,7 +95,7 @@
 				pickup="904"
 		/>
 	<card name="Mega Battery"
-				description="Supercharge an items"
+				description="Supercharge an item"
 				hud="Mega Battery"
 				type="special"
 				mimiccharge="12"

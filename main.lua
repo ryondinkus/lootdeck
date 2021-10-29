@@ -1,4 +1,4 @@
-DEBUG = true
+DEBUG = false
 
 lootdeck = RegisterMod("Loot Deck", 1)
 
@@ -511,4 +511,3 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
         helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "Idle")
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
-
