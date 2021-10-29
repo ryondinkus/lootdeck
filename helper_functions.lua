@@ -114,7 +114,7 @@ function H.NewTearflag(x)
 end
 
 -- function to check if player can only use soul/black hearts
-function H.IsSoulHeartMarty(p)
+function H.IsSoulHeartFarty(p)
     local soulHeartMarties = {
         PlayerType.PLAYER_XXX,
         PlayerType.PLAYER_BLACKJUDAS,
@@ -180,7 +180,7 @@ end
 
 function H.GetPlayerHeartTotal(p)
     local heartTotal = p:GetMaxHearts()
-    if H.IsSoulHeartMarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
+    if H.IsSoulHeartFarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
     if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts() * 2) end
     return heartTotal
 end
@@ -945,8 +945,11 @@ function H.GenerateEncyclopediaPage(...)
     return {output}
 end
 
-function H.SaveHUDOffset()
+function H.SaveHUDOffset(ignoreMCM)
     lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
+    if not ignoreMCM and ModConfigMenu and ModConfigMenu.Config and ModConfigMenu.Config.General then
+        ModConfigMenu.Config.General.HudOffset = lootdeck.f.hudOffset
+    end
 end
 
 function H.LoadHUDOffset()

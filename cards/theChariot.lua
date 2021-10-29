@@ -22,7 +22,7 @@ local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
     if f == CacheFlag.CACHE_DAMAGE then
         if data.chariot then
-            if helper.IsSoulHeartMarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
+            if helper.IsSoulHeartFarty(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then
                 p.Damage = p.Damage + (0.25 * p:GetSoulHearts())
             else
                 p.Damage = p.Damage + (0.25 * p:GetHearts())

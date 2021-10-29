@@ -14,18 +14,36 @@ local function MC_USE_CARD(_, c, p)
     local room = game:GetRoom()
     local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
-    local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
+    local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
     spawnedItem.AutoUpdatePrice = false
-    if helper.IsSoulHeartMarty(p) then
+    if helper.IsSoulHeartFarty(p) then
         spawnedItem.Price = -3
     elseif p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
         spawnedItem.Price = 15
     else
         spawnedItem.Price = -1
     end
+    spawnedItem.ShopItemId = -2
+    spawnedItem:GetData()[Tag] = true
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_SATAN_GROW, 1, 0)
 end
+
+local function MC_POST_PICKUP_UPDATE(_, entity)
+    if entity.FrameCount == 1 then
+        if entity.SpawnerEntity and entity.SpawnerEntity.Type == EntityType.ENTITY_PLAYER and entity.ShopItemId == -2 then
+            entity.AutoUpdatePrice = false
+            if helper.IsSoulHeartFarty(entity.SpawnerEntity:ToPlayer()) then
+                entity.Price = -3
+            elseif entity.SpawnerEntity:ToPlayer():GetPlayerType() == PlayerType.PLAYER_KEEPER or entity.SpawnerEntity:ToPlayer():GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
+                entity.Price = 15
+            else
+                entity.Price = -1
+            end
+        end
+    end
+end
+
 
 return {
     Name = Name,
@@ -39,6 +57,11 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
+        },
+        {
+            ModCallbacks.MC_POST_PICKUP_UPDATE,
+            MC_POST_PICKUP_UPDATE,
+            PickupVariant.PICKUP_COLLECTIBLE
         }
     }
 }
