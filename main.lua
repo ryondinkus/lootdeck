@@ -1,3 +1,5 @@
+DEBUG = true
+
 lootdeck = RegisterMod("Loot Deck", 1)
 
 function table.deepCopy(original)
@@ -35,10 +37,12 @@ local defaultStartupValues = {
     hudOffsetControlsCountdown = 0
 }
 
-local debugValues = {
-	debugGuaranteedLoot = false,
-	debugBlankCardStart = false,
-	debugJacobEsauStart = false
+local mcmOptions = {
+	GuaranteedLoot = false,
+	LootDeckStart = false,
+	BlankCardStart = false,
+	JacobEsauStart = false,
+    LootCardChance = 20
 }
 
 lootdeck.rng = RNG()
@@ -176,11 +180,11 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
         lootdeck.f.hudOffsetControlsCountdown = HUD_OFFSET_CONTROLS_WAIT_FRAMES + HUD_OFFSET_CONTROLS_FADE_FRAMES
     end
 
-	if debugValues.BlankCardStart then
+	if mcmOptions.BlankCardStart then
 		Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
 	end
 
-	if debugValues.JacobEsauStart then
+	if mcmOptions.JacobEsauStart then
 		Isaac.GetPlayer(0):ChangePlayerType(PlayerType.PLAYER_JACOB)
 	end
 
@@ -206,75 +210,121 @@ end)
 
 --========== MCM BUGTESTING SHIT ===========
 if ModConfigMenu then
-	ModConfigMenu.AddSetting(
-	"Lootdeck Beta",
-	"Settings",
-	{
-		Type = ModConfigMenu.OptionType.BOOLEAN,
-		CurrentSetting = function()
-			return debugValues.GuaranteedLoot
-		end,
-		Display = function()
-			local onOff = "Disabled"
-			if debugValues.GuaranteedLoot then
-				onOff = "Enabled"
-			end
-			return "100% Loot Drop Rate: " .. onOff
-		end,
-		OnChange = function(currentBool)
-			debugValues.GuaranteedLoot = currentBool
-		end,
-		Info = "Turns all card drops into Loot Card drops"
-	})
+	if DEBUG then
+        ModConfigMenu.AddSetting(
+        "Lootdeck Beta",
+        "Settings",
+        {
+            Type = ModConfigMenu.OptionType.BOOLEAN,
+            CurrentSetting = function()
+                return mcmOptions.GuaranteedLoot
+            end,
+            Display = function()
+                local onOff = "Disabled"
+                if mcmOptions.GuaranteedLoot then
+                    onOff = "Enabled"
+                end
+                return "100% Loot Drop Rate: " .. onOff
+            end,
+            OnChange = function(currentBool)
+                mcmOptions.GuaranteedLoot = currentBool
+            end,
+            Info = "Turns all card drops into Loot Card drops."
+        })
 
-	ModConfigMenu.AddSetting(
-	"Lootdeck Beta",
-	"Settings",
-	{
-		Type = ModConfigMenu.OptionType.BOOLEAN,
-		CurrentSetting = function()
-			return debugValues.BlankCardStart
-		end,
-		Display = function()
-			local onOff = "Disabled"
-			if debugValues.BlankCardStart then
-				onOff = "Enabled"
-			end
-			return "Start with Blank Card: " .. onOff
-		end,
-		OnChange = function(currentBool)
-			debugValues.BlankCardStart = currentBool
-		end,
-		Info = "Gives you Blank Card at the start of a new run."
-	})
+        ModConfigMenu.AddSetting(
+        "Lootdeck Beta",
+        "Settings",
+        {
+            Type = ModConfigMenu.OptionType.BOOLEAN,
+            CurrentSetting = function()
+                return mcmOptions.LootDeckStart
+            end,
+            Display = function()
+                local onOff = "Disabled"
+                if mcmOptions.LootDeckStart then
+                    onOff = "Enabled"
+                end
+                return "Start with Loot Deck: " .. onOff
+            end,
+            OnChange = function(currentBool)
+                mcmOptions.LootDeckStart = currentBool
+            end,
+            Info = "Gives you Loot Deck at the start of a new run. Loot Deck drops a Loot Card every 6 rooms."
+        })
 
-	ModConfigMenu.AddSetting(
-	"Lootdeck Beta",
-	"Settings",
-	{
-		Type = ModConfigMenu.OptionType.BOOLEAN,
-		CurrentSetting = function()
-			return debugValues.JacobEsauStart
-		end,
-		Display = function()
-			local onOff = "Disabled"
-			if debugValues.JacobEsauStart then
-				onOff = "Enabled"
-			end
-			return "Start as Jacob & Esau: " .. onOff
-		end,
-		OnChange = function(currentBool)
-			debugValues.JacobEsauStart = currentBool
-		end,
-		Info = "Start your next run as Jacob & Esau."
-	})
+        ModConfigMenu.AddSetting(
+        "Lootdeck Beta",
+        "Settings",
+        {
+            Type = ModConfigMenu.OptionType.BOOLEAN,
+            CurrentSetting = function()
+                return mcmOptions.BlankCardStart
+            end,
+            Display = function()
+                local onOff = "Disabled"
+                if mcmOptions.BlankCardStart then
+                    onOff = "Enabled"
+                end
+                return "Start with Blank Card: " .. onOff
+            end,
+            OnChange = function(currentBool)
+                mcmOptions.BlankCardStart = currentBool
+            end,
+            Info = "Gives you Blank Card and a random Loot Card at the start of a new run."
+        })
+
+        ModConfigMenu.AddSetting(
+        "Lootdeck Beta",
+        "Settings",
+        {
+            Type = ModConfigMenu.OptionType.BOOLEAN,
+            CurrentSetting = function()
+                return mcmOptions.JacobEsauStart
+            end,
+            Display = function()
+                local onOff = "Disabled"
+                if mcmOptions.JacobEsauStart then
+                    onOff = "Enabled"
+                end
+                return "Start as Jacob & Esau: " .. onOff
+            end,
+            OnChange = function(currentBool)
+                mcmOptions.JacobEsauStart = currentBool
+            end,
+            Info = "Start your next run as Jacob & Esau."
+        })
+    end
+    ModConfigMenu.AddSetting(
+		"Lootdeck Beta",
+		"Settings",
+		{
+			Type = ModConfigMenu.OptionType.NUMBER,
+			CurrentSetting = function()
+				return mcmOptions.LootCardChance
+			end,
+			Minimum = 0,
+			Maximum = 100,
+			ModifyBy = 5,
+			Display = function()
+                if mcmOptions.LootCardChance == 0 then
+                    return "Loot Card Chance: 1%"
+                end
+				return "Loot Card Chance: " .. mcmOptions.LootCardChance .. "%"
+			end,
+			OnChange = function(currentNum)
+				mcmOptions.LootCardChance = currentNum
+			end,
+			Info = {"Chance for Loot Cards to replace normal card drops (Default: 20%)"}
+		}
+	)
 end
 
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
-		if (helper.PercentageChance(5 + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or debugValues.GuaranteedLoot then
+		if (helper.PercentageChance(mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or mcmOptions.GuaranteedLoot then
 			return helper.GetWeightedLootCardId()
 		end
 	end
