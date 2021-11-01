@@ -9,7 +9,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Wo
 
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()
-    if p:HasCollectible(Id) and helper.PercentageChance(100) then
+    if p:HasCollectible(Id) and helper.PercentageChance(10 * p:GetCollectibleNum(Id), 25) then
         tear.FallingSpeed = 0
         tear.FallingAcceleration = -0.1
         tear:GetData()[Tag] = true
@@ -32,7 +32,7 @@ local function MC_POST_FIRE_TEAR(_, tear)
 
         if not tear:HasTearFlags(helper.NewTearflag(77)) then
            sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", spriteSheetDirection))
-            sprite:LoadGraphics() 
+            sprite:LoadGraphics()
         end
     end
 end
