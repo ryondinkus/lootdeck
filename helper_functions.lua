@@ -565,30 +565,6 @@ function H.PercentageChance(percent, max)
     return lootdeck.rng:RandomInt(99) <= value
 end
 
--- https://github.com/IsaacScript/isaacscript-common/blob/main/src/functions/ui.ts#L7-L49
-function H.GetHUDOffsetVector()
-    local defaultVector = Vector.Zero
-
-    if ModConfigMenu and ModConfigMenu.Config and ModConfigMenu.Config.General then
-        local hudOffset = ModConfigMenu.Config.General.HudOffset
-
-        if hudOffset and type(hudOffset) == "number" and hudOffset >= 1 and hudOffset <= 10 then
-            local x  = hudOffset * 2
-            local y = hudOffset
-
-            if y >= 4 then
-                y = y + 1
-            end
-            if y >= 9 then
-                y = y + 1
-            end
-
-            return Vector(x, y)
-        end
-    end
-    return defaultVector
-end
-
 function H.GetLootcardById(id)
     for _, card in pairs(lootcards) do
         if card.Id == id then
@@ -946,16 +922,30 @@ function H.GenerateEncyclopediaPage(...)
 end
 
 function H.SaveHUDOffset(ignoreMCM)
-    lootdeck:SaveData(json.encode({hudOffset = lootdeck.f.hudOffset}))
-    if not ignoreMCM and ModConfigMenu and ModConfigMenu.Config and ModConfigMenu.Config.General then
+    H.SaveKey("hudOffset", lootdeck.f.hudOffset)
+    if not ignoreMCM and ModConfigMenu then
         ModConfigMenu.Config.General.HudOffset = lootdeck.f.hudOffset
     end
 end
 
 function H.LoadHUDOffset()
     if lootdeck:HasData() then
-        local savedData = json.decode(lootdeck:LoadData())
-        lootdeck.f.hudOffset = savedData.hudOffset
+        lootdeck.f.hudOffset = H.LoadKey("hudOffset") or 0
+    end
+end
+
+function H.SaveKey(key, value)
+    local savedData = {}
+    if lootdeck:HasData() then
+        savedData = json.decode(lootdeck:LoadData())
+    end
+    savedData[key] = value
+    lootdeck:SaveData(json.encode(savedData))
+end
+
+function H.LoadKey(key)
+    if lootdeck:HasData() then
+        return json.decode(lootdeck:LoadData())[key]
     end
 end
 
