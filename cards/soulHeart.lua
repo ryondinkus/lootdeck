@@ -15,14 +15,16 @@ local function MC_USE_CARD(_, c, p)
 	p:AddNullCostume(costumes.mantle)
 end
 
-local function MC_ENTITY_TAKE_DMG(_, e)
+local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData()
     if data[Tag] then
-		p:TryRemoveNullCostume(costumes.mantle)
-        helper.HolyMantleEffect(p)
-        data[Tag] = nil
-        return false
+        if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
+    		p:TryRemoveNullCostume(costumes.mantle)
+            helper.HolyMantleEffect(p)
+            data[Tag] = nil
+            return false
+        end
     end
 end
 

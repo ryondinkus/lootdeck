@@ -240,6 +240,20 @@ function H.IsEntityInTable(table, entity)
 	return false
 end
 
+function H.HolyMantleDamage(damageAmount, damageFlags, damageSource)
+    local ignoreFlags = DamageFlag.DAMAGE_DEVIL | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_FAKE | DamageFlag.DAMAGE_RED_HEARTS
+    local includeFlags = DamageFlag.DAMAGE_CURSED_DOOR
+    if (Game():GetRoom():GetType() == RoomType.ROOM_SACRIFICE and damageSource.Type == 0) then
+        includeFlags = includeFlags | DamageFlag.DAMAGE_SPIKES
+    end
+    if damageAmount > 0
+    and ((damageSource and damageSource.Type ~= EntityType.ENTITY_SLOT) or not damageSource)
+    and ((damageFlags & ignoreFlags == 0) or (damageFlags & includeFlags ~= 0)) then
+        return true
+    end
+    return false
+end
+
 function H.HolyMantleEffect(p, damageCooldown)
     lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0)
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 11, p.Position, Vector.Zero, p)

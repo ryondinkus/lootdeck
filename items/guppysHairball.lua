@@ -11,8 +11,10 @@ local function MC_ENTITY_TAKE_DMG(_, e)
     local p = e:ToPlayer()
     if p:HasCollectible(Id) then
         if helper.PercentageChance(100 / 6 * p:GetCollectibleNum(Id), 50) then
-            helper.HolyMantleEffect(p)
-            return false
+            if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
+                helper.HolyMantleEffect(p)
+                return false
+            end
         end
     end
 end

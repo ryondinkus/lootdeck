@@ -15,18 +15,20 @@ local function MC_USE_CARD(_, c, p)
 	p:AddNullCostume(costumes.mantle)
 end
 
-local function MC_ENTITY_TAKE_DMG(_, e)
+local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData()
     if data[Tag] and data[Tag] > 0 then
-        helper.HolyMantleEffect(p)
-        data[Tag] = data[Tag] - 1
-		p:TryRemoveNullCostume(costumes.mantle)
-		p:TryRemoveNullCostume(costumes.mantleBroken)
-		if data[Tag] == 1 then
-			p:AddNullCostume(costumes.mantleBroken)
-		end
-        return false
+        if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
+            helper.HolyMantleEffect(p)
+            data[Tag] = data[Tag] - 1
+    		p:TryRemoveNullCostume(costumes.mantle)
+    		p:TryRemoveNullCostume(costumes.mantleBroken)
+    		if data[Tag] == 1 then
+    			p:AddNullCostume(costumes.mantleBroken)
+    		end
+            return false
+        end
     else
         data[Tag] = nil
     end
@@ -34,9 +36,13 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
-        data[Tag] = nil
-		p:TryRemoveNullCostume(costumes.mantle)
-		p:TryRemoveNullCostume(costumes.mantleBroken)
+        if data[Tag] then
+            if data[Tag] == 2 then
+                p:AddNullCostume(costumes.mantle)
+            elseif data[Tag] == 1 then
+                p:AddNullCostume(costumes.mantleBroken)
+            end
+        end
     end)
 end
 
