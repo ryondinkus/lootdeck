@@ -68,15 +68,7 @@ for _, card in pairs(lootcards) do
         end
     end
 
-	if EID and card.Description then
-		EID:addCard(card.Id, card.Description)
-		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
-		local cardFrontSprite = Sprite()
-        cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
-		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
-		cardFrontSprite:LoadGraphics()
-		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
-	end
+    helper.AddExternalItemDescriptionCard(card)
 
 	if Encyclopedia and card.WikiDescription then
 		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
@@ -113,9 +105,7 @@ for _, item in pairs(items) do
         end
     end
 
-	if EID and item.Description then
-		EID:addCollectible(item.Id, item.Description)
-	end
+	helper.AddExternalItemDescriptionItem(item)
 
 	if Encyclopedia and item.WikiDescription then
 		Encyclopedia.AddItem({
@@ -134,9 +124,7 @@ for _, trinket in pairs(trinkets) do
         end
     end
 
-	if EID and trinket.Description then
-		EID:addTrinket(trinket.Id, trinket.Description)
-	end
+	helper.AddExternalItemDescriptionTrinket(trinket)
 
 	if Encyclopedia and trinket.WikiDescription then
 		Encyclopedia.AddTrinket({

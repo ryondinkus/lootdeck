@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Explodes three random enemies in the room
-local Name = "Gold Bomb!!"
+local Names = {
+    en_us = "Gold Bomb!!",
+    spa = "¡¡Bomba Dorada!!"
+}
+local Name = Names.en_us
 local Tag = "goldBomb"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Explodes on three random enemies, dealing 40 damage to each#{{Warning}} If no enemies are in the room initally, this will explode on the player"
+local Descriptions = {
+	en_us = "Explodes on three random enemies, dealing 40 damage to each#{{Warning}} If no enemies are in the room initally, this will explode on the player",
+	spa = "Tres enemigos aleatorios explotan, provocando 40 de daño#{{Warning}} Si no hay enemigos en la sala, el jugador explotará"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on three random enemies in the room, dealing 40 damage to each enemy and all enemies around them.", "If used with no targetable enemies in the room, an explosion will spawn on the player instead.", "- This only applies to the inital explosion. If the first or second explosion wipes out all enemies in the room, any subsequent explosions will simply not happen.")
 
 local function MC_USE_CARD(_, c, p)
@@ -29,10 +36,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

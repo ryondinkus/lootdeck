@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Permacharms all enemies in the room
-local Name = "IV. The Emperor"
+local Names = {
+    en_us = "IV. The Emperor",
+    spa = "IV. El Emperador"
+}
+local Name = Names.en_us
 local Tag = "theEmperor"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Permanently charms every enemy in the room, excluding bosses"
+local Descriptions = {
+	en_us = "Permanently charms every enemy in the room, excluding bosses",
+	spa = "Aplica encantamiento permanente a todos los enemigos de la habitación, exceptuando a los jefes"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,10 +34,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

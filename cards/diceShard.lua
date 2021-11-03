@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 
 -- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
 -- If not possible, like at the beginning of the level, give the player a penny
-local Name = "Dice Shard"
+local Names = {
+    en_us = "Dice Shard",
+    spa = "Dado Roto"
+}
+local Name = Names.en_us
 local Tag = "diceShard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 4
-local Description = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail."
+local Descriptions = {
+    en_us = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail",
+    spa = "Rebobina los eventos de la habitación, igual que {{Collectible422}} el Reloj de Arena Brillante, pero reapareces en la misma habitación y no en la anterior#{{Warning}} Si se utiliza en el principio de un nuevo piso sin visitar habitaciones, el efecto fallará"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, undoes all of the events of the current room, similar to the Glowing Hourglass effect.", "- Unlike Glowing Hourglass, you will be rewinded to the start of the current room instead of the previous room. As such, this card cannot be used as a teleport.", "- If used in the starting room of a new floor, without visiting any other rooms, the effect will fail and spawn a Penny.")
 
 local blackOverlay = Sprite()
@@ -98,10 +105,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

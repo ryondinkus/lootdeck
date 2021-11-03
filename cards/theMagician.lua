@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Temporary tears up and brain worm effect for the room, as well as a brain costume
-local Name = "I. The Magician"
+local Names = {
+    en_us = "I. The Magician",
+    spa = "I. El Mago"
+}
+local Name = Names.en_us
 local Tag = "theMagician"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{ArrowUp}} +0.27 Tears Up for the room# Grants the {{Trinket144}} Brain Worm effect for the room, causing your tears to turn 90 degrees and hit enemies"
+local Descriptions = {
+    en_us = "{{ArrowUp}} +0.27 Tears Up for the room# Grants the {{Trinket144}} Brain Worm effect for the room, causing your tears to turn 90 degrees and hit enemies",
+    spa = "{{ArrowUp}} +0.27 de lágrimas durante la habitación#Otorga el efecto de {{Trinket144}} Gusano del cerebro"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a +0.31 Tears Up and the Brain Worm effect for the room, which causes your tears to turn 90 degrees to hit enemies.")
 
 -- If it ever gets fixed, AddTrinketEffect() would be better here
@@ -55,10 +62,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

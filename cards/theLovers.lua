@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Gain two temporary hearts for the room
-local Name = "VI. The Lovers"
+local Names = {
+    en_us = "VI. The Lovers",
+    spa = "VI. Los Amantes"
+}
+local Name = Names.en_us
 local Tag = "theLovers"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{Heart}} +2 Heart Containers for the room"
+local Descriptions = {
+    en_us = "{{Heart}} +2 Heart Containers for the room",
+    spa = "Otorga 2 contenedores de corazón durante la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,10 +34,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {
