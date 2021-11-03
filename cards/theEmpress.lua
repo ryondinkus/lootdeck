@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Fires two tears at once with a demon costume and red tears for the room
-local Name = "III. The Empress"
+local Names = {
+    en_us = "III. The Empress",
+    spa = "III. La Emperatriz"
+}
+local Name = Names.en_us
 local Tag = "theEmpress"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{ArrowUp}} * 1.3 damage multiplier# Grants the {{Collectible245}} 20/20 effect for the room, allowing you to shoot two tears at once"
+local Descriptions = {
+    en_us = "{{ArrowUp}} * 1.3 damage multiplier# Grants the {{Collectible245}} 20/20 effect for the room, allowing you to shoot two tears at once",
+    spa = "{{ArrowUp}} Multiplicador de daño x1.3# Otorga el efecto de {{Collectible245}} 20/20 durante la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a x1.3 Damage multiplier and the 20/20 effect for the room, allowing you to shoot two tears at once.")
 
 local function MC_USE_CARD(_, c, p)
@@ -56,10 +63,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

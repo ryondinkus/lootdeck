@@ -2,11 +2,18 @@ local helper = include('helper_functions')
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns 10 "Holy Shield" familiars that block bullets and die after blocking
-local Name = "Holy Card"
+local Names = {
+    en_us = "Holy Card",
+    spa = "Carta Sagrada"
+}
+local Name = Names.en_us
 local Tag = "holyCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns 10 Holy Shield orbitals, which die after blocking one projectile."
+local Descriptions = {
+    en_us = "Spawns 10 Holy Shield orbitals, which die after blocking one projectile.",
+    spa = "Genera 10 Escudos Sagrados orbitales, se destruyen al bloquear un proyectil"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break.")
 
 local function MC_USE_CARD(_, c, p)
@@ -20,10 +27,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

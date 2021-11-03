@@ -2,10 +2,17 @@ local helper = include("helper_functions")
 local entitySubTypes = include("entitySubTypes/registry")
 
 -- Swap the pools of Red Chests and Gold Chests
-local Name = "The Left Hand"
+local Names = {
+    en_us = "The Left Hand",
+    spa = "La Mano Izquierda"
+}
+local Name = Names.en_us
 local Tag = "leftHand"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "Swaps the potential drops of Gold Chests and Red Chests"
+local Descriptions = {
+    en_us = "Swaps the potential drops of Gold Chests and Red Chests",
+    spa = "Cambia las recompensas potenciales de los Cofres Dorados y los Cofres Rojos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Swaps the potential drops of Gold Chests and Red Chests.")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
@@ -51,9 +58,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

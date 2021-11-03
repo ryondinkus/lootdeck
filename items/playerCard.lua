@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Doubles the effect of loot cards
-local Name = "Player Card"
+local Names = {
+    en_us = "Player Card",
+    spa = "Carta de Jugador"
+}
+local Name = Names.en_us
 local Tag = "playerCard"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "{{Card}} Spawns a Loot Card on pickup# All Loot Card effects are doubled, similar to {{Collectible451}} Tarot Cloth"
+local Descriptions = {
+    en_us = "{{Card}} Spawns a Loot Card on pickup# All Loot Card effects are doubled, similar to {{Collectible451}} Tarot Cloth",
+    spa = "{{Card}} Genera una carta de loot al tomarlo#Todos los efectos de las cartasde Lootse duplican, igual al {{Collectible451}} Tapete de Tarot"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Loot Card.", "All Loot Card effects are now doubled, similar to the effect of Tarot Cloth.")
 
 local function ShouldRunDouble(p)
@@ -29,9 +36,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	  Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

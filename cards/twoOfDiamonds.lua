@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
 -- Grants Steam Sale effect for the floor + little card familiar
-local Name = "Two of Diamonds"
+local Names = {
+    en_us = "Two of Diamonds",
+    spa = "Dos de Diamantes"
+}
+local Name = Names.en_us
 local Tag = "twoOfDiamonds"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price"
+local Descriptions = {
+    en_us = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price",
+    spa = "Otorga el efecto de las {{Collectible64}} Ofertas de Steam durante el piso"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.")
 
 local function MC_USE_CARD(_, c, p)
@@ -35,10 +42,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

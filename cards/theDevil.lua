@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Spawns a devil deal item
-local Name = "XV. The Devil"
+local Names = {
+    en_us = "XV. The Devil",
+    spa = "XV. El Diablo"
+}
+local Name = Names.en_us
 local Tag = "theDevil"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a random 1 Heart Devil Deal from the current room pool"
+local Descriptions = {
+    en_us = "Spawns a random 1 Heart Devil Deal from the current room pool",
+    spa = "Genera un Trato con el Diablo de 1 corazón de la pool de la habitación actual"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 1 Heart Devil Deal from the current room pool.")
 
 local function MC_USE_CARD(_, c, p)
@@ -47,10 +54,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Reroll a random item from the player's inventory
-local Name = "Perthro"
+local Names = {
+    en_us = "Perthro",
+    spa = "Perthto"
+}
+local Name = Names.en_us
 local Tag = "perthro"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Destroys one of your items at random#{{Collectible}} Grants a new item from the current room pool"
+local Descriptions = {
+    en_us = "Destroys one of your items at random#{{Collectible}} Grants a new item from the current room pool",
+    spa = "Destruye uno de tus objetos aleatoriamente#{{Collectible}} Genera un nuevo objeto basado en la pool de la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.")
 
 local function MC_USE_CARD(_, c, p)
@@ -58,10 +65,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

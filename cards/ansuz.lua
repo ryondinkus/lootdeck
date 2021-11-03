@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Teleport to Treasure Room, Shop, or Boss, with priority given to unvisited rooms
-local Name = "Ansuz"
+local Names = {
+    en_us = "Ansuz",
+    spa = "Ansuz"
+}
+local Name = Names.en_us
 local Tag = "ansuz"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Teleport to either the Treasure Room, Shop, or Boss Room# Priority is given to unvisited rooms"
+local Descriptions = {
+    en_us = "Teleport to either the Treasure Room, Shop, or Boss Room# Priority is given to unvisited rooms",
+    spa = "Te teletransporta a la Sala del Tesoro, la Tienda o la Sala del jefe#Se le da prioridad a salas no visitadas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Random teleport to either the Treasure Room, Shop, or Boss Room.", "- Unvisited rooms are prioritized.", "- On floors with no Treasure Rooms, Shops, or Bosses, teleports you to a random room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -42,10 +49,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

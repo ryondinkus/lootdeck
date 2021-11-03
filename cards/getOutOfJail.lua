@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Allows player to phase through enemies and projectiles for 5 seconds
-local Name = "Get out of Jail Card"
+local Names = {
+    en_us = "Get out of Jail Card",
+    spa = "Carta Sal de la Cárcel"
+}
+local Name = Names.en_us
 local Tag = "getOutOfJail"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Grants the player invincibility and the ability to phase through enemies for 5 seconds"
+local Descriptions = {
+    en_us = "Grants the player invincibility and the ability to phase through enemies for 5 seconds",
+    spa = "El jugador se vuelve invencible y puede traspasar a los enemigos por 5 segundos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("For 5 seconds, the player is invincibile and can phase through enemies.")
 
 local function MC_USE_CARD(_, c, p)
@@ -60,10 +67,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

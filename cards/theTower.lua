@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Explodes each enemy in the room and then the player
-local Name = "XIV. The Tower"
+local Names = {
+    en_us = "XIV. The Tower",
+    spa = "XIV. La Torre"
+}
+local Name = Names.en_us
 local Tag = "theTower"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{Warning}} On use, explodes on every enemy in the room, then the player"
+local Descriptions = {
+	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player",
+	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.")
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
@@ -49,10 +56,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
             {

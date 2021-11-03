@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Gives two Holy Mantle effects for the room (negates damage twice with minimal cooldown)
-local Name = "V. The Hierophant"
+local Names = {
+    en_us = "V. The Hierophant",
+    spa = "V. EL Hierofante"
+}
+local Name = Names.en_us
 local Tag = "theHierophant"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits for the room"
+local Descriptions = {
+    en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits for the room",
+    spa = "Otorga el efecto del {{Collectible313}} Manto Sagrado"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits for the duration of the room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -48,10 +55,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

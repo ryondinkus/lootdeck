@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives an extra penny for each penny picked up
-local Name = "Counterfeit Penny"
+local Names = {
+    en_us = "Counterfeit Penny",
+    spa = "Moneda Falsificada"
+}
+local Name = Names.en_us
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "Get an additional +1 Coin every time you gain Coins"
+local Descriptions = {
+    en_us = "Get an additional +1 Coin every time you gain Coins",
+    spa = "Recibes una moneda adicional cada vez que consigues monedas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Gain an additional +1 Coin whenever you gain coins.")
 
 local function MC_POST_GAME_STARTED()
@@ -23,9 +30,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

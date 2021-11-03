@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 local costumes = include("costumes/registry")
 
-local Name = "XI. Strength"
+local Names = {
+    en_us = "XI. Strength",
+    spa = "XI. Fuerza"
+}
+local Name = Names.en_us
 local Tag = "strength"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Triggers the {{Collectible437}} D7 effect, respawning all enemies in the room to spawn an extra room reward#{{ArrowUp}} +1.0 Damage up until the end of the floor"
+local Descriptions = {
+    en_us = "Triggers the {{Collectible437}} D7 effect, respawning all enemies in the room to spawn an extra room reward#{{ArrowUp}} +1.0 Damage up until the end of the floor",
+    spa = "Activa el efecto del {{Collectible437}} D7, reviviendo a los enemigos muertos con una recompensa extra#{{ArrowUp}} +1.0 durante todo el piso"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect, which respawns all enemies in the room for a chance at an extra room reward.", "+1 Damage Up for the rest of the floor.")
 
 local function MC_USE_CARD(_, c, p)
@@ -61,10 +68,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -3,11 +3,18 @@ local helper = include("helper_functions")
 local items = include("items/registry")
 
 -- Gives the swallowed penny item
-local Name = "Swallowed Penny"
+local Names = {
+    en_us = "Swallowed Penny",
+    spa = "Moneda Tragada"
+}
+local Name = Names.en_us
 local Tag = "swallowedPenny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Adds a unique passive item on use# Passive: 50% chance to drop a penny after taking damage"
+local Descriptions = {
+    en_us = "Adds a unique passive item on use# Passive: 50% chance to drop a penny after taking damage",
+    spa = "Añade un objeto pasivo al usarla#Efecto pasivo: 50% de posibilidad de generar un penny al recibir daño"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: 50% chance to drop a penny after taking damage.", "- Increased chance to drop a penny for every extra copy of Swallowed Penny.")
 
 local function MC_USE_CARD(_, c, p)
@@ -16,10 +23,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

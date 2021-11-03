@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Spawns a permacharmed copy of an enemy in the room, spawns a random permacharmed enemy if no enemies in room
-local Name = "? Card"
+local Names = {
+    en_us = "? Card",
+    spa = "Carta ¿?"
+}
+local Name = Names.en_us
 local Tag = "questionCard"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a permanently charmed clone of a random enemy in the room# If there are no enemies, spawns a permanently charmed Gaper"
+local Descriptions = {
+    en_us = "Spawns a permanently charmed clone of a random enemy in the room# If there are no enemies, spawns a permanently charmed Gaper",
+    spa = "Genera un clon encantado de un enemigo en la habitación#Si no hay enemigos en la habitación, genera un Gaper encantado"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.")
 
 local function MC_USE_CARD(_, c, p)
@@ -22,10 +29,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

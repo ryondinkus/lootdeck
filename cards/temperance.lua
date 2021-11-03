@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- A 1 in 2 chance of losing half a heart and gaining 4 coins or losing a full heart and gaining 8 coins
-local Name = "XVI. Temperance"
+local Names = {
+    en_us = "XVI. Temperance",
+    spa = "XIV. Templanza"
+}
+local Name = Names.en_us
 local Tag = "temperance"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:#{{Warning}} Take 1 Half Heart of damage (fatal), gain 4 Cents#{{Warning}} Take 1 Full Heart of damage (fatal), gain 8 cents"
+local Descriptions = {
+    en_us = "Random chance for any of these effects:#{{Warning}} Take 1 Half Heart of damage (fatal), gain 4 Cents#{{Warning}} Take 1 Full Heart of damage (fatal), gain 8 cents",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Warning}} Hacer medio corazón de daño (fatal), ganando 4 monedas#{{Warning}} Hace un corazón de daño (fatal), ganando 8 monedas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of either effects:", "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player.", "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player.")
 
 local function MC_USE_CARD(_, c, p)
@@ -29,10 +36,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {
