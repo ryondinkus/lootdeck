@@ -3,7 +3,7 @@ local helper = include("helper_functions")
 -- Teleport to Treasure Room, Shop, or Boss, with priority given to unvisited rooms
 local Names = {
     en_us = "Ansuz",
-    spa = "Anzus"
+    spa = "Ansuz"
 }
 local Name = Names.en_us
 local Tag = "ansuz"

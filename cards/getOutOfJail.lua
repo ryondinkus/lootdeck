@@ -3,7 +3,7 @@ local helper = include('helper_functions')
 -- Allows player to phase through enemies and projectiles for 5 seconds
 local Names = {
     en_us = "Get out of Jail Card",
-    spa = "Carta Sal de la Cárcel Gratis"
+    spa = "Carta Sal de la Cárcel"
 }
 local Name = Names.en_us
 local Tag = "getOutOfJail"
