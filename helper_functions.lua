@@ -240,10 +240,27 @@ function H.IsEntityInTable(table, entity)
 	return false
 end
 
-function H.HolyMantleEffect(p, damageCooldown)
+function H.HolyMantleDamage(damageAmount, damageFlags, damageSource)
+    local ignoreFlags = DamageFlag.DAMAGE_DEVIL | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_FAKE | DamageFlag.DAMAGE_RED_HEARTS
+    local includeFlags = DamageFlag.DAMAGE_CURSED_DOOR
+    if (Game():GetRoom():GetType() == RoomType.ROOM_SACRIFICE and damageSource.Type == 0) then
+        includeFlags = includeFlags | DamageFlag.DAMAGE_SPIKES
+    end
+    if (Game():GetRoom():GetType() == RoomType.ROOM_SHOP and damageSource.Type == 0 and (damageFlags & (DamageFlag.DAMAGE_NO_PENALTIES | DamageFlag.DAMAGE_SPIKES) ~= 0)) then
+        ignoreFlags = ignoreFlags | DamageFlag.DAMAGE_SPIKES
+    end
+    if damageAmount > 0
+    and ((damageSource and damageSource.Type ~= EntityType.ENTITY_SLOT) or not damageSource)
+    and ((damageFlags & ignoreFlags == 0) or (damageFlags & includeFlags ~= 0)) then
+        return true
+    end
+    return false
+end
+
+function H.HolyMantleEffect(p)
     lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0)
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 11, p.Position, Vector.Zero, p)
-    p:SetMinDamageCooldown(damageCooldown or 30)
+    p:SetMinDamageCooldown(30)
 end
 
 function H.CheckFinalFloorBossKilled()
@@ -957,6 +974,36 @@ function H.StartLootcardPickupAnimation(data, tag, animationName)
 
     H.StartLootcardAnimation(data.lootcardPickupAnimation, tag, animationName)
     data.isHoldingLootcard = true
+end
+
+function H.AddExternalItemDescriptionCard(card)
+	if EID and card.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(card, EID.addCard)
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		local cardFrontSprite = Sprite()
+        cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
+		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
+		cardFrontSprite:LoadGraphics()
+		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
+	end
+end
+
+function H.AddExternalItemDescriptionItem(item)
+	if EID and item.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(item, EID.addCollectible)
+	end
+end
+
+function H.AddExternalItemDescriptionTrinket(trinket)
+	if EID and trinket.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(trinket, EID.addTrinket)
+	end
+end
+
+function H.RegisterExternalItemDescriptionLanguages(obj, func)
+    for language, description in pairs(obj.Descriptions) do
+        func(EID, obj.Id, description, obj.Names[language], language)
+    end
 end
 
 return H

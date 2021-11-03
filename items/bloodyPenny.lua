@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives a chance for killing an enemy to drop a tarotcard
-local Name = "Bloody Penny"
+local Names = {
+    en_us = "Bloody Penny",
+    spa = "Moneda Sangrienta"
+}
+local Name = Names.en_us
 local Tag = "bloodyPenny"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "5% chance to drop a Loot Card on enemy death"
+local Descriptions = {
+    en_us = "5% chance to drop a Loot Card on enemy death",
+    spa = "Matar a un enemigo otorga un 5% de posibilidad de que suelte una carta de loot"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Enemies have a 5% chance to drop a Loot Card on death.", "- Effect stacks +5% for every instance of the passive and caps at 25%.")
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
@@ -35,9 +42,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

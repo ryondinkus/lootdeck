@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Applies blue map effect with one, compass effect with two, and map effect with three
-local Name = "Cain's Eye"
+local Names = {
+    en_us = "Cain's Eye",
+    spa = "Ojo de Cain"
+}
+local Name = Names.en_us
 local Tag = "cainsEye"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "Gain a random mapping effect ( {{Collectible54}} Treasure Map, {{Collectible21}} The Compass, {{Collectible246}} Blue Map) for each floor"
+local Descriptions = {
+    en_us = "Gain a random mapping effect ( {{Collectible54}} Treasure Map, {{Collectible21}} The Compass, {{Collectible246}} Blue Map) for each floor",
+    spa = "Gana efectos de mapas ({{Collectible54}} Mapa del Tesoro, {{Collectible21}} La Brújula, {{Collectible}}) por cada piso"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On each floor, gain a random effect of either Treasure Map, The Compass, or Blue Map.", "- Additional copies of the passive grant extra mapping effects, avoiding duplicate effects.")
 
 local function MC_POST_NEW_LEVEL()
@@ -39,9 +46,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

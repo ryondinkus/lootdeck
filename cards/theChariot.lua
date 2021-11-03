@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Gain .50 damage for the room for each heart
-local Name = "VII. The Chariot"
+local Names = {
+    en_us = "VII. The Chariot",
+    spa = "VII. El carro"
+}
+local Name = Names.en_us
 local Tag = "theChariot"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{Heart}} +1 Heart Container for the room# {{ArrowUp}} +0.5 damage for every Heart Container you have"
+local Descriptions = {
+    en_us = "{{Heart}} +1 Heart Container for the room# {{ArrowUp}} +0.5 damage for every Heart Container you have",
+    spa = "{{Heart}} +1 contenedor de corazón durante la habitación# {{ArrowUp}} +0.5 de daño por cada contenedor de corazón que tengas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a temporary Heart Container for the room.", "Adds +0.5 Damage for every Heart Container you have for the duration of the room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -44,10 +51,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

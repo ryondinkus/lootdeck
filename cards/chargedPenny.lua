@@ -2,11 +2,18 @@ local helper = include('helper_functions')
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns a penny
-local Name = "Charged Penny"
+local Names = {
+    en_us = "Charged Penny",
+    spa = "Moneda Cargada"
+}
+local Name = Names.en_us
 local Tag = "chargedPenny"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a Charged Penny, which recharges your active on pickup"
+local Descriptions = {
+    en_us = "Spawns a Charged Penny, which recharges your active on pickup",
+    spa = "Genera un penny cargado, el cual recarga tu objeto activo al tomarlo"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.")
 
 local function MC_USE_CARD(_, c, p)
@@ -15,10 +22,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
             {

@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- A 1 in 3 chance of recharging your active item, +1 firerate, or -1 firerate
-local Name = "Pills! Purple"
+local Names = {
+    en_us = "Pills! Purple",
+    spa = "¡Píldora! Púrpura"
+}
+local Name = Names.en_us
 local Tag = "purplePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:#{{Battery}} Recharge your active item#{{ArrowUp}} +0.27 Tears for the room#{{ArrowDown}} -0.27 Tears for the room"
+local Descriptions = {
+    en_us = "Random chance for any of these effects:#{{Battery}} Recharge your active item#{{ArrowUp}} +0.27 Tears for the room#{{ArrowDown}} -0.27 Tears for the room",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Battery}} Recarga tu objeto activo#{{ArrowUp}} +0.27 de lágrimas durante la habitación#{{ArrowDown}} -0.27 de lágrimas durante la habitación)"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Recharge one of your active items (+6 charge).", "- +0.27 Tears for the room.", "- -0.27 Tears for the room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -50,10 +57,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local costumes = include("costumes/registry")
 
 -- Gives magneto effect for the room and a glowing costume
-local Name = "XII. The Hanged Man"
+local Names = {
+    en_us = "XII. The Hanged Man",
+    spa = "XII. El Colgado"
+}
+local Name = Names.en_us
 local Tag = "theHangedMan"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Grants the {{Collectible53}} Magneto effect for the room, causing pickups to be drawn towards you"
+local Descriptions = {
+    en_us = "Grants the {{Collectible53}} Magneto effect for the room, causing pickups to be drawn towards you",
+    spa = "Otorga el efecto del {{Collectible53}} Imán durante la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.")
 
 local function MC_USE_CARD(_, c, p)
@@ -35,10 +42,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Spawns 5-10 shopkeepers around the room
-local Name = "XVIII. The Moon"
+local Names = {
+    en_us = "XVIII. The Moon",
+    spa = "XVIII. La Luna"
+}
+local Name = Names.en_us
 local Tag = "theMoon"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns 5-10 Shopkeepers"
+local Descriptions = {
+    en_us = "Spawns 5-10 Shopkeepers",
+    spa = "Genera 5-10 cuidadores de tiendas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -24,10 +31,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
             {

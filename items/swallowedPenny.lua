@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives a chance for a coin to spawn when the player takes damage
-local Name = "Swallowed Penny"
+local Names = {
+    en_us = "Swallowed Penny",
+    spa = "Moneda Tragada"
+}
+local Name = Names.en_us
 local Tag = "swallowedPenny"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "50% chance to drop a penny after taking damage"
+local Descriptions = {
+    en_us = "50% chance to drop a penny after taking damage",
+    spa = "50% de posibilidad de generar un penny al recibir daño"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("50% chance to drop a penny after taking damage.", "- Increased chance to drop a penny for every extra copy of Swallowed Penny.")
 
 local function MC_ENTITY_TAKE_DMG(_, e)
@@ -23,9 +30,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

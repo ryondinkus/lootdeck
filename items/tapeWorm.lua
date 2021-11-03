@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- 1/10 tears replaced with Worm Tears, which have endless range and create slowing creep on collision
-local Name = "Tape Worm"
+local Names = {
+    en_us = "Tape Worm",
+    spa = "Gusano"
+}
+local Name = Names.en_us
 local Tag = "tapeWorm"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "10% chance to fire a Worm Tear, which has endless range and spawns slowing creep"
+local Descriptions = {
+    en_us = "10% chance to fire a Worm Tear, which has endless range and spawns slowing creep",
+    spa = "10% de posibilidad de lanzar una lágrima con efecto de gusano, con rango infinito y suelta rastro ralentizador"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go.", "- Additional copies of the passive increase the chance up to 25%")
 
 local function MC_POST_FIRE_TEAR(_, tear)
@@ -51,9 +58,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

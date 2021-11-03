@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives a chance of reviving in the previous room with half a heart
-local Name = "Broken Ankh"
+local Names = {
+    en_us = "Broken Ankh",
+    spa = "Anj Roto"
+}
+local Name = Names.en_us
 local Tag = "brokenAnkh"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "On death, 1/6 chance to revive with half a heart"
+local Descriptions = {
+    en_us = "On death, 1/6 chance to revive with half a heart",
+    spa = "Al morir, tienes una probabilidad de 1/6 de revivir con medio corazón de alma"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On player death, you have a 1/6 chance of reviving with half a heart.", "- Additional copies of the passive grant an extra revival chance up to 3/6.")
 
 local ReviveTag = string.format("%sRevive", Tag)
@@ -40,9 +47,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
 		{

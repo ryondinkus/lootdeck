@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- 50% chance each room to grant a temporary copy of a random passive you already have
-local Name = "Rainbow Tapeworm"
+local Names = {
+    en_us = "Rainbow Tapeworm",
+    spa = "Gusano Arcoíris"
+}
+local Name = Names.en_us
 local Tag = "rainbowTapeworm"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "On room entry, 50% chance to temporarily duplicate one of your existing passives"
+local Descriptions = {
+    en_us = "On room entry, 50% chance to temporarily duplicate one of your existing passives",
+    spa = "Al entrar a una habitación, hay un 50% de duplicar uno de tus objetos pasivos temporalmente"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("When entering a room, 50% chance to duplicate one of your passives for the rest of the room.")
 
 local function MC_POST_NEW_ROOM()
@@ -37,9 +44,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

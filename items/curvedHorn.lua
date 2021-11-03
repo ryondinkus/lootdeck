@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives an extra large and damage-boosted tear in each new room, the number of tears in each room being the number of curved horns
-local Name = "Curved Horn"
+local Names = {
+    en_us = "Curved Horn",
+    spa = "Cuerno Torcido"
+}
+local Name = Names.en_us
 local Tag = "curvedHorn"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "Quadruple damage for the first tear fired in a room"
+local Descriptions = {
+    en_us = "Quadruple damage for the first tear fired in a room",
+    spa = "Cuadriplica el daño de la primer lágrima lanzada en una habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("In a room with active enemies, the first tear fired has x4 damage and size.", "- This effect occurs when enemies spawn after entering a room, such as when a spider spawns from a pot.", "- Additional copies of the passive let you fire additional x4 damage tears.")
 
 local finishedTag = string.format("%sFinished", Tag)
@@ -51,9 +58,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

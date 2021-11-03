@@ -2,11 +2,18 @@ local entityVariants = include("entityVariants/registry")
 local helper = include("helper_functions")
 
 -- A 1 in 3 chance of spawning a tarotcard, thee tarotcards, or losing one coin, bomb, and key
-local Name = "Pills! Blue"
+local Names = {
+    en_us = "Pills! Blue",
+    spa = "¡Píldora! Azul"
+}
+local Name = Names.en_us
 local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key"
+local Descriptions = {
+	en_us = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Card}} Genera una carta de loor#{{Card}} Genera 3 cartas de loot#Pierdes una moneda, una llave y una bomba"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.")
 
 local function MC_USE_CARD(_, c, p)
@@ -43,10 +50,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

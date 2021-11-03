@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Spawns a mega battery
-local Name = "Mega Battery"
+local Names = {
+    en_us = "Mega Battery",
+    spa = "Mega Batería"
+}
+local Name = Names.en_us
 local Tag = "megaBattery"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a Mega Battery"
+local Descriptions = {
+    en_us = "Spawns a Mega Battery",
+    spa = "Genera una Mega batería"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery on use.")
 
 local function MC_USE_CARD(_, c, p)
@@ -14,10 +21,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
             {

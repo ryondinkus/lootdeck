@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Spawns four pennies
-local Name = "4 Cents!"
+local Names = {
+    en_us = "4 Cents!",
+    spa = "¡4 Centavos!"
+}
+local Name = Names.en_us
 local Tag = "fourCents"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 13
-local Description = "Spawns four Pennies"
+local Descriptions = {
+    en_us = "Spawns four Pennies",
+    spa = "Genera 4 pennies"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns four Pennies on use.")
 
 local function MC_USE_CARD(_, c, p)
@@ -14,10 +21,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
             {

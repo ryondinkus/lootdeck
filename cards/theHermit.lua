@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Spawns a 15c item from the item pool
-local Name = "IX. The Hermit"
+local Names = {
+    en_us = "IX. The Hermit",
+    spa = "IX. El Ermitaño"
+}
+local Name = Names.en_us
 local Tag = "theHermit"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a random 15c item from the current room pool"
+local Descriptions = {
+    en_us = "Spawns a random 15c item from the current room pool",
+    spa = "Genera un objeto con un costo de 15 monedas de la pool de la habitación actual"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 15c item from the current room pool.")
 
 local function MC_USE_CARD(_, c, p)
@@ -34,10 +41,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {
