@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Grants an item from the item pool or (1% chance) possibly the planitarium pool
-local Name = "XVII. The Stars"
+local Names = {
+    en_us = "XVII. The Stars",
+    spa = "XVII. Las Estrellas"
+}
+local Name = Names.en_us
 local Tag = "theStars"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Instantly grants an item from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead"
+local Descriptions = {
+    en_us = "Instantly grants an item from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead",
+    spa = "Te regala instantaneamente un objeto de la {{TreasureRoom}} Sala del tesoro#1% de posibilidad de que sea un objeto del Planetario"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.")
 
 local function MC_USE_CARD(_, c, p)
@@ -36,10 +43,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

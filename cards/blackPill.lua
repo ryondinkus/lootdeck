@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Instakill all enemies in room (80 dmg on bosses) | Confuse all enemies in room | Deal full heart of damage
-local Name = "Pills! Black"
+local Names = {
+    en_us = "Pills! Black",
+    spa = "¡Píldora! Negra"
+}
+local Name = Names.en_us
 local Tag = "blackPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:# Instantly kill all enemies in the room (80 damage to bosses)# Confuses all room enemies#{{Warning}} Take a Full Heart of damage (non-fatal)"
+local Descriptions = {
+    en_us = "Random chance for any of these effects:# Instantly kill all enemies in the room (80 damage to bosses)# Confuses all room enemies#{{Warning}} Take a Full Heart of damage (non-fatal)",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Matar a todos los enemigos de la habitación instantaneamente (80 de daño a jefes)#Confundir a todos los enemigos de la habitación#{{Warning}} Recibir un corazón de daño (no fatal)"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Instantly kills all enemies in the room. Deals 80 damage to bosses.", "- Confuses all enemies in the room for 5 seconds.", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.")
 
 local function MC_USE_CARD(_, c, p)
@@ -59,10 +66,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Freezes the room for 10 seconds
-local Name = "XXI. The World"
+local Names = {
+    en_us = "XXI. The World",
+    spa = "XXI. El Mundo"
+}
+local Name = Names.en_us
 local Tag = "theWorld"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Pauses all enemies and projectiles in the room# Effect wears off after 10 seconds, or when you exit the room# Stops the game clock for the duration of the effect"
+local Descriptions = {
+    en_us = "Pauses all enemies and projectiles in the room# Effect wears off after 10 seconds, or when you exit the room# Stops the game clock for the duration of the effect",
+    spa = "Detiene a todos los enemigos y proyectiles en la sala#Dura 10 segundos o hasta que salgas de la habitación#El reloj del juego se detiene al activar el efecto"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds, or until you exit the room.", "- The in-game clock does not increment for the duration of the effect.")
 
 local function MC_USE_CARD(_, c, p)
@@ -90,10 +97,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

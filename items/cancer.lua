@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Gives massive firerate increase on room entry, quickly decreases over time
-local Name = "Cancer!"
+local Names = {
+    en_us = "Cancer!",
+    spa = "¡Cancer!"
+}
+local Name = Names.en_us
 local Tag = "cancer"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "{{ArrowUp}} Massive firerate increase when entering a room with enemies#{{ArrowDown}} The firerate increase quickly diminishes over time"
+local Descriptions = {
+    en_us = "{{ArrowUp}} Massive firerate increase when entering a room with enemies#{{ArrowDown}} The firerate increase quickly diminishes over time",
+    spa = "{ArrowUp}} Aumento masivo en potencia de fuego al entrar en una habitación con enemigos#El efecto disminuye rápidamente"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("In a room with active enemies, your firerate massively increases, then decreases over time.", "- This effect occurs when enemies spawn after entering a room, such as when a spider spawns from a pot.")
 
 local originalFireDelayTag = string.format("%sOriginalFireDelay", Tag)
@@ -70,9 +77,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Kills the player and revives them in the previous room with 3 bone hearts
-local Name = "XIII. Death"
+local Names = {
+    en_us = "XIII. Death",
+    spa = "XIII. Muerte"
+}
+local Name = Names.en_us
 local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts"
+local Descriptions = {
+    en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts",
+    spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.")
 
 local ReviveTag = string.format("%sRevive", Tag)
@@ -58,10 +65,11 @@ end
 
 return {
     Name = Name,
+Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

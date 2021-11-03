@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Spawns a glitch item in every treasure room
-local Name = "Golden Horseshoe"
+local Names = {
+    en_us = "Golden Horseshoe",
+    spa = "Herradura Dorada"
+}
+local Name = Names.en_us
 local Tag = "goldenHorseshoe"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "Every Treasure room has an additional {{Collectible721}} TMTRAINER item"
+local Descriptions ={
+    en_us =  "Every Treasure room has an additional {{Collectible721}} TMTRAINER item",
+    spa = "Cada sala del tesoro tiene un objeto adicional de {{Collectible721}} ENTRENADOR TM"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Every Treasure room has an additional TMTRAINER item.")
 
 local function MC_POST_NEW_ROOM()
@@ -27,9 +34,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

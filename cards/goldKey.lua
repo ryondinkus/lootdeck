@@ -1,11 +1,18 @@
 local helper = include("helper_functions")
 
 -- Spawns a permacharmed void portal
-local Name = "Gold Key"
+local Names = {
+    en_us = "Gold Key",
+    spa = "Llave Dorada"
+}
+local Name = Names.en_us
 local Tag = "goldKey"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Spawns a permanently charmed Portal enemy, who spawns other permanently charmed enemies until disappearing"
+local Descriptions = {
+    en_us = "Spawns a permanently charmed Portal enemy, who spawns other permanently charmed enemies until disappearing",
+    spa = "Genera un enemigo Portal encantado, quien genera otros enemigos encantados hasta desaparecer"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed Portal enemy. Portal will spawn other permanently charmed enemies until it disappears.")
 
 local function MC_USE_CARD(_, c, p)
@@ -19,10 +26,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

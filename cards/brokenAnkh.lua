@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local items = include("items/registry")
 
 -- Gives the Broken Ankh item
-local Name = "Broken Ankh"
+local Names = {
+    en_us = "Broken Ankh",
+    spa = "Anj Roto"
+}
+local Name = Names.en_us
 local Tag = "brokenAnkh"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Adds a unique passive item on use# Passive: On death, 1/6 chance to revive with half a heart"
+local Descriptions = {
+    en_us = "Adds a unique passive item on use# Passive: On death, 1/6 chance to revive with half a heart",
+    spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Al morir, tienes una probabilidad de 1/6 de revivir con medio corazón de alma"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: On player death, you have a 1/6 chance of reviving with half a heart.", "- Additional copies of the passive grant an extra revival chance up to 3/6.")
 
 -- BUG: When you revive, your streak is still lost, and saving/continuing is disabled. this is because Revive() is bugged and the game still thinks you're dead
@@ -17,10 +24,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

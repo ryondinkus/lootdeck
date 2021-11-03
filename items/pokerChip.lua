@@ -2,10 +2,17 @@ local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
 -- All penny spawns are either double pennies or nothing
-local Name = "Poker Chip"
+local Names = {
+    en_us = "Poker Chip",
+    spa = "Ficha de Póker"
+}
+local Name = Names.en_us
 local Tag = "pokerChip"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "All coin spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all"
+local Descriptions = {
+    en_us = "All coin spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all",
+    spa = "Todas las monedas tienen un 50/50 de posibilidad de generarse como monedas dobles o no generarse en sí"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)")
 
 local function MC_POST_PICKUP_INIT(_, pickup)
@@ -58,9 +65,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

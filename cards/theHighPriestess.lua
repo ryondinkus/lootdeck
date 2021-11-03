@@ -2,11 +2,18 @@ local helper = include("helper_functions")
 local entityVariants = include("entityVariants/registry")
 
 -- Drops 1-6 Mom's Fingers on random enemies in the room
-local Name = "II. The High Priestess"
+local Names = {
+    en_us = "II. The High Priestess",
+    spa = "II. La Gran Sacerdotiza"
+}
+local Name = Names.en_us
 local Tag = "theHighPriestess"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit"
+local Descriptions = {
+    en_us = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit",
+    spa = "Suelta 1-6 dedos de Mamá en los enemigos, provocando 40 de daño a cada enemigo golpeado"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.")
 
 local function MC_USE_CARD(_, c, p)
@@ -28,10 +35,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Shuffle values of coins, keys, and bombs | reroll all items in room | reroll all of your passives
-local Name = "Pills! White Spotted"
+local Names = {
+    en_us = "Pills! White Spotted",
+    spa = "¡Píldora! con Puntos Blancos"
+}
+local Name = Names.en_us
 local Tag = "whiteSpottedPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs# Rerolls all item pedestals in the room# Rerolls all of your passives"
+local Descriptions = {
+    en_us = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs# Rerolls all item pedestals in the room# Rerolls all of your passives",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Pone de revés tu cantidad de monedas, llaves y bombas#Rerolea todos los objetos de pedestales#Rerolea todos tus objetos pasivos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.")
 
 local function MC_USE_CARD(_, c, p)
@@ -30,10 +37,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

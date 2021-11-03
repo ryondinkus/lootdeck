@@ -1,10 +1,17 @@
 local helper = include("helper_functions")
 
 -- Rerolls an enemy in a room and drops an extra reward per room
-local Name = "Purple Heart"
+local Names = {
+    en_us = "Purple Heart",
+    spa = "Corazón Purputa"
+}
+local Name = Names.en_us
 local Tag = "purpleHeart"
 local Id = Isaac.GetItemIdByName(Name)
-local Description = "25% chance to reroll a random enemy in the room# Rerolled enemies drop a consumable on death"
+local Descriptions = {
+    en_us = "25% chance to reroll a random enemy in the room# Rerolled enemies drop a consumable on death",
+    spa = "25% de rerolear a un enemigo aleatorio en la habitación#Los enemigos reroleados sueltan un recolectable al derrolatolos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("25% chance to reroll a random enemy in the room.", "- Additional copies of the passive add an additional 25% chance, up to 100%.", "Rerolled enemies drop an extra consumable on death.", "- Consumables spawned are based on the algorithm from Glyph of Balance, granting a consumable you have the least of.")
 
 local shouldRerollEnemyTag = string.format("%sShouldRerollEnemy", Tag)
@@ -72,9 +79,10 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

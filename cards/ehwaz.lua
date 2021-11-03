@@ -1,11 +1,18 @@
 local helper = include('helper_functions')
 
 -- Rerolls the enemies in the room using the D10
-local Name = "Ehwaz"
+local Names = {
+    en_us = "Ehwaz",
+    spa = "Ehwaz"
+}
+local Name = Names.en_us
 local Tag = "ehwaz"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "{{Collectible285}} D10 effect on use, rerolling all enemies in the room."
+local Descriptions = {
+    en_us = "{{Collectible285}} D10 effect on use, rerolling all enemies in the room.",
+    spa = "Efecto del {{Collectible285}} D10 al usarse (rerolea a todos los enemigos de la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the D10 effect, rerolling all enemies in the room.")
 
 local function MC_USE_CARD(_, c, p)
@@ -14,10 +21,11 @@ end
 
 return {
     Name = Name,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-	Description = Description,
+	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
             {

@@ -959,4 +959,34 @@ function H.StartLootcardPickupAnimation(data, tag, animationName)
     data.isHoldingLootcard = true
 end
 
+function H.AddExternalItemDescriptionCard(card)
+	if EID and card.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(card, EID.addCard)
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		local cardFrontSprite = Sprite()
+        cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
+		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
+		cardFrontSprite:LoadGraphics()
+		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
+	end
+end
+
+function H.AddExternalItemDescriptionItem(item)
+	if EID and item.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(item, EID.addCollectible)
+	end
+end
+
+function H.AddExternalItemDescriptionTrinket(trinket)
+	if EID and trinket.Descriptions then
+        H.RegisterExternalItemDescriptionLanguages(trinket, EID.addTrinket)
+	end
+end
+
+function H.RegisterExternalItemDescriptionLanguages(obj, func)
+    for language, description in pairs(obj.Descriptions) do
+        func(EID, obj.Id, description, obj.Names[language], language)
+    end
+end
+
 return H

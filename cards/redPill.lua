@@ -2,11 +2,18 @@ local helper = include('helper_functions')
 
 -- A 1 in 3 chance of gaining the book of belial effect for the room,
 -- gaining a heart canister for the room, or losing half a heart
-local Name = "Pills! Red"
+local Names = {
+    en_us = "Pills! Red",
+    spa = "¡Píldora! Roja"
+}
+local Name = Names.en_us
 local Tag = "redPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = "Random chance for any of these effects:#{{ArrowUp}} +1 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1 Half Heart of damage (non-fatal)"
+local Descriptions = {
+	en_us = "Random chance for any of these effects:#{{ArrowUp}} +1 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1 Half Heart of damage (non-fatal)",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} +1 de daño durante la habitación#{{Heart}} +1 contenedor de corazón durante la habitación#{{Warning}} Recibir medio corazón de daño (no fatal)"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- +1 Damage up for the room", "- +1 filled Heart Container for the room", "- Take 1 Half Heart of damage. The damage will be negated if it would kill the player.")
 
 local function MC_USE_CARD(_, c, p)
@@ -54,10 +61,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {
