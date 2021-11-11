@@ -37,7 +37,6 @@ local function MC_USE_CARD(_, c, p)
         elseif effect == 2 then
 			helper.TakeSelfDamage(player, 2)
 			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-			return false
         elseif effect == 3 then
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)

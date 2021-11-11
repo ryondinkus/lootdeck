@@ -19,7 +19,6 @@ local function MC_USE_CARD(_, c, p)
 	local data = p:GetData()
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
 		Isaac.Explode(p.Position, nil, 40)
-		return false
 	else
 		data[Tag] = 1
 	end

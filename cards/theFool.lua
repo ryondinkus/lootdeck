@@ -17,7 +17,6 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Te
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
-	return false
 end
 
 return {

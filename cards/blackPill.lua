@@ -60,7 +60,6 @@ local function MC_USE_CARD(_, c, p)
 	else
 		helper.TakeSelfDamage(p, 2)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-        return false
 	end
 end
 

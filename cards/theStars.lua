@@ -38,7 +38,6 @@ local function MC_USE_CARD(_, c, p)
     p:AnimateCollectible(collectible)
     lootdeck.sfx:Play(SoundEffect.SOUND_POWERUP1, 1, 0)
     p:AddCollectible(collectible)
-    return false
 end
 
 return {
