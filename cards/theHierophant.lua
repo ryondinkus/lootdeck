@@ -25,7 +25,6 @@ end
 local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData()
-    print(damageSource.Type)
     if data[Tag] and data[Tag] > 0 then
         if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
             helper.HolyMantleEffect(p)
