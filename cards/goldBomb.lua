@@ -18,7 +18,11 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explo
 local function MC_USE_CARD(_, c, p)
 	local data = p:GetData()
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
+        for i=0,4 do
+            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5, nil)
+        end
 		Isaac.Explode(p.Position, nil, 40)
+        lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
 	else
 		data[Tag] = 1
 	end
@@ -28,7 +32,11 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 	helper.StaggerSpawn(Tag, p, 15, 3, function(p)
 		local target = helper.FindRandomEnemy(p.Position) or 0
 		if target ~= 0 then
-			Isaac.Explode(target.Position, nil, 40)
+            for i=0,4 do
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5, nil)
+            end
+            Isaac.Explode(target.Position, nil, 40)
+            lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
 		end
 	end)
 end

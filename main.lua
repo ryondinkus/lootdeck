@@ -229,7 +229,6 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
     end
 end)
 
--- sound effect printer
 -- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
 --     for soundEffectName, soundEffect in pairs(SoundEffect) do
 --         if lootdeck.sfx:IsPlaying(soundEffect) then
