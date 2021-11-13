@@ -54,6 +54,8 @@ local function MC_USE_CARD(_, c, p)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
             player:AddCoins(6)
         end
+        local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player)
+        poof.Color = Color(0.6,0,0.6,1,0,0,0)
     end)
 end
 
