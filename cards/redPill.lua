@@ -16,32 +16,35 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- +1 Damage up for the room", "- +1 filled Heart Container for the room", "- Take 1 Half Heart of damage. The damage will be negated if it would kill the player.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
-	local effect = lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
-	if effect == 0 then
-		if not data.redDamage then data.redDamage = 0 end
-		data.redDamage = data.redDamage + 1
+
+	helper.RandomChance(shouldDouble,
+	function()
+		if not data[Tag] then data[Tag] = 0 end
+		data[Tag] = data[Tag] + 1
 		p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 		p:EvaluateItems()
-		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-		sfx:Play(SoundEffect.SOUND_DEVIL_CARD,1,0)
+		sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
+		sfx:Play(SoundEffect.SOUND_DEVIL_CARD, 1, 0)
 		local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
 		p:AddCostume(itemConfig, true)
-	elseif effect == 1 then
+	end,
+	function()
 		helper.AddTemporaryHealth(p, 2)
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-	else
+	end,
+	function()
 		helper.TakeSelfDamage(p, 1)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-	end
+	end)
 end
 
 local function MC_POST_NEW_ROOM()
 	helper.ForEachPlayer(function(p, data)
-        if data.redDamage then
-            data.redDamage = nil
+        if data[Tag] then
+            data[Tag] = nil
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end
@@ -50,10 +53,10 @@ end
 
 local function MC_EVALUATE_CACHE(_, p, f)
 	local data = p:GetData()
-    if not data.redDamage then data.redDamage = 0 end
+    if not data[Tag] then data[Tag] = 0 end
     if f == CacheFlag.CACHE_DAMAGE then
-        if data.redDamage then
-            p.Damage = p.Damage + (2 * data.redDamage)
+        if data[Tag] then
+            p.Damage = p.Damage + (2 * data[Tag])
         end
     end
 end

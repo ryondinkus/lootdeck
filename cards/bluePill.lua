@@ -16,22 +16,25 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
-	local effect = rng:RandomInt(3)
 	local room = Game():GetRoom()
-	if effect == 0 then
+
+	helper.RandomChance(shouldDouble,
+	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		local cardId = helper.GetWeightedLootCardId()
 		Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
-	elseif effect == 1 then
+	end,
+	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		for i=0,2 do
 			local cardId = helper.GetWeightedLootCardId()
 			Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 		end
-	else
+	end,
+	function()
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
 		if p:GetNumCoins() > 0 then
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostPenny.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
@@ -45,7 +48,7 @@ local function MC_USE_CARD(_, c, p)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostKey.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
 			p:AddKeys(-1)
 		end
-	end
+	end)
 end
 
 return {

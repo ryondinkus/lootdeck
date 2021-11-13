@@ -17,20 +17,26 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
-	local effect = rng:RandomInt(3)
-	if effect <= 1 then
-		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+
+	local function coinPickup()
+		sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
 		sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
 		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
-		if effect == 0 then
-			p:AddCoins(4)
-		else
-			p:AddCoins(7)
-		end
-	else
+	end
+
+	helper.RandomChance(shouldDouble,
+	function ()
+		coinPickup()
+		p:AddCoins(4)
+	end,
+	function ()
+		coinPickup()
+		p:AddCoins(7)
+	end,
+	function ()
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
 		for i=1,4 do
 			if p:GetNumCoins() > 0 then
@@ -38,7 +44,7 @@ local function MC_USE_CARD(_, c, p)
 				p:AddCoins(-1)
 			end
 		end
-	end
+	end)
 end
 
 return {

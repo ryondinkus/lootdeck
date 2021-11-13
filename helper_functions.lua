@@ -68,8 +68,8 @@ end
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = p:GetData()
     if data[key] == 1 then
-		local timerName = string.format("%sTimer", key)
-		local counterName = string.format("%sCounter", key)
+		local timerName = key.."Timer"
+		local counterName = key.."Counter"
 		if not data[timerName] then data[timerName] = 0 end
 		if not data[counterName] then data[counterName] = occurences end
 
@@ -686,6 +686,17 @@ function H.GenerateEncyclopediaPage(...)
     return {output}
 end
 
+function H.SaveData(data)
+    print(json.encode(data))
+    lootdeck:SaveData(json.encode(data))
+end
+
+function H.LoadData()
+    if lootdeck:HasData() then
+        return json.decode(lootdeck:LoadData())
+    end
+end
+
 function H.SaveKey(key, value)
     local savedData = {}
     if lootdeck:HasData() then
@@ -728,6 +739,18 @@ end
 function H.RegisterExternalItemDescriptionLanguages(obj, func)
     for language, description in pairs(obj.Descriptions) do
         func(EID, obj.Id, description, obj.Names[language], language)
+    end
+end
+
+function H.RandomChance(shouldDouble, ...)
+    local functions = {...}
+
+    local effectIndex = lootdeck.rng:RandomInt(#functions) + 1
+
+    functions[effectIndex]()
+
+    if shouldDouble then
+        functions[effectIndex]()
     end
 end
 

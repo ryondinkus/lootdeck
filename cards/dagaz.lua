@@ -15,19 +15,20 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers either effect:", "- Clear all curses for the floor. This does not apply to permanent curses in Challenges.", "- Gain a Soul Heart.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx
-	local rng = lootdeck.rng
     local level = Game():GetLevel()
-    local effect = rng:RandomInt(2)
-    if effect == 0 then
+
+    helper.RandomChance(shouldDouble,
+    function()
         sfx:Play(SoundEffect.SOUND_SUPERHOLY,1,0)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GROUND_GLOW, 0, p.Position, Vector.Zero, p)
         level:RemoveCurses(level:GetCurses())
-    else
+    end,
+    function()
         sfx:Play(SoundEffect.SOUND_HOLY,1,0)
         p:AddSoulHearts(2)
-    end
+    end)
 end
 
 return {

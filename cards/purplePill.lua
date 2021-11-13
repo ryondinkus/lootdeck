@@ -15,27 +15,32 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Recharge one of your active items (+6 charge).", "- +0.27 Tears for the room.", "- -0.27 Tears for the room.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx
-	local effect = lootdeck.rng:RandomInt(3)
 	local data = p:GetData()
-	if effect == 0 then
-		helper.AddActiveCharge(p, 6)
-	else
-        local change = 1
-		if effect == 1 then
-			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-		else
-			change = -1
-			sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
-		end
+
+    helper.RandomChance(shouldDouble,
+    function()
+        helper.AddActiveCharge(p, 6)
+    end,
+    function()
+        sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
         if not data[Tag] then
             data[Tag] = 0
         end
-        data[Tag] = data[Tag] + change
+        data[Tag] = data[Tag] - 1
 		p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
 		p:EvaluateItems()
-	end
+    end,
+    function()
+        sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+        if not data[Tag] then
+            data[Tag] = 0
+        end
+        data[Tag] = data[Tag] + 1
+		p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
+		p:EvaluateItems()
+    end)
 end
 
 local function MC_POST_NEW_ROOM()
