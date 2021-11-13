@@ -70,6 +70,11 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             player:AddCoins(6)
         end)
     end)
+
+    helper.ForEachPlayer(function(player)
+        local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player)
+        poof.Color = Color(0.6,0,0.6,1,0,0,0)
+    end)
 end
 
 return {
