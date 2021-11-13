@@ -15,45 +15,60 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local game = Game()
 	local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
     local room = game:GetRoom()
-    local effect = rng:RandomInt(6)
 
-    return helper.ForEachPlayer(function(player)
-        if effect == 0 then
+    helper.RandomChance(shouldDouble,
+    function()
+        helper.ForEachPlayer(function(player)
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, p)
             player:AddCoins(1)
-        elseif effect == 1 then
+        end)
+    end,
+    function()
+        helper.ForEachPlayer(function(player)
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             for j=1,2 do
 				local cardId = helper.GetWeightedLootCardId()
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 			end
-        elseif effect == 2 then
-			helper.TakeSelfDamage(player, 2)
+        end)
+    end,
+    function()
+        helper.ForEachPlayer(function(player)
+            helper.TakeSelfDamage(player, 2)
 			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-        elseif effect == 3 then
+        end)
+    end,
+    function()
+        helper.ForEachPlayer(function(player)
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
             player:AddCoins(4)
-        elseif effect == 4 then
+        end)
+    end,
+    function()
+        helper.ForEachPlayer(function(player)
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             for j=1,5 do
 				local cardId = helper.GetWeightedLootCardId()
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
             end
-        elseif effect == 5 then
+        end)
+    end,
+    function()
+        helper.ForEachPlayer(function(player)
             sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
             sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
             player:AddCoins(6)
-        end
+        end)
     end)
 end
 
