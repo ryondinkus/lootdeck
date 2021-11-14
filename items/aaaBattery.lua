@@ -20,6 +20,11 @@ local function GivePlayerItem(p, data)
     end
     local itemPool = Game():GetItemPool()
     local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
+    local itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
+    while itemConfig.Type == ItemType.ITEM_ACTIVE do
+        collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
+        itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
+    end
     p:AddCollectible(collectibleId)
     if not data[Tag] then
         data[Tag] = {}
