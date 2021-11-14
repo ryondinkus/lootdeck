@@ -24,6 +24,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	helper.RandomChance(shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
+        Game():ShakeScreen(15)
         helper.ForEachEntityInRoom(function(entity)
     		entity:TakeDamage(40, 0, EntityRef(p), 0)
             local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
@@ -43,8 +44,11 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             portalType = 3
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
-	end,
+        local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, spawnPos, Vector.Zero, p)
+        local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
+		poof.Color = Color(0,0,0,1,0,0,0)
+    end,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
         for i=1,3 do
