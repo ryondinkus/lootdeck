@@ -15,10 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
-    local effect = lootdeck.rng:RandomInt(3)
-    if effect == 0 then
+
+    helper.RandomChance(shouldDouble,
+    function()
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
         local coins = p:GetNumCoins()
         local bombs = p:GetNumBombs()
@@ -26,12 +27,14 @@ local function MC_USE_CARD(_, c, p)
         p:AddCoins(bombs - coins)
         p:AddBombs(keys - bombs)
         p:AddKeys(coins - keys)
-    elseif effect == 1 then
+    end,
+    function()
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D6, SoundEffect.SOUND_EDEN_GLITCH)
-    else
+    end,
+    function()
         p:PlayExtraAnimation("Glitch")
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
-    end
+    end)
 end
 
 return {

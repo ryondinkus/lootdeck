@@ -15,10 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Instantly kills all enemies in the room. Deals 80 damage to bosses.", "- Confuses all enemies in the room for 5 seconds.", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
-	local effect = lootdeck.rng:RandomInt(3)
-	if effect == 0 then
+
+    helper.RandomChance(shouldDouble,
+    function()
         sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
 
         helper.ForEachEntityInRoom(function(entity)
@@ -40,7 +41,8 @@ local function MC_USE_CARD(_, c, p)
             local npc = entity:ToNPC()
             return npc and npc:IsVulnerableEnemy()
         end)
-	elseif effect == 1 then
+    end,
+    function()
         helper.ForEachEntityInRoom(function(entity)
             entity:AddConfusion(EntityRef(p), 150, false)
             local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
@@ -51,10 +53,11 @@ local function MC_USE_CARD(_, c, p)
             return npc and npc:IsVulnerableEnemy()
         end)
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-	else
-		helper.TakeSelfDamage(p, 2)
+    end,
+    function()
+        helper.TakeSelfDamage(p, 2)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-	end
+    end)
 end
 
 return {

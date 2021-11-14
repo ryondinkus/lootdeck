@@ -50,9 +50,9 @@ for _, card in pairs(lootcards) do
         for _, callback in pairs(card.callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    callback[2](_, c, p, f)
+                    callback[2](_, c, p, f, items.playerCard.helpers.ShouldRunDouble(p))
 
-                    if items.playerCard.helpers.ShouldRunDouble(p) then
+                    if callback[4] then
                         callback[2](_, c, p, f)
                     end
                 end, callback[3])
@@ -138,9 +138,27 @@ for _, trinket in pairs(trinkets) do
     end
 end
 
-lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function()
+lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
-    lootdeck.f = table.deepCopy(defaultStartupValues)
+
+    if lootdeck:HasData() then
+        if not isContinued then
+            local cachedMcmOptions = helper.LoadKey("mcmOptions")
+            lootdeck:RemoveData()
+            helper.SaveKey("mcmOptions", cachedMcmOptions)
+            lootdeck.f = table.deepCopy(defaultStartupValues)
+        else
+            local data = helper.LoadData()
+
+            lootdeck.f = data.global
+
+            helper.ForEachPlayer(function(p, pData)
+                if data[p.InitSeed] then
+                    pData = data.players[p.InitSeed]
+                end
+            end)
+        end
+    end
 
 	if mcmOptions.BlankCardStart then
 		Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
@@ -182,7 +200,35 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	end
 end)
 
--- sound effect printer
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
+    if shouldSave then
+        local data = {
+            players = {},
+            global = lootdeck.f,
+            mcmOptions = mcmOptions
+        }
+
+        helper.ForEachPlayer(function(p, pData)
+            data.players[tostring(p.InitSeed)] = pData
+        end)
+
+        helper.SaveData(data)
+    end
+end)
+
 -- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
 --     for soundEffectName, soundEffect in pairs(SoundEffect) do
 --         if lootdeck.sfx:IsPlaying(soundEffect) then

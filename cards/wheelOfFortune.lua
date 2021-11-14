@@ -25,27 +25,30 @@ local arcadeItems = {
     CollectibleType.COLLECTIBLE_CRYSTAL_BALL
 }
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local game = Game()
     local sfx = lootdeck.sfx
     local rng = lootdeck.rng
     local room = game:GetRoom()
-    local effect = rng:RandomInt(6)
-    if effect == 0 then
+
+    helper.RandomChance(shouldDouble,
+    function()
         p:AddCoins(1)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-    elseif effect == 1 then
-		helper.TakeSelfDamage(p, 1)
+    end,
+    function()
+        helper.TakeSelfDamage(p, 1)
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-        return false
-    elseif effect == 2 then
+    end,
+    function()
         for j=1,3 do
             local cardId = helper.GetWeightedLootCardId()
             Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-    elseif effect == 3 then
+    end,
+    function()
         sfx:Play(SoundEffect.SOUND_THUMBS_DOWN, 1, 0)
         for i=0,3 do
             if p:GetNumCoins() > 0 then
@@ -55,18 +58,20 @@ local function MC_USE_CARD(_, c, p)
                 break
             end
         end
-    elseif effect == 4 then
+    end,
+    function()
         p:AddCoins(5)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-    elseif effect == 5 then
+    end,
+    function()
         local room = game:GetRoom()
         local collectible = arcadeItems[rng:RandomInt(#arcadeItems)+1]
         local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
         Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-    end
+    end)
 end
 
 return {

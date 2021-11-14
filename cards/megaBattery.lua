@@ -17,6 +17,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery o
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_MEGA)
+    lootdeck.sfx:Play(SoundEffect.SOUND_SHELLGAME,1,0)
 end
 
 return {
@@ -28,10 +29,10 @@ return {
 	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
-            {
-                ModCallbacks.MC_USE_CARD,
-                MC_USE_CARD,
-                Id
-            }
+        {
+            ModCallbacks.MC_USE_CARD,
+            MC_USE_CARD,
+            Id
+        }
     }
 }

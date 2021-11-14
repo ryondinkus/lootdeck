@@ -16,16 +16,21 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On player death, you ha
 
 local ReviveTag = string.format("%sRevive", Tag)
 
-local function MC_POST_NEW_ROOM()
+local function MC_ENTITY_TAKE_DMG()
     local sfx = lootdeck.sfx
     helper.ForEachPlayer(function(p, data)
 		if p:HasCollectible(Id) then
 			data[ReviveTag] = false
-			if helper.PercentageChance(100 / 6 * p:GetCollectibleNum(Id), 50) then
+			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
 				data[ReviveTag] = true
 			end
 		end
+    end)
+end
 
+local function MC_POST_NEW_ROOM()
+    local sfx = lootdeck.sfx
+    helper.ForEachPlayer(function(p, data)
         if data[Tag] then
             if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
                 p:AddHearts(-1)
@@ -54,6 +59,11 @@ return {
     WikiDescription = WikiDescription,
     callbacks = {
 		{
+            ModCallbacks.MC_ENTITY_TAKE_DMG,
+            MC_ENTITY_TAKE_DMG,
+            EntityType.ENTITY_PLAYER
+        },
+        {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
         },
