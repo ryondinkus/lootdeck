@@ -21,12 +21,6 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     helper.RandomChance(shouldDouble,
     function()
         sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
-        local illegalParents = {
-            EntityType.ENTITY_GEMINI, -- gemini's umbilical cord
-            EntityType.ENTITY_THE_HAUNT, -- the haunt's minions
-            EntityType.ENTITY_FORSAKEN, -- the forsaken's minions
-            EntityType.ENTITY_HERETIC, -- the forsaken's minions
-        }
 
         helper.ForEachEntityInRoom(function(entity)
             entity:Kill()
@@ -35,7 +29,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         end, nil, nil, nil,
         function(entity)
             local npc = entity:ToNPC()
-            return npc and not npc:IsBoss() and npc:IsVulnerableEnemy() and not helper.TableContains(illegalParents, npc.SpawnerType or 0)
+            return npc and not npc:IsBoss() and npc:IsVulnerableEnemy()
         end)
 
         helper.ForEachEntityInRoom(function(entity)
