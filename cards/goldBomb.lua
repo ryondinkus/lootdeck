@@ -29,8 +29,8 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-	helper.StaggerSpawn(Tag, p, 15, 3, function(p)
-		local target = helper.FindRandomEnemy(p.Position) or 0
+	helper.StaggerSpawn(Tag, p, 15, 3, function(player)
+		local target = helper.FindRandomEnemy(player.Position) or 0
 		if target ~= 0 then
             for i=0,4 do
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5, nil)
