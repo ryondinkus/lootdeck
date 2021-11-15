@@ -52,7 +52,7 @@ local function MC_POST_PICKUP_INIT(_, pickup)
                     newVariant = entityVariants.doubleChargedPenny.Id
                 end
 
-                helper.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup)
                 pickup:Remove()
             else
                 pickup:Remove()

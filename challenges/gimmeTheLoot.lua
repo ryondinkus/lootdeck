@@ -32,6 +32,16 @@ local function MC_PRE_PICKUP_COLLISION(_, pickup, entity)
     end
 end
 
+local function MC_POST_NEW_ROOM()
+    for i = 0, DoorSlot.NUM_DOOR_SLOTS - 1 do
+        local door = Game():GetRoom():GetDoor(i)
+        
+        if door and door:IsRoomType(RoomType.ROOM_SHOP) then
+            door:TryUnlock(Isaac.GetPlayer(0), true)
+        end
+    end
+end
+
 return {
     Name = Name,
     Names = Names,
@@ -46,6 +56,10 @@ return {
             ModCallbacks.MC_PRE_PICKUP_COLLISION,
             MC_PRE_PICKUP_COLLISION,
             PickupVariant.PICKUP_TROPHY
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         }
     }
 }
