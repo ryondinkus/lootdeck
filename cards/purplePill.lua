@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 
     helper.RandomChance(shouldDouble,
     function()
-        helper.AddActiveCharge(p, 6)
+        helper.AddActiveCharge(p, 6, true)
     end,
     function()
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
