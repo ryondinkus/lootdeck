@@ -15,9 +15,12 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("For 5 seconds, the player is invincibile and can phase through enemies.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
     data[Tag] = 5 * 60
+    if shouldDouble then
+        data[Tag] = data[Tag] * 2
+    end
     data[Tag .. "Color"] = p.Color
     p.Color = Color(p.Color.R,p.Color.G,p.Color.B,0.5,p.Color.RO,p.Color.GO,p.Color.BO)
     local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
