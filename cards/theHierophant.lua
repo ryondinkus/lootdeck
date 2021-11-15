@@ -16,28 +16,32 @@ local Description = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
     data[Tag] = 2
+    if shouldDouble then
+        data[Tag] = data[Tag] + 1
+    end
 	p:AddNullCostume(costumes.mantle)
 end
 
 local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData()
-    if data[Tag] and data[Tag] > 0 then
+    if data[Tag] then
         if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
             helper.HolyMantleEffect(p)
             data[Tag] = data[Tag] - 1
-    		p:TryRemoveNullCostume(costumes.mantle)
-    		p:TryRemoveNullCostume(costumes.mantleBroken)
     		if data[Tag] == 1 then
+                p:TryRemoveNullCostume(costumes.mantle)
     			p:AddNullCostume(costumes.mantleBroken)
     		end
+            if data[Tag] <= 0 then
+                p:TryRemoveNullCostume(costumes.mantleBroken)
+                data[Tag] = nil
+            end
             return false
         end
-    else
-        data[Tag] = nil
     end
 end
 
