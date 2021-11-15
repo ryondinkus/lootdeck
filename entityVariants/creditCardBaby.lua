@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 local Name = "Credit Card Baby"
 local Tag = "creditCardBaby"
 local Id = Isaac.GetEntityVariantByName(Name)
@@ -18,10 +20,10 @@ local function MC_FAMILIAR_UPDATE(_, f)
 		sprite:Play("Spent", false)
 		if sprite:IsEventTriggered("Sound") then
 			for i=1,data.toSpawn[4] do
-				Isaac.Spawn(data.toSpawn[1], data.toSpawn[2], data.toSpawn[3], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+				helper.Spawn(data.toSpawn[1], data.toSpawn[2], data.toSpawn[3], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
 			end
 			for i=1,(data.toSpawn[8] or 0) do
-				Isaac.Spawn(data.toSpawn[5], data.toSpawn[6], data.toSpawn[7], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+				helper.Spawn(data.toSpawn[5], data.toSpawn[6], data.toSpawn[7], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
 			end
 			sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
 		end

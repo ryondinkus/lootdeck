@@ -21,7 +21,7 @@ local function MC_ENTITY_TAKE_DMG(_, e)
         for i=1,p:GetCollectibleNum(Id) do
             local effect = rng:RandomInt(2)
             if effect == 0 then
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
+                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
 				break
 			end
         end

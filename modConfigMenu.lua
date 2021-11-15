@@ -4,13 +4,15 @@ local MenuName = "Lootdeck"
 local SubMenuName = "Settings"
 DEBUG = false
 
-local mcmOptions = {
+lootdeck.mcmOptions = {
 	GuaranteedLoot = false,
 	LootDeckStart = false,
 	BlankCardStart = false,
 	JacobEsauStart = false,
     LootCardChance = 20
 }
+
+local mcmOptions = lootdeck.mcmOptions
 
 --========== MCM BUGTESTING SHIT ===========
 if ModConfigMenu then
@@ -124,5 +126,3 @@ if ModConfigMenu then
 		}
 	)
 end
-
-return mcmOptions

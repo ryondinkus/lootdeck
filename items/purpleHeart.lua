@@ -71,7 +71,7 @@ local function MC_POST_UPDATE()
 
         if data[rerolledEnemy] and data[rerolledEnemy]:HasMortalDamage() then
             local itemToSpawn = helper.GlyphOfBalance(p)
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, itemToSpawn[1], itemToSpawn[2], data[rerolledEnemy].Position, Vector.Zero, nil)
+            helper.Spawn(EntityType.ENTITY_PICKUP, itemToSpawn[1], itemToSpawn[2], data[rerolledEnemy].Position, Vector.Zero, nil)
             data[rerolledEnemy] = nil
         end
     end, Id)

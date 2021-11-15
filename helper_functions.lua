@@ -50,21 +50,6 @@ function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag, filter)
     return chosenEnt
 end
 
--- function for registering basic loot cards that spawn items
-function H.SimpleLootCardSpawn(p, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
-    if effect then
-        for i=1,(effectAmount or 1) do
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-        end
-    end
-    if sound then
-        lootdeck.sfx:Play(sound)
-    end
-    for i = 1,(uses or 1) do
-        Isaac.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-    end
-end
-
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = p:GetData()
     if data[key] == 1 then
@@ -342,7 +327,7 @@ function H.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            Isaac.Spawn(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
+            H.SpawnEntity(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
         end
     end
 end
@@ -687,7 +672,6 @@ function H.GenerateEncyclopediaPage(...)
 end
 
 function H.SaveData(data)
-    print(json.encode(data))
     lootdeck:SaveData(json.encode(data))
 end
 
@@ -742,6 +726,44 @@ function H.RegisterExternalItemDescriptionLanguages(obj, func)
     end
 end
 
+function H.IsInChallenge(challengeName)
+    local challengeId = Isaac.GetChallengeIdByName(challengeName)
+    return Isaac.GetChallenge() == challengeId
+end
+
+function H.Spawn(type, variant, subType, position, velocity, spawner)
+    local entity = Isaac.Spawn(type, variant or 0, subType or 0, position, velocity, spawner)
+    if Isaac.GetChallenge() == lootdeckChallenges.gimmeTheLoot.Id then
+        entity:GetData()[lootdeckChallenges.gimmeTheLoot.Tag] = true
+    end
+
+    return entity
+end
+
+-- function for registering basic loot cards that spawn items
+function H.SpawnEntity(p, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
+    local output = {
+        effects = {},
+        entities = {}
+    }
+    if effect then
+        for i=1,(effectAmount or 1) do
+            local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+            table.insert(output.effects, effect)
+        end
+    end
+    if sound then
+        lootdeck.sfx:Play(sound)
+    end
+    for i = 1,(uses or 1) do
+        local entity = H.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+
+        table.insert(output.entities, entity)
+    end
+
+    return output
+end
+
 function H.RandomChance(shouldDouble, ...)
     local functions = {...}
 
@@ -752,6 +774,21 @@ function H.RandomChance(shouldDouble, ...)
     if shouldDouble then
         functions[effectIndex]()
     end
+end
+
+function H.SaveGame()
+    local data = {
+        players = {},
+        global = lootdeck.f,
+        mcmOptions = lootdeck.mcmOptions or {},
+        unlocks = lootdeck.unlocks or {}
+    }
+
+    H.ForEachPlayer(function(p, pData)
+        data.players[tostring(p.InitSeed)] = pData
+    end)
+
+    H.SaveData(data)
 end
 
 return H

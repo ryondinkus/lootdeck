@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, entityVariants.chargedPenny.Id, 0, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 1)
+	helper.SpawnEntity(p, EntityType.ENTITY_PICKUP, entityVariants.chargedPenny.Id, 0, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 1)
 end
 
 return {

@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Lil' Battery on use.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL)
+	helper.SpawnEntity(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_NORMAL)
     lootdeck.sfx:Play(SoundEffect.SOUND_SHELLGAME,1,0)
 end
 

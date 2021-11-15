@@ -65,7 +65,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                     return
                 end
                 local chosenVariant = (rng:RandomInt(4) + 1) * 10
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+                helper.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
                 data.spawnAmount = data.spawnAmount - 1
                 data.spawnCountdown = 30
             end

@@ -34,7 +34,7 @@ local function MC_POST_PICKUP_UPDATE(_, pickup)
         end
 
         if variant then
-            local newChest = Isaac.Spawn(EntityType.ENTITY_PICKUP, variant, subType, pickup.Position, Vector.Zero, nil)
+            local newChest = helper.Spawn(EntityType.ENTITY_PICKUP, variant, subType, pickup.Position, Vector.Zero, nil)
             newChest:GetData()[Tag] = true
             for _, entity in pairs(Isaac.GetRoomEntities()) do
                 if entity:GetLastParent().InitSeed == pickup.InitSeed then

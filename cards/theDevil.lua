@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p)
     local room = game:GetRoom()
     local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
-    local spawnedItem = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
+    local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
     spawnedItem.AutoUpdatePrice = false
     if helper.IsSoulHeartFarty(p) then
         spawnedItem.Price = -3
@@ -32,7 +32,7 @@ local function MC_USE_CARD(_, c, p)
     end
     spawnedItem.ShopItemId = -2
     spawnedItem:GetData()[Tag] = true
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
+    helper.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_SATAN_GROW, 1, 0)
 end
 
