@@ -17,9 +17,14 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "Yo
 
 local ReviveTag = string.format("%sRevive", Tag)
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
-    if not data[Tag] then data[Tag] = true end
+    if not data[Tag] then
+        data[Tag] = 3
+        if shouldDouble then
+            data[Tag] = data[Tag] + 1
+        end
+    end
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
     p:Die()
@@ -31,12 +36,12 @@ local function MC_POST_NEW_ROOM()
             p:AddMaxHearts(-24)
             p:AddSoulHearts(-24)
             p:AddBoneHearts(-12)
-            p:AddBoneHearts(3)
+            p:AddBoneHearts(data[Tag])
             if p:GetOtherTwin() then
                 p:GetOtherTwin():AddMaxHearts(-24)
                 p:GetOtherTwin():AddSoulHearts(-24)
                 p:GetOtherTwin():AddBoneHearts(-12)
-                p:GetOtherTwin():AddBoneHearts(3)
+                p:GetOtherTwin():AddBoneHearts(data[Tag])
             end
             if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
                 p:AddMaxHearts(2, false)
