@@ -17,6 +17,7 @@ local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 local entitySubTypes = include("entitySubTypes/registry")
 local trinkets = include("trinkets/registry")
+local json = include("json")
 
 local defaultStartupValues = {
     sunUsed = false,
@@ -166,8 +167,11 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
             lootdeck.f = table.deepCopy(defaultStartupValues)
         else
             helper.ForEachPlayer(function(p, pData)
-                if data[p.InitSeed] then
-                    pData = data.players[p.InitSeed]
+                local savedPlayerData = data.players[tostring(p.InitSeed)]
+                if savedPlayerData then
+                    for key, val in pairs(savedPlayerData) do
+                        pData[key] = val
+                    end
                 end
             end)
             lootdeck.f = data.global
