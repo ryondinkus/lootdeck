@@ -30,7 +30,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
 end
 
 local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
-    if e.Type == EntityType.ENTITY_PROJECTILE then
+    if e.Type == EntityType.ENTITY_PROJECTILE and not e:ToProjectile():HasProjectileFlags(ProjectileFlags.CANT_HIT_PLAYER) then
         e:Die()
         f:GetData()[Tag] = true
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
