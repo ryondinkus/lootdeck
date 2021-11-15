@@ -9,7 +9,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
         if helper.PercentageChance(90) then
             local room = Game():GetRoom()
             local spawnPoint = room:FindFreePickupSpawnPosition(room:GetRandomPosition(0), 0, true)
-            local goldenPenny = Isaac.Spawn(EntityType.ENTITY_PICKUP, Id, 0, spawnPoint, Vector.Zero, pi.Parent)
+            local goldenPenny = helper.Spawn(EntityType.ENTITY_PICKUP, Id, 0, spawnPoint, Vector.Zero, pi.Parent)
             goldenPenny:GetSprite():Play("Reappear")
         end
     end)

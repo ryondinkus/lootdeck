@@ -24,7 +24,7 @@ local function MC_POST_NEW_ROOM()
         if not alreadySpawned then
             if room:GetType() == RoomType.ROOM_TREASURE and roomDescriptor.VisitedCount <= 1 then
                 p:AddCollectible(CollectibleType.COLLECTIBLE_TMTRAINER, 0, false)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, nil)
+                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, nil)
                 p:RemoveCollectible(CollectibleType.COLLECTIBLE_TMTRAINER)
             end
         end

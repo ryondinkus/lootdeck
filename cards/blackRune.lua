@@ -64,7 +64,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     			Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.lostKey.Id, 0, p.Position, Vector.FromAngle(rng:RandomInt(360))*2, p)
     			p:AddKeys(-1)
     		end
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_CHEST, 0, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
+            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_CHEST, 0, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
         end
 	end)
 end

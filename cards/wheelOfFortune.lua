@@ -44,7 +44,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     function()
         for j=1,3 do
             local cardId = helper.GetWeightedLootCardId()
-            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     end,
@@ -68,7 +68,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         local room = game:GetRoom()
         local collectible = arcadeItems[rng:RandomInt(#arcadeItems)+1]
         local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
-        Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)
+        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
         sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
     end)

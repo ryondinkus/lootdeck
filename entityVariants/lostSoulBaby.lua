@@ -70,7 +70,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
         if data.targetPos then
             if sprite:IsEventTriggered("Spawn") then
                 sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
-                Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
             end
             if sprite:IsFinished("Fly") then
                 lootdeck.f.lostSoul = false

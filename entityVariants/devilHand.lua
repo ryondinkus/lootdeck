@@ -1,3 +1,5 @@
+local helper = include("helper_functions")
+
 local Name = "Devil Hand"
 local Tag = "devilHand"
 local Id = Isaac.GetEntityVariantByName(Name)
@@ -36,7 +38,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
             sfx:Play(SoundEffect.SOUND_SATAN_APPEAR, 1, 0)
         end
         if sprite:IsEventTriggered("Spawn") then
-            local collectible = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, data.collectibleType, f.Position, Vector.Zero, f)
+            local collectible = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, data.collectibleType, f.Position, Vector.Zero, f)
             collectible:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, f.Position, Vector.Zero, f)
             poof.Color = Color(0,0,0,1,0,0,0)

@@ -20,7 +20,7 @@ local function MC_USE_CARD(_, c, p)
     helper.RemoveHitFamiliars(entityVariants.holyShield.Id)
 	local data = p:GetData()
 	data[Tag] = 1
-	helper.SimpleLootCardSpawn(p, EntityType.ENTITY_FAMILIAR, entityVariants.holyShield.Id, 0, 10, Vector.Zero, SoundEffect.SOUND_HOLY)
+	helper.SpawnEntity(p, EntityType.ENTITY_FAMILIAR, entityVariants.holyShield.Id, 0, 10, Vector.Zero, SoundEffect.SOUND_HOLY)
 	local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 5, p.Position, Vector.Zero, p)
 	poof.Color = Color(1,1,1,1,1,1,1)
 end

@@ -12,6 +12,7 @@ function table.deepCopy(original)
 end
 
 include("cards/registry")
+include("challenges/registry")
 local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 local entitySubTypes = include("entitySubTypes/registry")
@@ -32,16 +33,20 @@ local defaultStartupValues = {
     lostSoul = false,
     hudOffset = 0,
     hudOffsetCountdown = 0,
-    hudOffsetControlsCountdown = 0
+    hudOffsetControlsCountdown = 0,
+    unlocks = {}
 }
 
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
 lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
+lootdeck.unlocks = {}
 
+include("modConfigMenu")
 local helper = include("helper_functions")
-local mcmOptions = include("modConfigMenu")
+
+local mcmOptions = lootdeck.mcmOptions
 
 local rng = lootdeck.rng
 
@@ -74,6 +79,14 @@ for _, card in pairs(lootcards) do
 			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", "Idle", 0, cardFrontPath),
 		})
 	end
+end
+
+for _, challenge in pairs(lootdeckChallenges) do
+    if challenge.callbacks then
+        for _, callback in pairs(challenge.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
 end
 
 for _, variant in pairs(entityVariants) do
@@ -142,22 +155,26 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
     rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
 
     if lootdeck:HasData() then
+        local data = helper.LoadData()
         if not isContinued then
-            local cachedMcmOptions = helper.LoadKey("mcmOptions")
-            lootdeck:RemoveData()
-            helper.SaveKey("mcmOptions", cachedMcmOptions)
+            helper.SaveData({
+                players = {},
+                global = table.deepCopy(defaultStartupValues),
+                mcmOptions = data.mcmOptions,
+                unlocks = data.unlocks
+            })
             lootdeck.f = table.deepCopy(defaultStartupValues)
         else
-            local data = helper.LoadData()
-
-            lootdeck.f = data.global
-
             helper.ForEachPlayer(function(p, pData)
                 if data[p.InitSeed] then
                     pData = data.players[p.InitSeed]
                 end
             end)
+            lootdeck.f = data.global
         end
+
+        lootdeck.mcmOptions = data.mcmOptions
+        lootdeck.unlocks = data.unlocks
     end
 
 	if mcmOptions.BlankCardStart then
@@ -200,32 +217,9 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	end
 end)
 
-function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
-
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
     if shouldSave then
-        local data = {
-            players = {},
-            global = lootdeck.f,
-            mcmOptions = mcmOptions
-        }
-
-        helper.ForEachPlayer(function(p, pData)
-            data.players[tostring(p.InitSeed)] = pData
-        end)
-
-        helper.SaveData(data)
+        helper.SaveGame()
     end
 end)
 
