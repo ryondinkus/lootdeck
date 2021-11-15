@@ -21,7 +21,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     f.OrbitSpeed = -0.05
     f.Velocity = f:GetOrbitPosition(f.Player.Position + f.Player.Velocity) - f.Position
     local data = f:GetData()
-    print(data[finishedTag])
     if data[finishedTag] or f:GetSprite():IsFinished("Poof") then
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         f.SpriteScale = Vector.Zero
