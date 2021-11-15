@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.")
 
 local function SpawnFinger(target)
-    if target ~= 0 then
+    if target ~= nil then
         local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.momsFinger.Id, 0, target.Position, Vector(0,0), target)
         local fingerData = finger:GetData()
         fingerData.target = target
