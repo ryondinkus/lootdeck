@@ -4,6 +4,8 @@ local Name = "Holy Shield"
 local Tag = "holyShield"
 local Id = Isaac.GetEntityVariantByName(Name)
 
+local finishedTag = Tag.."Finished"
+
 local function MC_FAMILIAR_INIT(_, f)
     f:AddToOrbit(0)
     f:GetSprite():Play("Spawn", true)
@@ -18,23 +20,27 @@ local function MC_FAMILIAR_UPDATE(_, f)
     f.OrbitDistance = Vector(20, 20)
     f.OrbitSpeed = -0.05
     f.Velocity = f:GetOrbitPosition(f.Player.Position + f.Player.Velocity) - f.Position
-    if f:GetSprite():IsFinished("Poof") then
+    local data = f:GetData()
+    print(data[finishedTag])
+    if data[finishedTag] or f:GetSprite():IsFinished("Poof") then
+        f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         f.SpriteScale = Vector.Zero
+        data[finishedTag] = true
     end
 end
 
 local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
     if e.Type == EntityType.ENTITY_PROJECTILE then
         e:Die()
+        f:GetData()[Tag] = true
         f.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
-        f:GetData().hit = true
         f:GetSprite():Play("Poof", true)
         lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0,false,1.2)
     end
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.RemoveHitFamiliars(Id)
+    helper.RemoveHitFamiliars(Id, Tag)
 end
 
 return {

@@ -160,6 +160,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
         if not isContinued then
             helper.SaveData({
                 players = {},
+                familiars = {},
                 global = table.deepCopy(defaultStartupValues),
                 mcmOptions = data.mcmOptions,
                 unlocks = data.unlocks
@@ -174,6 +175,18 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                     end
                 end
             end)
+            helper.ForEachEntityInRoom(function(familiar)
+                local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
+                if savedFamiliarData then
+                    local familiarData = familiar:GetData()
+                    for key, val in pairs(savedFamiliarData) do
+                        familiarData[key] = val
+                    end
+                end
+            end, EntityType.ENTITY_FAMILIAR)
+
+            helper.RemoveHitFamiliars(entityVariants.holyShield.Id, entityVariants.holyShield.Tag)
+
             lootdeck.f = data.global
         end
 
