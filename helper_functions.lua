@@ -553,7 +553,7 @@ function H.RemoveHitFamiliars(id, hitTag)
     H.ForEachEntityInRoom(function(entity)
         entity:Remove()
     end, EntityType.ENTITY_FAMILIAR, id, nil, function(entity)
-        return entity:GetData()[hitTag or 'hit'] == true
+        return entity:GetData()[hitTag] == true
     end)
 end
 
@@ -791,6 +791,7 @@ end
 function H.SaveGame()
     local data = {
         players = {},
+        familiars = {},
         global = lootdeck.f,
         mcmOptions = lootdeck.mcmOptions or {},
         unlocks = lootdeck.unlocks or {}
@@ -799,6 +800,12 @@ function H.SaveGame()
     H.ForEachPlayer(function(p, pData)
         data.players[tostring(p.InitSeed)] = pData
     end)
+
+    H.ForEachEntityInRoom(function(familiar)
+        local eData = familiar:GetData()
+
+        data.familiars[tostring(familiar.InitSeed)] = eData
+    end, EntityType.ENTITY_FAMILIAR)
 
     H.SaveData(data)
 end
