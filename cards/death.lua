@@ -27,6 +27,8 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     end
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
+    poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
+    poof.Color = Color(0,0,0,1,0,0,0)
     p:Die()
 end
 
