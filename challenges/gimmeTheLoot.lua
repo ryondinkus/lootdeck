@@ -33,11 +33,13 @@ local function MC_PRE_PICKUP_COLLISION(_, pickup, entity)
 end
 
 local function MC_POST_NEW_ROOM()
-    for i = 0, DoorSlot.NUM_DOOR_SLOTS - 1 do
-        local door = Game():GetRoom():GetDoor(i)
-        
-        if door and door:IsRoomType(RoomType.ROOM_SHOP) then
-            door:TryUnlock(Isaac.GetPlayer(0), true)
+    if Isaac.GetChallenge() == Id then
+        for i = 0, DoorSlot.NUM_DOOR_SLOTS - 1 do
+            local door = Game():GetRoom():GetDoor(i)
+            
+            if door and door:IsRoomType(RoomType.ROOM_SHOP) then
+                door:TryUnlock(Isaac.GetPlayer(0), true)
+            end
         end
     end
 end
