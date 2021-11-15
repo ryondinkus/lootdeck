@@ -17,8 +17,8 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.")
 
 local function SpawnFinger(target)
-    if target ~= nil then
-        local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.momsFinger.Id, 0, target.Position, Vector(0,0), target)
+    if target ~= 0 then
+        local finger = Isaac.Spawn(EntityType.ENTITY_EFFECT, entityVariants.momsFinger.Id, 0, target.Position, Vector(0,0), nil)
         local fingerData = finger:GetData()
         fingerData.target = target
     end
@@ -32,12 +32,14 @@ local function MC_USE_CARD(_, c, p)
     else
         SpawnFinger(p)
     end
+
+    lootdeck.sfx:Play(SoundEffect.SOUND_MOM_VOX_ISAAC, 1, 0, false, 1.2)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local rng = lootdeck.rng
 	helper.StaggerSpawn(Tag, p, 15, rng:RandomInt(6) + 1, function(player)
-		SpawnFinger(helper.FindRandomEnemy(player.Position))
+		SpawnFinger(helper.FindRandomEnemy(player.Position) or 0)
 	end)
 end
 
