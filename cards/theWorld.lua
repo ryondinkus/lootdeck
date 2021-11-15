@@ -31,23 +31,18 @@ local function MC_POST_UPDATE()
         if lootdeck.f.world % 30 == 0 then
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
         end
-        if lootdeck.f.world == 300 then
+        if lootdeck.f.world > 1 then
+            Game().TimeCounter = lootdeck.f.savedTime
+            lootdeck.f.world = lootdeck.f.world - 1
             helper.ForEachEntityInRoom(function(entity) entity:AddEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
                 return entity:IsEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
             end)
-        end
-        if lootdeck.f.world >= 1 then
-            Game().TimeCounter = lootdeck.f.savedTime
-            lootdeck.f.world = lootdeck.f.world - 1
-        end
-        if lootdeck.f.world == 1 then
+        elseif lootdeck.f.world <= 1 then
             helper.ForEachEntityInRoom(function(entity) entity:ClearEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
                 return entity:IsEnemy() and entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
             end)
             mus:Enable()
             sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
-        end
-        if lootdeck.f.world <= 0 then
             lootdeck.f.world = nil
         end
     end
@@ -87,14 +82,6 @@ local function MC_NPC_UPDATE(_, entity)
     end
 end
 
-local function MC_POST_NEW_ROOM()
-    if lootdeck.f.world then
-        lootdeck.f.world = nil
-        lootdeck.mus:Enable()
-        lootdeck.sfx:Play(SoundEffect.SOUND_DOGMA_TV_BREAK, 1, 0)
-    end
-end
-
 return {
     Name = Name,
     Names = Names,
@@ -120,10 +107,6 @@ return {
         {
             ModCallbacks.MC_NPC_UPDATE,
             MC_NPC_UPDATE
-        },
-        {
-            ModCallbacks.MC_POST_NEW_ROOM,
-            MC_POST_NEW_ROOM
         }
     }
 }
