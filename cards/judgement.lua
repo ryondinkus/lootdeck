@@ -21,6 +21,7 @@ local function MC_USE_CARD(_, c, p)
     for i=0,lootdeck.rng:RandomInt(3) do
         helper.Spawn(EntityType.ENTITY_PICKUP, reward[1], reward[2], room:FindFreePickupSpawnPosition(p.Position), Vector.Zero, nil)
     end
+    lootdeck.sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
 end
 
 return {
