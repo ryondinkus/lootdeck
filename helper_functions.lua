@@ -658,7 +658,20 @@ function H.CustomCoinPickupUpdate(pi, sfx)
     end
 end
 
-function H.AddActiveCharge(p, value)
+function H.GetPlayerSpriteOffset(p)
+    local flyingOffset = p:GetFlyingOffset()
+	if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
+		flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
+	end
+	local offsetVector = Vector(0,60) - p.PositionOffset - flyingOffset
+    return offsetVector
+end
+
+function H.AddActiveCharge(p, value, animate)
+    if animate then
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BATTERY, 0, p.Position - H.GetPlayerSpriteOffset(p), Vector.Zero, p)
+    end
+    lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
     for i=0,3 do
         if p:GetActiveItem(i) ~= 0 then
             if p:NeedsCharge(i) then
@@ -666,7 +679,6 @@ function H.AddActiveCharge(p, value)
                 if not p:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and p:GetBatteryCharge(i) > 0 then
                     p:SetActiveCharge(p:GetActiveCharge(i), i)
                 end
-                lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
                 Game():GetHUD():FlashChargeBar(p, i)
                 return
             end
