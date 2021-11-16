@@ -22,15 +22,24 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     if shouldDouble then
         data[Tag] = data[Tag] + 1
     end
+    p:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, false)
 	p:AddNullCostume(costumes.mantle)
 end
 
-local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
-    local p = e:ToPlayer()
-    local data = p:GetData()
-    if data[Tag] then
-        if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
-            helper.HolyMantleEffect(p)
+local function MC_POST_NEW_ROOM()
+    helper.ForEachPlayer(function(p, data)
+        if data[Tag] then
+            p:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, false)
+            data[Tag .. "KeepCostume"] = true
+        end
+    end)
+end
+
+local function MC_POST_UPDATE()
+    helper.ForEachPlayer(function(p, data)
+        local data = p:GetData()
+        local effects = p:GetEffects()
+        if data[Tag] and not effects:HasCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE) then
             data[Tag] = data[Tag] - 1
     		if data[Tag] == 1 then
                 p:TryRemoveNullCostume(costumes.mantle)
@@ -39,22 +48,10 @@ local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
             if data[Tag] <= 0 then
                 p:TryRemoveNullCostume(costumes.mantleBroken)
                 data[Tag] = nil
+            else
+                effects:AddCollectibleEffect(CollectibleType.COLLECTIBLE_HOLY_MANTLE, false)
             end
-            return false
         end
-    end
-end
-
-local function MC_POST_NEW_ROOM()
-    helper.ForEachPlayer(function(p, data)
-        if data[Tag] then
-            data[Tag .. "KeepCostume"] = true
-        end
-    end)
-end
-
-local function MC_POST_UPDATE()
-    helper.ForEachPlayer(function(p, data)
         if data[Tag .. "KeepCostume"] then
             if data[Tag] == 2 then
                 p:AddNullCostume(costumes.mantle)
@@ -78,11 +75,6 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
-        },
-        {
-            ModCallbacks.MC_ENTITY_TAKE_DMG,
-            MC_ENTITY_TAKE_DMG,
-            EntityType.ENTITY_PLAYER
         },
         {
             ModCallbacks.MC_POST_NEW_ROOM,
