@@ -35,7 +35,9 @@ local defaultStartupValues = {
     hudOffset = 0,
     hudOffsetCountdown = 0,
     hudOffsetControlsCountdown = 0,
-    unlocks = {}
+    unlocks = {},
+    isInitialized = false,
+    isGameStarted = false
 }
 
 lootdeck.rng = RNG()
@@ -50,6 +52,118 @@ local helper = include("helper_functions")
 local mcmOptions = lootdeck.mcmOptions
 
 local rng = lootdeck.rng
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
+    if lootdeck:HasData() then
+        local data = helper.LoadData()
+
+        if isContinued then
+            helper.ForEachEntityInRoom(function(familiar)
+                local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
+                if savedFamiliarData then
+                    local familiarData = familiar:GetData()
+                    for key, val in pairs(savedFamiliarData) do
+                        if val and type(val) == "table" then
+                            if helper.IsArray(val) then
+                                familiarData[key] = {}
+                                for _, v in pairs(val) do
+                                    if val.type == "userdata" then
+                                        table.insert(familiarData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                    else
+                                        goto normal
+                                    end
+                                end
+                                goto continue
+                            else
+                                if val.type == "userdata" then
+                                    familiarData[key] = helper.GetEntityByInitSeed(val.initSeed)
+                                    goto continue
+                                end
+                            end
+                        end
+                        ::normal::
+                        familiarData[key] = val
+                        ::continue::
+                    end
+                end
+            end, EntityType.ENTITY_FAMILIAR)
+            helper.RemoveHitFamiliars(entityVariants.holyShield.Id, entityVariants.holyShield.Tag)
+        end
+    end
+
+    lootdeck.f.isGameStarted = true
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
+    if not lootdeck.f.isInitialized then
+        local seeds = Game():GetSeeds()
+        rng:SetSeed(seeds:GetStartSeed(), 35)
+
+        if lootdeck:HasData() then
+            local data = helper.LoadData()
+            local initSeed = seeds:GetPlayerInitSeed()
+            local isContinued = data.seed == initSeed
+            if not isContinued then
+                helper.SaveData({
+                    seed = initSeed,
+                    players = {},
+                    familiars = {},
+                    global = table.deepCopy(defaultStartupValues),
+                    mcmOptions = data.mcmOptions,
+                    unlocks = data.unlocks
+                })
+                lootdeck.f = table.deepCopy(defaultStartupValues)
+            else
+                helper.ForEachPlayer(function(p, pData)
+                    local savedPlayerData = data.players[tostring(p.InitSeed)]
+                    if savedPlayerData then
+                        for key, val in pairs(savedPlayerData) do
+                            if val and type(val) == "table" then
+                                if helper.IsArray(val) then
+                                    pData[key] = {}
+                                    for _, v in pairs(val) do
+                                        if val.type == "userdata" then
+                                            table.insert(pData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                        else
+                                            goto normal
+                                        end
+                                    end
+                                    goto continue
+                                else
+                                    if val.type == "userdata" then
+                                        pData[key] = helper.GetEntityByInitSeed(val.initSeed)
+                                        goto continue
+                                    end
+                                end
+                            end
+                            ::normal::
+                            pData[key] = val
+                            ::continue::
+                        end
+                    end
+                end)
+
+                lootdeck.f = data.global
+            end
+
+            lootdeck.mcmOptions = data.mcmOptions
+            lootdeck.unlocks = data.unlocks
+        end
+
+        if mcmOptions.BlankCardStart then
+            Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
+        end
+
+        if mcmOptions.JacobEsauStart then
+            Isaac.GetPlayer(0):ChangePlayerType(PlayerType.PLAYER_JACOB)
+        end
+
+        mcmOptions.LootCardChance = helper.LoadKey("lootCardChance") or mcmOptions.LootCardChance
+
+        lootdeck.f.isInitialized = true
+    end
+
+end)
 
 for _, card in pairs(lootcards) do
     if card.callbacks then
@@ -152,60 +266,6 @@ for _, trinket in pairs(trinkets) do
     end
 end
 
-lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
-    rng:SetSeed(Game():GetSeeds():GetStartSeed(), 35)
-
-    if lootdeck:HasData() then
-        local data = helper.LoadData()
-        if not isContinued then
-            helper.SaveData({
-                players = {},
-                familiars = {},
-                global = table.deepCopy(defaultStartupValues),
-                mcmOptions = data.mcmOptions,
-                unlocks = data.unlocks
-            })
-            lootdeck.f = table.deepCopy(defaultStartupValues)
-        else
-            helper.ForEachPlayer(function(p, pData)
-                local savedPlayerData = data.players[tostring(p.InitSeed)]
-                if savedPlayerData then
-                    for key, val in pairs(savedPlayerData) do
-                        pData[key] = val
-                    end
-                end
-            end)
-            helper.ForEachEntityInRoom(function(familiar)
-                local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
-                if savedFamiliarData then
-                    local familiarData = familiar:GetData()
-                    for key, val in pairs(savedFamiliarData) do
-                        familiarData[key] = val
-                    end
-                end
-            end, EntityType.ENTITY_FAMILIAR)
-
-            helper.RemoveHitFamiliars(entityVariants.holyShield.Id, entityVariants.holyShield.Tag)
-
-            lootdeck.f = data.global
-        end
-
-        lootdeck.mcmOptions = data.mcmOptions
-        lootdeck.unlocks = data.unlocks
-    end
-
-	if mcmOptions.BlankCardStart then
-		Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
-	end
-
-	if mcmOptions.JacobEsauStart then
-		Isaac.GetPlayer(0):ChangePlayerType(PlayerType.PLAYER_JACOB)
-	end
-
-    mcmOptions.LootCardChance = helper.LoadKey("lootCardChance") or mcmOptions.LootCardChance
-
-end)
-
 -- Temporary health callback
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     helper.ForEachPlayer(function(p, data)
@@ -235,6 +295,8 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
+    lootdeck.f.isInitialized = false
+    lootdeck.f.isGameStarted = false
     if shouldSave then
         helper.SaveGame()
     end

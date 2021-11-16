@@ -20,12 +20,12 @@ local function MC_USE_CARD(_, c, p)
 
     local data = p:GetData()
     local sprite = p:GetSprite()
-    if not data.strength then data.strength = 1
+    if not data[Tag] then data[Tag] = 1
     else
-        data.strength = data.strength + 1
+        data[Tag] = data[Tag] + 1
     end
-    for i=1,data.strength or 0 do
-        local color = Color(1,1,1,1,data.strength/10,0,0)
+    for i=1,data[Tag] or 0 do
+        local color = Color(1,1,1,1,data[Tag] /10 ,0,0)
         sprite.Color = color
     end
 	p:AddNullCostume(costumes.strengthFire)
@@ -37,15 +37,15 @@ end
 local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData()
     if f == CacheFlag.CACHE_DAMAGE then
-        if data.strength then
-            p.Damage = p.Damage + (data.strength)
+        if data[Tag] then
+            p.Damage = p.Damage + data[Tag]
         end
     end
 end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
-        if data.strength then
+        if data[Tag] then
 			p:TryRemoveNullCostume(costumes.strengthFire)
 			p:AddNullCostume(costumes.strengthGlow)
         end
@@ -54,8 +54,8 @@ end
 
 local function MC_POST_NEW_LEVEL()
     helper.ForEachPlayer(function(p, data)
-        if data.strength then
-            data.strength = nil
+        if data[Tag] then
+            data[Tag] = nil
             local color = Color(1,1,1,1,0,0,0)
             p.Color = color
             p:TryRemoveNullCostume(costumes.strengthFire)

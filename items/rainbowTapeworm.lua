@@ -15,31 +15,33 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("When entering a room, 50% chance to duplicate one of your passives for the rest of the room.")
 
 local function MC_POST_NEW_ROOM()
-    helper.ForEachPlayer(function(p, data)
+    if lootdeck.f.isGameStarted then
+        helper.ForEachPlayer(function(p, data)
 
-        if data[Tag] then
-            for _, id in pairs(data[Tag]) do
-                p:RemoveCollectible(id)
+            if data[Tag] then
+                for _, id in pairs(data[Tag]) do
+                    p:RemoveCollectible(id)
+                end
+                data[Tag] = nil
             end
-            data[Tag] = nil
-        end
 
-        for i=1,p:GetCollectibleNum(Id) do
-            if helper.PercentageChance(50) then
-                local itemId = helper.GetRandomItemIdInInventory(p, Id, true)
-                if itemId then
-                    p:AddCollectible(itemId, 0, false)
-                    p:AnimateCollectible(itemId, "UseItem")
-                    lootdeck.sfx:Play(SoundEffect.SOUND_1UP, 1, 0)
-                    if data[Tag] then
-                        table.insert(data[Tag], itemId)
-                    else
-                        data[Tag] = { itemId }
+            for i=1,p:GetCollectibleNum(Id) do
+                if helper.PercentageChance(50) then
+                    local itemId = helper.GetRandomItemIdInInventory(p, Id, true)
+                    if itemId then
+                        p:AddCollectible(itemId, 0, false)
+                        p:AnimateCollectible(itemId, "UseItem")
+                        lootdeck.sfx:Play(SoundEffect.SOUND_1UP, 1, 0)
+                        if data[Tag] then
+                            table.insert(data[Tag], itemId)
+                        else
+                            data[Tag] = { itemId }
+                        end
                     end
                 end
             end
-        end
-    end, Id)
+        end, Id)
+    end
 end
 
 return {
