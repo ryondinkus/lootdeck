@@ -788,8 +788,33 @@ function H.RandomChance(shouldDouble, ...)
     end
 end
 
+function H.GetEntityByInitSeed(initSeed)
+    local entities = Isaac.GetRoomEntities()
+
+    for _, entity in pairs(entities) do
+        if tostring(entity.InitSeed) == initSeed then
+            return entity
+        end
+    end
+end
+
+function H.ConvertUserDataToInitSeeds(userData)
+    if type(userData) == "table" then
+        local output = {}
+        for key, value in pairs(userData) do
+            output[key] = H.ConvertUserDataToInitSeeds(value)
+        end
+        return output
+    elseif type(userData) == "userdata" then
+        return { type = "userdata", initSeed = tostring(userData.InitSeed) }
+    else
+        return userData
+    end
+end
+
 function H.SaveGame()
     local data = {
+        seed = Game():GetSeeds():GetPlayerInitSeed(),
         players = {},
         familiars = {},
         global = lootdeck.f,
@@ -798,16 +823,28 @@ function H.SaveGame()
     }
 
     H.ForEachPlayer(function(p, pData)
-        data.players[tostring(p.InitSeed)] = pData
+        local output = H.ConvertUserDataToInitSeeds(pData)
+        data.players[tostring(p.InitSeed)] = output
     end)
 
     H.ForEachEntityInRoom(function(familiar)
         local eData = familiar:GetData()
 
-        data.familiars[tostring(familiar.InitSeed)] = eData
+        local output = H.ConvertUserDataToInitSeeds(eData)
+
+        data.familiars[tostring(familiar.InitSeed)] = output
     end, EntityType.ENTITY_FAMILIAR)
 
     H.SaveData(data)
+end
+
+function H.IsArray(t)
+    local i = 0
+    for _ in pairs(t) do
+        i = i + 1
+        if t[i] == nil then return false end
+    end
+    return true
 end
 
 return H

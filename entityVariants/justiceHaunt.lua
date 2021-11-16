@@ -34,7 +34,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
             f.Velocity = dir * 6
             if math.abs(f.Position.X - data.target.Position.X) < 4
             and math.abs(f.Position.Y - data.target.Position.Y) < 4 then
-                sprite:Play("FloatAttack", true)
                 f.Velocity = Vector.Zero
                 data.spawnCountdown = 0
                 data.spawnAmount = 4
@@ -48,10 +47,13 @@ local function MC_FAMILIAR_UPDATE(_, f)
         end
     end
     if data.state == "STATE_ATTACK" then
-        if data.target:IsDead() or not data.target then
+        if not data.target or data.target:IsDead() then
             data.state = "STATE_DEAD"
             sprite:Play("Death", true)
         else
+            if not sprite:IsPlaying("FloatAttack") then
+                sprite:Play("FloatAttack", true)
+            end
             f.Position = data.target.Position
             if data.target:IsBoss() then
                 data.target:AddConfusion(EntityRef(f), 150, false)
