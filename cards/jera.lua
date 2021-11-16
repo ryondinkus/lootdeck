@@ -20,11 +20,16 @@ local function MC_USE_CARD(_, c, p)
     if #enemies > 0 then
         for _, entity in pairs(enemies) do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
-            helper.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, entity.Position, Vector.Zero, entity)
+            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, entity.Position, Vector.Zero, nil)
         end
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
     else
-        helper.FuckYou(p)
+        helper.TakeSelfDamage(p, 2)
+        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CLEAVER_SLASH, 0, p.Position, Vector.Zero, nil)
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, nil)
+        lootdeck.sfx:Play(SoundEffect.SOUND_SHELLGAME, 1, 0)
+        lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_BURST_SMALL, 1, 0)
     end
 end
 
