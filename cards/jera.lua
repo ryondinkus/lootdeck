@@ -16,8 +16,13 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.")
 
 local function MC_USE_CARD(_, c, p)
-    if #helper.ListEnemiesInRoom(p.Position, true) > 0 then
-       helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
+    local enemies = helper.ListEnemiesInRoom(p.Position, true)
+    if #enemies > 0 then
+        for _, entity in pairs(enemies) do
+            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
+            helper.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, entity.Position, Vector.Zero, entity)
+        end
+        helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
     else
         helper.FuckYou(p)
     end
