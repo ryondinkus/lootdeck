@@ -9,11 +9,9 @@ local function MC_POST_EFFECT_UPDATE(_, e)
         local target = data.target
         e.Position = target.Position
         if sprite:IsEventTriggered("Land") then
-            local flags
+            local flags = 0
             if target:ToPlayer() then
-                flags = DamageFlag.DAMAGE_FAKE
-            else
-                flags = 0
+                flags = flags | DamageFlag.DAMAGE_FAKE
             end
             target:TakeDamage(40, flags, EntityRef(e), 0)
             data.target = nil
