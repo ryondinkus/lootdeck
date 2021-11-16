@@ -17,4 +17,5 @@ return {
     doubleStickyNickel = include("entityVariants/doubleStickyNickel"),
     doubleGoldenPenny = include("entityVariants/doubleGoldenPenny"),
     doubleChargedPenny = include("entityVariants/doubleChargedPenny"),
+    hairballPoof = include("entityVariants/hairballPoof")
 }

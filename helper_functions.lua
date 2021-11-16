@@ -242,10 +242,10 @@ function H.HolyMantleDamage(damageAmount, damageFlags, damageSource)
     return false
 end
 
-function H.HolyMantleEffect(p)
-    lootdeck.sfx:Play(SoundEffect.SOUND_HOLY_MANTLE,1,0)
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 11, p.Position, Vector.Zero, p)
-    p:SetMinDamageCooldown(30)
+function H.HolyMantleEffect(p, sound, effect, effectSubtype)
+    lootdeck.sfx:Play(sound or SoundEffect.SOUND_HOLY_MANTLE,1,0)
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, effect or EffectVariant.POOF02, effectSubtype or 11, p.Position, Vector.Zero, p)
+    p:SetMinDamageCooldown(60)
 end
 
 function H.CheckFinalFloorBossKilled()
