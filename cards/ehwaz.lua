@@ -17,6 +17,14 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the D1
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D10, SoundEffect.SOUND_LAZARUS_FLIP_DEAD)
+    helper.ForEachEntityInRoom(function(entity)
+		entity:AddHealth(-(entity.HitPoints/2))
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, entity.Position, Vector.Zero, nil)
+	end, nil, nil, nil,
+	function(entity)
+		local npc = entity:ToNPC()
+		return npc and not npc:IsBoss() and npc:IsVulnerableEnemy() and not helper.TableContains(illegalParents, npc.SpawnerType or 0)
+	end)
 end
 
 return {
