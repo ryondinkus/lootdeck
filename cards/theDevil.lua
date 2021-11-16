@@ -32,7 +32,8 @@ local function MC_USE_CARD(_, c, p)
     end
     spawnedItem.ShopItemId = -2
     spawnedItem:GetData()[Tag] = true
-    helper.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
+    poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
+    poof.Color = Color(0,0,0,1,0,0,0)
     lootdeck.sfx:Play(SoundEffect.SOUND_SATAN_GROW, 1, 0)
 end
 
