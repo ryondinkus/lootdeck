@@ -23,6 +23,8 @@ local function MC_USE_CARD(_, c, p)
         end
 		Isaac.Explode(p.Position, nil, 40)
         lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
+
+        return false
 	else
 		data[Tag] = 1
 	end

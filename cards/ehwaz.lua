@@ -23,7 +23,7 @@ local function MC_USE_CARD(_, c, p)
 	end, nil, nil, nil,
 	function(entity)
 		local npc = entity:ToNPC()
-		return npc and not npc:IsBoss() and npc:IsVulnerableEnemy() and not helper.TableContains(illegalParents, npc.SpawnerType or 0)
+		return npc and not npc:IsBoss() and npc:IsVulnerableEnemy()
 	end)
 end
 

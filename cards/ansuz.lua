@@ -44,6 +44,7 @@ local function MC_USE_CARD(_, c, p)
     end
 
     Game():StartRoomTransition(finalRoomIndexes[lootdeck.rng:RandomInt(#finalRoomIndexes) + 1], Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT)
+    return false
 end
 
 return {

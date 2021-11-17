@@ -18,46 +18,47 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
 
-    helper.RandomChance(shouldDouble,
-    function()
-        sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
+    return helper.RandomChance(shouldDouble,
+        function()
+            sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
 
-        helper.ForEachEntityInRoom(function(entity)
-            entity:Kill()
-            local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
-            poof.Color = Color(0,0,0,1,0,0,0)
-        end, nil, nil, nil,
-        function(entity)
-            local npc = entity:ToNPC()
-            return npc and not npc:IsBoss() and npc:IsVulnerableEnemy()
-        end)
+            helper.ForEachEntityInRoom(function(entity)
+                entity:Kill()
+                local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
+                poof.Color = Color(0,0,0,1,0,0,0)
+            end, nil, nil, nil,
+            function(entity)
+                local npc = entity:ToNPC()
+                return npc and not npc:IsBoss() and npc:IsVulnerableEnemy()
+            end)
 
-        helper.ForEachEntityInRoom(function(entity)
-            entity:TakeDamage(80, 0, EntityRef(p), 0)
-            local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
-            poof.Color = Color(0,0,0,1,0,0,0)
-        end, nil, nil, nil,
-        function(entity)
-            local npc = entity:ToNPC()
-            return npc and npc:IsVulnerableEnemy()
+            helper.ForEachEntityInRoom(function(entity)
+                entity:TakeDamage(80, 0, EntityRef(p), 0)
+                local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
+                poof.Color = Color(0,0,0,1,0,0,0)
+            end, nil, nil, nil,
+            function(entity)
+                local npc = entity:ToNPC()
+                return npc and npc:IsVulnerableEnemy()
+            end)
+        end,
+        function()
+            helper.ForEachEntityInRoom(function(entity)
+                entity:AddConfusion(EntityRef(p), 150, false)
+                local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
+                poof.Color = Color(1,1,1,1,1,1,1)
+            end, nil, nil, nil,
+            function(entity)
+                local npc = entity:ToNPC()
+                return npc and npc:IsVulnerableEnemy()
+            end)
+            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+        end,
+        function()
+            helper.TakeSelfDamage(p, 2)
+            sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+            return false
         end)
-    end,
-    function()
-        helper.ForEachEntityInRoom(function(entity)
-            entity:AddConfusion(EntityRef(p), 150, false)
-            local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, p)
-            poof.Color = Color(1,1,1,1,1,1,1)
-        end, nil, nil, nil,
-        function(entity)
-            local npc = entity:ToNPC()
-            return npc and npc:IsVulnerableEnemy()
-        end)
-		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-    end,
-    function()
-        helper.TakeSelfDamage(p, 2)
-		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-    end)
 end
 
 return {

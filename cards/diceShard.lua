@@ -38,6 +38,8 @@ local function MC_USE_CARD(_, c, p, flags)
         if (flags & UseFlag.USE_VOID == 0) then
             data.dischargeVoid = true
         end
+
+        return false
     else
         helper.FuckYou(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY)
     end

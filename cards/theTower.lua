@@ -17,9 +17,13 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explo
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()
 	data[Tag] = 1
-	for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, true)) do
+
+	local enemies = helper.ListEnemiesInRoom(p.Position, true)
+	for _, enemy in ipairs(enemies) do
 		enemy:GetData()[Tag] = 1
 	end
+
+	return #enemies > 0
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)

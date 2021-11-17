@@ -21,60 +21,61 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local rng = lootdeck.rng
     local room = game:GetRoom()
 
-    helper.RandomChance(shouldDouble,
-    function()
-        helper.ForEachPlayer(function(player)
-            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-            sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, p)
-            player:AddCoins(1)
-        end)
-    end,
-    function()
-        helper.ForEachPlayer(function(player)
-            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-            for j=1,2 do
-				local cardId = helper.GetWeightedLootCardId()
-				helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
-			end
-        end)
-    end,
-    function()
-        helper.ForEachPlayer(function(player)
-            helper.TakeSelfDamage(player, 2)
-			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-        end)
-    end,
-    function()
-        helper.ForEachPlayer(function(player)
-            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-            sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
-            player:AddCoins(4)
-        end)
-    end,
-    function()
-        helper.ForEachPlayer(function(player)
-            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-            for j=1,5 do
-				local cardId = helper.GetWeightedLootCardId()
-				helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
-            end
-        end)
-    end,
-    function()
-        helper.ForEachPlayer(function(player)
-            sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-            sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
-            player:AddCoins(6)
-        end)
-    end)
-
     helper.ForEachPlayer(function(player)
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, player.Position, Vector.Zero, player)
         poof.Color = Color(0.6,0,0.6,1,0,0,0)
     end)
+
+    return helper.RandomChance(shouldDouble,
+        function()
+            helper.ForEachPlayer(function(player)
+                sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+                sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, p)
+                player:AddCoins(1)
+            end)
+        end,
+        function()
+            helper.ForEachPlayer(function(player)
+                sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+                for j=1,2 do
+                    local cardId = helper.GetWeightedLootCardId()
+                    helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+                end
+            end)
+        end,
+        function()
+            helper.ForEachPlayer(function(player)
+                helper.TakeSelfDamage(player, 2)
+                sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+            end)
+            return false
+        end,
+        function()
+            helper.ForEachPlayer(function(player)
+                sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+                sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
+                player:AddCoins(4)
+            end)
+        end,
+        function()
+            helper.ForEachPlayer(function(player)
+                sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+                for j=1,5 do
+                    local cardId = helper.GetWeightedLootCardId()
+                    helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
+                end
+            end)
+        end,
+        function()
+            helper.ForEachPlayer(function(player)
+                sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+                sfx:Play(SoundEffect.SOUND_PENNYPICKUP, 1, 0)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, player.Position, Vector.Zero, player)
+                player:AddCoins(6)
+            end)
+        end)
 end
 
 return {

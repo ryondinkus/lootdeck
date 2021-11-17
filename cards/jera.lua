@@ -25,7 +25,7 @@ local function MC_USE_CARD(_, c, p)
         helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
     else
         helper.TakeSelfDamage(p, 2)
-        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
+        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CLEAVER_SLASH, 0, p.Position, Vector.Zero, nil)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, nil)
         lootdeck.sfx:Play(SoundEffect.SOUND_SHELLGAME, 1, 0)

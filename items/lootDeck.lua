@@ -20,7 +20,14 @@ local function MC_USE_ITEM(_, type, rng, p)
 
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))
 
-    p:AnimateCard(heldLootcard.Id)
+    local data = p:GetData()
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation:SetLastFrame()
+    end
+    if heldLootcard then
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "IdleFast")
+    end
+    p:PlayExtraAnimation("UseItem")
 end
 
 return {
