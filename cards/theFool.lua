@@ -17,6 +17,22 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Te
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
+    p:GetData()[Tag] = true
+end
+
+local function MC_POST_NEW_ROOM()
+    helper.ForEachPlayer(function(p, data)
+        local room = Game():GetRoom()
+        if data[Tag] then
+            for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
+                local door = room:GetDoor(i)
+                if door then
+                    door:Open()
+                end
+            end
+            data[Tag] = nil
+        end
+    end)
 end
 
 return {
@@ -32,6 +48,10 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         }
     }
 }
