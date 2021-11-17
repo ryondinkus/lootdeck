@@ -52,7 +52,7 @@ end
 
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = p:GetData()
-    if data[key] == 1 then
+    if data[key] and data[key] > 0 then
 		local timerName = key.."Timer"
 		local counterName = key.."Counter"
 		if not data[timerName] then data[timerName] = 0 end
@@ -61,6 +61,12 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
         data[timerName] = data[timerName] - 1
         if data[timerName] <= 0 then
 			callback(p, counterName)
+            if data[key] >= 2 then
+                print("===")
+                print(data[key])
+                print('doubled bitches')
+                callback(p, counterName)
+            end
             data[timerName] = interval
 			if noAutoDecrement ~= 1 then
 				data[counterName] = data[counterName] - 1

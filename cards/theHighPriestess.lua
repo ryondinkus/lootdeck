@@ -24,11 +24,14 @@ local function SpawnFinger(target)
     end
 end
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local data = p:GetData()
 
     if #helper.ListEnemiesInRoom(p.Position) > 0 then
         data[Tag] = 1
+        if shouldDouble then
+            data[Tag] = data[Tag] + 1
+        end
     else
         SpawnFinger(p)
     end
@@ -39,7 +42,7 @@ end
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local rng = lootdeck.rng
 	helper.StaggerSpawn(Tag, p, 15, rng:RandomInt(6) + 1, function(player)
-		SpawnFinger(helper.FindRandomEnemy(player.Position) or 0)
+		SpawnFinger(helper.FindRandomEnemy(player.Position, true, true) or 0)
 	end)
 end
 
