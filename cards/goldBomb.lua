@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on three random enemies in the room, dealing 40 damage to each enemy and all enemies around them.", "If used with no targetable enemies in the room, an explosion will spawn on the player instead.", "- This only applies to the inital explosion. If the first or second explosion wipes out all enemies in the room, any subsequent explosions will simply not happen.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local data = p:GetData()
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
         for i=0,4 do
@@ -23,8 +23,13 @@ local function MC_USE_CARD(_, c, p)
         end
 		Isaac.Explode(p.Position, nil, 40)
         lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
+
+        return false
 	else
 		data[Tag] = 1
+        if shouldDouble then
+            data[Tag] = data[Tag] + 1
+        end
 	end
 end
 

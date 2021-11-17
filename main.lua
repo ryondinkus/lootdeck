@@ -17,7 +17,6 @@ local items = include("items/registry")
 local entityVariants = include("entityVariants/registry")
 local entitySubTypes = include("entitySubTypes/registry")
 local trinkets = include("trinkets/registry")
-local json = include("json")
 
 local defaultStartupValues = {
     sunUsed = false,
@@ -32,9 +31,6 @@ local defaultStartupValues = {
     compass = false,
     map = false,
     lostSoul = false,
-    hudOffset = 0,
-    hudOffsetCountdown = 0,
-    hudOffsetControlsCountdown = 0,
     unlocks = {},
     isInitialized = false,
     isGameStarted = false
@@ -170,10 +166,16 @@ for _, card in pairs(lootcards) do
         for _, callback in pairs(card.callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    callback[2](_, c, p, f, items.playerCard.helpers.ShouldRunDouble(p))
+                    local result = callback[2](_, c, p, f, items.playerCard.helpers.ShouldRunDouble(p))
 
                     if callback[4] then
                         callback[2](_, c, p, f)
+                    end
+
+                    if ((result == nil or result) and f & UseFlag.USE_MIMIC == 0) then
+                        local data = p:GetData()
+
+                        helper.StartLootcardPickupAnimation(data, card.Tag, "IdleFast")
                     end
                 end, callback[3])
             else
@@ -309,3 +311,105 @@ end)
 --         end
 --     end
 -- end)
+
+--========== LOOTCARD HUD RENDERING ==========
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
+    local data = p:GetData()
+
+    if not data.isHoldingLootcard then
+        return
+    end
+
+    local lootcardAnimationContainer = data.lootcardPickupAnimation
+
+    if not p:IsExtraAnimationFinished() then
+        if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
+            lootcardAnimationContainer:Update()
+        end
+
+		local flyingOffset = p:GetFlyingOffset()
+		if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
+			flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
+		end
+		local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
+
+        lootcardAnimationContainer:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
+    end
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, collider)
+	if not helper.GetLootcardById(card.SubType) or collider.Type ~= EntityType.ENTITY_PLAYER then
+		return
+	end
+	local p = collider:ToPlayer()
+    if p.SubType == PlayerType.PLAYER_THESOUL_B then
+        p = p:GetOtherTwin()
+    end
+	if not p:IsExtraAnimationFinished() then
+		return
+	end
+	local data = p:GetData()
+
+	if card.Price == 0 or helper.CanBuyPickup(p, card) then
+        local lootcard = helper.GetLootcardById(card.SubType)
+        if lootcard then
+            helper.StartLootcardPickupAnimation(data, lootcard.Tag, "Idle")
+        end
+	end
+end, PickupVariant.PICKUP_TAROTCARD)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
+    helper.ForEachPlayer(function(p, data)
+        if lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled then
+            local heldCardId = p:GetCard(0)
+            local heldLootcard = helper.GetLootcardById(heldCardId)
+            if heldLootcard then
+
+                local lootcardAnimationContainer = data.lootcardHUDAnimation
+
+                lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", "Idle", function(lac)
+                    local color = lac.Color
+                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                        lac.Color = Color(color.R, color.G, color.B, 0.5)
+                    end
+                end)
+                data.lootcardHUDAnimation = lootcardAnimationContainer
+
+                if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    local color = lootcardAnimationContainer.Color
+                    if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
+                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
+                    else
+                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.max(color.A - 0.07, 0.5))
+                    end
+                end
+
+                helper.StartLootcardAnimation(lootcardAnimationContainer, heldLootcard.Tag, "Idle")
+
+                lootcardAnimationContainer:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
+            else
+                if data.lootcardHUDAnimation then
+                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                        local color = data.lootcardHUDAnimation.Color
+                        data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                    end
+                end
+            end
+        end
+    end)
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
+    local heldLootcard = helper.GetLootcardById(p:GetCard(0))
+
+    local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation:SetLastFrame()
+    end
+
+    if heldLootcard then
+        helper.StartLootcardPickupAnimation(data, heldLootcard.Tag, "Idle")
+    end
+end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)

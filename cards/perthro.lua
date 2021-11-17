@@ -32,6 +32,8 @@ local function MC_USE_CARD(_, c, p)
         local collectible = itemPool:GetCollectible(currentPool)
         data[Tag .. "Collectible"] = collectible
         data[Tag] = true
+
+        return false
     else
         helper.FuckYou(p)
     end

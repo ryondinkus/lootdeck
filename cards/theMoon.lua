@@ -15,9 +15,12 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
 	data[Tag] = 1
+    if shouldDouble then
+        data[Tag] = data[Tag] + 1
+    end
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)

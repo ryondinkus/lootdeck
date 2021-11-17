@@ -27,9 +27,10 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     end
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
-    poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
+    local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
     poof.Color = Color(0,0,0,1,0,0,0)
     p:Die()
+    return false
 end
 
 local function MC_POST_NEW_ROOM()
@@ -59,6 +60,8 @@ local function MC_POST_NEW_ROOM()
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
             data[Tag] = nil
             data[ReviveTag] = nil
+
+            helper.StartLootcardPickupAnimation(data, Tag, "IdleFast")
         end
     end)
 end

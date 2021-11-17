@@ -18,23 +18,24 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
 
-    helper.RandomChance(shouldDouble,
-    function()
-        sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-        local coins = p:GetNumCoins()
-        local bombs = p:GetNumBombs()
-        local keys = p:GetNumKeys()
-        p:AddCoins(bombs - coins)
-        p:AddBombs(keys - bombs)
-        p:AddKeys(coins - keys)
-    end,
-    function()
-        helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D6, SoundEffect.SOUND_EDEN_GLITCH)
-    end,
-    function()
-        p:PlayExtraAnimation("Glitch")
-        helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
-    end)
+    return helper.RandomChance(shouldDouble,
+        function()
+            sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
+            local coins = p:GetNumCoins()
+            local bombs = p:GetNumBombs()
+            local keys = p:GetNumKeys()
+            p:AddCoins(bombs - coins)
+            p:AddBombs(keys - bombs)
+            p:AddKeys(coins - keys)
+        end,
+        function()
+            helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D6, SoundEffect.SOUND_EDEN_GLITCH)
+        end,
+        function()
+            p:PlayExtraAnimation("Glitch")
+            helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
+            return false
+        end)
 end
 
 return {

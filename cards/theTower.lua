@@ -14,12 +14,20 @@ local Descriptions = {
 	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.")
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
 	data[Tag] = 1
-	for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, true)) do
+
+	if shouldDouble then
+		data[Tag] = data[Tag] + 1
+	end
+
+	local enemies = helper.ListEnemiesInRoom(p.Position, true)
+	for _, enemy in ipairs(enemies) do
 		enemy:GetData()[Tag] = 1
 	end
+
+	return #enemies > 0
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)

@@ -20,25 +20,26 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
 	local data = p:GetData()
 
-	helper.RandomChance(shouldDouble,
-	function()
-		if not data[Tag] then data[Tag] = 0 end
-		data[Tag] = data[Tag] + 1
-		p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
-		p:EvaluateItems()
-		sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
-		sfx:Play(SoundEffect.SOUND_DEVIL_CARD, 1, 0)
-		local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
-		p:AddCostume(itemConfig, true)
-	end,
-	function()
-		helper.AddTemporaryHealth(p, 2)
-		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-	end,
-	function()
-		helper.TakeSelfDamage(p, 1)
-		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
-	end)
+	return helper.RandomChance(shouldDouble,
+		function()
+			if not data[Tag] then data[Tag] = 0 end
+			data[Tag] = data[Tag] + 1
+			p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
+			p:EvaluateItems()
+			sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
+			sfx:Play(SoundEffect.SOUND_DEVIL_CARD, 1, 0)
+			local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
+			p:AddCostume(itemConfig, true)
+		end,
+		function()
+			helper.AddTemporaryHealth(p, 2)
+			sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
+		end,
+		function()
+			helper.TakeSelfDamage(p, 1)
+			sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
+			return false
+		end)
 end
 
 local function MC_POST_NEW_ROOM()
