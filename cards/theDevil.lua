@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p)
     local room = game:GetRoom()
     local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
-    local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
+    local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     spawnedItem.AutoUpdatePrice = false
     if helper.IsSoulHeartFarty(p) then
         spawnedItem.Price = -3
@@ -39,7 +39,7 @@ end
 
 local function MC_POST_PICKUP_UPDATE(_, entity)
     if entity.FrameCount == 1 then
-        if entity.SpawnerEntity and entity.SpawnerEntity.Type == EntityType.ENTITY_PLAYER and entity.ShopItemId == -2 then
+        if not entity.SpawnerType and entity.ShopItemId == -2 then
             entity.AutoUpdatePrice = false
             if helper.IsSoulHeartFarty(entity.SpawnerEntity:ToPlayer()) then
                 entity.Price = -3
