@@ -62,9 +62,6 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
         if data[timerName] <= 0 then
 			callback(p, counterName)
             if data[key] >= 2 then
-                print("===")
-                print(data[key])
-                print('doubled bitches')
                 callback(p, counterName)
             end
             data[timerName] = interval
@@ -798,7 +795,7 @@ function H.GetEntityByInitSeed(initSeed)
     local entities = Isaac.GetRoomEntities()
 
     for _, entity in pairs(entities) do
-        if tostring(entity.InitSeed) == initSeed then
+        if tostring(entity.InitSeed) == tostring(initSeed) then
             return entity
         end
     end
