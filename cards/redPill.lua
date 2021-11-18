@@ -29,7 +29,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 			p:EvaluateItems()
 			sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
 			sfx:Play(SoundEffect.SOUND_DEVIL_CARD, 1, 0)
-			local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
+			Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
 			p:AddNullCostume(costumes.redPill)
 		end,
 		function()
