@@ -1,4 +1,5 @@
 local helper = include('helper_functions')
+local costumes = include("costumes/registry")
 
 -- A 1 in 3 chance of gaining the book of belial effect for the room,
 -- gaining a heart canister for the room, or losing half a heart
@@ -29,7 +30,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 			sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
 			sfx:Play(SoundEffect.SOUND_DEVIL_CARD, 1, 0)
 			local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL)
-			p:AddCostume(itemConfig, true)
+			p:AddNullCostume(costumes.redPill)
 		end,
 		function()
 			helper.AddTemporaryHealth(p, 2)
@@ -46,6 +47,7 @@ local function MC_POST_NEW_ROOM()
 	helper.ForEachPlayer(function(p, data)
         if data[Tag] then
             data[Tag] = nil
+            p:TryRemoveNullCostume(costumes.redPill)
             p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
             p:EvaluateItems()
         end

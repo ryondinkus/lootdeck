@@ -56,9 +56,14 @@
 		type="none"
 		hasSkinAlt="true"
 	/>
-<costume
-	id="1"
-	anm2path="playerCard.anm2"
-	type="passive"
+	<costume
+		id="1"
+		anm2path="playerCard.anm2"
+		type="passive"
+	/>
+	<costume
+		anm2path="redPill.anm2"
+		type="none"
+		hasSkinAlt="true"
 	/>
 </costumes>
