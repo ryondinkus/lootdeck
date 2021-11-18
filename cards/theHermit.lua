@@ -21,18 +21,18 @@ local function MC_USE_CARD(_, c, p)
     local room = game:GetRoom()
     local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
-    local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p):ToPickup()
+    local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
     spawnedItem.AutoUpdatePrice = false
     spawnedItem.Price = 15
-    spawnedItem.ShopItemId = -1
+    spawnedItem.ShopItemId = -904
     spawnedItem:GetData()[Tag] = true
     lootdeck.sfx:Play(SoundEffect.SOUND_CASH_REGISTER, 1, 0)
 end
 
 local function MC_POST_PICKUP_UPDATE(_, entity)
     if entity.FrameCount == 1 then
-        if entity.SpawnerEntity and entity.SpawnerEntity.Type == EntityType.ENTITY_PLAYER and entity.ShopItemId == -1 then
+        if not entity.SpawnerType and entity.ShopItemId == -904 then
             entity.AutoUpdatePrice = false
             entity.Price = 15
         end
