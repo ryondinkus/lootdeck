@@ -49,7 +49,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
 			f:RemoveFromFollowers()
 			f:Remove()
 
-			local p = f:GetLastParent():ToPlayer()
+			local p = f.SpawnerEntity:ToPlayer()
 
 			if p then
 				local pData = p:GetData()
