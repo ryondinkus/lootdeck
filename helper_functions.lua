@@ -581,13 +581,64 @@ function H.GetLootcardById(id)
     end
 end
 
-function H.GetPlayerInventory(p, ignoreId, ignoreActives)
+function H.GetStartingItemsFromPlayer(p)
+    local startingItems =
+    {
+        {CollectibleType.COLLECTIBLE_D6},
+        {CollectibleType.COLLECTIBLE_YUM_HEART},
+        {CollectibleType.COLLECTIBLE_LUCKY_FOOT},
+        {CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL, 59}, -- 59: Passive Book of Belial from Birthright (no enum exists)
+        {CollectibleType.COLLECTIBLE_POOP},
+        {CollectibleType.COLLECTIBLE_WHORE_OF_BABYLON, CollectibleType.COLLECTIBLE_DEAD_BIRD, CollectibleType.COLLECTIBLE_RAZOR_BLADE},
+        {CollectibleType.COLLECTIBLE_BLOODY_LUST},
+        {},
+        {CollectibleType.COLLECTIBLE_ANEMIC},
+        {},
+        {CollectibleType.COLLECTIBLE_HOLY_MANTLE, CollectibleType.COLLECTIBLE_ETERNAL_D6},
+        {CollectibleType.COLLECTIBLE_ANEMIC},
+        {},
+        {CollectibleType.COLLECTIBLE_INCUBUS, CollectibleType.COLLECTIBLE_BOX_OF_FRIENDS, CollectibleType.COLLECTIBLE_CAMBION_CONCEPTION},
+        {CollectibleType.COLLECTIBLE_WOODEN_NICKEL},
+        {CollectibleType.COLLECTIBLE_VOID},
+        {},
+        {},
+        {CollectibleType.COLLECTIBLE_BOOK_OF_VIRTUES},
+        {},
+        {},
+        {},
+        {CollectibleType.COLLECTIBLE_YUM_HEART},
+        {CollectibleType.COLLECTIBLE_BAG_OF_CRAFTING},
+        {CollectibleType.COLLECTIBLE_DARK_ARTS},
+        {CollectibleType.COLLECTIBLE_HOLD},
+        {CollectibleType.COLLECTIBLE_SUMPTORIUM},
+        {},
+        {},
+        {CollectibleType.COLLECTIBLE_FLIP},
+        {},
+        {},
+        {},
+        {},
+        {CollectibleType.COLLECTIBLE_ABYSS},
+        {CollectibleType.COLLECTIBLE_RECALL},
+        {CollectibleType.COLLECTIBLE_LEMEGETON},
+        {CollectibleType.COLLECTIBLE_ANIMA_SOLA},
+        {CollectibleType.COLLECTIBLE_FLIP},
+        {CollectibleType.COLLECTIBLE_ANIMA_SOLA},
+        {CollectibleType.COLLECTIBLE_RECALL}
+    }
+    local index = p:GetPlayerType() + 1
+    return startingItems[index]
+end
+
+function H.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
     for i = 1, numCollectibles do
         local collectible = itemConfig:GetCollectible(i)
-        if collectible and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE) then
+        if collectible
+        and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
+        and (not ignoreStartingItems or not H.TableContains(H.GetStartingItemsFromPlayer(p), i)) then
             inv[i] = p:GetCollectibleNum(i)
         end
     end
