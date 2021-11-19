@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p)
     local game = Game()
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
-    local inv = helper.GetPlayerInventory(p)
+    local inv = helper.GetPlayerInventory(p, false, false, true)
     if helper.LengthOfTable(inv) > 0 then
         local selectedItem = inv[rng:RandomInt(helper.LengthOfTable(inv))+1]
         p:RemoveCollectible(selectedItem)
@@ -36,6 +36,8 @@ local function MC_USE_CARD(_, c, p)
         return false
     else
         helper.FuckYou(p)
+        local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
+        poof.Color = Color(0.6,0,0.6,1,0,0,0)
     end
 end
 

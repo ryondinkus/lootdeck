@@ -66,4 +66,8 @@
 		type="none"
 		hasSkinAlt="true"
 	/>
+	<costume
+		anm2path="emperor.anm2"
+		type="none"
+	/>
 </costumes>
