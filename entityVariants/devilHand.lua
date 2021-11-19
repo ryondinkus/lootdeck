@@ -147,10 +147,12 @@ local function MC_FAMILIAR_UPDATE(_, f)
             if not sprite:IsPlaying("PunchDown") then
                 sprite:Play("PunchDown", true)
                 f.Velocity = Vector.Zero
+                sfx:Play(SoundEffect.SOUND_SATAN_BLAST, 1, 0)
             end
 
             if sprite:IsEventTriggered("Land") then
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE_RANDOM, 0, f.Position, Vector.Zero, f)
+                sfx:Play(SoundEffect.SOUND_FORESTBOSS_STOMPS, 1, 0)
             end
         end
     end
