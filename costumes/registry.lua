@@ -13,5 +13,6 @@ return {
     strengthFire = CostumePathToId("strength fire"),
 	strengthGlow = CostumePathToId("strength glow"),
     lovers = CostumePathToId("lovers"),
-    redPill = CostumePathToId("redPill")
+    redPill = CostumePathToId("redPill"),
+    emperor = CostumePathToId("emperor")
 }

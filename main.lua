@@ -63,8 +63,12 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                             if helper.IsArray(val) then
                                 familiarData[key] = {}
                                 for _, v in pairs(val) do
-                                    if val.type == "userdata" then
-                                        table.insert(familiarData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                    if v and type(v) == "table" then
+                                        if v.type == "userdata" then
+                                            table.insert(familiarData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                        else
+                                            goto normal
+                                        end
                                     else
                                         goto normal
                                     end
@@ -118,8 +122,12 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                                 if helper.IsArray(val) then
                                     pData[key] = {}
                                     for _, v in pairs(val) do
-                                        if val.type == "userdata" then
-                                            table.insert(pData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                        if v and type(v) == "table" then
+                                            if v.type == "userdata" then
+                                                table.insert(pData[key], helper.GetEntityByInitSeed(v.initSeed))
+                                            else
+                                                goto normal
+                                            end
                                         else
                                             goto normal
                                         end
