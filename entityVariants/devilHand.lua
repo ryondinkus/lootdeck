@@ -16,7 +16,9 @@ local STATES = {
     GRAB = "STATE_GRAB",
     UP = "STATE_UP",
     DOWN = "STATE_DOWN",
-    SPAWN = "STATE_SPAWN"
+    SPAWN = "STATE_SPAWN",
+    PUNCHDOWN = "STATE_PUNCH_DOWN",
+    PUNCHUP = "STATE_PUNCH_UP"
 }
 
 local function MC_FAMILIAR_INIT(_, f)
@@ -72,7 +74,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 data[STATE_TAG] = STATES.GRAB
             end
         else
-            data[STATE_TAG] = STATES.IDLE
+            data[STATE_TAG] = STATES.PUNCHDOWN
             data[TARGET_TAG] = nil
             data[SELECTED_ITEM_TAG] = nil
             data[COLLECTIBLE_TYPE_TAG] = nil
@@ -134,6 +136,31 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 collectible:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
                 local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, f.Position, Vector.Zero, f)
                 poof.Color = Color(0,0,0,1,0,0,0)
+            end
+        end
+    end
+
+    if data[STATE_TAG] == STATES.PUNCHDOWN then
+        if sprite:IsFinished("PunchDown") then
+            data[STATE_TAG] = STATES.PUNCHUP
+        else
+            if not sprite:IsPlaying("PunchDown") then
+                sprite:Play("PunchDown", true)
+                f.Velocity = Vector.Zero
+            end
+
+            if sprite:IsEventTriggered("Land") then
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE_RANDOM, 0, f.Position, Vector.Zero, f)
+            end
+        end
+    end
+
+    if data[STATE_TAG] == STATES.PUNCHUP then
+        if sprite:IsFinished("PunchUp") then
+            data[STATE_TAG] = STATES.IDLE
+        else
+            if not sprite:IsPlaying("PunchUp") then
+                sprite:Play("PunchUp", true)
             end
         end
     end
