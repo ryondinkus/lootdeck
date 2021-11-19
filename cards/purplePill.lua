@@ -21,7 +21,11 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 
     helper.RandomChance(shouldDouble,
     function()
-        helper.AddActiveCharge(p, 6, true)
+        if (f & UseFlag.USE_MIMIC ~= 0) then
+            data[Tag .. "Charge"] = true
+        else
+            helper.AddActiveCharge(p, 6, true)
+        end
     end,
     function()
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
@@ -60,6 +64,13 @@ local function MC_EVALUATE_CACHE(_, p, f)
     end
 end
 
+local function MC_POST_PEFFECT_UPDATE(_, p)
+    if p:GetData()[Tag.."Charge"] then
+        helper.AddActiveCharge(p, 6, true)
+        p:GetData()[Tag.."Charge"] = nil
+    end
+end
+
 return {
     Name = Name,
     Names = Names,
@@ -82,5 +93,9 @@ return {
             ModCallbacks.MC_EVALUATE_CACHE,
             MC_EVALUATE_CACHE
         },
+        {
+            ModCallbacks.MC_POST_PEFFECT_UPDATE,
+            MC_POST_PEFFECT_UPDATE
+        }
     }
 }
