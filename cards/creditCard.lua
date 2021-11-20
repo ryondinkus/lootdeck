@@ -32,6 +32,12 @@ return {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
+            Id,
+            true
+        },
+        {
+            ModCallbacks.MC_PRE_PICKUP_COLLISION,
+            MC_PRE_PICKUP_COLLISION,
             Id
         }
     }

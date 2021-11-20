@@ -44,7 +44,8 @@ return {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
-            Id
+            Id,
+            true
         },
         {
             ModCallbacks.MC_POST_NEW_ROOM,

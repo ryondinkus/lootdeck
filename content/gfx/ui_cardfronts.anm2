@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="10/3/2021 3:47:06 PM" Version="34" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="11/20/2021 1:29:49 AM" Version="38" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="ui_CardFronts.png" Id="0"/>
+			<Spritesheet Path="..\..\resources\gfx\ui\lootcard_fronts\test.png" Id="0"/>
 			<Spritesheet Path="sparkle.png" Id="1"/>
 		</Spritesheets>
 		<Layers>

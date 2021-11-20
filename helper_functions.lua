@@ -330,7 +330,7 @@ function H.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            H.SpawnEntity(type, variant or 0, subtype or 0, Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, p)
+            H.SpawnEntity(p, type, variant or 0, subtype or 0, 1, Game():GetRoom():FindFreePickupSpawnPosition(p.Position))
         end
     end
 end
@@ -1087,19 +1087,40 @@ function H.RegisterAnimation(animationContainer, animationPath, animationName, c
 end
 
 function H.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
-    lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag))
+    lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag:gsub("holographic", "")))
     lootcardAnimationContainer:LoadGraphics()
-    lootcardAnimationContainer:Play(animationName, true)
+    if animationName then
+        lootcardAnimationContainer:Play(animationName, true)
+    end
 end
 
-function H.StartLootcardPickupAnimation(data, tag, animationName)
-    if Game():GetRoom():HasWater() then
-        animationName = animationName .. "Water"
-    end
-    data.lootcardPickupAnimation = H.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+function H.PlayLootcardPickupAnimation(data, id)
+    local card = H.GetLootcardById(id)
 
-    H.StartLootcardAnimation(data.lootcardPickupAnimation, tag, animationName)
-    data.isHoldingLootcard = true
+    if card then
+        local animationName = card.PickupAnimationName
+        if Game():GetRoom():HasWater() then
+            animationName = animationName.."Water"
+        end
+        data.lootcardPickupAnimation = H.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+
+        H.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
+        data.isHoldingLootcard = true
+    end
+end
+
+function H.PlayLootcardUseAnimation(data, id)
+    local card = H.GetLootcardById(id)
+
+    if card then
+        local animationName = card.UseAnimationName
+        if Game():GetRoom():HasWater() then
+            animationName = animationName.."Water"
+        end
+        data.lootcardUseAnimation = H.RegisterAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+
+        H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
+    end
 end
 
 return H

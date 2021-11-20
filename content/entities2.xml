@@ -63,4 +63,7 @@
   </entity>
   <entity anm2path="effects/hairball_poof.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="0" collisionRadius="0" friction="1" id="1000" name="Hairball Poof" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="8295">
   </entity>
+  <entity anm2path="items/pickups/holo loot card.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="5" name="Holographic Loot Card" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="300" subtype="905">
+         <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
+  </entity>
 </entities>

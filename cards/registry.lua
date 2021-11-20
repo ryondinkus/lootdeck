@@ -1,4 +1,4 @@
-lootcards = {
+local cards = {
     penny = include("cards/penny"),
     twoCents = include("cards/twoCents"),
     threeCents = include("cards/threeCents"),
@@ -75,3 +75,42 @@ lootcards = {
     goldKey = include("cards/goldKey"),
     rainbowTapeworm = include("cards/rainbowTapeworm")
 }
+
+local holoCards = {}
+
+for key, card in pairs(cards) do
+    Isaac.DebugString(key)
+    card.HUDAnimationName = "Idle"
+    card.PickupAnimationName = "Idle"
+    card.UseAnimationName = "IdleFast"
+
+    local holoCard = table.deepCopy(card)
+    holoCard.Holographic = true
+    holoCard.HUDAnimationName = "IdleHolo"
+    holoCard.PickupAnimationName = "IdleHolo"
+    holoCard.UseAnimationName = "IdleFastHolo"
+
+    local callbacks = {}
+
+    for _, callback in pairs(card.callbacks) do
+        if callback[1] == ModCallbacks.MC_USE_CARD then
+            table.insert(callbacks, callback)
+        end
+    end
+
+    holoCard.callbacks = callbacks
+
+    local holographicCardName = "Holographic "..card.Name
+    local holographicCardId = Isaac.GetCardIdByName(holographicCardName)
+
+    holoCard.Tag = "holographic"..card.Tag
+    holoCard.Id = holographicCardId
+
+    holoCards[holoCard.Tag] = holoCard
+end
+
+lootcards = cards
+
+for tag, card in pairs(holoCards) do
+    lootcards[tag] = card
+end

@@ -15,9 +15,12 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds, or until you exit the room.", "- The in-game clock does not increment for the duration of the effect.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local game = Game()
     lootdeck.f.world = 300
+    if shouldDouble then
+        lootdeck.f.world = lootdeck.f.world * 2
+    end
     lootdeck.f.savedTime = game.TimeCounter
     game:AddPixelation(15)
     lootdeck.mus:Disable()
