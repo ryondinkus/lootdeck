@@ -92,11 +92,22 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 f.Velocity = Vector.Zero
             end
 
-            if sprite:IsEventTriggered("Land") then
-                data[COLLECTIBLE_TYPE_TAG] = target.SubType
-                data[OPTIONS_PICKUP_INDEX_TAG] = target.OptionsPickupIndex
-                sfx:Play(SoundEffect.SOUND_FORESTBOSS_STOMPS, 1, 0)
-                target:Remove()
+            if sprite:WasEventTriggered("Land") then
+                if sprite:IsEventTriggered("Land") then
+                    data[COLLECTIBLE_TYPE_TAG] = target.SubType
+                    data[OPTIONS_PICKUP_INDEX_TAG] = target.OptionsPickupIndex
+                    sfx:Play(SoundEffect.SOUND_FORESTBOSS_STOMPS, 1, 0)
+                    target:Remove()
+                end
+            else
+                if not target:Exists() or target.SubType == 0 then
+                    data[STATE_TAG] = STATES.PUNCHDOWN
+                    data[TARGET_TAG] = nil
+                    data[SELECTED_ITEM_TAG] = nil
+                    data[COLLECTIBLE_TYPE_TAG] = nil
+                    data[OPTIONS_PICKUP_INDEX_TAG] = nil
+                    return
+                end
             end
         end
     end
