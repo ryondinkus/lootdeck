@@ -56,12 +56,12 @@ local function MC_POST_NEW_ROOM()
                 end
                 p:AddSoulHearts(1)
             end
-			p:AnimateCard(Id)
             lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
             data[Tag] = nil
             data[ReviveTag] = nil
 
-            helper.StartLootcardPickupAnimation(data, Tag, "IdleFast")
+            p:AnimateCard(Id, "UseItem")
+            helper.PlayLootcardUseAnimation(data, Id)
         end
     end)
 end
@@ -72,7 +72,7 @@ end
 
 return {
     Name = Name,
-Names = Names,
+    Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,

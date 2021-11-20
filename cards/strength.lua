@@ -20,12 +20,13 @@ local function MC_USE_CARD(_, c, p)
 
     local data = p:GetData()
     local sprite = p:GetSprite()
-    if not data[Tag] then data[Tag] = 1
+    if not data[Tag] then
+        data[Tag] = 1
     else
         data[Tag] = data[Tag] + 1
     end
     for i=1,data[Tag] or 0 do
-        local color = Color(1,1,1,1,data[Tag] /10 ,0,0)
+        local color = Color(1, 1, 1, 1, data[Tag] / 10, 0, 0)
         sprite.Color = color
     end
 	p:AddNullCostume(costumes.strengthFire)
@@ -78,7 +79,8 @@ return {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
-            Id
+            Id,
+            true
         },
         {
             ModCallbacks.MC_EVALUATE_CACHE,

@@ -15,20 +15,22 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of either effects:", "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player.", "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player.")
 
-local function MC_USE_CARD(_, c, p)
-    local rng = lootdeck.rng
-    local effect = rng:RandomInt(2)
-    if effect == 0 then
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
+   	local rng = lootdeck.rng
+
+    helper.RandomChance(shouldDouble,
+    function()
 		helper.TakeSelfDamage(p, 1, true)
 		for i=0,3 do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
         end
-    else
+    end,
+    function()
         helper.TakeSelfDamage(p, 2, true)
         for i=0,7 do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
         end
-    end
+    end)
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, p)
     lootdeck.sfx:Play(SoundEffect.SOUND_BLOODBANK_SPAWN, 1, 0)
     return false

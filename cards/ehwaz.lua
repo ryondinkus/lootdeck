@@ -36,10 +36,12 @@ return {
 	Descriptions = Descriptions,
 	WikiDescription = WikiDescription,
     callbacks = {
-            {
-                ModCallbacks.MC_USE_CARD,
-                MC_USE_CARD,
-                Id
-            }
+        {
+            ModCallbacks.MC_USE_CARD,
+            MC_USE_CARD,
+            Id,
+            true,
+            0.25
+        }
     }
 }
