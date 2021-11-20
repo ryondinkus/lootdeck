@@ -45,16 +45,36 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             portalType = 3
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
-        local portals = helper.ForEachEntityInRoom(function(entity)
-            return entity
+        local portalGridIndexes = {}
+
+        helper.ForEachEntityInRoom(function(entity)
+            table.insert(portalGridIndexes, room:GetGridIndex(entity.Position))
         end, EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
-        print(include("json").encode(portals))
-        local spawnPos
-        if portals then
-            spawnPos = room:FindFreePickupSpawnPosition(portals[1].Position, 0)
-        else
-            spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0)
+        
+        local spawnIndex
+
+        local validSpawnIndex = false
+        for i = 0, 10000 do
+            if not spawnIndex or helper.TableContains(portalGridIndexes, spawnIndex) or room:GetGridEntity(spawnIndex) then
+                spawnIndex = room:GetRandomTileIndex(rng:GetSeed())
+            else
+                validSpawnIndex = true
+                break
+            end
         end
+
+        if not validSpawnIndex then
+            spawnIndex = nil
+        end
+
+        local spawnPos
+
+        if spawnIndex then
+            spawnPos = room:GetGridPosition(spawnIndex)
+        else
+            spawnPos = room:GetRandomPosition(20)
+        end
+
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, spawnPos, Vector.Zero, p)
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
 		poof.Color = Color(0,0,0,1,0,0,0)
