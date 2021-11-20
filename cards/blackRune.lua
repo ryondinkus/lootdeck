@@ -20,6 +20,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
 	local rng = lootdeck.rng
 	local room = Game():GetRoom()
+    local tempPickups = {}
 
 	helper.RandomChance(shouldDouble,
 	function()
@@ -44,10 +45,33 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             portalType = 3
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
-        local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
+        local portalGridIndexes = {}
+
+        helper.ForEachEntityInRoom(function(entity)
+            table.insert(portalGridIndexes, room:GetGridIndex(entity.Position))
+        end, EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
+        
+        local spawnPos
+
+        local validSpawnIndex = false
+        for i = 0, 10000 do
+            if not spawnPos or helper.TableContains(portalGridIndexes, room:GetGridIndex(spawnPos)) or room:GetGridEntity(room:GetGridIndex(spawnPos)) then
+                spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0)
+            else
+                validSpawnIndex = true
+                break
+            end
+        end
+
+        if not validSpawnIndex then
+            spawnPos = room:GetRandomPosition(20)
+        end
+
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, spawnPos, Vector.Zero, p)
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
 		poof.Color = Color(0,0,0,1,0,0,0)
+        local tempPickup = Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF, spawnPos, Vector.Zero, p)
+        table.insert(tempPickups, tempPickup)
     end,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBS_DOWN,1,0)
@@ -67,6 +91,12 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_CHEST, 0, room:FindFreePickupSpawnPosition(p.Position, 0, true), Vector.Zero, p)
         end
 	end)
+    if #tempPickups > 0 then
+        for _,v in pairs(tempPickups) do
+            v:Remove()
+        end
+    end
+    tempPickups = {}
 end
 
 return {
