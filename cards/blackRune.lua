@@ -51,12 +51,12 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             table.insert(portalGridIndexes, room:GetGridIndex(entity.Position))
         end, EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
         
-        local spawnIndex
+        local spawnPos
 
         local validSpawnIndex = false
         for i = 0, 10000 do
-            if not spawnIndex or helper.TableContains(portalGridIndexes, spawnIndex) or room:GetGridEntity(spawnIndex) then
-                spawnIndex = room:GetRandomTileIndex(rng:GetSeed())
+            if not spawnPos or helper.TableContains(portalGridIndexes, room:GetGridIndex(spawnPos)) or room:GetGridEntity(room:GetGridIndex(spawnPos)) then
+                spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0)
             else
                 validSpawnIndex = true
                 break
@@ -64,14 +64,6 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         end
 
         if not validSpawnIndex then
-            spawnIndex = nil
-        end
-
-        local spawnPos
-
-        if spawnIndex then
-            spawnPos = room:GetGridPosition(spawnIndex)
-        else
             spawnPos = room:GetRandomPosition(20)
         end
 
