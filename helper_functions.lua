@@ -309,8 +309,13 @@ function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
     end
 end
 
-function H.GetWeightedLootCardId()
-    local cards = lootcards
+function H.GetWeightedLootCardId(includeHolos)
+    local cards = {}
+    for k,card in pairs(lootcards) do
+        if not card.Holographic then
+            table.insert(cards, card)
+        end
+    end
     if H.LengthOfTable(cards) > 0 then
         local csum = 0
         local outcome = cards[0]
@@ -322,7 +327,11 @@ function H.GetWeightedLootCardId()
             end
             csum = csum + weight
         end
-        return outcome.Id
+        if lootdeck.unlocks.gimmeTheLoot and includeHolos and H.PercentageChance(10) then
+            return outcome.Id + 75
+        else
+            return outcome.Id
+        end
     end
 end
 
@@ -1121,6 +1130,15 @@ function H.PlayLootcardUseAnimation(data, id)
 
         H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
     end
+end
+
+function H.IsHolographic(id)
+    for _, card in pairs(lootcards) do
+        if card.Id == id and card.Holographic then
+            return true
+        end
+    end
+    return false
 end
 
 return H

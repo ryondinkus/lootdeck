@@ -43,7 +43,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     end,
     function()
         for j=1,3 do
-            local cardId = helper.GetWeightedLootCardId()
+            local cardId = helper.GetWeightedLootCardId(true)
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
         end
         sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)

@@ -15,7 +15,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a Loot Card on use.")
 
 local function MC_USE_ITEM(_, type, rng, p)
-    local lootCard = helper.GetWeightedLootCardId()
+    local lootCard = helper.GetWeightedLootCardId(true)
     p:AddCard(lootCard)
 
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))

@@ -11,7 +11,7 @@ local Id = Isaac.GetChallengeIdByName(Name)
 local function MC_POST_PICKUP_UPDATE(_, entity)
     if Isaac.GetChallenge() == Id and Isaac.GetFrameCount() % 2 == 0 and (entity:GetSprite():IsPlaying("Appear") or entity.Price ~= 0) and entity.Variant ~= PickupVariant.PICKUP_COLLECTIBLE and entity.Variant ~= PickupVariant.PICKUP_TROPHY and not entity:GetData()[Tag] then
         if not helper.GetLootcardById(entity.SubType) then
-            local pickup = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, helper.GetWeightedLootCardId(), entity.Position, entity.Velocity, entity.SpawnerEntity):ToPickup()
+            local pickup = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, helper.GetWeightedLootCardId(true), entity.Position, entity.Velocity, entity.SpawnerEntity):ToPickup()
             pickup.Price = entity.Price
             entity:Remove()
         end
@@ -36,7 +36,7 @@ local function MC_POST_NEW_ROOM()
     if Isaac.GetChallenge() == Id then
         for i = 0, DoorSlot.NUM_DOOR_SLOTS - 1 do
             local door = Game():GetRoom():GetDoor(i)
-            
+
             if door and door:IsRoomType(RoomType.ROOM_SHOP) then
                 door:TryUnlock(Isaac.GetPlayer(0), true)
             end

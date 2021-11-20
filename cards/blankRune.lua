@@ -39,7 +39,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
                 for j=1,2 do
-                    local cardId = helper.GetWeightedLootCardId()
+                    local cardId = helper.GetWeightedLootCardId(true)
                     helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
                 end
             end)
@@ -63,7 +63,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
                 for j=1,5 do
-                    local cardId = helper.GetWeightedLootCardId()
+                    local cardId = helper.GetWeightedLootCardId(true)
                     helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
                 end
             end)

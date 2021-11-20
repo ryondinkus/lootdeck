@@ -301,8 +301,17 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
+		local isHoloLootCard = helper.IsHolographic(id)
+		local holoChance = helper.PercentageChance(10) and lootdeck.unlocks.gimmeTheLoot
+		if (isLootCard and isHoloLootCard and not holoChance) then
+			return id - 75
+		end
 		if (helper.PercentageChance(mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or mcmOptions.GuaranteedLoot then
-			return helper.GetWeightedLootCardId()
+			local selectedLootCard = helper.GetWeightedLootCardId(false)
+			if holoChance then
+				selectedLootCard = selectedLootCard + 75
+			end
+			return selectedLootCard
 		end
 	end
 end)
