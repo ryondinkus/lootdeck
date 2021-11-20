@@ -846,7 +846,7 @@ function H.GetEntityByInitSeed(initSeed)
     local entities = Isaac.GetRoomEntities()
 
     for _, entity in pairs(entities) do
-        if tostring(entity.InitSeed) == initSeed then
+        if tostring(entity.InitSeed) == tostring(initSeed) then
             return entity
         end
     end
