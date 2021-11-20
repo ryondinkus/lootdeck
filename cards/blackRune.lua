@@ -45,7 +45,16 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             portalType = 3
         end
         sfx:Play(SoundEffect.SOUND_THUMBSUP,1,0)
-        local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
+        local portals = helper.ForEachEntityInRoom(function(entity)
+            return entity
+        end, EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
+        print(include("json").encode(portals))
+        local spawnPos
+        if portals then
+            spawnPos = room:FindFreePickupSpawnPosition(portals[1].Position, 0)
+        else
+            spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0)
+        end
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT, portalType, spawnPos, Vector.Zero, p)
         local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
 		poof.Color = Color(0,0,0,1,0,0,0)
