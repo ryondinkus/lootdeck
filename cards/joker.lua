@@ -23,6 +23,7 @@ local function MC_USE_CARD(_, c, p)
 
 	local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
 	poof.Color = Color(0,0,0,1,0,0,0)
+    lootdeck.sfx:Play(SoundEffect.SOUND_SATAN_SPIT, 1, 0)
 end
 
 return {
