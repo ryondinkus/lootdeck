@@ -861,17 +861,37 @@ function H.GetEntityByInitSeed(initSeed)
     end
 end
 
-function H.ConvertUserDataToInitSeeds(userData)
-    if type(userData) == "table" then
-        local output = {}
-        for key, value in pairs(userData) do
-            output[key] = H.ConvertUserDataToInitSeeds(value)
+function H.SaveDataFromEntities(data)
+    if data ~= nil then
+        if type(data) == "userdata" then
+            if data.InitSeed then
+                return { savedType = "userdata", initSeed = tostring(data.InitSeed) }
+            end
+        elseif type(data) == "table" then
+            local output = {}
+            for key, item in pairs(data) do
+                output[key] = H.SaveDataFromEntities(item)
+            end
+            return output
+        else
+            return data
         end
-        return output
-    elseif type(userData) == "userdata" then
-        return { type = "userdata", initSeed = tostring(userData.InitSeed) }
+    end
+end
+
+function H.LoadEntitiesFromSaveData(data)
+    if data ~= nil and type(data) == "table" then
+        if H.IsArray(data) or data.savedType ~= "userdata" then
+            local output = {}
+            for key, item in pairs(data) do
+                output[key] = H.LoadEntitiesFromSaveData(item)
+            end
+            return output
+        else
+            return H.GetEntityByInitSeed(data.initSeed)
+        end
     else
-        return userData
+        return data
     end
 end
 
@@ -885,20 +905,15 @@ function H.SaveGame()
         unlocks = lootdeck.unlocks or {}
     }
 
-    H.ForEachPlayer(function(p, pData)
-        local output = H.ConvertUserDataToInitSeeds(pData)
-        data.players[tostring(p.InitSeed)] = output
+    H.ForEachPlayer(function(p)
+        data.players[tostring(p.InitSeed)] = p:GetData()
     end)
 
     H.ForEachEntityInRoom(function(familiar)
-        local eData = familiar:GetData()
-
-        local output = H.ConvertUserDataToInitSeeds(eData)
-
-        data.familiars[tostring(familiar.InitSeed)] = output
+        data.familiars[tostring(familiar.InitSeed)] = familiar:GetData()
     end, EntityType.ENTITY_FAMILIAR)
 
-    H.SaveData(data)
+    H.SaveData(H.SaveDataFromEntities(data))
 end
 
 function H.IsArray(t)

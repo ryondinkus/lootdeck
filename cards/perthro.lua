@@ -80,7 +80,7 @@ return {
             MC_USE_CARD,
             Id,
             true,
-            42 * 2 / 30 + 0.25
+            3
         },
         {
             ModCallbacks.MC_POST_PEFFECT_UPDATE,
