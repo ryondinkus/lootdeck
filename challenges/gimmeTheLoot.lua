@@ -27,6 +27,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pickup, entity)
                 lootdeck.unlocks[Tag] = true
                 data[Tag] = true
                 helper.SaveGame()
+                CCO.PlayAchievement("gfx/ui/achievements/achievement_holographicloot.png")
             end
         end
     end

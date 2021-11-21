@@ -1,12 +1,15 @@
 CCO = CCO or {}
 
-if CCO.AchievementDisplayAPI then return end
+if CCO.AchievementDisplayAPI then 
+	CCO.PlayAchievement = CCO.AchievementDisplayAPI.PlayAchievement
+	return
+end
 
 local game = Game()
 local sound = SFXManager()
 local AchievementQueue = {}
 local AchievementSpr = Sprite()
-AchievementSpr:Load("gfx/ui/achievements.anm2")
+AchievementSpr:Load("gfx/ui/achievements/achievements.anm2")
 AchievementSpr.PlaybackSpeed = 0.5
 
 local OldTimer
