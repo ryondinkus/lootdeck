@@ -1,4 +1,5 @@
 local helper = include("helper_functions")
+local sounds = include("sounds/registry")
 
 -- Gives an extra penny for each penny picked up
 local Names = {
@@ -21,11 +22,13 @@ end
 local function MC_POST_UPDATE()
     local f = lootdeck.f
     helper.ForEachPlayer(function(p)
-        if p:GetNumCoins() > (f.pennyCount or 0) then
+        if f.pennyCount and p:GetNumCoins() > f.pennyCount then
             p:AddCoins(1)
-            f.pennyCount = p:GetNumCoins()
+            lootdeck.sfx:Stop(SoundEffect.SOUND_PENNYPICKUP)
+            lootdeck.sfx:Play(sounds.counterfeitPenny, 1, 0)
         end
     end, Id)
+    lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
 end
 
 return {

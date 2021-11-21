@@ -1,0 +1,5 @@
+<sounds root="sfx/">
+	<sound name="Counterfeit Penny">
+		<sample weight="1" path="counterfeit penny.wav"/>
+	</sound>
+</sounds>
