@@ -38,8 +38,16 @@ local function MC_POST_FIRE_TEAR(_, tear)
         end
 
         if not tear:HasTearFlags(helper.NewTearflag(77)) then
-           sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", spriteSheetDirection))
+            local animationToPlay = "RegularTear6"
+            for i = 1,13 do
+                if sprite:IsPlaying("RegularTear" .. tostring(i)) then
+                    animationToPlay = "RegularTear" .. tostring(i)
+                end
+            end
+            sprite:Load("gfx/tears/tapeworm tear.anm2", true)
+            sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", spriteSheetDirection))
             sprite:LoadGraphics()
+            sprite:Play(animationToPlay, true)
         end
     end
 end
