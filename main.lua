@@ -33,7 +33,8 @@ local defaultStartupValues = {
     lostSoul = false,
     unlocks = {},
     isInitialized = false,
-    isGameStarted = false
+    isGameStarted = false,
+    delayedCards = {}
 }
 
 lootdeck.rng = RNG()
@@ -58,32 +59,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                 local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
                 if savedFamiliarData then
                     local familiarData = familiar:GetData()
-                    for key, val in pairs(savedFamiliarData) do
-                        if val and type(val) == "table" then
-                            if helper.IsArray(val) then
-                                familiarData[key] = {}
-                                for _, v in pairs(val) do
-                                    if v and type(v) == "table" then
-                                        if v.type == "userdata" then
-                                            table.insert(familiarData[key], helper.GetEntityByInitSeed(v.initSeed))
-                                        else
-                                            goto normal
-                                        end
-                                    else
-                                        goto normal
-                                    end
-                                end
-                                goto continue
-                            else
-                                if val.type == "userdata" then
-                                    familiarData[key] = helper.GetEntityByInitSeed(val.initSeed)
-                                    goto continue
-                                end
-                            end
-                        end
-                        ::normal::
-                        familiarData[key] = val
-                        ::continue::
+                    for key, value in pairs(helper.LoadEntitiesFromSaveData(savedFamiliarData)) do
+                        familiarData[key] = value
                     end
                 end
             end, EntityType.ENTITY_FAMILIAR)
@@ -117,37 +94,17 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 helper.ForEachPlayer(function(p, pData)
                     local savedPlayerData = data.players[tostring(p.InitSeed)]
                     if savedPlayerData then
-                        for key, val in pairs(savedPlayerData) do
-                            if val and type(val) == "table" then
-                                if helper.IsArray(val) then
-                                    pData[key] = {}
-                                    for _, v in pairs(val) do
-                                        if v and type(v) == "table" then
-                                            if v.type == "userdata" then
-                                                table.insert(pData[key], helper.GetEntityByInitSeed(v.initSeed))
-                                            else
-                                                goto normal
-                                            end
-                                        else
-                                            goto normal
-                                        end
-                                    end
-                                    goto continue
-                                else
-                                    if val.type == "userdata" then
-                                        pData[key] = helper.GetEntityByInitSeed(val.initSeed)
-                                        goto continue
-                                    end
-                                end
-                            end
-                            ::normal::
-                            pData[key] = val
-                            ::continue::
+                        for key, value in pairs(helper.LoadEntitiesFromSaveData(savedPlayerData)) do
+                            pData[key] = value
                         end
                     end
                 end)
 
-                lootdeck.f = data.global
+                if data.global then
+                    for key, value in pairs(helper.LoadEntitiesFromSaveData(data.global)) do
+                        lootdeck.f[key] = value
+                    end
+                end
             end
 
             lootdeck.mcmOptions = data.mcmOptions
@@ -178,7 +135,16 @@ for _, card in pairs(lootcards) do
                     local result = callback[2](_, c, p, f, shouldDouble)
 
                     if shouldDouble and callback[4] then
-                        callback[2](_, c, p, f)
+                        if not callback[5] then
+                            callback[2](_, c, p, f)
+                        else
+                            table.insert(lootdeck.f.delayedCards, {
+                                player = p,
+                                cardId = c,
+                                flags = f,
+                                delay = callback[5] * 30
+                            })
+                        end
                     end
 
                     if f & UseFlag.USE_MIMIC == 0 then
@@ -278,6 +244,29 @@ for _, trinket in pairs(trinkets) do
         end
     end
 end
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
+    if lootdeck.f.delayedCards then
+        for i, delayedCard in pairs(lootdeck.f.delayedCards) do
+            if delayedCard then
+                delayedCard.delay = delayedCard.delay - 1
+
+                if delayedCard.delay <= 0 then
+                    local lootcard = helper.GetLootcardById(delayedCard.cardId)
+
+                    if lootcard then
+                        for _, callback in pairs(lootcard.callbacks) do
+                            if callback[1] == ModCallbacks.MC_USE_CARD then
+                                callback[2](nil, delayedCard.cardId, delayedCard.player:ToPlayer(), delayedCard.flags)
+                            end
+                        end
+                    end
+                    lootdeck.f.delayedCards[i] = nil
+                end
+            end
+        end
+    end
+end)
 
 -- Temporary health callback
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
