@@ -113,6 +113,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                     unlocks = data.unlocks
                 })
                 lootdeck.f = table.deepCopy(defaultStartupValues)
+                lootdeck.unlocks = data.unlocks or {}
             else
                 helper.ForEachPlayer(function(p, pData)
                     local savedPlayerData = data.players[tostring(p.InitSeed)]
@@ -151,7 +152,10 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             end
 
             lootdeck.mcmOptions = data.mcmOptions
-            lootdeck.unlocks = data.unlocks
+            lootdeck.unlocks = data.unlocks or {}
+        else
+            lootdeck.f = table.deepCopy(defaultStartupValues)
+            lootdeck.unlocks = {}
         end
 
         if mcmOptions.BlankCardStart then
@@ -317,8 +321,7 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
-    lootdeck.f.isInitialized = false
-    lootdeck.f.isGameStarted = false
+    lootdeck.f = table.deepCopy(defaultStartupValues)
     if shouldSave then
         helper.SaveGame()
     end
