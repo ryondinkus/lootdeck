@@ -13,7 +13,7 @@ local Descriptions = {
 	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player",
 	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: Spawns explosions two at a time.")
 
 local chosenTag = Tag.."Chosen"
 

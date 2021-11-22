@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts",
     spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.", "Holographic Effect: You revive with 4 Empty Bones Hearts.")
 
 local ReviveTag = string.format("%sRevive", Tag)
 

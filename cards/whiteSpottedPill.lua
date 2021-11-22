@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs# Rerolls all item pedestals in the room# Rerolls all of your passives",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Pone de revés tu cantidad de monedas, llaves y bombas#Rerolea todos los objetos de pedestales#Rerolea todos tus objetos pasivos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx

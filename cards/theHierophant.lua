@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits",
     spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber dos golpes"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.", "Holographic Effect: The Holy Mantle can absorb three hits.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()

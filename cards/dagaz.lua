@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Random chance for either of these effects:# Clear all curses for the floor#{{SoulHeart}} Gain a Soul Heart",
     spa = "Probabilidad de que ocurra uno de los siguientes efectoa aleatorios:#Deshacerse de todas las maldiciones del piso#{{SoulHeart}} Ganar un Corazón de Alma"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers either effect:", "- Clear all curses for the floor. This does not apply to permanent curses in Challenges.", "- Gain a Soul Heart.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers either effect:", "- Clear all curses for the floor. This does not apply to permanent curses in Challenges.", "- Gain a Soul Heart.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx

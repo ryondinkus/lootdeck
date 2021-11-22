@@ -168,7 +168,7 @@ for _, card in pairs(lootcards) do
 
     helper.AddExternalItemDescriptionCard(card)
 
-	if Encyclopedia and card.WikiDescription then
+	if Encyclopedia and card.WikiDescription and not card.Holographic then
 		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
 		Encyclopedia.AddCard({
 			Class = "Loot Deck",

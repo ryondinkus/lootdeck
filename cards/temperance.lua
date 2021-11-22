@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:#{{Warning}} Take 1 Half Heart of damage (fatal), gain 4 Cents#{{Warning}} Take 1 Full Heart of damage (fatal), gain 8 cents",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Warning}} Hacer medio corazón de daño (fatal), ganando 4 monedas#{{Warning}} Hace un corazón de daño (fatal), ganando 8 monedas"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of either effects:", "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player.", "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of either effects:", "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player.", "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
    	local rng = lootdeck.rng

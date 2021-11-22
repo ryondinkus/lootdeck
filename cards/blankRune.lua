@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:#{{Coin}} Gain 1 Coin#{{Card}} Spawn 2 Loot Cards#{{Warning}} Take a Full Heart of damage (non-lethal)#{{Coin}} Gain 4 Coins#{{Card}} Spawns 5 Loot Cards#{{Coin}} Gain 6 Coins# The rolled effect multiplies for each player!",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}} Ganar una moneda#{{Card}}Generar 2 cartas de loot#{{Warning}}Recibir un corazón de daño (no fatal)#{{Coin}}Ganar 6 monedas#¡El efecto se multiplica para cada jugador!"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local game = Game()

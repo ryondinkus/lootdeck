@@ -15,7 +15,7 @@ local Descriptions = {
 	en_us = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} +4 Coins#{{Coin}}{{ArrowUp}} +7 Coins#{{Coin}}{{ArrowDown}} -4 Coins",
 	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}}{{ArrowUp}} +4 monedas#{{Coin}}{{ArrowUp}} +7 monedas#{{Coin}}{{ArrowDown}} -4 monedas"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local sfx = lootdeck.sfx

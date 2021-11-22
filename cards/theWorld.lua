@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Pauses all enemies and projectiles in the room# Effect wears off after 10 seconds# Stops the game clock for the duration of the effect",
     spa = "Detiene a todos los enemigos y proyectiles en la sala#Dura 10 segundos o hasta que salgas de la habitación#El reloj del juego se detiene al activar el efecto"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds.", "- The in-game clock does not increment for the duration of the effect.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds.", "- The in-game clock does not increment for the duration of the effect.", "Holographic Effect: The effect lasts for 20 seconds.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local game = Game()

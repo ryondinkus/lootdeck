@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Spawns a Mega Battery",
     spa = "Genera una Mega batería"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery on use.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery on use.", "Holographic Effect: Spawns two Mega Batteries.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SpawnEntity(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_LIL_BATTERY, BatterySubType.BATTERY_MEGA)

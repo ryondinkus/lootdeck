@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Spawns a Charged Penny, which recharges your active on pickup",
     spa = "Genera un penny cargado, el cual recarga tu objeto activo al tomarlo"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.", "Holographic Effect: Spawns two Charged Pennies.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SpawnEntity(p, EntityType.ENTITY_PICKUP, entityVariants.chargedPenny.Id, 0, 1, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 1)

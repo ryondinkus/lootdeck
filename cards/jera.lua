@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Triggers the {{Collectible631}} Meat Cleaver effect, splitting all room enemies in half with half their respective HP# All cleaved enemies will drop a Full Red Heart# If used with no enemies in the room, it will damage the player for one full heart and drop a Full Red Heart",
     spa = "Activa el efecto del {{Collectible631}} Cuchillo de Carnicero, partiendo a los enemigos a la mitad con la mitad de sus PS respecticos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.", "Holographic Effect: Splits all enemies, then splits them again.")
 
 local function MC_USE_CARD(_, c, p)
     local enemies = helper.ListEnemiesInRoom(p.Position)

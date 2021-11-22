@@ -770,12 +770,20 @@ end
 function H.AddExternalItemDescriptionCard(card)
 	if EID and card.Descriptions then
         H.RegisterExternalItemDescriptionLanguages(card, EID.addCard)
-		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		local cardFrontPathTag = card.Tag
+		if card.Holographic then
+			cardFrontPathTag = cardFrontPathTag:gsub("holographic", "")
+		end
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", cardFrontPathTag)
 		local cardFrontSprite = Sprite()
         cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
 		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
 		cardFrontSprite:LoadGraphics()
-		EID:addIcon("Card"..card.Id, "Idle", -1, 8, 8, 0, 1, cardFrontSprite)
+		local cardFrontAnim = "Idle"
+		if card.Holographic then
+			cardFrontAnim = "IdleHolo"
+		end
+		EID:addIcon("Card"..card.Id, cardFrontAnim, -1, 8, 8, 0, 1, cardFrontSprite)
 	end
 end
 

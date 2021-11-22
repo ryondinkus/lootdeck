@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price",
     spa = "Otorga el efecto de las {{Collectible64}} Ofertas de Steam durante el piso"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Holographic Effect: Grants two Steam Sale effects.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

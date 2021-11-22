@@ -14,7 +14,7 @@ local Descriptions = {
 	en_us = "Random chance for any of these effects:# Deals 40 damage to all enemies in room# Spawns a random {{Collectible660}} Card Reading portal# Lose 3 Bombs, Keys, and Coins, then spawn 3 chests",
 	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Hacer 40 de daño a todos los enemigos de la habitación#Generar un portal aleatorio de {{Collectible660}} Lectura de cartas#Perder 3 monedas, llaves y bombas, para generar 3 cofres"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Deals 40 damage to all room enemies.","- Spawns a random Card Reading portal, which will warp you to a random room. Higher priority is given to special room warps.", "- Lose 3 Coins, Keys, and Bombs, if possible. Spawn 3 chests.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Deals 40 damage to all room enemies.","- Spawns a random Card Reading portal, which will warp you to a random room. Higher priority is given to special room warps.", "- Lose 3 Coins, Keys, and Bombs, if possible. Spawn 3 chests.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
@@ -50,7 +50,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         helper.ForEachEntityInRoom(function(entity)
             table.insert(portalGridIndexes, room:GetGridIndex(entity.Position))
         end, EntityType.ENTITY_EFFECT, EffectVariant.PORTAL_TELEPORT)
-        
+
         local spawnPos
 
         local validSpawnIndex = false

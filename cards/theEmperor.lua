@@ -14,7 +14,7 @@ local Descriptions = {
 	en_us = "Permanently charms every enemy in the room, excluding bosses",
 	spa = "Aplica encantamiento permanente a todos los enemigos de la habitación, exceptuando a los jefes"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.", "Holographic Effect: None")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

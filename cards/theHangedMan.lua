@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Grants the {{Collectible53}} Magneto effect for the room, causing pickups to be drawn towards you",
     spa = "Otorga el efecto del {{Collectible53}} Imán durante la habitación"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: None")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

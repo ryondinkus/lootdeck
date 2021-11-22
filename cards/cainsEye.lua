@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: Gain a random mapping effect ( {{Collectible54}} Treasure Map, {{Collectible21}} The Compass, {{Collectible246}} Blue Map) for each floor",
     spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Gana efectos de mapas ({{Collectible54}} Mapa del Tesoro, {{Collectible21}} La Brújula, {{Collectible}}) por cada piso"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: On each floor, gain a random effect of either Treasure Map, The Compass, or Blue Map.", "- Additional copies of the passive grant extra mapping effects, avoiding duplicate effects.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: On each floor, gain a random effect of either Treasure Map, The Compass, or Blue Map.", "- Additional copies of the passive grant extra mapping effects, avoiding duplicate effects.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardItem(p, items.cainsEye.Id, SoundEffect.SOUND_VAMP_GULP)

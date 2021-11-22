@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Instantly grants an item from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead",
     spa = "Te regala instantaneamente un objeto de la {{TreasureRoom}} Sala del tesoro#1% de posibilidad de que sea un objeto del Planetario"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.", "Holographic Effect: Grants a treasure item, then another.")
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()
