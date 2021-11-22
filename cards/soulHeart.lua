@@ -9,7 +9,7 @@ local Name = Names.en_us
 local Tag = "soulHeart"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 2
-local Description = {
+local Descriptions = {
         en_us = "Grants a {{Collectible313}} Holy Mantle shield for the room, negating damage once",
         spa = "Otorga un escudo del {{Collectible313}} Mando Sagrado durante la habitación, negando el daño una vez"
 }
@@ -21,10 +21,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {

@@ -10,7 +10,7 @@ local Name = Names.en_us
 local Tag = "theHierophant"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
-local Description = {
+local Descriptions = {
     en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits",
     spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber dos golpes"
 }
@@ -68,10 +68,11 @@ end
 
 return {
     Name = Name,
+	Names = Names,
     Tag = Tag,
 	Id = Id,
     Weight = Weight,
-    Description = Description,
+    Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
         {
