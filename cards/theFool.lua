@@ -25,12 +25,7 @@ local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
         local room = Game():GetRoom()
         if data[Tag] then
-            for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
-                local door = room:GetDoor(i)
-                if door then
-                    door:Open()
-                end
-            end
+			helper.OpenAllDoors(room, p)
             data[Tag] = nil
         end
     end)

@@ -1160,4 +1160,19 @@ function H.IsHolographic(id)
     return false
 end
 
+function H.OpenAllDoors(room, p)
+	for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
+		local door = room:GetDoor(i)
+		if door then
+			if door:IsLocked() then
+				door:TryUnlock(p, true)
+			end
+			if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+				door:TryBlowOpen(true, p)
+			end
+			door:Open()
+		end
+	end
+end
+
 return H

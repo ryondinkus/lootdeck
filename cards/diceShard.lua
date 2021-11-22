@@ -22,7 +22,7 @@ blackOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
 blackOverlay:LoadGraphics()
 blackOverlay:Play("Idle", true)
 
-local function MC_USE_CARD(_, c, p, flags)
+local function MC_USE_CARD(_, c, p, flags, shouldDouble)
 	local game = Game()
 	local level = game:GetLevel()
     local f = lootdeck.f
@@ -31,13 +31,17 @@ local function MC_USE_CARD(_, c, p, flags)
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS)
         f.newRoom = level:GetCurrentRoomIndex()
         if (flags & UseFlag.USE_MIMIC == 0) then
-            data.removeCard = true
+            data[Tag .. "RemoveCard"] = true
         else
-            data.dischargeMimic = true
+            data[Tag .. "DischargeMimic"] = true
         end
         if (flags & UseFlag.USE_VOID == 0) then
-            data.dischargeVoid = true
+            data[Tag .. "DischargeVoid"] = true
         end
+
+		if shouldDouble then
+			data[Tag .. "Double"] = true
+		end
 
         return false
     else
@@ -57,27 +61,33 @@ local function MC_POST_NEW_ROOM()
     if lootdeck.f.checkEm then
         helper.ForEachPlayer(function(p, data)
             for j=0,3 do
-                if p:GetCard(j) == Id and data.removeCard then
+				local currentCard = p:GetCard(j)
+                if currentCard == Id and data[Tag .. "RemoveCard"] then
                     p:SetCard(j, 0)
-                    data.removeCard = nil
+                    data[Tag .. "RemoveCard"] = nil
                 end
             end
-            if data.dischargeMimic then
+            if data[Tag .. "DischargeMimic"] then
                 for j=0,3 do
                     if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_BLANK_CARD then
                         p:DischargeActiveItem(j)
-                        data.dischargeMimic = nil
+                        data[Tag .. "DischargeMimic"] = nil
                     end
                 end
             end
-            if data.dischargeVoid then
+            if data[Tag .. "DischargeVoid"] then
                 for j=0,3 do
                     if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
                         p:DischargeActiveItem(j)
-                        data.dischargeVoid = nil
+                        data[Tag .. "DischargeVoid"] = nil
                     end
                 end
             end
+			if data[Tag .. "Double"] then
+				print("door go brr")
+				helper.OpenAllDoors(room, p)
+				data[Tag .. "Double"] = nil
+			end
         end)
         lootdeck.f.checkEm = false
         lootdeck.f.showOverlay = false
