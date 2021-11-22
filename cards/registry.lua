@@ -89,6 +89,7 @@ for key, card in pairs(cards) do
     holoCard.HUDAnimationName = "IdleHolo"
     holoCard.PickupAnimationName = "IdleHolo"
     holoCard.UseAnimationName = "IdleFastHolo"
+	holoCard.Descriptions.en_us = holoCard.Descriptions.en_us .. "#{{ColorRainbow}}HOLOGRAPHIC: Effect doubled!"
 
     local callbacks = {}
 
