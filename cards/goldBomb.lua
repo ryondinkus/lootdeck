@@ -42,6 +42,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
             end
             Isaac.Explode(target.Position, nil, 40)
             lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
+            return target.InitSeed
 		end
 	end)
 end
