@@ -16,7 +16,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.", "Holographic Effect: All enemies charmed this way become champions.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
     data[Tag] = {}
 	local illegalParents = {
@@ -26,8 +26,13 @@ local function MC_USE_CARD(_, c, p)
 		EntityType.ENTITY_HERETIC, -- the forsaken's minions
 	}
 	helper.ForEachEntityInRoom(function(entity)
-		entity:AddCharmed(EntityRef(p), -1)
-        table.insert(data[Tag], entity)
+		if not entity:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
+			entity:AddCharmed(EntityRef(p), -1)
+			if shouldDouble then
+				entity:ToNPC():MakeChampion(lootdeck.rng:Next())
+			end
+	        table.insert(data[Tag], entity)
+		end
 	end, nil, nil, nil,
 	function(entity)
 		local npc = entity:ToNPC()
