@@ -16,9 +16,13 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.", "Holographic Effect: Grants 3 temporary heart containers.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
-    helper.AddTemporaryHealth(p, 4)
+	local tempHealth = 4
+	if shouldDouble then
+		tempHealth = tempHealth + 2
+	end
+    helper.AddTemporaryHealth(p, tempHealth)
     if not data[Tag] then data[Tag] = true end
     p:AddNullCostume(costumes.lovers)
 end
@@ -44,8 +48,7 @@ return {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
-            Id,
-            true
+            Id
         },
         {
             ModCallbacks.MC_POST_NEW_ROOM,
