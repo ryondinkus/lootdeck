@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room# The room you teleport into will have its doors opened",
     spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: None")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: Triggers the Necronomicon effect on room entry, dealing 40 damage to all enemies.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
