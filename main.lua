@@ -11,6 +11,7 @@ function table.deepCopy(original)
 	return copy
 end
 
+include("helpers/achievements")
 include("cards/registry")
 include("challenges/registry")
 local items = include("items/registry")

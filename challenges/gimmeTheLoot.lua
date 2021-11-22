@@ -23,10 +23,11 @@ local function MC_PRE_PICKUP_COLLISION(_, pickup, entity)
         local player = entity:ToPlayer()
         if player then
             local data = player:GetData()
-            if not data[Tag] then
+            if not data[Tag] and not lootdeck.unlocks[Tag] then
                 lootdeck.unlocks[Tag] = true
                 data[Tag] = true
                 helper.SaveGame()
+                CCO.PlayAchievement("gfx/ui/achievements/achievement_holographicloot.png")
             end
         end
     end
