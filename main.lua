@@ -329,31 +329,30 @@ end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
+    local playerAnimation = p:GetSprite():GetAnimation()
 
-    if not p:IsExtraAnimationFinished() then
-        if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
-            if data.isHoldingLootcard and data.lootcardPickupAnimation and data.lootcardPickupAnimation:IsPlaying(data.lootcardPickupAnimation:GetAnimation()) then
+    local flyingOffset = p:GetFlyingOffset()
+    if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
+        flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
+    end
+    local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
+
+    if (playerAnimation == "Pickup" or playerAnimation == "PickupWalkDown" or playerAnimation == "PickupWalkUp" or playerAnimation == "PickupWalkLeft" or playerAnimation == "PickupWalkRight") then
+        if data.isHoldingLootcard and data.lootcardPickupAnimation and data.lootcardPickupAnimation:IsPlaying(data.lootcardPickupAnimation:GetAnimation()) then
+            if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
                 data.lootcardPickupAnimation:Update()
             end
 
-            if data.lootcardUseAnimation and data.lootcardUseAnimation:IsPlaying(data.lootcardUseAnimation:GetAnimation()) then
-                data.lootcardUseAnimation:Update()
-            end
-        end
-
-		local flyingOffset = p:GetFlyingOffset()
-		if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
-			flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
-		end
-		local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
-
-        if data.isHoldingLootcard and data.lootcardPickupAnimation and data.lootcardPickupAnimation:IsPlaying(data.lootcardPickupAnimation:GetAnimation()) then
             data.lootcardPickupAnimation:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
         end
 
         if data.lootcardUseAnimation and data.lootcardUseAnimation:IsPlaying(data.lootcardUseAnimation:GetAnimation()) then
+            if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
+                data.lootcardUseAnimation:Update()
+            end
+
             data.lootcardUseAnimation:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
-        end        
+        end
     end
 end)
 
