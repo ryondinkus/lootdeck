@@ -42,7 +42,7 @@ end
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local rng = lootdeck.rng
 	helper.StaggerSpawn(Tag, p, 15, rng:RandomInt(6) + 1, function(player)
-		SpawnFinger(helper.FindRandomEnemy(player.Position, true, true) or 0)
+		SpawnFinger(helper.FindRandomEnemy(player.Position) or 0)
 	end)
 end
 

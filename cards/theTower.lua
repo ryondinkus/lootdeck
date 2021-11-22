@@ -14,6 +14,9 @@ local Descriptions = {
 	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.")
+
+local chosenTag = Tag.."Chosen"
+
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
 	data[Tag] = 1
@@ -22,7 +25,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 		data[Tag] = data[Tag] + 1
 	end
 
-	local enemies = helper.ListEnemiesInRoom(p.Position, true)
+	local enemies = helper.ListEnemiesInRoom(p.Position)
 	for _, enemy in ipairs(enemies) do
 		enemy:GetData()[Tag] = 1
 	end
@@ -31,7 +34,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, Tag) + 1
+    local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
 		local data = player:GetData()
 		if data[counterName] > numberOfEnemies then
@@ -42,7 +45,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		if data[counterName] == 1 then
 			target = player
 		else
-			local enemy = helper.FindRandomEnemy(player.Position, true, false, Tag)
+			local enemy = helper.FindRandomEnemy(player.Position, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
 			if enemy then
 				target = enemy
 				enemy:GetData()[Tag] = nil

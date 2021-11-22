@@ -3,7 +3,7 @@ local H = {}
 
 -- helper function for using FindRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
 function H.ClearChosens(pos)
-    local entities = Isaac.FindInRadius(pos, 875, EntityPartition.ENEMY)
+    local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
     for i, entity in pairs(entities) do
         local data = entity:GetData()
         if data.chosen then
@@ -12,25 +12,19 @@ function H.ClearChosens(pos)
     end
 end
 
-function H.ListEnemiesInRoom(pos, ignoreChosen, tag, ignoreVulnerability, chosenTag, filter)
+function H.ListEnemiesInRoom(pos, ignoreVulnerability, filter)
 	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
 	local enemies = {}
-	local key = 1;
-	for i, entity in pairs(entities) do
-		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (ignoreChosen or not entity:GetData()[chosenTag or "chosen"]) then
-            if not tag or entity:GetData()[tag] then
-                if not filter or filter(entity) then
-                    enemies[key] = entities[i]
-                    key = key + 1;
-                end
-            end
+	for _, entity in pairs(entities) do
+		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
+            table.insert(enemies, entity)
 		end
 	end
 	return enemies
 end
 
-function H.ListBossesInRoom(pos, ignoreMiniBosses)
-	local enemies = H.ListEnemiesInRoom(pos, true, nil, true)
+function H.ListBossesInRoom(pos, ignoreMiniBosses, filter)
+	local enemies = H.ListEnemiesInRoom(pos, true, filter)
     local bosses = {}
 
     for _, enemy in pairs(enemies) do
@@ -43,10 +37,12 @@ function H.ListBossesInRoom(pos, ignoreMiniBosses)
 end
 
 -- function for finding random enemy in the room
-function H.FindRandomEnemy(pos, noDupes, ignoreChosen, tag, filter)
-	local enemies = H.ListEnemiesInRoom(pos, ignoreChosen, tag, false, nil, filter)
-    local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies)+1]
-    if chosenEnt then chosenEnt:GetData().chosen = noDupes end
+function H.FindRandomEnemy(pos, tag, filter)
+	local enemies = H.ListEnemiesInRoom(pos, false, filter)
+    local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies) + 1]
+    if chosenEnt and tag then
+        chosenEnt:GetData()[tag] = true
+    end
     return chosenEnt
 end
 
@@ -60,9 +56,9 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
 
         data[timerName] = data[timerName] - 1
         if data[timerName] <= 0 then
-			callback(p, counterName)
+			local result = callback(p, counterName)
             if data[key] >= 2 then
-                callback(p, counterName)
+                callback(p, counterName, result)
             end
             data[timerName] = interval
 			if noAutoDecrement ~= 1 then
