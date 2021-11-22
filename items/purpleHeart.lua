@@ -24,7 +24,7 @@ local function MC_POST_NEW_ROOM()
     local room = game:GetRoom()
     helper.ForEachPlayer(function(p, data)
         if not room:IsClear() then
-            if helper.PercentageChance(25*p:GetCollectibleNum(Id), 100) then
+            if helper.PercentageChance(25 * p:GetCollectibleNum(Id), 100) then
                 data[shouldRerollEnemyTag] = true
                 data[preRerollEnemySeedList] = {}
             end
@@ -36,7 +36,7 @@ local function MC_POST_UPDATE()
     local game = Game()
     helper.ForEachPlayer(function(p, data)
         if data[preRerollEnemySeedList] and #data[preRerollEnemySeedList] > 0 then
-            for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, nil, false, chosenEnemy)) do
+            for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, function(_, eData) return not eData[chosenEnemy] end)) do
                 local isRerolledEnemy = true
                 for _, initSeed in ipairs(data[preRerollEnemySeedList]) do
                     if enemy.InitSeed == initSeed then
@@ -55,10 +55,10 @@ local function MC_POST_UPDATE()
         end
 
         if data[shouldRerollEnemyTag] then
-            local target = helper.FindRandomEnemy(p.Position, false) or 0
+            local target = helper.FindRandomEnemy(p.Position) or 0
             if target ~= 0 then
                 local enemyInitSeeds = {}
-                for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, nil, false, chosenEnemy)) do
+                for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, function(_, eData) return not eData[chosenEnemy] end)) do
                     table.insert(enemyInitSeeds, enemy.InitSeed)
                 end
                 data[preRerollEnemySeedList] = enemyInitSeeds

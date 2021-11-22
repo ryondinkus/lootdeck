@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.")
 
 local function MC_USE_CARD(_, c, p)
-    local enemy = helper.FindRandomEnemy(p.Position, nil, true, nil, function(entity) return not entity:IsBoss() end)
+    local enemy = helper.FindRandomEnemy(p.Position, nil, function(entity) return not entity:IsBoss() end)
 
     if enemy then
         local friend = Isaac.Spawn(enemy.Type, enemy.Variant, enemy.SubType, p.Position, Vector.Zero, p)
