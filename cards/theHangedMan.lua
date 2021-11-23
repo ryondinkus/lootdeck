@@ -16,7 +16,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: Fills in all holes in the current room.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()
     local magnetoConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
     p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO, 0, false)
@@ -26,6 +26,15 @@ local function MC_USE_CARD(_, c, p)
         p:RemoveCostume(magnetoConfig)
     end
 	p:AddNullCostume(costumes.hangedMan)
+	if shouldDouble then
+		local room = Game():GetRoom()
+		for i=0,room:GetGridSize() do
+			local gridEntity = room:GetGridEntity(i)
+			if gridEntity and gridEntity:ToPit() then
+				gridEntity:ToPit():MakeBridge(gridEntity)
+			end
+		end
+	end
 end
 
 local function MC_POST_NEW_ROOM()
@@ -52,8 +61,7 @@ return {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
-            Id,
-            true
+            Id
         },
         {
             ModCallbacks.MC_POST_NEW_ROOM,

@@ -76,6 +76,14 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
     end
 end
 
+function H.ClearStaggerSpawn(tag)
+    H.ForEachPlayer(function(_, data)
+        data[tag] = nil
+        data[tag.."Timer"] = nil
+        data[tag.."Counter"] = nil
+    end)
+end
+
 -- function for registering basic loot cards that copy item effects
 function H.SimpleLootCardEffect(p, itemEffect, sound)
     p:UseActiveItem(itemEffect, false)
@@ -1158,6 +1166,21 @@ function H.IsHolographic(id)
         end
     end
     return false
+end
+
+function H.OpenAllDoors(room, p)
+	for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
+		local door = room:GetDoor(i)
+		if door then
+			if door:IsLocked() then
+				door:TryUnlock(p, true)
+			end
+			if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+				door:TryBlowOpen(true, p)
+			end
+			door:Open()
+		end
+	end
 end
 
 return H

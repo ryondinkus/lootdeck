@@ -17,7 +17,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("After using, defeating the boss of the current floor triggers the Forget Me Now effect, which restarts the floor.", "- The effect will also trigger on use if the current floor's boss is already defeated.", "On use, all other instances of this card are removed and cannot be found for the rest of the run.", "Holographic Effect: Grants full mapping on the restarted floor.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.sunUsed = true
     lootdeck.f.removeSun = true
     for i=0,3 do
@@ -27,10 +27,13 @@ local function MC_USE_CARD(_, c, p)
     end
     helper.ForEachEntityInRoom(function(entity) entity:Remove() end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
     if helper.CheckFinalFloorBossKilled() then
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
+        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, UseFlag.USE_NOANIM)
     end
     p:AddNullCostume(costumes.sun)
     lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
+	if shouldDouble then
+		p:GetData()[Tag .. "Double"] = true
+	end
 end
 
 local function MC_POST_UPDATE()
@@ -55,8 +58,12 @@ end
 
 local function MC_POST_NEW_LEVEL()
     if lootdeck.f.sunUsed then
-        helper.ForEachPlayer(function(p)
+        helper.ForEachPlayer(function(p, data)
             p:TryRemoveNullCostume(costumes.sun)
+			if data[Tag .. "Double"] then
+				Game():GetLevel():ShowMap()
+				data[Tag .. "Double"] = nil
+			end
         end)
     end
     lootdeck.f.sunUsed = false

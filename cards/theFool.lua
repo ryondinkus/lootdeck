@@ -15,9 +15,13 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: Triggers the Necronomicon effect on room entry, dealing 40 damage to all enemies.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble)
+	local data = p:GetData()
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
-    p:GetData()[Tag] = true
+    data[Tag] = true
+	if shouldDouble then
+		data[Tag .. "Double"] = true
+	end
     return false
 end
 
@@ -25,14 +29,14 @@ local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
         local room = Game():GetRoom()
         if data[Tag] then
-            for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
-                local door = room:GetDoor(i)
-                if door then
-                    door:Open()
-                end
-            end
+			helper.OpenAllDoors(room, p)
             data[Tag] = nil
         end
+		if data[Tag .. "Double"] then
+			p:UseActiveItem(CollectibleType.COLLECTIBLE_NECRONOMICON)
+			lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
+			data[Tag .. "Double"] = nil
+		end
     end)
 end
 
