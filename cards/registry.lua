@@ -106,6 +106,7 @@ for key, card in pairs(cards) do
     holoCard.Tag = "holographic"..card.Tag
     holoCard.Id = holographicCardId
 	holoCard.Descriptions.en_us = card.Descriptions.en_us .. "#{{ColorRainbow}}HOLOGRAPHIC: Effect doubled!"
+	holoCard.Descriptions.spa = card.Descriptions.spa .. "#{{ColorRainbow}}HOLOGRÁFICA: ¡Efecto doble!"
 
     holoCards[holoCard.Tag] = holoCard
 end

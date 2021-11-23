@@ -11,7 +11,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
     en_us = "{{Collectible285}} D10 effect on use, rerolling all enemies in the room.# All rerolled enemies will have 50% HP.",
-    spa = "Efecto del {{Collectible285}} D10 al usarse (rerolea a todos los enemigos de la habitación)"
+    spa = "Efecto del {{Collectible285}} D10, al usarse rerolea a todos los enemigos de la habitación#Todos los enemigos reroleados tendrán 50% de salud"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the D10 effect, rerolling all enemies in the room.", "All rerolled enemies will have 50% HP.", "Holographic Effect: Rerolls all room enemies, then rerolls them again.")
 
