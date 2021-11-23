@@ -21,19 +21,11 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.sunUsed = true
     lootdeck.f.removeSun = true
     for i=0,3 do
-        if p:GetCard(i) == Id or p:GetCard(i) == Id + 75 then
+        if p:GetCard(i) == Id or p:GetCard(i) == lootcards.holographictheSun.Id then
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
             p:SetCard(i, 0)
         end
     end
-    helper.ForEachEntityInRoom(function(entity)
-		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
-		entity:Remove()
-	end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
-	helper.ForEachEntityInRoom(function(entity)
-		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
-		entity:Remove()
-	end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id + 75)
     if helper.CheckFinalFloorBossKilled() then
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, UseFlag.USE_NOANIM)
     end
@@ -53,7 +45,7 @@ local function MC_POST_UPDATE()
 		helper.ForEachEntityInRoom(function(entity)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
 			entity:Remove()
-		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id + 75)
+		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, lootcards.holographictheSun.Id)
     end
 end
 

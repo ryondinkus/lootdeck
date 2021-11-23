@@ -62,7 +62,7 @@ local function MC_POST_NEW_ROOM()
         helper.ForEachPlayer(function(p, data)
             for j=0,3 do
 				local currentCard = p:GetCard(j)
-                if currentCard == Id or currentCard == Id + 75 and data[Tag .. "RemoveCard"] then
+                if currentCard == Id or currentCard == lootcards.holographicdiceShard.Id and data[Tag .. "RemoveCard"] then
                     p:SetCard(j, 0)
                     data[Tag .. "RemoveCard"] = nil
                 end
