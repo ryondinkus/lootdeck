@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Spawns a permanently charmed clone of a random enemy in the room# If there are no enemies, spawns a permanently charmed Gaper",
     spa = "Genera un clon encantado de un enemigo en la habitación#Si no hay enemigos en la habitación, genera un Gaper encantado"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.", "Holographic Effect: Spawns two charmed copies of two different random enemies.")
 
 local function MC_USE_CARD(_, c, p)
     local enemy = helper.FindRandomEnemy(p.Position, nil, function(entity) return not entity:IsBoss() end)

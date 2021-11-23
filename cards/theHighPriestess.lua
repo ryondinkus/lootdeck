@@ -11,10 +11,10 @@ local Tag = "theHighPriestess"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit",
-    spa = "Suelta 1-6 dedos de Mamá en los enemigos, provocando 40 de daño a cada enemigo golpeado"
+    en_us = "Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit# If no enemies are present, a Mom's Finger will drop on the player, dealing fake damage.",
+    spa = "Suelta 1-6 dedos de Mamá en los enemigos, provocando 40 de daño a cada enemigo golpeado#Si no hay enemigos, un dedo de Mamá caerá sobre el jugador, efectuando daño falso"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Drops 1-6 Mom's Fingers onto enemies, dealing 40 damage to each enemy hit.", "- The same enemy cannot be hit by multiple fingers.", "If no enemies are in the room when used, a Mom's Finger will drop on the player, dealing fake damage similar to Dull Razor.", "Holographic Effect: Spawns twice the amount of fingers, dropping two at a time.")
 
 local function SpawnFinger(target)
     if target ~= 0 then

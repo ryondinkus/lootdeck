@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: Swaps the potential drops of Gold Chests and Red Chests",
     spa = "Añade un objeto pasivo al usarla#Efecto pasivo: Cambia las recompensas potenciales de los Cofres Dorados y los Cofres Rojos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Swaps the potential drops of Gold Chests and Red Chests.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Swaps the potential drops of Gold Chests and Red Chests.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.leftHand.Id, SoundEffect.SOUND_VAMP_GULP)

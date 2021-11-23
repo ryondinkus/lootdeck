@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Spawns 5-10 Shopkeepers",
     spa = "Genera 5-10 cuidadores de tiendas"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.", "Holographic Effect: Spawns twice as many shopkeepers, two at at time.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData()

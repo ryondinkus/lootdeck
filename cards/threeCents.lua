@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Spawns three Pennies",
     spa = "Genera 3 pennies"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns three Pennies on use.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns three Pennies on use.", "Holographic Effect: Spawns six Pennies.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SpawnEntity(p, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, 3, nil, SoundEffect.SOUND_CASH_REGISTER, EffectVariant.COIN_PARTICLE, 3)

@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "{{Card}} Spawns 3 Loot Cards",
     spa = "{{Card}} Genera 3 cartas de loot"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns 3 Loot Cards.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns 3 Loot Cards.", "Holographic Effect: Spawns 6 Loot Cards.")
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()

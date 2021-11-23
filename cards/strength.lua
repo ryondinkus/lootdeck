@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Triggers the {{Collectible437}} D7 effect, respawning all enemies in the room to spawn an extra room reward#{{ArrowUp}} +1.0 Damage up until the end of the floor",
     spa = "Activa el efecto del {{Collectible437}} D7, reviviendo a los enemigos muertos con una recompensa extra#{{ArrowUp}} +1.0 durante todo el piso"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect, which respawns all enemies in the room for a chance at an extra room reward.", "+1 Damage Up for the rest of the floor.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect, which respawns all enemies in the room for a chance at an extra room reward.", "+1 Damage Up for the rest of the floor.", "Holographic Effect: Grants twice the damage increase.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D7)

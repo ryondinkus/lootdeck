@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "{{Heart}} +2 Heart Containers for the room",
     spa = "Otorga 2 contenedores de corazón durante la habitación"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.", "Holographic Effect: Grants 3 temporary heart containers.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

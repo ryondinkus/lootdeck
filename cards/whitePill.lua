@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:# Create a poison fart, similar to {{Collectible111}} The Bean# Weakens and slows all enemies in the room, similar to {{Card67}} XI - Strength?# Does nothing",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Sueltas un pedo venenoso, igual a  {{Collectible111}} El Frijol#Debilitas a todos los enemigos en la habitación, igual que {{Card67}} XI - ¿Fuerza?#No hace nada"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Creates a poison fart, like The Bean effect.", "- Weakens and slows all enemies in the room, similar to XI - Strength?.", "- Does nothing.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Creates a poison fart, like The Bean effect.", "- Weakens and slows all enemies in the room, similar to XI - Strength?.", "- Does nothing.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx

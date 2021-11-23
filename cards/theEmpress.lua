@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "{{ArrowUp}} * 1.3 damage multiplier# Grants the {{Collectible245}} 20/20 effect for the room, allowing you to shoot two tears at once",
     spa = "{{ArrowUp}} Multiplicador de daño x1.3# Otorga el efecto de {{Collectible245}} 20/20 durante la habitación"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants a x1.3 Damage multiplier and the 20/20 effect for the room, allowing you to shoot two tears at once.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants a x1.3 Damage multiplier and the 20/20 effect for the room, allowing you to shoot two tears at once.", "Holographic Effect: Grants a triple shot with thinner range.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData()

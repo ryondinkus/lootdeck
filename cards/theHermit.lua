@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Spawns a random 15c item from the current room pool",
     spa = "Genera un objeto con un costo de 15 monedas de la pool de la habitación actual"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 15c item from the current room pool.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 15c item from the current room pool.", "Holographic Effect: Spawns two 15c items.")
 
 local function MC_USE_CARD(_, c, p)
     local game = Game()

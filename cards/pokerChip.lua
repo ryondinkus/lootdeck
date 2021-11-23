@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: All coin spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all",
     spa = "Añade un objeto pasivo al usarla#Efecto pasivo: Todas las monedas tienen un 50/50 de posibilidad de generarse como monedas dobles o no generarse en sí"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
     helper.SimpleLootCardItem(p, items.pokerChip.Id, SoundEffect.SOUND_VAMP_GULP)

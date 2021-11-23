@@ -10,10 +10,10 @@ local Tag = "jera"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "Triggers the {{Collectible631}} Meat Cleaver effect, splitting all room enemies in half with half their respective HP",
-    spa = "Activa el efecto del {{Collectible631}} Cuchillo de Carnicero, partiendo a los enemigos a la mitad con la mitad de sus PS respecticos"
+    en_us = "Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up# If used while a Lost Soul already exists, it will spawn a Found Soul instead. The two souls will fall in love, spawn a Soul Heart, and fly away.",
+    spa = "Genera un Alma Perdida familiar, que encontrará las piedras marcadas y entradas a Salas Secretas y las explotará#Si ya se tiene un Alma Perdida, se generará un Alma Encontrada en su lugar en medio de la habitación, las dos almas se enamorarán y volarán lejos, soltando un Corazón de Alma"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.", "- All cleaved enemies will drop a Full Red Heart.", "Holographic Effect: Splits all enemies, then splits them again.")
 
 local function MC_USE_CARD(_, c, p)
     local enemies = helper.ListEnemiesInRoom(p.Position)

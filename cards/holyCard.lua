@@ -14,7 +14,7 @@ local Descriptions = {
     en_us = "Spawns 10 Holy Shield orbitals, which die after blocking one projectile.",
     spa = "Genera 10 Escudos Sagrados orbitales, se destruyen al bloquear un proyectil"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break.", "Holographic Effect: Spawns 20 Holy Shields.")
 
 local function MC_USE_CARD(_, c, p)
     helper.RemoveHitFamiliars(entityVariants.holyShield.Id)

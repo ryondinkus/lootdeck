@@ -13,7 +13,7 @@ local Descriptions = {
     en_us = "Creates a {{Collectible294}} Butter Bean fart, which knocks back enemies.",
     spa = "Crea un pedo de {{Collectible294}} frijol de mantequilla, puede empujar a los enemigos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.", "Holographic Effect: Creates two Butter Bean farts in quick succession.")
 
 local function MC_USE_CARD(_, c, p)
 	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_BUTTER_BEAN)
@@ -32,7 +32,8 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id,
-            true
+            true,
+			0.5
         }
     }
 }
