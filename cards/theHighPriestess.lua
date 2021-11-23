@@ -39,9 +39,12 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.sfx:Play(SoundEffect.SOUND_MOM_VOX_ISAAC, 1, 0, false, 1.2)
 end
 
+local function MC_POST_NEW_ROOM()
+    helper.ClearStaggerSpawn(Tag)
+end
+
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local rng = lootdeck.rng
-	helper.StaggerSpawn(Tag, p, 15, rng:RandomInt(6) + 1, function(player)
+	helper.StaggerSpawn(Tag, p, 15, (lootdeck.rng:RandomInt(6) + 1) * (p:GetData()[Tag] or 0), function(player)
 		SpawnFinger(helper.FindRandomEnemy(player.Position) or 0)
 	end)
 end
@@ -59,6 +62,10 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         },
         {
             ModCallbacks.MC_POST_PEFFECT_UPDATE,

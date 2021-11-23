@@ -84,7 +84,6 @@ local function MC_POST_NEW_ROOM()
                 end
             end
 			if data[Tag .. "Double"] then
-				print("door go brr")
 				helper.OpenAllDoors(room, p)
 				data[Tag .. "Double"] = nil
 			end

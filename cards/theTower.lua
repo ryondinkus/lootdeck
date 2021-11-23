@@ -33,6 +33,10 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	return #enemies > 0
 end
 
+local function MC_POST_NEW_ROOM()
+    helper.ClearStaggerSpawn(Tag)
+end
+
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
@@ -76,6 +80,10 @@ return {
                 MC_USE_CARD,
                 Id
             },
+			{
+				ModCallbacks.MC_POST_NEW_ROOM,
+				MC_POST_NEW_ROOM
+			},
             {
                 ModCallbacks.MC_POST_PEFFECT_UPDATE,
                 MC_POST_PEFFECT_UPDATE

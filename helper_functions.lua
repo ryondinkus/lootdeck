@@ -76,6 +76,14 @@ function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDec
     end
 end
 
+function H.ClearStaggerSpawn(tag)
+    H.ForEachPlayer(function(_, data)
+        data[tag] = nil
+        data[tag.."Timer"] = nil
+        data[tag.."Counter"] = nil
+    end)
+end
+
 -- function for registering basic loot cards that copy item effects
 function H.SimpleLootCardEffect(p, itemEffect, sound)
     p:UseActiveItem(itemEffect, false)
