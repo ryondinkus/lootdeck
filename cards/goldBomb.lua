@@ -33,6 +33,10 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	end
 end
 
+local function MC_POST_NEW_ROOM()
+    helper.ClearStaggerSpawn(Tag)
+end
+
 local function MC_POST_PEFFECT_UPDATE(_, p)
 	helper.StaggerSpawn(Tag, p, 15, 3, function(player, _, pastInitSeed)
 		local target = helper.FindRandomEnemy(player.Position, nil, function(entity) return entity.InitSeed ~= pastInitSeed end) or 0
@@ -60,6 +64,10 @@ return {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,
             Id
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
         },
 		{
 			ModCallbacks.MC_POST_PEFFECT_UPDATE,
