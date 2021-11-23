@@ -32,8 +32,10 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 			local gridEntity = room:GetGridEntity(i)
 			if gridEntity and gridEntity:ToPit() then
 				gridEntity:ToPit():MakeBridge(gridEntity)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, gridEntity.Position, Vector.Zero, nil)
 			end
 		end
+        lootdeck.sfx:Play(SoundEffect.SOUND_ROCK_CRUMBLE)
 	end
 end
 
