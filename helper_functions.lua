@@ -331,7 +331,7 @@ function H.GetWeightedLootCardId(includeHolos)
             end
             csum = csum + weight
         end
-        if lootdeck.unlocks.gimmeTheLoot and includeHolos and H.PercentageChance(10) then
+        if lootdeck.unlocks.gimmeTheLoot and includeHolos and H.PercentageChance(lootdeck.mcmOptions.HoloCardChance or 10) then
             return outcome.Id + 75
         else
             return outcome.Id
