@@ -23,7 +23,8 @@ local function MC_USE_CARD(_, c, p)
         Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.lostSoulBaby.Id, 0, p.Position, Vector.Zero, p)
         f.lostSoul = true
     else
-        Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.lostSoulLove.Id, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, p)
+        local foundSoul = Isaac.Spawn(EntityType.ENTITY_FAMILIAR, entityVariants.foundSoul.Id, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), Vector.Zero, p)
+        foundSoul:AddEntityFlags(EntityFlag.FLAG_NO_PHYSICS_KNOCKBACK | EntityFlag.FLAG_NO_KNOCKBACK)
         f.lostSoul = false
     end
 end
