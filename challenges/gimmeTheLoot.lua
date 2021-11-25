@@ -38,8 +38,9 @@ local function MC_POST_NEW_ROOM()
         for i = 0, DoorSlot.NUM_DOOR_SLOTS - 1 do
             local door = Game():GetRoom():GetDoor(i)
 
-            if door and door:IsRoomType(RoomType.ROOM_SHOP) then
+            if door and door:IsRoomType(RoomType.ROOM_SHOP) and door:IsLocked() then
                 door:TryUnlock(Isaac.GetPlayer(0), true)
+				lootdeck.sfx:Stop(SoundEffect.SOUND_UNLOCK00)
             end
         end
     end
