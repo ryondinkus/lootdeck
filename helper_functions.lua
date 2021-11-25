@@ -752,14 +752,14 @@ end
 
 local function SetNestedValue(t, key, value)
     if t and type(t) == "table" then
-      if key:find("%.") then
-        local levelKey, nextLevelKey = key:match('(.*)%.(.*)')
-        return SetNestedValue(t[levelKey], nextLevelKey, value)
-      else
-        t[key] = value
-      end
+        if key:find("%.") then
+            local levelKey, nextLevelKey = key:match('(.*)%.(.*)')
+            return SetNestedValue(t[levelKey], nextLevelKey, value)
+        else
+            t[key] = value
+        end
     end
-  end
+end
 
 function H.SaveData(data)
     lootdeck:SaveData(json.encode(data))
