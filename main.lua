@@ -39,10 +39,6 @@ local defaultStartupValues = {
 }
 
 local defaultMcmOptions = {
-	GuaranteedLoot = false,
-	LootDeckStart = false,
-	BlankCardStart = false,
-	JacobEsauStart = false,
     LootCardChance = 20,
     HoloCardChance = 10
 }
@@ -54,6 +50,7 @@ lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
 local helper = include("helper_functions")
+local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
 
@@ -94,7 +91,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                     familiars = {},
                     global = table.deepCopy(defaultStartupValues),
                     mcmOptions = data.mcmOptions or table.deepCopy(defaultMcmOptions),
-                    unlocks = data.unlocks
+                    unlocks = data.unlocks or {}
                 })
                 lootdeck.f = table.deepCopy(defaultStartupValues)
                 lootdeck.unlocks = data.unlocks or {}
@@ -123,7 +120,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
             lootdeck.mcmOptions = table.deepCopy(defaultMcmOptions)
         end
 
-        include("modConfigMenu")
+        InitializeMCM(defaultMcmOptions)
         lootdeck.f.isInitialized = true
     end
 
@@ -294,12 +291,11 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
-		local holoChance = helper.PercentageChance((lootdeck.mcmOptions and lootdeck.mcmOptions.HoloCardChance) or 10) and lootdeck.unlocks.gimmeTheLoot
-        print(lootdeck.mcmOptions.HoloCardChance)
+		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance) and lootdeck.unlocks.gimmeTheLoot
 		if (isLootCard and isHoloLootCard and not holoChance) then
 			return id - 75
 		end
-		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or lootdeck.mcmOptions.GuaranteedLoot then
+		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) then
 			local selectedLootCard = helper.GetWeightedLootCardId(false)
 			if holoChance then
 				selectedLootCard = selectedLootCard + 75
