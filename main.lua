@@ -38,16 +38,19 @@ local defaultStartupValues = {
     delayedCards = {}
 }
 
+local defaultMcmOptions = {
+    LootCardChance = 20,
+    HoloCardChance = 10
+}
+
 lootdeck.rng = RNG()
 lootdeck.sfx = SFXManager()
 lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
-include("modConfigMenu")
 local helper = include("helper_functions")
-
-local mcmOptions = lootdeck.mcmOptions
+local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
 
@@ -87,8 +90,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                     players = {},
                     familiars = {},
                     global = table.deepCopy(defaultStartupValues),
-                    mcmOptions = data.mcmOptions,
-                    unlocks = data.unlocks
+                    mcmOptions = data.mcmOptions or table.deepCopy(defaultMcmOptions),
+                    unlocks = data.unlocks or {}
                 })
                 lootdeck.f = table.deepCopy(defaultStartupValues)
                 lootdeck.unlocks = data.unlocks or {}
@@ -109,23 +112,15 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 end
             end
 
-            lootdeck.mcmOptions = data.mcmOptions
+            lootdeck.mcmOptions = data.mcmOptions or table.deepCopy(defaultMcmOptions)
             lootdeck.unlocks = data.unlocks or {}
         else
             lootdeck.f = table.deepCopy(defaultStartupValues)
             lootdeck.unlocks = {}
+            lootdeck.mcmOptions = table.deepCopy(defaultMcmOptions)
         end
 
-        if mcmOptions.BlankCardStart then
-            Isaac.GetPlayer(0):AddCollectible(CollectibleType.COLLECTIBLE_BLANK_CARD, 4)
-        end
-
-        if mcmOptions.JacobEsauStart then
-            Isaac.GetPlayer(0):ChangePlayerType(PlayerType.PLAYER_JACOB)
-        end
-
-        mcmOptions.LootCardChance = helper.LoadKey("lootCardChance") or mcmOptions.LootCardChance
-
+        InitializeMCM(defaultMcmOptions)
         lootdeck.f.isInitialized = true
     end
 
@@ -296,11 +291,11 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	if not runeOnly then
         local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
-		local holoChance = helper.PercentageChance(10) and lootdeck.unlocks.gimmeTheLoot
+		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance) and lootdeck.unlocks.gimmeTheLoot
 		if (isLootCard and isHoloLootCard and not holoChance) then
 			return id - 75
 		end
-		if (helper.PercentageChance(mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) or mcmOptions.GuaranteedLoot then
+		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) then
 			local selectedLootCard = helper.GetWeightedLootCardId(false)
 			if holoChance then
 				selectedLootCard = selectedLootCard + 75

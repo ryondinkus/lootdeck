@@ -332,8 +332,8 @@ function H.GetWeightedLootCardId(includeHolos)
             end
             csum = csum + weight
         end
-        if lootdeck.unlocks.gimmeTheLoot and includeHolos and H.PercentageChance(10) then
-            return outcome.Id + 75
+        if lootdeck.unlocks.gimmeTheLoot and includeHolos and H.PercentageChance(lootdeck.mcmOptions.HoloCardChance) then
+            return lootcards["holographic"..outcome.Tag].Id
         else
             return outcome.Id
         end
@@ -751,6 +751,17 @@ function H.GenerateEncyclopediaPage(...)
     return {output}
 end
 
+local function SetNestedValue(t, key, value)
+    if t and type(t) == "table" then
+        if key:find("%.") then
+            local levelKey, nextLevelKey = key:match('(.*)%.(.*)')
+            return SetNestedValue(t[levelKey], nextLevelKey, value)
+        else
+            t[key] = value
+        end
+    end
+end
+
 function H.SaveData(data)
     lootdeck:SaveData(json.encode(data))
 end
@@ -766,7 +777,7 @@ function H.SaveKey(key, value)
     if lootdeck:HasData() then
         savedData = json.decode(lootdeck:LoadData())
     end
-    savedData[key] = value
+    SetNestedValue(savedData, key, value)
     lootdeck:SaveData(json.encode(savedData))
 end
 
