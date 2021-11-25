@@ -20,13 +20,13 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 
     helper.RandomChance(shouldDouble,
     function()
-		helper.TakeSelfDamage(p, 1, true)
+		helper.TakeSelfDamage(p, 1, true, true)
 		for i=0,3 do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
         end
     end,
     function()
-        helper.TakeSelfDamage(p, 2, true)
+        helper.TakeSelfDamage(p, 2, true, true)
         for i=0,7 do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
         end
