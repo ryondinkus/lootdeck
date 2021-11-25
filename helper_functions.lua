@@ -1143,7 +1143,9 @@ function H.PlayLootcardPickupAnimation(data, id)
 
         H.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
-        data.lootcardUseAnimation:SetLastFrame()
+        if data.lootcardUseAnimation then
+            data.lootcardUseAnimation:SetLastFrame()
+        end
     end
 end
 
@@ -1158,7 +1160,9 @@ function H.PlayLootcardUseAnimation(data, id)
         data.lootcardUseAnimation = H.RegisterAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
         H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
-        data.lootcardPickupAnimation:SetLastFrame()
+        if data.lootcardPickupAnimation then
+            data.lootcardPickupAnimation:SetLastFrame()
+        end
     end
 end
 
