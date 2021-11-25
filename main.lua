@@ -337,7 +337,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     end
     local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
 
-    if (playerAnimation == "UseItem" or playerAnimation == "Pickup" or playerAnimation == "PickupWalkDown" or playerAnimation == "PickupWalkUp" or playerAnimation == "PickupWalkLeft" or playerAnimation == "PickupWalkRight") then
+    if ((playerAnimation == "UseItem" and p:GetActiveItem() == items.lootDeck.Id) or playerAnimation == "Pickup" or playerAnimation == "PickupWalkDown" or playerAnimation == "PickupWalkUp" or playerAnimation == "PickupWalkLeft" or playerAnimation == "PickupWalkRight") then
         if data.isHoldingLootcard and data.lootcardPickupAnimation and data.lootcardPickupAnimation:IsPlaying(data.lootcardPickupAnimation:GetAnimation()) then
             if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
                 data.lootcardPickupAnimation:Update()
