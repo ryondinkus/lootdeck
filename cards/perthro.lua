@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p)
     local game = Game()
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
-    local inv = helper.GetPlayerInventory(p, false, false, true)
+    local inv = helper.GetPlayerInventory(p, false, false, true, true)
     if helper.LengthOfTable(inv) > 0 then
         local selectedItem = inv[rng:RandomInt(helper.LengthOfTable(inv))+1]
         p:RemoveCollectible(selectedItem)
