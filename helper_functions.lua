@@ -1114,8 +1114,11 @@ function H.GetCardPositionWithHUDOffset(p, sprite)
 end
 
 function H.RegisterAnimation(animationContainer, animationPath, animationName, callback)
-    if not animationContainer then
-        animationContainer = H.RegisterSprite(animationPath, nil, animationName)
+    if not animationContainer or not animationContainer.sprite then
+        animationContainer = {
+            sprite = H.RegisterSprite(animationPath, nil, animationName),
+            frameCount = 0
+        }
         if callback then
             callback(animationContainer)
         end
@@ -1124,10 +1127,11 @@ function H.RegisterAnimation(animationContainer, animationPath, animationName, c
 end
 
 function H.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
-    lootcardAnimationContainer:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag:gsub("holographic", "")))
-    lootcardAnimationContainer:LoadGraphics()
+    lootcardAnimationContainer.sprite:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag:gsub("holographic", "")))
+    lootcardAnimationContainer.sprite:LoadGraphics()
     if animationName then
-        lootcardAnimationContainer:Play(animationName, true)
+        lootcardAnimationContainer.sprite:Play(animationName, true)
+        lootcardAnimationContainer.frameCount = Isaac.GetFrameCount()
     end
 end
 
@@ -1144,7 +1148,7 @@ function H.PlayLootcardPickupAnimation(data, id)
         H.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
         if data.lootcardUseAnimation then
-            data.lootcardUseAnimation:SetLastFrame()
+            data.lootcardUseAnimation.sprite:SetLastFrame()
         end
     end
 end
@@ -1161,7 +1165,7 @@ function H.PlayLootcardUseAnimation(data, id)
 
         H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
         if data.lootcardPickupAnimation then
-            data.lootcardPickupAnimation:SetLastFrame()
+            data.lootcardPickupAnimation.sprite:SetLastFrame()
         end
     end
 end

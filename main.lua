@@ -331,27 +331,58 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     local data = p:GetData()
     local playerAnimation = p:GetSprite():GetAnimation()
 
+    local notExtraAnimations = {
+        "WalkRight",
+        "WalkDown",
+        "WalkLeft",
+        "WalkUp",
+        "HeadLeft",
+        "HeadRight",
+        "HeadDown",
+        "HeadUp"
+    }
+
+    if not helper.TableContains(notExtraAnimations, playerAnimation) then
+        data.previousExtraAnimation = playerAnimation
+    end
+
     local flyingOffset = p:GetFlyingOffset()
     if p.SubType == PlayerType.PLAYER_THEFORGOTTEN_B and p.PositionOffset.Y < -38 then
         flyingOffset = p:GetOtherTwin():GetFlyingOffset() - Vector(0,2)
     end
     local offsetVector = Vector(0,12) - p.PositionOffset - flyingOffset
 
-    if ((playerAnimation == "UseItem" and p:GetActiveItem() == items.lootDeck.Id) or playerAnimation == "Pickup" or playerAnimation == "PickupWalkDown" or playerAnimation == "PickupWalkUp" or playerAnimation == "PickupWalkLeft" or playerAnimation == "PickupWalkRight") then
-        if data.isHoldingLootcard and data.lootcardPickupAnimation and data.lootcardPickupAnimation:IsPlaying(data.lootcardPickupAnimation:GetAnimation()) then
-            if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
-                data.lootcardPickupAnimation:Update()
-            end
+    local cardExtraAnimations = {
+        "Pickup",
+        "PickupWalkDown",
+        "PickupWalkLeft",
+        "PickupWalkUp",
+        "PickupWalkRight",
+        "HeadLeft",
+        "HeadRight",
+        "HeadDown",
+        "HeadUp"
+    }
 
-            data.lootcardPickupAnimation:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
+    if not Game():IsPaused() then
+        if data.lootcardPickupAnimation then
+            if data.isHoldingLootcard and helper.TableContains(cardExtraAnimations, data.previousExtraAnimation) and data.lootcardPickupAnimation.sprite:IsPlaying(data.lootcardPickupAnimation.sprite:GetAnimation()) then
+                if (Isaac.GetFrameCount() - data.lootcardPickupAnimation.frameCount) % 2 == 0 then
+                    data.lootcardPickupAnimation.sprite:Update()
+                end
+
+                data.lootcardPickupAnimation.sprite:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
+            end
         end
 
-        if data.lootcardUseAnimation and data.lootcardUseAnimation:IsPlaying(data.lootcardUseAnimation:GetAnimation()) then
-            if (Isaac.GetFrameCount() % 2) == 0 and not Game():IsPaused() then
-                data.lootcardUseAnimation:Update()
-            end
+        if data.lootcardUseAnimation then
+            if ((playerAnimation == "UseItem" and p:GetActiveItem() == items.lootDeck.Id) or helper.TableContains(cardExtraAnimations, data.previousExtraAnimation)) and data.lootcardUseAnimation.sprite:IsPlaying(data.lootcardUseAnimation.sprite:GetAnimation()) then
+                if (Isaac.GetFrameCount() - data.lootcardUseAnimation.frameCount) % 2 == 0 then
+                    data.lootcardUseAnimation.sprite:Update()
+                end
 
-            data.lootcardUseAnimation:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
+                data.lootcardUseAnimation.sprite:Render(Isaac.WorldToScreen(p.Position - offsetVector), Vector.Zero, Vector.Zero)
+            end
         end
     end
 end)
@@ -395,29 +426,29 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 data.lootcardHUDAnimation = lootcardAnimationContainer
 
                 if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
-                    local color = lootcardAnimationContainer.Color
+                    local color = lootcardAnimationContainer.sprite.Color
                     if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
-                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
+                        lootcardAnimationContainer.sprite.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
                     else
-                        lootcardAnimationContainer.Color = Color(color.R, color.G, color.B, math.max(color.A - 0.07, 0.5))
+                        lootcardAnimationContainer.sprite.Color = Color(color.R, color.G, color.B, math.max(color.A - 0.07, 0.5))
                     end
                 end
 
-                if not lootcardAnimationContainer:IsPlaying(heldLootcard.HUDAnimationName) then
+                if not lootcardAnimationContainer.sprite:IsPlaying(heldLootcard.HUDAnimationName) then
                     helper.StartLootcardAnimation(lootcardAnimationContainer, heldLootcard.Tag, heldLootcard.HUDAnimationName)
                 else
                     helper.StartLootcardAnimation(lootcardAnimationContainer, heldLootcard.Tag)
                 end
 
                 if Isaac.GetFrameCount() % 2 == 0 then
-                    lootcardAnimationContainer:Update()
+                    lootcardAnimationContainer.sprite:Update()
                 end
-                lootcardAnimationContainer:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
+                lootcardAnimationContainer.sprite:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation then
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
-                        local color = data.lootcardHUDAnimation.Color
-                        data.lootcardHUDAnimation.Color = Color(color.R, color.G, color.B, 0.5)
+                        local color = data.lootcardHUDAnimation.sprite.Color
+                        data.lootcardHUDAnimation.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end
             end
@@ -431,7 +462,7 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     local data = p:GetData()
 
     if data.lootcardUseAnimation then
-        data.lootcardUseAnimation:SetLastFrame()
+        data.lootcardUseAnimation.sprite:SetLastFrame()
     end
 
     if heldLootcard then
