@@ -131,125 +131,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 
 end)
 
-for _, card in pairs(lootcards) do
-    if card.callbacks then
-        for _, callback in pairs(card.callbacks) do
-            if callback[1] == ModCallbacks.MC_USE_CARD then
-                lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
-                    local result = callback[2](_, c, p, f, shouldDouble)
-
-                    if shouldDouble and callback[4] then
-                        if not callback[5] then
-                            callback[2](_, c, p, f)
-                        else
-                            table.insert(lootdeck.f.delayedCards, {
-                                player = p,
-                                cardId = c,
-                                flags = f,
-                                delay = callback[5] * 30
-                            })
-                        end
-                    end
-
-                    if f & UseFlag.USE_MIMIC == 0 then
-                        local data = p:GetData()
-                        if result == nil or result then
-                            helper.PlayLootcardUseAnimation(data, card.Id)
-                        end
-                        data.isHoldingLootcard = false
-                    end
-                end, card.Id)
-            else
-                lootdeck:AddCallback(table.unpack(callback))
-            end
-        end
-    end
-
-    helper.AddExternalItemDescriptionCard(card)
-
-	if Encyclopedia and card.WikiDescription and not card.Holographic then
-		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
-		Encyclopedia.AddCard({
-			Class = "Loot Deck",
-			ID = card.Id,
-			WikiDesc = card.WikiDescription,
-			ModName = "Loot Deck",
-			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 0, cardFrontPath),
-		})
-	end
-end
-
-for _, challenge in pairs(lootdeckChallenges) do
-    if challenge.callbacks then
-        for _, callback in pairs(challenge.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-end
-
-for _, variant in pairs(entityVariants) do
-    if variant.callbacks then
-        for _, callback in pairs(variant.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-end
-
-for _, subType in pairs(entitySubTypes) do
-    if subType.callbacks then
-        for _, callback in pairs(subType.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-end
-
-for _, item in pairs(items) do
-    if item.callbacks then
-        for _, callback in pairs(item.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-
-	helper.AddExternalItemDescriptionItem(item)
-
-	if Encyclopedia and item.WikiDescription then
-		Encyclopedia.AddItem({
-			Class = "Loot Deck",
-			ID = item.Id,
-			WikiDesc = item.WikiDescription,
-			ModName = "Loot Deck"
-		})
-	end
-end
-
-for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-
-	helper.AddExternalItemDescriptionTrinket(trinket)
-
-	if Encyclopedia and trinket.WikiDescription then
-		Encyclopedia.AddTrinket({
-			Class = "Loot Deck",
-			ID = trinket.Id,
-			WikiDesc = trinket.WikiDescription,
-			ModName = "Loot Deck"
-		})
-	end
-end
-
-for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
-end
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
     if lootdeck.f.delayedCards then
         for i, delayedCard in pairs(lootdeck.f.delayedCards) do
@@ -456,10 +337,38 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
     end)
 end)
 
+lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
+    local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation.sprite:SetLastFrame()
+    end
+
+    if data.lootcardUseAnimation then
+        data.lootcardUseAnimation.sprite:SetLastFrame()
+    end
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
+    local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation.sprite:SetLastFrame()
+    end
+    
+    if data.lootcardUseAnimation then
+        data.lootcardUseAnimation.sprite:SetLastFrame()
+    end
+end)
+
 lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))
 
     local data = p:GetData()
+
+    if data.lootcardPickupAnimation then
+        data.lootcardPickupAnimation.sprite:SetLastFrame()
+    end
 
     if data.lootcardUseAnimation then
         data.lootcardUseAnimation.sprite:SetLastFrame()
@@ -469,3 +378,122 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
         helper.PlayLootcardUseAnimation(data, heldLootcard.Id)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
+
+for _, card in pairs(lootcards) do
+    if card.callbacks then
+        for _, callback in pairs(card.callbacks) do
+            if callback[1] == ModCallbacks.MC_USE_CARD then
+                lootdeck:AddCallback(callback[1], function(_, c, p, f)
+                    local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
+                    local result = callback[2](_, c, p, f, shouldDouble)
+
+                    if shouldDouble and callback[4] then
+                        if not callback[5] then
+                            callback[2](_, c, p, f)
+                        else
+                            table.insert(lootdeck.f.delayedCards, {
+                                player = p,
+                                cardId = c,
+                                flags = f,
+                                delay = callback[5] * 30
+                            })
+                        end
+                    end
+
+                    if f & UseFlag.USE_MIMIC == 0 then
+                        local data = p:GetData()
+                        if result == nil or result then
+                            helper.PlayLootcardUseAnimation(data, card.Id)
+                        end
+                        data.isHoldingLootcard = false
+                    end
+                end, card.Id)
+            else
+                lootdeck:AddCallback(table.unpack(callback))
+            end
+        end
+    end
+
+    helper.AddExternalItemDescriptionCard(card)
+
+	if Encyclopedia and card.WikiDescription and not card.Holographic then
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
+		Encyclopedia.AddCard({
+			Class = "Loot Deck",
+			ID = card.Id,
+			WikiDesc = card.WikiDescription,
+			ModName = "Loot Deck",
+			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 0, cardFrontPath),
+		})
+	end
+end
+
+for _, challenge in pairs(lootdeckChallenges) do
+    if challenge.callbacks then
+        for _, callback in pairs(challenge.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end
+
+for _, variant in pairs(entityVariants) do
+    if variant.callbacks then
+        for _, callback in pairs(variant.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end
+
+for _, subType in pairs(entitySubTypes) do
+    if subType.callbacks then
+        for _, callback in pairs(subType.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end
+
+for _, item in pairs(items) do
+    if item.callbacks then
+        for _, callback in pairs(item.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+
+	helper.AddExternalItemDescriptionItem(item)
+
+	if Encyclopedia and item.WikiDescription then
+		Encyclopedia.AddItem({
+			Class = "Loot Deck",
+			ID = item.Id,
+			WikiDesc = item.WikiDescription,
+			ModName = "Loot Deck"
+		})
+	end
+end
+
+for _, trinket in pairs(trinkets) do
+    if trinket.callbacks then
+        for _, callback in pairs(trinket.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+
+	helper.AddExternalItemDescriptionTrinket(trinket)
+
+	if Encyclopedia and trinket.WikiDescription then
+		Encyclopedia.AddTrinket({
+			Class = "Loot Deck",
+			ID = trinket.Id,
+			WikiDesc = trinket.WikiDescription,
+			ModName = "Loot Deck"
+		})
+	end
+end
+
+for _, trinket in pairs(trinkets) do
+    if trinket.callbacks then
+        for _, callback in pairs(trinket.callbacks) do
+            lootdeck:AddCallback(table.unpack(callback))
+        end
+    end
+end

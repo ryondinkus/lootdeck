@@ -79,7 +79,6 @@ local cards = {
 local holoCards = {}
 
 for key, card in pairs(cards) do
-    Isaac.DebugString(key)
     card.HUDAnimationName = "Idle"
     card.PickupAnimationName = "Idle"
     card.UseAnimationName = "IdleFast"
