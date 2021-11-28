@@ -1,50 +1,50 @@
 <ItemPools>
-<Pool name="treasure">
-	<Item name="Player Card"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+<Pool Name="treasure">
+	<Item Name="Player Card"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
-	<Item name="Loot Deck"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
-    />
-</Pool>
-<Pool name="shop">
-	<Item name="Player Card"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
-    />
-	<Item name="Loot Deck"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+	<Item Name="Loot Deck"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
 </Pool>
-<Pool name="greedTreasure">
-	<Item name="Player Card"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+<Pool Name="shop">
+	<Item Name="Player Card"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
-	<Item name="Loot Deck"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+	<Item Name="Loot Deck"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
 </Pool>
-<Pool name="greedShop">
-	<Item name="Player Card"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+<Pool Name="greedTreasure">
+	<Item Name="Player Card"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
-	<Item name="Loot Deck"
-        weight="1"
-        removeon="0.1"
-        decreaseby="0.5"
+	<Item Name="Loot Deck"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
+    />
+</Pool>a
+<Pool Name="greedShop">
+	<Item Name="Player Card"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
+    />
+	<Item Name="Loot Deck"
+        Weight="1"
+        RemoveOn="0.1"
+        DecreaseBy="1"
     />
 </Pool>
 </ItemPools>
