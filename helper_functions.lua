@@ -641,7 +641,7 @@ function H.GetStartingItemsFromPlayer(p)
     return startingItems[index]
 end
 
-function H.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems)
+function H.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
@@ -649,7 +649,8 @@ function H.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems)
         local collectible = itemConfig:GetCollectible(i)
         if collectible
         and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
-        and (not ignoreStartingItems or not H.TableContains(H.GetStartingItemsFromPlayer(p), i)) then
+        and (not ignoreStartingItems or not H.TableContains(H.GetStartingItemsFromPlayer(p), i))
+		and (not ignoreQuestItems or not collectible:HasTags(ItemConfig.TAG_QUEST)) then
             inv[i] = p:GetCollectibleNum(i)
         end
     end
