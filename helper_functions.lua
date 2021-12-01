@@ -929,6 +929,8 @@ function H.SaveGame()
         unlocks = lootdeck.unlocks or {}
     }
 
+    print(json.encode(lootdeck.f))
+
     H.ForEachPlayer(function(p)
         data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
     end)
@@ -1158,7 +1160,7 @@ function H.PlayLootcardPickupAnimation(data, id)
 
         H.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
-        if data.lootcardUseAnimation then
+        if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
             data.lootcardUseAnimation.sprite:SetLastFrame()
         end
     end
@@ -1175,7 +1177,7 @@ function H.PlayLootcardUseAnimation(data, id)
         data.lootcardUseAnimation = H.RegisterAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
         H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
-        if data.lootcardPickupAnimation then
+        if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
             data.lootcardPickupAnimation.sprite:SetLastFrame()
         end
     end

@@ -24,15 +24,12 @@ local defaultStartupValues = {
     removeSun = false,
     floorBossCleared = 0,
     newRoom = false,
-    world = nil,
-    savedTime = 0,
     showOverlay = false,
     firstEnteredLevel = false,
     blueMap = false,
     compass = false,
     map = false,
     lostSoul = false,
-    unlocks = {},
     isInitialized = false,
     isGameStarted = false,
     delayedCards = {}
@@ -118,6 +115,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 end
             end
 
+            print(include("json").encode(lootdeck.f))
             lootdeck.mcmOptions = data.mcmOptions or table.deepCopy(defaultMcmOptions)
             lootdeck.unlocks = data.unlocks or {}
         else
@@ -193,10 +191,10 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
-    lootdeck.f = table.deepCopy(defaultStartupValues)
     if shouldSave then
         helper.SaveGame()
     end
+    lootdeck.f = table.deepCopy(defaultStartupValues)
 end)
 
 -- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
