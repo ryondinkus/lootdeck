@@ -115,7 +115,6 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 end
             end
 
-            print(include("json").encode(lootdeck.f))
             lootdeck.mcmOptions = data.mcmOptions or table.deepCopy(defaultMcmOptions)
             lootdeck.unlocks = data.unlocks or {}
         else

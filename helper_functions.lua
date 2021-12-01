@@ -929,8 +929,6 @@ function H.SaveGame()
         unlocks = lootdeck.unlocks or {}
     }
 
-    print(json.encode(lootdeck.f))
-
     H.ForEachPlayer(function(p)
         data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
     end)

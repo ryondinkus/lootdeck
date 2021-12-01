@@ -35,8 +35,6 @@ local function MC_POST_UPDATE()
     local mus = lootdeck.mus
     local global = lootdeck.f
     if global[Tag] then
-        print(global[Tag])
-        print(include("json").encode(lootdeck.f))
         if global[Tag] % 30 == 0 then
             sfx:Play(SoundEffect.SOUND_FETUS_LAND, 1, 0)
         end
