@@ -18,7 +18,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "Yo
 local ReviveTag = string.format("%sRevive", Tag)
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if not data[Tag] then
         data[Tag] = 3
         if shouldDouble then

@@ -23,7 +23,7 @@ local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
 local function Initialize(p)
     local game = Game()
     if helper.AreEnemiesInRoom(game:GetRoom()) then
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         if data[finishedTag] or data[finishedTag] == nil then
             data[originalFireDelayTag] = p.MaxFireDelay
         end
@@ -40,7 +40,7 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p)
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         data[Tag] = nil
         data[finishedTag] = nil
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
@@ -51,7 +51,7 @@ end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function()
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         if data[Tag] then
             data[Tag] = data[Tag] + 1
             p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
@@ -61,7 +61,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if f == CacheFlag.CACHE_FIREDELAY then
         if data[Tag] then
             local newDelay = p.MaxFireDelay - 10 + (data[Tag]/(p.MaxFireDelay))

@@ -74,15 +74,15 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 			if not OverrideControls then
 				OverrideControls = true
 				
-				for p = 0, game:GetNumPlayers() - 1 do
-					local player = Isaac.GetPlayer(p)
-					local data = player:GetData()
+				for pi = 0, game:GetNumPlayers() - 1 do
+					local p = Isaac.GetPlayer(pi)
+					local data = p:GetData().lootdeck
 					
 					if not data.AchievementDisplayAPIControls then
-						data.AchievementDisplayAPIControls = player.Velocity
+						data.AchievementDisplayAPIControls = p.Velocity
 						data.MenuDisabledControls = nil
-						player.ControlsEnabled = false
-						player.Velocity = Vector.Zero
+						p.ControlsEnabled = false
+						p.Velocity = Vector.Zero
 					end
 				end
 			end
@@ -116,13 +116,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 				if (not AchievementQueue[1]) and OverrideControls then
 					OverrideControls = false
 					
-					for p = 0, game:GetNumPlayers() - 1 do
-						local player = Isaac.GetPlayer(p)
-						local data = player:GetData()
+					for pi = 0, game:GetNumPlayers() - 1 do
+						local p = Isaac.GetPlayer(pi)
+						local data = p:GetData().lootdeck
 						
 						if data.AchievementDisplayAPIControls then
-							player.ControlsEnabled = true
-							player.Velocity = data.AchievementDisplayAPIControls
+							p.ControlsEnabled = true
+							p.Velocity = data.AchievementDisplayAPIControls
 							data.AchievementDisplayAPIControls = nil
 						end
 					end

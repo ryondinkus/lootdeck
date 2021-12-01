@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Holographic Effect: Grants two Steam Sale effects.")
 
 local function MC_USE_CARD(_, c, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)
     p:AddCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE, 0, false)
     if not data.sale then data.sale = 1

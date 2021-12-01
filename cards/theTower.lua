@@ -18,7 +18,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explo
 local chosenTag = Tag.."Chosen"
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
 	data[Tag] = 1
 
 	if shouldDouble then
@@ -40,7 +40,7 @@ end
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
-		local data = player:GetData()
+		local data = player:GetData().lootdeck
 		if data[counterName] > numberOfEnemies then
 			data[counterName] = numberOfEnemies
 		end

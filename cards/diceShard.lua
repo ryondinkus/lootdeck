@@ -27,7 +27,7 @@ local function MC_USE_CARD(_, c, p, flags, shouldDouble)
 	local level = game:GetLevel()
     local f = lootdeck.f
     if not f.firstEnteredLevel then
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS)
         f.newRoom = level:GetCurrentRoomIndex()
         if (flags & UseFlag.USE_MIMIC == 0) then

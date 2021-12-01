@@ -24,15 +24,12 @@ local defaultStartupValues = {
     removeSun = false,
     floorBossCleared = 0,
     newRoom = false,
-    world = nil,
-    savedTime = 0,
     showOverlay = false,
     firstEnteredLevel = false,
     blueMap = false,
     compass = false,
     map = false,
     lostSoul = false,
-    unlocks = {},
     isInitialized = false,
     isGameStarted = false,
     delayedCards = {}
@@ -53,6 +50,12 @@ local helper = include("helper_functions")
 local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, p)
+    if not p:GetData().lootdeck then
+        p:GetData().lootdeck = {}
+    end
+end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
     if lootdeck:HasData() then
@@ -187,10 +190,10 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
-    lootdeck.f = table.deepCopy(defaultStartupValues)
     if shouldSave then
         helper.SaveGame()
     end
+    lootdeck.f = table.deepCopy(defaultStartupValues)
 end)
 
 -- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
@@ -204,7 +207,7 @@ end)
 --========== LOOTCARD HUD RENDERING ==========
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local playerAnimation = p:GetSprite():GetAnimation()
 
     local notExtraAnimations = {
@@ -241,7 +244,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
     }
 
     if not Game():IsPaused() then
-        if data.lootcardPickupAnimation then
+        if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
             if data.isHoldingLootcard and helper.TableContains(cardExtraAnimations, data.previousExtraAnimation) and not p:IsExtraAnimationFinished() and data.lootcardPickupAnimation.sprite:IsPlaying(data.lootcardPickupAnimation.sprite:GetAnimation()) then
                 if (Isaac.GetFrameCount() - data.lootcardPickupAnimation.frameCount) % 2 == 0 then
                     data.lootcardPickupAnimation.sprite:Update()
@@ -251,7 +254,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
             end
         end
 
-        if data.lootcardUseAnimation then
+        if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
             if ((playerAnimation == "UseItem" and p:GetActiveItem() == items.lootDeck.Id) or helper.TableContains(cardExtraAnimations, data.previousExtraAnimation)) and not p:IsExtraAnimationFinished() and data.lootcardUseAnimation.sprite:IsPlaying(data.lootcardUseAnimation.sprite:GetAnimation()) then
                 if (Isaac.GetFrameCount() - data.lootcardUseAnimation.frameCount) % 2 == 0 then
                     data.lootcardUseAnimation.sprite:Update()
@@ -274,7 +277,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if not p:IsExtraAnimationFinished() then
 		return
 	end
-	local data = p:GetData()
+	local data = p:GetData().lootdeck
 
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
@@ -321,7 +324,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 end
                 lootcardAnimationContainer.sprite:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
-                if data.lootcardHUDAnimation then
+                if data.lootcardHUDAnimation and data.lootcardHUDAnimation.sprite then
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                         local color = data.lootcardHUDAnimation.sprite.Color
                         data.lootcardHUDAnimation.sprite.Color = Color(color.R, color.G, color.B, 0.5)
@@ -333,25 +336,26 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
 
-    if data.lootcardPickupAnimation then
+    if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end
 
-    if data.lootcardUseAnimation then
+    if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
         data.lootcardUseAnimation.sprite:SetLastFrame()
     end
+
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
 
-    if data.lootcardPickupAnimation then
+    if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end
-    
-    if data.lootcardUseAnimation then
+
+    if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
         data.lootcardUseAnimation.sprite:SetLastFrame()
     end
 end)
@@ -359,13 +363,13 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))
 
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
 
-    if data.lootcardPickupAnimation then
+    if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end
 
-    if data.lootcardUseAnimation then
+    if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
         data.lootcardUseAnimation.sprite:SetLastFrame()
     end
 
@@ -396,7 +400,7 @@ for _, card in pairs(lootcards) do
                     end
 
                     if f & UseFlag.USE_MIMIC == 0 then
-                        local data = p:GetData()
+                        local data = p:GetData().lootdeck
                         if result == nil or result then
                             helper.PlayLootcardUseAnimation(data, card.Id)
                         end
@@ -411,15 +415,20 @@ for _, card in pairs(lootcards) do
 
     helper.AddExternalItemDescriptionCard(card)
 
-	if Encyclopedia and card.WikiDescription and not card.Holographic then
-		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag)
-		Encyclopedia.AddCard({
+	if Encyclopedia and card.WikiDescription then
+		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", card.Tag:gsub("holographic", ""))
+
+        local encyclopediaOptions = {
 			Class = "Loot Deck",
 			ID = card.Id,
 			WikiDesc = card.WikiDescription,
 			ModName = "Loot Deck",
-			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 0, cardFrontPath),
-		})
+            Name = card.Name,
+			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 2, cardFrontPath),
+            Hide = card.Holographic
+		}
+
+		Encyclopedia.AddCard(encyclopediaOptions)
 	end
 end
 

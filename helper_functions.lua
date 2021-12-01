@@ -47,7 +47,7 @@ function H.FindRandomEnemy(pos, tag, filter)
 end
 
 function H.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
-	local data = p:GetData()
+	local data = p:GetData().lootdeck
     if data[key] and data[key] > 0 then
 		local timerName = key.."Timer"
 		local counterName = key.."Counter"
@@ -189,7 +189,7 @@ function H.FindHealthToAdd(p, hp)
 end
 
 function H.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
-	local data = p:GetData()
+	local data = p:GetData().lootdeck
     local amountToAdd = H.FindHealthToAdd(p, hp)
     if p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
         if not data.soulHp then data.soulHp = 0 end
@@ -284,7 +284,7 @@ end
 
 function H.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
     local game = Game()
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local sprite = p:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
@@ -464,7 +464,7 @@ function H.CheckForTintedRocks(room)
 end
 
 function H.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local game = Game()
     if not data[roomClearedTag] and not H.AreEnemiesInRoom(game:GetRoom()) then
         data[roomClearedTag] = true
@@ -513,8 +513,7 @@ function H.ForEachPlayer(callback, collectibleId)
     for x = 0, Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
-            local p = Isaac.GetPlayer(x)
-            if callback(p, p:GetData()) == false then
+            if callback(p, p:GetData().lootdeck) == false then
                 shouldReturn = false
             end
         end
@@ -931,7 +930,7 @@ function H.SaveGame()
     }
 
     H.ForEachPlayer(function(p)
-        data.players[tostring(p.InitSeed)] = p:GetData()
+        data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
     end)
 
     H.ForEachEntityInRoom(function(familiar)
@@ -1159,7 +1158,7 @@ function H.PlayLootcardPickupAnimation(data, id)
 
         H.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
-        if data.lootcardUseAnimation then
+        if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
             data.lootcardUseAnimation.sprite:SetLastFrame()
         end
     end
@@ -1176,7 +1175,7 @@ function H.PlayLootcardUseAnimation(data, id)
         data.lootcardUseAnimation = H.RegisterAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
         H.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
-        if data.lootcardPickupAnimation then
+        if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
             data.lootcardPickupAnimation.sprite:SetLastFrame()
         end
     end

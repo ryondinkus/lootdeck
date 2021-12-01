@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.", "Holographic Effect: Destroys and grants a new item, then destroys and grants another.")
 
 local function MC_USE_CARD(_, c, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local rng = lootdeck.rng
     local game = Game()
     local room = game:GetRoom()
@@ -42,7 +42,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if data[Tag] then
         if p:IsExtraAnimationFinished() then
             local collectible = data[Tag .. "Collectible"]

@@ -20,9 +20,9 @@ end
 
 local function MC_PRE_PICKUP_COLLISION(_, pickup, entity)
     if Isaac.GetChallenge() == Id then
-        local player = entity:ToPlayer()
-        if player then
-            local data = player:GetData()
+        local p = entity:ToPlayer()
+        if p then
+            local data = p:GetData().lootdeck
             if not data[Tag] and not lootdeck.unlocks[Tag] then
                 lootdeck.unlocks[Tag] = true
                 data[Tag] = true

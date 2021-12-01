@@ -16,7 +16,6 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Swaps the potential drops of Gold Chests and Red Chests.")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
-    local f = lootdeck.f
     local found = false
     helper.ForEachPlayer(function()
         found = true
@@ -45,14 +44,20 @@ local function MC_POST_PICKUP_UPDATE(_, pickup)
         end
     end
 
+    local global = lootdeck.f
     local sprite = pickup:GetSprite()
-    if found and not helper.TableContains(f, pickup.InitSeed) and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and sprite:GetOverlayAnimation() == "Alternates" and pickup.FrameCount == 1 then
+    if found and not helper.TableContains(global[Tag] or {}, pickup.InitSeed) and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and sprite:GetOverlayAnimation() == "Alternates" and pickup.FrameCount == 1 then
         if sprite:GetOverlayFrame() == 4 then
             sprite:SetOverlayFrame("Alternates", 5)
         elseif sprite:GetOverlayFrame() == 5 then
             sprite:SetOverlayFrame("Alternates", 4)
         end
-        table.insert(f, pickup.InitSeed)
+
+        if not global[Tag] then
+            global[Tag] = { pickup.InitSeed }
+        else
+            table.insert(global[Tag], pickup.InitSeed)
+        end
     end
 end
 

@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: Fills in all holes in the current room.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     local magnetoConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_MAGNETO)
     p:AddCollectible(CollectibleType.COLLECTIBLE_MAGNETO, 0, false)
     if not data.hangedMan then data.hangedMan = 1

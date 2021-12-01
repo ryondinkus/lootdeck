@@ -47,7 +47,7 @@ end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
     helper.RevivePlayerPostPlayerUpdate(p, Tag, ReviveTag, function()
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         data[ReviveTag] = nil
     end)
 end
