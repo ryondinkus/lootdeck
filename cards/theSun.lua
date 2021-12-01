@@ -32,7 +32,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     p:AddNullCostume(costumes.sun)
     lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
 	if shouldDouble then
-		p:GetData()[Tag .. "Double"] = true
+		p:GetData().lootdeck[Tag .. "Double"] = true
 	end
 end
 

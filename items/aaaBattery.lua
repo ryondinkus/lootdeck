@@ -16,7 +16,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Grants a random tempora
 
 local function GivePlayerItem(p, data)
     if not data then
-        data = p:GetData()
+        data = p:GetData().lootdeck
     end
     local itemPool = Game():GetItemPool()
     local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
@@ -34,7 +34,7 @@ end
 
 local function RemovePlayerItems(p, data)
     if not data then
-        data = p:GetData()
+        data = p:GetData().lootdeck
     end
     if data[Tag] then
         for _,v in pairs(data[Tag]) do
@@ -55,7 +55,7 @@ local function MC_POST_NEW_LEVEL()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if data[Tag] and not data[Tag .. "Played"] and p:IsExtraAnimationFinished() then
         p:AnimateCollectible(data[Tag][#data[Tag]])
         lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)

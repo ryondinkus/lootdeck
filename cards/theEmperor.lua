@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.", "Holographic Effect: All enemies charmed this way become champions.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     data[Tag] = {}
 	local illegalParents = {
 		EntityType.ENTITY_GEMINI, -- gemini's umbilical cord

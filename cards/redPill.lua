@@ -19,7 +19,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local sfx = lootdeck.sfx
-	local data = p:GetData()
+	local data = p:GetData().lootdeck
 
 	return helper.RandomChance(shouldDouble,
 		function()
@@ -55,7 +55,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-	local data = p:GetData()
+	local data = p:GetData().lootdeck
     if not data[Tag] then data[Tag] = 0 end
     if f == CacheFlag.CACHE_DAMAGE then
         if data[Tag] then

@@ -19,7 +19,7 @@ local function MC_FAMILIAR_INIT(_, f)
 	local p = f.SpawnerEntity:ToPlayer()
 
 	if p then
-		local data = p:GetData()
+		local data = p:GetData().lootdeck
 
 		if data[FAMILIAR_INIT_SEEDS_TAG] then
 			if not helper.TableContains(data[FAMILIAR_INIT_SEEDS_TAG], f.InitSeed) then
@@ -52,7 +52,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
 			local p = f.SpawnerEntity:ToPlayer()
 
 			if p then
-				local pData = p:GetData()
+				local pData = p:GetData().lootdeck
 
 				table.remove(pData[FAMILIAR_INIT_SEEDS_TAG], 1)
 
@@ -83,7 +83,7 @@ end
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     local p = e:ToPlayer()
     if p then
-        local playerData = p:GetData()
+        local playerData = p:GetData().lootdeck
         if playerData[FAMILIAR_INIT_SEEDS_TAG] and #playerData[FAMILIAR_INIT_SEEDS_TAG] > 0 and pi.Type == EntityType.ENTITY_PICKUP then
             if helper.CanBuyPickup(p, pi) then
 				local familiar = helper.GetEntityByInitSeed(playerData[FAMILIAR_INIT_SEEDS_TAG][1])

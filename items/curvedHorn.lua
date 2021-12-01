@@ -22,7 +22,7 @@ local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
 local function Initialize(p)
     local game = Game()
     if helper.AreEnemiesInRoom(game:GetRoom()) then
-        local data = p:GetData()
+        local data = p:GetData().lootdeck
         data[finishedTag] = false
         data[roomClearedTag] = nil
         if game:IsGreedMode() then
@@ -42,7 +42,7 @@ end
 
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if p:HasCollectible(Id) then
         if data.curvedHornTearAmount and data.curvedHornTearAmount > 0 then
             tear.CollisionDamage = tear.CollisionDamage * 4

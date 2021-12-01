@@ -931,7 +931,7 @@ function H.SaveGame()
     }
 
     H.ForEachPlayer(function(p)
-        data.players[tostring(p.InitSeed)] = p:GetData()
+        data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
     end)
 
     H.ForEachEntityInRoom(function(familiar)

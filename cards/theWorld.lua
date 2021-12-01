@@ -52,7 +52,7 @@ local function MC_POST_UPDATE()
 end
 
 local function MC_POST_PROJECTILE_UPDATE(_, p)
-    local data = p:GetData()
+    local data = p:GetData().lootdeck
     if lootdeck.f.world then
         if lootdeck.f.world >= 300 then
             data.Velocity = p.Velocity
