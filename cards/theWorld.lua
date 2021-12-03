@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Freezes the room for 10 seconds
 local Names = {

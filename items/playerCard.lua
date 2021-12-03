@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Doubles the effect of loot cards
 local Names = {

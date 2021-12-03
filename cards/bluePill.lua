@@ -1,5 +1,5 @@
 local entityVariants = include("entityVariants/registry")
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- A 1 in 3 chance of spawning a tarotcard, thee tarotcards, or losing one coin, bomb, and key
 local Names = {

@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Spawns 5-10 shopkeepers around the room
 local Names = {

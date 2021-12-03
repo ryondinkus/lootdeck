@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Instakill all enemies in room (80 dmg on bosses) | Confuse all enemies in room | Deal full heart of damage
 local Names = {

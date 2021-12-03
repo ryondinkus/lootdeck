@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns a Devil Hand that "steals" any item and brings it next to the player

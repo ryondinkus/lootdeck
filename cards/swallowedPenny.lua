@@ -1,5 +1,5 @@
 
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local items = include("items/registry")
 
 -- Gives the swallowed penny item
@@ -18,7 +18,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: 50% chance to drop a penny after taking damage.", "- Increased chance to drop a penny for every extra copy of Swallowed Penny.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardItem(p, items.swallowedPenny.Id, SoundEffect.SOUND_VAMP_GULP)
+	helper.GiveItem(p, items.swallowedPenny.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {

@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Shuffle values of coins, keys, and bombs | reroll all items in room | reroll all of your passives
 local Names = {
@@ -29,11 +29,11 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             p:AddKeys(coins - keys)
         end,
         function()
-            helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D6, SoundEffect.SOUND_EDEN_GLITCH)
+            helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D6, SoundEffect.SOUND_EDEN_GLITCH)
         end,
         function()
             p:PlayExtraAnimation("Glitch")
-            helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
+            helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D4, SoundEffect.SOUND_EDEN_GLITCH)
             return false
         end)
 end

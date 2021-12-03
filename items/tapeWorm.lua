@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- 1/10 tears replaced with Worm Tears, which have endless range and create slowing creep on collision
 local Names = {

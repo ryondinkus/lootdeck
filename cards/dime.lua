@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Spawns a dime
 local Names = {

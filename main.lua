@@ -11,6 +11,7 @@ function table.deepCopy(original)
 	return copy
 end
 
+include("helpers")
 include("helpers/achievements")
 include("cards/registry")
 include("challenges/registry")
@@ -46,7 +47,7 @@ lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
@@ -173,7 +174,7 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
 	if not runeOnly then
-        local isLootCard = helper.FindItemInTableByKey(lootcards, "Id", id) ~= nil
+        local isLootCard = lootcards[id] ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
 		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance) and lootdeck.unlocks.gimmeTheLoot
 		if (isLootCard and isHoloLootCard and not holoChance) then
@@ -289,8 +290,8 @@ end, PickupVariant.PICKUP_TAROTCARD)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
     helper.ForEachPlayer(function(p, data)
-        if lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled then
-            local heldCardId = p:GetCard(0)
+        local heldCardId = p:GetCard(0)
+        if heldCardId ~= 0 and (lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled) then
             local heldLootcard = helper.GetLootcardById(heldCardId)
             if heldLootcard then
 

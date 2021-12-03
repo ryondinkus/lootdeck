@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Farts
 local Names = {
@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.", "Holographic Effect: Creates two Butter Bean farts in quick succession.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_BUTTER_BEAN)
+	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_BUTTER_BEAN)
 end
 
 return {
