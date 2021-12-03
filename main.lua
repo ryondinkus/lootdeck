@@ -473,6 +473,10 @@ for _, item in pairs(items) do
 			ModName = "Loot Deck"
 		})
 	end
+
+	if AnimatedItemsAPI then
+		AnimatedItemsAPI:SetAnimationForCollectible(item.Id, "items/collectibles/animated/".. item.Tag .. "Animated.anm2")
+	end
 end
 
 for _, trinket in pairs(trinkets) do
