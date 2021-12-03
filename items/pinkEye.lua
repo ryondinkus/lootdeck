@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- On damamge taken, chance to fire a poison creep tear at attacker
 local Names = {

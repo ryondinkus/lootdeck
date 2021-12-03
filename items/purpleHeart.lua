@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Rerolls an enemy in a room and drops an extra reward per room
 local Names = {

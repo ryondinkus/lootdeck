@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Poison fart | weaken all enemies (they take 2x damage) | do nothing
 local Names = {
@@ -20,7 +20,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 
     helper.RandomChance(shouldDouble,
     function()
-        helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_BEAN)
+        helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_BEAN)
     end,
     function()
         local useFlags = UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER | UseFlag.USE_NOCOSTUME

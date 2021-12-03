@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Kills the player and revives them in the previous room with 3 bone hearts
 local Names = {

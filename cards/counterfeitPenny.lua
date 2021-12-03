@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local items = include("items/registry")
 
 -- Gives the cointerfeit penny item
@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Gain an additional +1 Coin whenever you gain coins.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardItem(p, items.counterfeitPenny.Id, SoundEffect.SOUND_VAMP_GULP)
+	helper.GiveItem(p, items.counterfeitPenny.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {

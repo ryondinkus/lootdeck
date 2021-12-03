@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local costumes = include("costumes/registry")
 
 -- Gain two temporary hearts for the room

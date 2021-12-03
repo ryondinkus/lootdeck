@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Gives a chance for killing an enemy to drop a tarotcard
 local Names = {

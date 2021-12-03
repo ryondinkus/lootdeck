@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Increases lootcard drop percentage by 10% for each trinket held
 local Names = {

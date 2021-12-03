@@ -1,5 +1,5 @@
 local entityVariants = include("entityVariants/registry")
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- A 1 in 6 chance of gaining 1 coin, deal half a heart of damage (if lethal, heal to full health), spawn 3 tarotcards, lost 4 coins, gain 5 coins, or spawn an item from the arcade list
 local Names = {

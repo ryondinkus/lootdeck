@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
 -- If not possible, like at the beginning of the level, give the player a penny
@@ -62,7 +62,7 @@ local function MC_POST_NEW_ROOM()
         helper.ForEachPlayer(function(p, data)
             for j=0,3 do
 				local currentCard = p:GetCard(j)
-                if currentCard == Id or currentCard == lootcards.holographicdiceShard.Id and data[Tag .. "RemoveCard"] then
+                if currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id and data[Tag .. "RemoveCard"] then
                     p:SetCard(j, 0)
                     data[Tag .. "RemoveCard"] = nil
                 end

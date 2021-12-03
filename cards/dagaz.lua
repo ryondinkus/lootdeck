@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- A 1 in 2 chance of removing curses for the floor or gaining a soul heart
 local Names = {

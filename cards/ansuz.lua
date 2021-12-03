@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Teleport to Treasure Room, Shop, or Boss, with priority given to unvisited rooms
 local Names = {

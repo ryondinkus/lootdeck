@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Rerolls the enemies in the room using the D10
 local Names = {
@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the D10 effect, rerolling all enemies in the room.", "All rerolled enemies will have 50% HP.", "Holographic Effect: Rerolls all room enemies, then rerolls them again.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D10, SoundEffect.SOUND_LAZARUS_FLIP_DEAD)
+	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D10, SoundEffect.SOUND_LAZARUS_FLIP_DEAD)
     helper.ForEachEntityInRoom(function(entity)
 		entity:AddHealth(-(entity.HitPoints/2))
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, entity.Position, Vector.Zero, nil)

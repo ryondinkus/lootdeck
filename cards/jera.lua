@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Meat Cleaver effect
 local Names = {
@@ -22,7 +22,7 @@ local function MC_USE_CARD(_, c, p)
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, entity.Position, Vector.Zero, nil)
         end
-        helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
+        helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
     else
         helper.TakeSelfDamage(p, 2)
         helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)

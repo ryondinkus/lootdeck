@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns 10 "Holy Shield" familiars that block bullets and die after blocking

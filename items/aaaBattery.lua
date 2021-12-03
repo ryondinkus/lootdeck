@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Grants a temporary effect of a random battery item for the rest of the floor
 local Names = {

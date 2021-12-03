@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Spawns 1-3 of a pickup determined by the Glyph of Balance algorithm
 local Names = {

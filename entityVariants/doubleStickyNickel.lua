@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 local Name = "Double Sticky Nickel"
 local Tag = "doubleStickyNickel"
@@ -35,18 +35,18 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
         if nearEntity.Type == EntityType.ENTITY_BOMBDROP then
             if nearEntity:GetSprite():IsPlaying("Explode") then
                 local directionVector = Vector(pi.Position.X - nearEntity.Position.X, pi.Position.Y - nearEntity.Position.Y)
-                local maxVector = Vector(maxRadius * helper.sign(directionVector.X), maxRadius * helper.sign(directionVector.Y))
+                local maxVector = Vector(maxRadius * helper.Sign(directionVector.X), maxRadius * helper.Sign(directionVector.Y))
                 directionVector = (maxVector - directionVector) * 0.27
                 local directionVariant = lootdeck.rng:RandomInt(20) + 10
                 if lootdeck.rng:RandomFloat() < 0.5 then
                     directionVariant = -directionVariant
                 end
 
-                if helper.sign(directionVector.X) ~= helper.sign(maxVector.X) then
+                if helper.Sign(directionVector.X) ~= helper.Sign(maxVector.X) then
                     directionVector = Vector(-directionVector.X, directionVector.Y)
                 end
 
-                if helper.sign(directionVector.Y) ~= helper.sign(maxVector.Y) then
+                if helper.Sign(directionVector.Y) ~= helper.Sign(maxVector.Y) then
                     directionVector = Vector(directionVector.X, -directionVector.Y)
                 end
 

@@ -1,84 +1,84 @@
 local cards = {
-    penny = include("cards/penny"),
-    twoCents = include("cards/twoCents"),
-    threeCents = include("cards/threeCents"),
-    fourCents = include("cards/fourCents"),
-    nickel = include("cards/nickel"),
-    dime = include("cards/dime"),
-    butterBean = include("cards/butterBean"),
-    redPill = include("cards/redPill"),
-    bluePill = include("cards/bluePill"),
-    yellowPill = include("cards/yellowPill"),
-    bomb = include("cards/bomb"),
-    goldBomb = include("cards/goldBomb"),
-    lilBattery = include("cards/lilBattery"),
-    megaBattery = include("cards/megaBattery"),
-    diceShard = include("cards/diceShard"),
-    soulHeart = include("cards/soulHeart"),
-    blankRune = include("cards/blankRune"),
-    dagaz = include("cards/dagaz"),
-    ehwaz = include("cards/ehwaz"),
-    bloodyPenny = include("cards/bloodyPenny"),
-    swallowedPenny = include("cards/swallowedPenny"),
-    counterfeitPenny = include("cards/counterfeitPenny"),
-    cainsEye = include("cards/cainsEye"),
-    brokenAnkh = include("cards/brokenAnkh"),
-    curvedHorn = include("cards/curvedHorn"),
-    purpleHeart = include("cards/purpleHeart"),
-    goldenHorseshoe = include("cards/goldenHorseshoe"),
-    guppysHairball = include("cards/guppysHairball"),
-    lostSoul = include("cards/lostSoul"),
-    theFool = include("cards/theFool"),
-    theMagician = include("cards/theMagician"),
-    theHighPriestess = include("cards/theHighPriestess"),
-    theEmpress = include("cards/theEmpress"),
-    theEmperor = include("cards/theEmperor"),
-    theHierophant = include("cards/theHierophant"),
-    theLovers = include("cards/theLovers"),
-    theChariot = include("cards/theChariot"),
-    justice = include("cards/justice"),
-    theHermit = include("cards/theHermit"),
-    wheelOfFortune = include("cards/wheelOfFortune"),
-    strength = include("cards/strength"),
-    theHangedMan = include("cards/theHangedMan"),
-    death = include("cards/death"),
-    theTower = include("cards/theTower"),
-    theDevil = include("cards/theDevil"),
-    temperance = include("cards/temperance"),
-    theStars = include("cards/theStars"),
-    theMoon = include("cards/theMoon"),
-    theSun = include("cards/theSun"),
-    judgement = include("cards/judgement"),
-    theWorld = include("cards/theWorld"),
-    chargedPenny = include("cards/chargedPenny"),
-    joker = include("cards/joker"),
-    holyCard = include("cards/holyCard"),
-    twoOfDiamonds = include("cards/twoOfDiamonds"),
-    aSack = include("cards/aSack"),
-    creditCard = include("cards/creditCard"),
-    jera = include("cards/jera"),
-    purplePill = include("cards/purplePill"),
-    pinkEye = include("cards/pinkEye"),
-    cancer = include("cards/cancer"),
-    perthro = include("cards/perthro"),
-    ansuz = include("cards/ansuz"),
-    blackRune = include("cards/blackRune"),
-    tapeWorm = include("cards/tapeWorm"),
-    aaaBattery = include("cards/aaaBattery"),
-    pokerChip = include("cards/pokerChip"),
-    leftHand = include("cards/leftHand"),
-    blackPill = include("cards/blackPill"),
-    whiteSpottedPill = include("cards/whiteSpottedPill"),
-    whitePill = include("cards/whitePill"),
-    questionCard = include("cards/questionCard"),
-    getOutOfJail = include("cards/getOutOfJail"),
-    goldKey = include("cards/goldKey"),
-    rainbowTapeworm = include("cards/rainbowTapeworm")
+    include("cards/penny"),
+    include("cards/twoCents"),
+    include("cards/threeCents"),
+    include("cards/fourCents"),
+    include("cards/nickel"),
+    include("cards/dime"),
+    include("cards/butterBean"),
+    include("cards/redPill"),
+    include("cards/bluePill"),
+    include("cards/yellowPill"),
+    include("cards/bomb"),
+    include("cards/goldBomb"),
+    include("cards/lilBattery"),
+    include("cards/megaBattery"),
+    include("cards/diceShard"),
+    include("cards/soulHeart"),
+    include("cards/blankRune"),
+    include("cards/dagaz"),
+    include("cards/ehwaz"),
+    include("cards/bloodyPenny"),
+    include("cards/swallowedPenny"),
+    include("cards/counterfeitPenny"),
+    include("cards/cainsEye"),
+    include("cards/brokenAnkh"),
+    include("cards/curvedHorn"),
+    include("cards/purpleHeart"),
+    include("cards/goldenHorseshoe"),
+    include("cards/guppysHairball"),
+    include("cards/lostSoul"),
+    include("cards/theFool"),
+    include("cards/theMagician"),
+    include("cards/theHighPriestess"),
+    include("cards/theEmpress"),
+    include("cards/theEmperor"),
+    include("cards/theHierophant"),
+    include("cards/theLovers"),
+    include("cards/theChariot"),
+    include("cards/justice"),
+    include("cards/theHermit"),
+    include("cards/wheelOfFortune"),
+    include("cards/strength"),
+    include("cards/theHangedMan"),
+    include("cards/death"),
+    include("cards/theTower"),
+    include("cards/theDevil"),
+    include("cards/temperance"),
+    include("cards/theStars"),
+    include("cards/theMoon"),
+    include("cards/theSun"),
+    include("cards/judgement"),
+    include("cards/theWorld"),
+    include("cards/chargedPenny"),
+    include("cards/joker"),
+    include("cards/holyCard"),
+    include("cards/twoOfDiamonds"),
+    include("cards/aSack"),
+    include("cards/creditCard"),
+    include("cards/jera"),
+    include("cards/purplePill"),
+    include("cards/pinkEye"),
+    include("cards/cancer"),
+    include("cards/perthro"),
+    include("cards/ansuz"),
+    include("cards/blackRune"),
+    include("cards/tapeWorm"),
+    include("cards/aaaBattery"),
+    include("cards/pokerChip"),
+    include("cards/leftHand"),
+    include("cards/blackPill"),
+    include("cards/whiteSpottedPill"),
+    include("cards/whitePill"),
+    include("cards/questionCard"),
+    include("cards/getOutOfJail"),
+    include("cards/goldKey"),
+    include("cards/rainbowTapeworm")
 }
 
 local holoCards = {}
 
-for key, card in pairs(cards) do
+for _, card in pairs(cards) do
     card.HUDAnimationName = "Idle"
     card.PickupAnimationName = "Idle"
     card.UseAnimationName = "IdleFast"
@@ -94,6 +94,7 @@ for key, card in pairs(cards) do
     for _, callback in pairs(card.callbacks) do
         if callback[1] == ModCallbacks.MC_USE_CARD then
             table.insert(callbacks, callback)
+            break
         end
     end
 
@@ -107,11 +108,21 @@ for key, card in pairs(cards) do
 	holoCard.Descriptions.en_us = card.Descriptions.en_us .. "#{{ColorRainbow}}HOLOGRAPHIC: Effect doubled!"
 	holoCard.Descriptions.spa = card.Descriptions.spa .. "#{{ColorRainbow}}HOLOGRÁFICA: ¡Efecto doble!"
 
-    holoCards[holoCard.Tag] = holoCard
+    table.insert(holoCards, holoCard)
 end
 
-lootcards = cards
+lootcards = {}
 
-for tag, card in pairs(holoCards) do
-    lootcards[tag] = card
+for _, card in pairs(cards) do
+    lootcards[card.Id] = card
+end
+
+for _, card in pairs(holoCards) do
+    lootcards[card.Id] = card
+end
+
+lootcardKeys = {}
+
+for _, card in pairs(lootcards) do
+    lootcardKeys[card.Tag] = card
 end
