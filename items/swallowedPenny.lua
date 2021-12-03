@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Gives a chance for a coin to spawn when the player takes damage
 local Names = {

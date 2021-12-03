@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local costumes = include("costumes/registry")
 
 -- Permacharms all enemies in the room

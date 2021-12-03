@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- All penny spawns are either double pennies or nothing

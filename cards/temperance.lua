@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- A 1 in 2 chance of losing half a heart and gaining 4 coins or losing a full heart and gaining 8 coins
 local Names = {

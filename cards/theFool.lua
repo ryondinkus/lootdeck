@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Teleport 2.0 effect
 local Names = {
@@ -17,7 +17,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Te
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local data = p:GetData().lootdeck
-	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
+	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
     data[Tag] = true
 	if shouldDouble then
 		data[Tag .. "Double"] = true

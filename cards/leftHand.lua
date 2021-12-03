@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 local items = include("items/registry")
 
 -- trinket; Swap the pools of Red Chests and Gold Chests
@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Swaps the potential drops of Gold Chests and Red Chests.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
-    helper.SimpleLootCardItem(p, items.leftHand.Id, SoundEffect.SOUND_VAMP_GULP)
+    helper.GiveItem(p, items.leftHand.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {

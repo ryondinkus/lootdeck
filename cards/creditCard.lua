@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Adds a familiar, the familiar refunds you for the next shop/devil item you buy

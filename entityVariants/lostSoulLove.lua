@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 local Name = "Lost Soul Love"
 local Tag = "lostSoulLove"

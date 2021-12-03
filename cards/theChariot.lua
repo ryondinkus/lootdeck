@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local costumes = include("costumes/registry")
 
 -- Gain .50 damage for the room for each heart

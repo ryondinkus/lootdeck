@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 
 -- Allows player to phase through enemies and projectiles for 5 seconds
 local Names = {

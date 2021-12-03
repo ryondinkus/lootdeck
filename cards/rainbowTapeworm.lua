@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 local items = include("items/registry")
 
 -- trinket; 50% chance each room to grant a temporary copy of a random passive you already have
@@ -17,7 +17,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: When entering a room, 50% chance to duplicate one of your passives for the rest of the room.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
-    helper.SimpleLootCardItem(p, items.rainbowTapeworm.Id, SoundEffect.SOUND_VAMP_GULP)
+    helper.GiveItem(p, items.rainbowTapeworm.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
 return {

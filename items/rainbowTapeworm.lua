@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- 50% chance each room to grant a temporary copy of a random passive you already have
 local Names = {

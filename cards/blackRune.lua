@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- 40 damage to all monsters | Spawn a random Card Reading portal | Lose 3 bombs, coins, and keys, spawn 3 chests

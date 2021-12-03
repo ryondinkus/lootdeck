@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 
 -- Gives massive firerate increase on room entry, quickly decreases over time
 local Names = {

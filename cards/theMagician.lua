@@ -1,4 +1,4 @@
-local helper = include("helper_functions")
+local helper = lootdeckHelpers
 local costumes = include("costumes/registry")
 
 -- Temporary tears up and brain worm effect for the room, as well as a brain costume

@@ -1,4 +1,4 @@
-local helper = include('helper_functions')
+local helper = lootdeckHelpers
 local costumes = include("costumes/registry")
 
 local Names = {
@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect, which respawns all enemies in the room for a chance at an extra room reward.", "+1 Damage Up for the rest of the floor.", "Holographic Effect: Grants twice the damage increase.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.SimpleLootCardEffect(p, CollectibleType.COLLECTIBLE_D7)
+	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D7)
 
     local data = p:GetData().lootdeck
     local sprite = p:GetSprite()
