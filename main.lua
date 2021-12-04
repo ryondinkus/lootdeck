@@ -176,12 +176,12 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	if not runeOnly then
         local isLootCard = lootcards[id] ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
-		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance) and lootdeck.unlocks.gimmeTheLoot
+		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance, 100, r) and lootdeck.unlocks.gimmeTheLoot
 		if (isLootCard and isHoloLootCard and not holoChance) then
 			return id - 75
 		end
-		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) then
-			local selectedLootCard = helper.GetWeightedLootCardId(false)
+		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage(), 100, r) or isLootCard) then
+			local selectedLootCard = helper.GetWeightedLootCardId(false, r)
 			if holoChance then
 				selectedLootCard = selectedLootCard + 75
 			end
