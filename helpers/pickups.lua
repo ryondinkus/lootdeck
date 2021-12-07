@@ -114,9 +114,9 @@ end
 
 -- function that returns a consumable based on what glyph of balance would drop
 function lootdeckHelpers.GlyphOfBalance(p)
-    if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 then
+    if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
-    elseif p:GetHearts() <= 1 then
+    elseif p:GetHearts() <= 1 and p:GetMaxHearts() > 0 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL}
     elseif p:GetNumKeys() <= 0 then
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
@@ -132,7 +132,7 @@ function lootdeckHelpers.GlyphOfBalance(p)
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
     elseif p:GetTrinket(0) == 0 and not lootdeckHelpers.AreTrinketsOnGround() then
         return {PickupVariant.PICKUP_TRINKET, 0}
-    elseif p:GetHearts() + p:GetSoulHearts() < 12 then
+    elseif p:GetHearts() + p:GetSoulHearts() < 12 and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     else
         return {(lootdeck.rng:RandomInt(4)+1)*10, 1}
