@@ -126,8 +126,13 @@ function lootdeckHelpers.RemoveHitFamiliars(id, hitTag)
     end)
 end
 
-function lootdeckHelpers.Spawn(type, variant, subType, position, velocity, spawner)
-    local entity = Isaac.Spawn(type, variant or 0, subType or 0, position, velocity, spawner)
+function lootdeckHelpers.Spawn(type, variant, subType, position, velocity, spawner, seed)
+    local entity
+    if seed then
+        entity = Game():Spawn(type, variant or 0, position, velocity, spawner, subType or 0, seed)
+    else
+        entity = Isaac.Spawn(type, variant or 0, subType or 0, position, velocity, spawner)
+    end
     if Isaac.GetChallenge() == lootdeckChallenges.gimmeTheLoot.Id then
         entity:GetData()[lootdeckChallenges.gimmeTheLoot.Tag] = true
     end

@@ -24,7 +24,7 @@ local function MC_USE_CARD(_, c, p, f, _, rng)
     if effect == 0 then
         roomType = RoomType.ROOM_PLANETARIUM
     end
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(roomType, rng:GetSeed()))
+    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(roomType, rng:GetSeed()), false, rng:GetSeed())
     local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
     if itemConfig.Type == ItemType.ITEM_ACTIVE then
         if p:GetActiveItem() ~= 0 then

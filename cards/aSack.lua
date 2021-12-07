@@ -20,7 +20,7 @@ local function MC_USE_CARD(_, c, p, f, _, rng)
     local sfx = lootdeck.sfx
     local room = game:GetRoom()
     for i=0,2 do
-        local cardId = helper.GetWeightedLootCardId(true)
+        local cardId = helper.GetWeightedLootCardId(true, rng)
         helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
     end
     sfx:Play(SoundEffect.SOUND_SHELLGAME,1,0)

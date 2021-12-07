@@ -24,7 +24,7 @@ local function MC_POST_NEW_ROOM()
     local room = game:GetRoom()
     helper.ForEachPlayer(function(p, data)
         if not room:IsClear() then
-            if helper.PercentageChance(25 * p:GetCollectibleNum(Id), 100) then
+            if helper.PercentageChance(25 * p:GetCollectibleNum(Id), 100, p:GetCollectibleRNG(Id)) then
                 data[shouldRerollEnemyTag] = true
                 data[preRerollEnemySeedList] = {}
             end

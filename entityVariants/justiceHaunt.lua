@@ -26,7 +26,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
             sprite:Play("FloatChase", true)
         end
     end
-    
+
     local rng = f.SpawnerEntity:ToPlayer():GetCardRNG(lootcardKeys.joker.Id)
 
     if data.state == "STATE_ACTIVE" then
@@ -69,7 +69,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                     return
                 end
                 local chosenVariant = (rng:RandomInt(4) + 1) * 10
-                helper.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(rng:RandomInt(360)), f)
+                helper.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(rng:RandomInt(360)), f, rng:GetSeed())
                 data.spawnAmount = data.spawnAmount - 1
                 data.spawnCountdown = 30
             end

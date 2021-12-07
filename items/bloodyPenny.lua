@@ -31,8 +31,8 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
         end
         if e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p then
             local rng = p:GetCollectibleRNG(Id)
-            if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
-                local cardId = helper.GetWeightedLootCardId(true)
+            if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25, rng) then
+                local cardId = helper.GetWeightedLootCardId(true, rng)
                 helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, e.Position, Vector.Zero, nil)
                 lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_BURST_LARGE, 1, 0)

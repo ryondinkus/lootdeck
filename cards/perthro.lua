@@ -28,7 +28,7 @@ local function MC_USE_CARD(_, c, p, f, _, rng)
         lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
         local currentPool = itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed())
         if currentPool == -1 then currentPool = 0 end
-        local collectible = itemPool:GetCollectible(currentPool)
+        local collectible = itemPool:GetCollectible(currentPool, false, rng:GetSeed())
         data[Tag .. "Collectible"] = collectible
         data[Tag] = true
 
