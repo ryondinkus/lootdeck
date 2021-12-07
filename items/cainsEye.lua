@@ -17,9 +17,6 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On each floor, gain a r
 local function MC_POST_NEW_LEVEL()
     local game = Game()
     local rng = lootdeck.rng
-    lootdeck.f.blueMap = false
-    lootdeck.f.compass = false
-    lootdeck.f.map = false
     helper.ForEachPlayer(function(p)
         local level = game:GetLevel()
         local effects = 0
@@ -27,15 +24,12 @@ local function MC_POST_NEW_LEVEL()
         if effectAmount > 3 then effectAmount = 3 end
         while effects < effectAmount do
             local effect = rng:RandomInt(3)
-            if effect == 0 and not lootdeck.f.blueMap then
+            if effect == 0 and not level:GetStateFlag(LevelStateFlag.STATE_BLUE_MAP_EFFECT) then
                 level:ApplyBlueMapEffect()
-                lootdeck.f.blueMap = true
-            elseif effect == 1 and not lootdeck.f.compass then
+            elseif effect == 1 and not level:GetStateFlag(LevelStateFlag.STATE_COMPASS_EFFECT) then
                 level:ApplyCompassEffect(true)
-                lootdeck.f.compass = true
-            elseif effect == 2 and not lootdeck.f.map then
+            elseif effect == 2 and not level:GetStateFlag(LevelStateFlag.STATE_MAP_EFFECT) then
                 level:ApplyMapEffect()
-                lootdeck.f.map = true
             else
                 effects = effects - 1
             end
