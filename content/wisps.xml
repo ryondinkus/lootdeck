@@ -1,0 +1,8 @@
+<wisps gfxroot="gfx/familiars/wisps/">
+  <color name="flame_blue" r="152" g="330" b="458"/>
+  <color name="core_blue" r="255" g="356" b="510"/>
+  <color name="tear_blue" or="64" og="89" ob="128"/>
+
+  <wisp id="17" hp="3" layer="0" damage="3" flameColor="flame_blue" coreColor="core_brown" tearColor="tear_blue" coreGfx="card.png" />
+
+</wisps>
