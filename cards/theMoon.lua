@@ -28,13 +28,15 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local rng = p:GetCardRNG(Id)
-	helper.StaggerSpawn(Tag, p, 7, (rng:RandomInt(6) + 5) * (p:GetData().lootdeck[Tag] or 0), function()
-		local room = Game():GetRoom()
-		local spawnPos = room:GetRandomPosition(0)
-		Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)
-		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, nil)
-	end)
+    if p:GetData().lootdeck[Tag] then
+        local rng = p:GetCardRNG(Id)
+    	helper.StaggerSpawn(Tag, p, 7, (rng:RandomInt(6) + 5) * (p:GetData().lootdeck[Tag] or 0), function()
+    		local room = Game():GetRoom()
+    		local spawnPos = room:GetRandomPosition(0)
+    		Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)
+    		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, nil)
+    	end)
+    end
 end
 
 return {
