@@ -31,7 +31,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
                 p = source.Entity:GetLastParent():ToPlayer()
             end
         end
-        if e:IsEnemy() and amount >= e.MaxHitPoints and p then
+        if e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p then
             if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
                 local cardId = helper.GetWeightedLootCardId(true)
                 helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
