@@ -29,7 +29,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
                 p = source.Entity:GetLastParent():ToPlayer()
             end
         end
-        if e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p then
+        if e.Type ~= EntityType.ENTITY_FIREPLACE and e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p then
             local rng = p:GetCollectibleRNG(Id)
             if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25, rng) then
                 local cardId = helper.GetWeightedLootCardId(true, rng)

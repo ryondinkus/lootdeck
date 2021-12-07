@@ -30,6 +30,14 @@ local function MC_USE_ITEM(_, type, rng, p)
     p:PlayExtraAnimation("UseItem")
 end
 
+local function MC_FAMILIAR_UPDATE(_, wisp)
+    if wisp.SubType == Id then
+        if wisp:HasMortalDamage() then
+            Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, helper.GetWeightedLootCardId(true), wisp.Position, Vector.Zero, wisp)
+        end
+    end
+end
+
 return {
     Name = Name,
     Names = Names,
@@ -42,6 +50,11 @@ return {
             ModCallbacks.MC_USE_ITEM,
             MC_USE_ITEM,
             Id
+        },
+        {
+            ModCallbacks.MC_FAMILIAR_UPDATE,
+            MC_FAMILIAR_UPDATE,
+            FamiliarVariant.WISP
         }
     }
 }
