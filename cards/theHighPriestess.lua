@@ -44,8 +44,9 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-	helper.StaggerSpawn(Tag, p, 15, (lootdeck.rng:RandomInt(6) + 1) * (p:GetData().lootdeck[Tag] or 0), function(player)
-		SpawnFinger(helper.FindRandomEnemy(player.Position) or 0)
+    local rng = p:GetCardRNG(Id)
+	helper.StaggerSpawn(Tag, p, 15, (rng:RandomInt(6) + 1) * (p:GetData().lootdeck[Tag] or 0), function(player)
+		SpawnFinger(helper.FindRandomEnemy(player.Position, rng) or 0)
 	end)
 end
 

@@ -15,11 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 15c item from the current room pool.", "Holographic Effect: Spawns two 15c items.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local game = Game()
     local itemPool = game:GetItemPool()
     local room = game:GetRoom()
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
+    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed()))
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
     local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)

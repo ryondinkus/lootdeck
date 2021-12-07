@@ -52,7 +52,8 @@ local function MC_FAMILIAR_UPDATE(_, f)
         function(entity) return not entity:GetData()[SELECTED_ITEM_TAG] end)
 
         if #itemsList > 0 then
-            local selectedItem = itemsList[lootdeck.rng:RandomInt(#itemsList) + 1]:ToPickup()
+            local rng = f.SpawnerEntity:ToPlayer():GetCardRNG(lootcardKeys.joker.Id)
+            local selectedItem = itemsList[rng:RandomInt(#itemsList) + 1]:ToPickup()
             selectedItem:GetData()[SELECTED_ITEM_TAG] = true
 
             data[TARGET_TAG] = selectedItem

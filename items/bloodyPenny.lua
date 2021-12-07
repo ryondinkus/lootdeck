@@ -21,8 +21,6 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     end, Id)
 
     if shouldRun then
-        local rng = lootdeck.rng
-
         local p
         if source and source.Entity then
             if source.Entity.Type == EntityType.ENTITY_PLAYER then
@@ -32,6 +30,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
             end
         end
         if e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p then
+            local rng = p:GetCollectibleRNG(Id)
             if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
                 local cardId = helper.GetWeightedLootCardId(true)
                 helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, e.Position, Vector.FromAngle(rng:RandomInt(360)), nil)

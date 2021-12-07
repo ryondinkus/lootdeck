@@ -36,9 +36,9 @@ function lootdeckHelpers.ListBossesInRoom(pos, ignoreMiniBosses, filter)
 end
 
 -- function for finding random enemy in the room
-function lootdeckHelpers.FindRandomEnemy(pos, tag, filter)
+function lootdeckHelpers.FindRandomEnemy(pos, rng, tag, filter)
 	local enemies = lootdeckHelpers.ListEnemiesInRoom(pos, false, filter)
-    local chosenEnt = enemies[lootdeck.rng:RandomInt(#enemies) + 1]
+    local chosenEnt = enemies[rng:RandomInt(#enemies) + 1]
     if chosenEnt and tag then
         chosenEnt:GetData()[tag] = true
     end
@@ -143,8 +143,8 @@ function lootdeckHelpers.SpawnEntity(p, spawnType, spawnVariant, spawnSubtype, u
     }
     if effect then
         for i=1,(effectAmount or 1) do
-            local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
-            table.insert(output.effects, effect)
+            local newEffect = Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+            table.insert(output.effects, newEffect)
         end
     end
     if sound then

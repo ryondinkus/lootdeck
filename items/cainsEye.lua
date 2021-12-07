@@ -16,8 +16,8 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On each floor, gain a r
 
 local function MC_POST_NEW_LEVEL()
     local game = Game()
-    local rng = lootdeck.rng
     helper.ForEachPlayer(function(p)
+        local rng = p:GetCollectibleRNG(Id)
         local level = game:GetLevel()
         local effects = 0
         local effectAmount = p:GetCollectibleNum(Id)

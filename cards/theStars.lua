@@ -15,9 +15,8 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.", "Holographic Effect: Grants a treasure item, then another.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local game = Game()
-    local rng = lootdeck.rng
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
     local effect = rng:RandomInt(99)

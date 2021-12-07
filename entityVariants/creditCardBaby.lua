@@ -45,11 +45,10 @@ local function MC_FAMILIAR_UPDATE(_, f)
 			sprite:Play("Float", true)
 		end
 	elseif data[STATE_TAG] == STATES.SPENT then
+		local p = f.SpawnerEntity:ToPlayer()
 		if sprite:IsFinished("Spent") then
 			f:RemoveFromFollowers()
 			f:Remove()
-
-			local p = f.SpawnerEntity:ToPlayer()
 
 			if p then
 				local pData = p:GetData().lootdeck
@@ -67,11 +66,12 @@ local function MC_FAMILIAR_UPDATE(_, f)
 		end
 
 		if sprite:IsEventTriggered("Sound") then
+			local rng = p:GetCardRNG(lootcardKeys.creditCard.Id)
 			for i=1, data[REFUND_PRICE_TAG][4] do
-				helper.Spawn(data[REFUND_PRICE_TAG][1], data[REFUND_PRICE_TAG][2], data[REFUND_PRICE_TAG][3], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+				helper.Spawn(data[REFUND_PRICE_TAG][1], data[REFUND_PRICE_TAG][2], data[REFUND_PRICE_TAG][3], f.Position, Vector.FromAngle(rng:RandomInt(360)), f)
 			end
 			for i=1, (data[REFUND_PRICE_TAG][8] or 0) do
-				helper.Spawn(data[REFUND_PRICE_TAG][5], data[REFUND_PRICE_TAG][6], data[REFUND_PRICE_TAG][7], f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+				helper.Spawn(data[REFUND_PRICE_TAG][5], data[REFUND_PRICE_TAG][6], data[REFUND_PRICE_TAG][7], f.Position, Vector.FromAngle(rng:RandomInt(360)), f)
 			end
 			sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
 		end

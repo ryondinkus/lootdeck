@@ -15,9 +15,8 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.", "Holographic Effect: Destroys and grants a new item, then destroys and grants another.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local data = p:GetData().lootdeck
-    local rng = lootdeck.rng
     local game = Game()
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
@@ -27,7 +26,7 @@ local function MC_USE_CARD(_, c, p)
         p:RemoveCollectible(selectedItem)
         p:AnimateCollectible(selectedItem)
         lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
-        local currentPool = itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed())
+        local currentPool = itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed())
         if currentPool == -1 then currentPool = 0 end
         local collectible = itemPool:GetCollectible(currentPool)
         data[Tag .. "Collectible"] = collectible

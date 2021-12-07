@@ -15,10 +15,10 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Instantly kills all enemies in the room. Deals 80 damage to bosses.", "- Confuses all enemies in the room for 5 seconds.", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
     local sfx = lootdeck.sfx
 
-    return helper.RandomChance(shouldDouble,
+    return helper.RandomChance(rng, shouldDouble,
         function()
             sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
 

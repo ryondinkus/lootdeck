@@ -48,10 +48,10 @@ function lootdeckHelpers.IsArray(t)
     return true
 end
 
-function lootdeckHelpers.RandomChance(shouldDouble, ...)
+function lootdeckHelpers.RandomChance(rng, shouldDouble, ...)
     local functions = {...}
 
-    local effectIndex = lootdeck.rng:RandomInt(#functions) + 1
+    local effectIndex = rng:RandomInt(#functions) + 1
 
     if shouldDouble then
         functions[effectIndex]()

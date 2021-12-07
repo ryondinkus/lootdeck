@@ -15,8 +15,8 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("50% chance to drop a penny after taking damage.", "- Increased chance to drop a penny for every extra copy of Swallowed Penny.")
 
 local function MC_ENTITY_TAKE_DMG(_, e)
-    local rng = lootdeck.rng
     local p = e:ToPlayer()
+    local rng = p:GetCollectibleRNG(Id)
     if p:HasCollectible(Id) then
         for i=1,p:GetCollectibleNum(Id) do
             local effect = rng:RandomInt(2)

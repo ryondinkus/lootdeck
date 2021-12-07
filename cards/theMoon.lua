@@ -28,7 +28,8 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-	helper.StaggerSpawn(Tag, p, 7, (lootdeck.rng:RandomInt(6) + 5) * (p:GetData().lootdeck[Tag] or 0), function()
+    local rng = p:GetCardRNG(Id)
+	helper.StaggerSpawn(Tag, p, 7, (rng:RandomInt(6) + 5) * (p:GetData().lootdeck[Tag] or 0), function()
 		local room = Game():GetRoom()
 		local spawnPos = room:GetRandomPosition(0)
 		Isaac.Spawn(EntityType.ENTITY_SHOPKEEPER, 0, 0, spawnPos, Vector.Zero, nil)

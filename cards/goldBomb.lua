@@ -15,11 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on three random enemies in the room, dealing 40 damage to each enemy and all enemies around them.", "If used with no targetable enemies in the room, an explosion will spawn on the player instead.", "- This only applies to the inital explosion. If the first or second explosion wipes out all enemies in the room, any subsequent explosions will simply not happen.", "Holographic Effect: Creates 6 explosions, two at a time, if able.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local data = p:GetData().lootdeck
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
         for i=0,4 do
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5, nil)
+            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)) * 5, nil)
         end
 		Isaac.Explode(p.Position, nil, 40)
         lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)
@@ -38,11 +38,12 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
+    local rng = p:GetCardRNG(Id)
 	helper.StaggerSpawn(Tag, p, 15, 3, function(player, _, pastInitSeed)
-		local target = helper.FindRandomEnemy(player.Position, nil, function(entity) return entity.InitSeed ~= pastInitSeed end) or 0
+		local target = helper.FindRandomEnemy(player.Position, rng, nil, function(entity) return entity.InitSeed ~= pastInitSeed end) or 0
 		if target ~= 0 then
             for i=0,4 do
-                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5, nil)
+                Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, target.Position, Vector.FromAngle(rng:RandomInt(360)) * 5, nil)
             end
             Isaac.Explode(target.Position, nil, 40)
             lootdeck.sfx:Play(SoundEffect.SOUND_ULTRA_GREED_COIN_DESTROY, 1, 0)

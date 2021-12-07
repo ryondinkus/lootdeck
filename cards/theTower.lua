@@ -38,6 +38,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
+	local rng = p:GetCardRNG(Id)
     local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
 		local data = player:GetData().lootdeck
@@ -49,7 +50,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		if data[counterName] == 1 then
 			target = player
 		else
-			local enemy = helper.FindRandomEnemy(player.Position, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
+			local enemy = helper.FindRandomEnemy(player.Position, rng, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
 			if enemy then
 				target = enemy
 				enemy:GetData()[Tag] = nil

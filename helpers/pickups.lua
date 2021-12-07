@@ -113,7 +113,7 @@ function lootdeckHelpers.CustomCoinPickupUpdate(pi, sfx)
 end
 
 -- function that returns a consumable based on what glyph of balance would drop
-function lootdeckHelpers.GlyphOfBalance(p)
+function lootdeckHelpers.GlyphOfBalance(p, rng)
     if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     elseif p:GetHearts() <= 1 then
@@ -135,7 +135,7 @@ function lootdeckHelpers.GlyphOfBalance(p)
     elseif p:GetHearts() + p:GetSoulHearts() < 12 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     else
-        return {(lootdeck.rng:RandomInt(4)+1)*10, 1}
+        return {(rng:RandomInt(4) + 1) * 10, 1}
     end
 end
 

@@ -15,17 +15,17 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.", "- All cleaved enemies will drop a Full Red Heart.", "Holographic Effect: Splits all enemies, then splits them again.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local enemies = helper.ListEnemiesInRoom(p.Position)
     if #enemies > 0 then
         for _, entity in pairs(enemies) do
-            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), entity)
+            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), entity)
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, entity.Position, Vector.Zero, nil)
         end
         helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_MEAT_CLEAVER)
     else
         helper.TakeSelfDamage(p, 2)
-        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, p.Position, Vector.FromAngle(rng:RandomInt(360)), p)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CLEAVER_SLASH, 0, p.Position, Vector.Zero, nil)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, p.Position, Vector.Zero, nil)
         lootdeck.sfx:Play(SoundEffect.SOUND_SHELLGAME, 1, 0)
