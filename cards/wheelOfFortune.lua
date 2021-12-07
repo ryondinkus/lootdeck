@@ -25,13 +25,12 @@ local arcadeItems = {
     CollectibleType.COLLECTIBLE_CRYSTAL_BALL
 }
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
     local game = Game()
     local sfx = lootdeck.sfx
-    local rng = lootdeck.rng
     local room = game:GetRoom()
 
-    helper.RandomChance(shouldDouble,
+    helper.RandomChance(rng, shouldDouble,
     function()
         p:AddCoins(1)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
@@ -43,7 +42,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     end,
     function()
         for j=1,3 do
-            local cardId = helper.GetWeightedLootCardId(true)
+            local cardId = helper.GetWeightedLootCardId(true, rng)
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
         end
         sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
@@ -65,7 +64,6 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
     end,
     function()
-        local room = game:GetRoom()
         local collectible = arcadeItems[rng:RandomInt(#arcadeItems)+1]
         local spawnPos = room:FindFreePickupSpawnPosition(p.Position)
         helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, p)

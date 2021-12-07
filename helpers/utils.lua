@@ -48,10 +48,10 @@ function lootdeckHelpers.IsArray(t)
     return true
 end
 
-function lootdeckHelpers.RandomChance(shouldDouble, ...)
+function lootdeckHelpers.RandomChance(rng, shouldDouble, ...)
     local functions = {...}
 
-    local effectIndex = lootdeck.rng:RandomInt(#functions) + 1
+    local effectIndex = rng:RandomInt(#functions) + 1
 
     if shouldDouble then
         functions[effectIndex]()
@@ -60,14 +60,15 @@ function lootdeckHelpers.RandomChance(shouldDouble, ...)
     return functions[effectIndex]()
 end
 
-function lootdeckHelpers.PercentageChance(percent, max)
+function lootdeckHelpers.PercentageChance(percent, max, rng)
     local value
     if percent > (max or 100) then
         value = max or 100
     else
         value = percent
     end
-    return lootdeck.rng:RandomInt(99) <= value
+    if rng then return rng:RandomInt(99) <= value
+    else return lootdeck.rng:RandomInt(99) <= value end
 end
 
 return H

@@ -24,7 +24,7 @@ local function MC_POST_NEW_ROOM()
     local room = game:GetRoom()
     helper.ForEachPlayer(function(p, data)
         if not room:IsClear() then
-            if helper.PercentageChance(25 * p:GetCollectibleNum(Id), 100) then
+            if helper.PercentageChance(25 * p:GetCollectibleNum(Id), 100, p:GetCollectibleRNG(Id)) then
                 data[shouldRerollEnemyTag] = true
                 data[preRerollEnemySeedList] = {}
             end
@@ -55,7 +55,8 @@ local function MC_POST_UPDATE()
         end
 
         if data[shouldRerollEnemyTag] then
-            local target = helper.FindRandomEnemy(p.Position) or 0
+            local rng = p:GetCollectibleRNG(Id)
+            local target = helper.FindRandomEnemy(p.Position, rng) or 0
             if target ~= 0 then
                 local enemyInitSeeds = {}
                 for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, function(_, eData) return not eData[chosenEnemy] end)) do
@@ -70,7 +71,7 @@ local function MC_POST_UPDATE()
         end
 
         if data[rerolledEnemy] and data[rerolledEnemy]:HasMortalDamage() then
-            local itemToSpawn = helper.GlyphOfBalance(p)
+            local itemToSpawn = helper.GlyphOfBalance(p, p:GetCollectibleRNG(Id))
             helper.Spawn(EntityType.ENTITY_PICKUP, itemToSpawn[1], itemToSpawn[2], data[rerolledEnemy].Position, Vector.Zero, nil)
             data[rerolledEnemy] = nil
         end

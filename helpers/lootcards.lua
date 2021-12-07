@@ -1,6 +1,6 @@
 local H = {}
 
-function lootdeckHelpers.GetWeightedLootCardId(includeHolos)
+function lootdeckHelpers.GetWeightedLootCardId(includeHolos, rng)
     local cards = {}
     for _ ,card in pairs(lootcards) do
         if not card.Holographic then
@@ -12,7 +12,12 @@ function lootdeckHelpers.GetWeightedLootCardId(includeHolos)
         local outcome = cards[0]
         for _, card in pairs(cards) do
             local weight = card.Weight
-            local r = lootdeck.rng:RandomInt(csum + weight)
+            local r
+            if rng ~= nil then
+                r = rng:RandomInt(csum + weight)
+            else
+                r = lootdeck.rng:RandomInt(csum + weight)
+            end
             if r >= csum then
                 outcome = card
             end

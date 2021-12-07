@@ -15,11 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Recharge one of your active items (+6 charge).", "- +0.27 Tears for the room.", "- -0.27 Tears for the room.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
 	local data = p:GetData().lootdeck
 
-    helper.RandomChance(shouldDouble,
+    helper.RandomChance(rng, shouldDouble,
     function()
         if (f & UseFlag.USE_MIMIC ~= 0) then
             data[Tag .. "Charge"] = true

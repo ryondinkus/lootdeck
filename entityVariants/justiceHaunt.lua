@@ -14,7 +14,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     local data = f:GetData()
     local sprite = f:GetSprite()
     local room = Game():GetRoom()
-    local rng = lootdeck.rng
     local sfx = lootdeck.sfx
     if not data.state then
 		sprite:Play("Float", true)
@@ -27,6 +26,9 @@ local function MC_FAMILIAR_UPDATE(_, f)
             sprite:Play("FloatChase", true)
         end
     end
+
+    local rng = f.SpawnerEntity:ToPlayer():GetCardRNG(lootcardKeys.joker.Id)
+
     if data.state == "STATE_ACTIVE" then
         if data.target then
             f:RemoveFromFollowers()
@@ -40,7 +42,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 data.state = "STATE_ATTACK"
             end
         else
-            data.target = helper.FindRandomEnemy(f.Position)
+            data.target = helper.FindRandomEnemy(f.Position, rng)
         end
         if not helper.AreEnemiesInRoom(room) then
             data.state = "STATE_DEAD"
@@ -67,7 +69,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                     return
                 end
                 local chosenVariant = (rng:RandomInt(4) + 1) * 10
-                helper.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+                helper.Spawn(EntityType.ENTITY_PICKUP, chosenVariant, 0, data.target.Position, Vector.FromAngle(rng:RandomInt(360)), f, rng:GetSeed())
                 data.spawnAmount = data.spawnAmount - 1
                 data.spawnCountdown = 30
             end

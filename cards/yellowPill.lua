@@ -17,9 +17,8 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
-	local rng = lootdeck.rng
 
 	local function coinPickup()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
@@ -27,7 +26,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
 	end
 
-	helper.RandomChance(shouldDouble,
+	helper.RandomChance(rng, shouldDouble,
 	function ()
 		coinPickup()
 		p:AddCoins(4)

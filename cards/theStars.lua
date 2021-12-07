@@ -15,9 +15,8 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.", "Holographic Effect: Grants a treasure item, then another.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local game = Game()
-    local rng = lootdeck.rng
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
     local effect = rng:RandomInt(99)
@@ -25,7 +24,7 @@ local function MC_USE_CARD(_, c, p)
     if effect == 0 then
         roomType = RoomType.ROOM_PLANETARIUM
     end
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(roomType, rng:GetSeed()))
+    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(roomType, rng:GetSeed()), false, rng:GetSeed())
     local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
     if itemConfig.Type == ItemType.ITEM_ACTIVE then
         if p:GetActiveItem() ~= 0 then

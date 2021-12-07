@@ -23,7 +23,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
     if data[Tag] then
         if p:IsExtraAnimationFinished() then
             data[Tag] = nil
-            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, helper.GetWeightedLootCardId(false), Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, nil)
+            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, helper.GetWeightedLootCardId(false, p:GetCollectibleRNG(Id)), Game():GetRoom():FindFreePickupSpawnPosition(p.Position), Vector.Zero, nil)
         end
     else
         local targetItem = p.QueuedItem.Item

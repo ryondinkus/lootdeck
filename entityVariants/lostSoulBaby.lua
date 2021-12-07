@@ -12,7 +12,6 @@ local function MC_FAMILIAR_UPDATE(_, f)
     local data = f:GetData()
     local sprite = f:GetSprite()
     local room = Game():GetRoom()
-    local rng = lootdeck.rng
     local sfx = lootdeck.sfx
     local lostSoulLove = nil
     if not data.state then
@@ -70,7 +69,8 @@ local function MC_FAMILIAR_UPDATE(_, f)
         if data.targetPos then
             if sprite:IsEventTriggered("Spawn") then
                 sfx:Play(SoundEffect.SOUND_SLOTSPAWN, 1, 0)
-                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL, f.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), f)
+                local rng = f.SpawnerEntity:ToPlayer():GetCardRNG(lootcardKeys.lostSoul.Id)
+                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL, f.Position, Vector.FromAngle(rng:RandomInt(360)), f)
             end
             if sprite:IsFinished("Fly") then
                 lootdeck.f.lostSoul = false

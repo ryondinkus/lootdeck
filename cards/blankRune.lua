@@ -15,10 +15,9 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local game = Game()
 	local sfx = lootdeck.sfx
-	local rng = lootdeck.rng
     local room = game:GetRoom()
 
     helper.ForEachPlayer(function(player)
@@ -26,7 +25,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         poof.Color = Color(0.6,0,0.6,1,0,0,0)
     end)
 
-    return helper.RandomChance(shouldDouble,
+    return helper.RandomChance(rng, shouldDouble,
         function()
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
@@ -39,7 +38,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
                 for j=1,2 do
-                    local cardId = helper.GetWeightedLootCardId(true)
+                    local cardId = helper.GetWeightedLootCardId(true, rng)
                     helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
                 end
             end)
@@ -63,7 +62,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
                 for j=1,5 do
-                    local cardId = helper.GetWeightedLootCardId(true)
+                    local cardId = helper.GetWeightedLootCardId(true, rng)
                     helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(player.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
                 end
             end)

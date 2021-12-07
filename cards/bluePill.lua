@@ -16,21 +16,20 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
-	local rng = lootdeck.rng
 	local room = Game():GetRoom()
 
-	helper.RandomChance(shouldDouble,
+	helper.RandomChance(rng, shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
-		local cardId = helper.GetWeightedLootCardId(true)
+		local cardId = helper.GetWeightedLootCardId(true, rng)
 		helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 	end,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		for i=0,2 do
-			local cardId = helper.GetWeightedLootCardId(true)
+			local cardId = helper.GetWeightedLootCardId(true, rng)
 			helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, cardId, room:FindFreePickupSpawnPosition(p.Position), Vector.FromAngle(rng:RandomInt(360)), nil)
 		end
 	end,

@@ -15,11 +15,13 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 1 Heart Devil Deal from the current room pool.", "Holographic Effect: Spawns two Devil Deals.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, _, rng)
     local game = Game()
     local itemPool = game:GetItemPool()
     local room = game:GetRoom()
-    local collectible = itemPool:GetCollectible(itemPool:GetPoolForRoom(room:GetType(), lootdeck.rng:GetSeed()))
+    local currentPool = itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed())
+    if currentPool == -1 then currentPool = 0 end
+    local collectible = itemPool:GetCollectible(currentPool, false, rng:GetSeed())
     local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
     local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     spawnedItem.AutoUpdatePrice = false
@@ -32,7 +34,7 @@ local function MC_USE_CARD(_, c, p)
     end
     spawnedItem.ShopItemId = -2
     spawnedItem:GetData()[Tag] = true
-    poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
+    local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, spawnPos, Vector.Zero, p)
     poof.Color = Color(0,0,0,1,0,0,0)
     lootdeck.sfx:Play(SoundEffect.SOUND_SATAN_GROW, 1, 0)
 end

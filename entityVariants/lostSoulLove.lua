@@ -7,8 +7,6 @@ local Id = Isaac.GetEntityVariantByName(Name)
 local function MC_FAMILIAR_UPDATE(_, f)
     local data = f:GetData()
     local sprite = f:GetSprite()
-    local room = Game():GetRoom()
-    local rng = lootdeck.rng
     local sfx = lootdeck.sfx
     local lostSoulLove = nil
     if not data.state then

@@ -15,11 +15,11 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers either effect:", "- Clear all curses for the floor. This does not apply to permanent curses in Challenges.", "- Gain a Soul Heart.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
     local level = Game():GetLevel()
 
-    helper.RandomChance(shouldDouble,
+    helper.RandomChance(rng, shouldDouble,
     function()
         sfx:Play(SoundEffect.SOUND_SUPERHOLY,1,0)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GROUND_GLOW, 0, p.Position, Vector.Zero, p)

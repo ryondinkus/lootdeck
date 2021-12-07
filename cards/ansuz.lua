@@ -15,12 +15,12 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Random teleport to either the Treasure Room, Shop, or Boss Room.", "- Unvisited rooms are prioritized.", "- On floors with no Treasure Rooms, Shops, or Bosses, teleports you to a random room.", "Holographic Effect: Grants the Compass effect.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
     local level = Game():GetLevel()
     local roomIndexes = {
-        level:QueryRoomTypeIndex(RoomType.ROOM_SHOP, false, lootdeck.rng),
-        level:QueryRoomTypeIndex(RoomType.ROOM_TREASURE, false, lootdeck.rng),
-        level:QueryRoomTypeIndex(RoomType.ROOM_BOSS, false, lootdeck.rng)
+        level:QueryRoomTypeIndex(RoomType.ROOM_SHOP, false, rng),
+        level:QueryRoomTypeIndex(RoomType.ROOM_TREASURE, false, rng),
+        level:QueryRoomTypeIndex(RoomType.ROOM_BOSS, false, rng)
     }
 
     local finalRoomIndexes = {}
@@ -43,7 +43,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
         finalRoomIndexes = roomIndexes
     end
 
-    Game():StartRoomTransition(finalRoomIndexes[lootdeck.rng:RandomInt(#finalRoomIndexes) + 1], Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT)
+    Game():StartRoomTransition(finalRoomIndexes[rng:RandomInt(#finalRoomIndexes) + 1], Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT)
 
 	if shouldDouble then
 		level:ApplyCompassEffect()

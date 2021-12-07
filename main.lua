@@ -139,7 +139,8 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
                     if lootcard then
                         for _, callback in pairs(lootcard.callbacks) do
                             if callback[1] == ModCallbacks.MC_USE_CARD then
-                                callback[2](nil, delayedCard.cardId, delayedCard.player:ToPlayer(), delayedCard.flags)
+                                local p = delayedCard.player:ToPlayer()
+                                callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, p:GetCardRNG(callback[3]))
                             end
                         end
                     end
@@ -173,12 +174,12 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 	if not runeOnly then
         local isLootCard = lootcards[id] ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
-		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance) and lootdeck.unlocks.gimmeTheLoot
+		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance, 100, r) and lootdeck.unlocks.gimmeTheLoot
 		if (isLootCard and isHoloLootCard and not holoChance) then
 			return id - 75
 		end
-		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage()) or isLootCard) then
-			local selectedLootCard = helper.GetWeightedLootCardId(false)
+		if (helper.PercentageChance(lootdeck.mcmOptions.LootCardChance + trinkets.cardSleeve.helpers.CalculateLootcardPercentage(), 100, r) or isLootCard) then
+			local selectedLootCard = helper.GetWeightedLootCardId(false, r)
 			if holoChance then
 				selectedLootCard = selectedLootCard + 75
 			end
@@ -382,11 +383,11 @@ for _, card in pairs(lootcards) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
-                    local result = callback[2](_, c, p, f, shouldDouble)
+                    local result = callback[2](_, c, p, f, shouldDouble, p:GetCardRNG(card.Id))
 
                     if shouldDouble and callback[4] then
                         if not callback[5] then
-                            callback[2](_, c, p, f)
+                            callback[2](_, c, p, f, false, p:GetCardRNG(card.Id))
                         else
                             table.insert(lootdeck.f.delayedCards, {
                                 player = p,
