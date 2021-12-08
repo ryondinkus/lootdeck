@@ -384,8 +384,15 @@ for _, card in pairs(lootcards) do
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
                     local result = callback[2](_, c, p, f, shouldDouble, p:GetCardRNG(card.Id))
+                    local shouldContinueDouble = true
 
-                    if shouldDouble and callback[4] then
+                    if type(result) == "table" then
+                        print("fix result")
+                        shouldContinueDouble = result[2]
+                        result = result[1]
+                    end
+
+                    if shouldDouble and shouldContinueDouble and callback[4] then
                         if not callback[5] then
                             callback[2](_, c, p, f, false, p:GetCardRNG(card.Id))
                         else
@@ -400,7 +407,7 @@ for _, card in pairs(lootcards) do
 
                     if f & UseFlag.USE_MIMIC == 0 then
                         local data = p:GetData().lootdeck
-                        if result == nil or result then
+                        if result == nil then
                             helper.PlayLootcardUseAnimation(data, card.Id)
                         end
                         data.isHoldingLootcard = false
