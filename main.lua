@@ -387,7 +387,6 @@ for _, card in pairs(lootcards) do
                     local shouldContinueDouble = true
 
                     if type(result) == "table" then
-                        print("fix result")
                         shouldContinueDouble = result[2]
                         result = result[1]
                     end
