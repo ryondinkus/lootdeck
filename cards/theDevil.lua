@@ -21,8 +21,8 @@ local function MC_USE_CARD(_, c, p, f, _, rng)
     local room = game:GetRoom()
     local currentPool = itemPool:GetPoolForRoom(room:GetType(), rng:GetSeed())
     if currentPool == -1 then currentPool = 0 end
-    local collectible = itemPool:GetCollectible(currentPool, false, rng:GetSeed())
-    local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 0, true)
+    local collectible = itemPool:GetCollectible(currentPool, false, rng:Next())
+    local spawnPos = room:FindFreePickupSpawnPosition(p.Position, 40, true)
     local spawnedItem = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, collectible, spawnPos, Vector.Zero, nil):ToPickup()
     spawnedItem.AutoUpdatePrice = false
     if helper.IsSoulHeartFarty(p) then
