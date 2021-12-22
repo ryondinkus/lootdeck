@@ -139,4 +139,26 @@ function lootdeckHelpers.GlyphOfBalance(p, rng)
     end
 end
 
+function lootdeckHelpers.IsCoin(pi, customOnly)
+	local customCoinVariants = {
+		20,
+		2252, -- double nickel
+		2253, -- double dime
+		2254, -- double lucky penny
+		2255, -- double sticky nickel
+		2256, -- double golden penny
+		2257, -- double charged penny
+		9192  -- charged penny
+	}
+	if customOnly then
+		table.remove(customCoinVariants, 1)
+	end
+	for k,v in pairs(customCoinVariants) do
+		if pi.Variant == v then
+			return true
+		end
+	end
+	return false
+end
+
 return H

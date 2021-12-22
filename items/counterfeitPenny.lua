@@ -1,5 +1,5 @@
 local helper = lootdeckHelpers
-local sounds = include("sounds/registry")
+local entityVariants = include("entityVariants/registry")
 
 -- Gives an extra penny for each penny picked up
 local Names = {
@@ -15,20 +15,35 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Gain an additional +1 Coin whenever you gain coins.")
 
-local function MC_POST_GAME_STARTED()
-    lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
-end
-
-local function MC_POST_UPDATE()
-    local f = lootdeck.f
-    helper.ForEachPlayer(function(p)
-        if f.pennyCount and p:GetNumCoins() > f.pennyCount then
-            p:AddCoins(1)
-            lootdeck.sfx:Stop(SoundEffect.SOUND_PENNYPICKUP)
-            lootdeck.sfx:Play(sounds.counterfeitPenny, 1, 0)
-        end
-    end, Id)
-    lootdeck.f.pennyCount = Isaac.GetPlayer(0):GetNumCoins()
+local function MC_PRE_PICKUP_COLLISION(_, pi, e)
+	if e:ToPlayer() and helper.IsCoin(pi) then
+		local p = e:ToPlayer()
+		local chance = 0
+		if helper.IsCoin(pi, true) then
+			local chanceTable = {
+				[2252] = 18,
+				[2253] = 18,
+				[2254] = 10,
+				[2257] = 18,
+				[9192] = 25
+			}
+			chance = chanceTable[pi.Variant]
+		else
+			local chanceTable = {
+				40,
+				33,
+				33,
+				33,
+				25
+			}
+			chance = chanceTable[pi.SubType]
+		end
+	    if helper.PercentageChance(chance * p:GetCollectibleNum(Id), 90) and (pi.Price == 0 or helper.CanBuyPickup(p, pi)) then
+			local room = Game():GetRoom()
+	        local spawnPoint = room:FindFreePickupSpawnPosition(room:GetRandomPosition(0), 0, true)
+	        local coin = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, pi.SubType, spawnPoint, Vector.Zero, pi.Parent)
+		end
+	end
 end
 
 return {
@@ -39,13 +54,9 @@ return {
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
     callbacks = {
-        {
-            ModCallbacks.MC_POST_GAME_STARTED,
-            MC_POST_GAME_STARTED
-        },
-        {
-            ModCallbacks.MC_POST_UPDATE,
-            MC_POST_UPDATE
+		{
+            ModCallbacks.MC_PRE_PICKUP_COLLISION,
+            MC_PRE_PICKUP_COLLISION,
         }
     }
 }
