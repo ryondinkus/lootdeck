@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
-	if pickup.FrameCount == 1 then
+	if pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1) then
 		local data = pickup:GetData()
 	    local hasItem = false
 
@@ -25,7 +25,7 @@ local function MC_POST_PICKUP_UPDATE(_, pickup)
 	    end, Id)
 
 	    if pickup:GetSprite():IsPlaying("Appear") and hasItem and pickup.SpawnerVariant ~= entityVariants.doubleStickyNickel.Id then
-	        if (pickup.Variant == PickupVariant.PICKUP_COIN or pickup.Variant == entityVariants.chargedPenny.Id)
+			if (pickup.Variant == PickupVariant.PICKUP_COIN or pickup.Variant == entityVariants.chargedPenny.Id)
 	        and pickup.SubType ~= CoinSubType.COIN_DOUBLEPACK
 	        and pickup.Variant ~= entityVariants.doubleNickel.Id
 	        and pickup.Variant ~= entityVariants.doubleDime.Id
@@ -63,7 +63,9 @@ local function MC_POST_PICKUP_UPDATE(_, pickup)
 					end
 	            else
 	                pickup:Remove()
-	            end
+					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, pickup.Velocity, pickup)
+					effect:GetSprite().Scale = Vector(0.75,0.75)
+			    end
 	        end
 	    end
 	end
