@@ -30,7 +30,6 @@ end
 
 local function MC_POST_ENTITY_REMOVE(_, tear)
 	local tearData = tear:GetData()
-	print('hullo')
 	if tearData[Id] then
 		local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER_TRAIL, 0, tear.Position, Vector.Zero, tear)
 		helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, tear.Position, tear.Velocity:Normalized(), tear)
