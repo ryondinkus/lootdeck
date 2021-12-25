@@ -297,8 +297,8 @@ end
 function lootdeckHelpers.AddActiveCharge(p, value, animate)
     if animate then
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BATTERY, 0, p.Position - lootdeckHelpers.GetPlayerSpriteOffset(p), Vector.Zero, p)
+		lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
     end
-    lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
     for i=0,3 do
         if p:GetActiveItem(i) ~= 0 then
             if p:NeedsCharge(i) then
@@ -307,10 +307,11 @@ function lootdeckHelpers.AddActiveCharge(p, value, animate)
                     p:SetActiveCharge(p:GetActiveCharge(i), i)
                 end
                 Game():GetHUD():FlashChargeBar(p, i)
-                return
+                return true
             end
         end
     end
+	return false
 end
 
 function lootdeckHelpers.GetPlayerControllerIndex(p)
