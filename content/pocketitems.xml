@@ -406,7 +406,7 @@
 				description="Duplicate them"
 				hud="Jera"
 				type="special"
-				mimiccharge="1"
+				mimiccharge="4"
 				pickup="904"
 		/>
 	<card name="Pills!"
