@@ -13,6 +13,12 @@ local function MC_FAMILIAR_UPDATE(_, f)
 	f:FollowParent()
 end
 
+local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
+	if e:ToNPC() and not e:HasEntityFlags(EntityFlag.FLAG_CHARM) then
+		e:AddMidasFreeze(EntityRef(f), 30)
+	end
+end
+
 local function MC_POST_NEW_LEVEL()
     helper.ForEachEntityInRoom(function(entity)
         local f = entity:ToFamiliar()
@@ -36,6 +42,11 @@ return {
             MC_FAMILIAR_UPDATE,
             Id
         },
+		{
+			ModCallbacks.MC_PRE_FAMILIAR_COLLISION,
+            MC_PRE_FAMILIAR_COLLISION,
+            Id
+		},
 		{
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL,
