@@ -19,13 +19,23 @@ local function MC_ENTITY_TAKE_DMG(_, e)
     local rng = p:GetCollectibleRNG(Id)
     if p:HasCollectible(Id) then
         for i=1,p:GetCollectibleNum(Id) do
-            local effect = rng:RandomInt(2)
-            if effect == 0 then
-                helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY, p.Position, Vector.FromAngle(rng:RandomInt(360)), nil)
-				break
-			end
-        end
+            local tear = p:FireTear(p.Position, Vector.FromAngle(rng:RandomInt(360)) * 10, false, true, false, p, 2)
+			tear:ChangeVariant(TearVariant.COIN)
+			tear:GetData()[Id] = true
+			p:AddCoins(-1)
+			lootdeck.sfx:Play(SoundEffect.SOUND_LITTLE_SPIT, 1, 0)
+		end
     end
+end
+
+local function MC_POST_ENTITY_REMOVE(_, tear)
+	local tearData = tear:GetData()
+	if tearData[Id] then
+		local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER_TRAIL, 0, tear.Position, Vector.Zero, tear)
+		helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, tear.Position, tear.Velocity:Normalized(), tear)
+		effect:GetSprite().Scale = Vector(2,2)
+		tearData[Id] = nil
+	end
 end
 
 return {
@@ -40,6 +50,10 @@ return {
             ModCallbacks.MC_ENTITY_TAKE_DMG,
             MC_ENTITY_TAKE_DMG,
             EntityType.ENTITY_PLAYER
+        },
+		{
+            ModCallbacks.MC_POST_ENTITY_REMOVE,
+            MC_POST_ENTITY_REMOVE,
         }
     }
 }
