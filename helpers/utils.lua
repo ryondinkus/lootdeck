@@ -67,8 +67,8 @@ function lootdeckHelpers.PercentageChance(percent, max, rng)
     else
         value = percent
     end
-    if rng then return rng:RandomInt(99) <= value
-    else return lootdeck.rng:RandomInt(99) <= value end
+    if rng then return rng:RandomInt(99) + 1 <= value
+    else return lootdeck.rng:RandomInt(99) + 1 <= value end
 end
 
 return H
