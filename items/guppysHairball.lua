@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- A 1 in 6 chance of negating damage with the Holy Mantle effect

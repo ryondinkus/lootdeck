@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Drops 1-6 Mom's Fingers on random enemies in the room

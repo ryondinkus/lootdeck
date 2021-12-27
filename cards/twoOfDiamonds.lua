@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Grants Steam Sale effect for the floor + little card familiar

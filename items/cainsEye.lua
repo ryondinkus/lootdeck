@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Applies blue map effect with one, compass effect with two, and map effect with three
 local Names = {

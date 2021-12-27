@@ -44,7 +44,7 @@ lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
@@ -377,12 +377,14 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
-for _, card in pairs(lootcards) do
+LootDeckAPI = {}
+
+function LootDeckAPI.RegisterLootCard(card, newCard)
     if card.callbacks then
         for _, callback in pairs(card.callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
+                    local shouldDouble = card.IsHolographic or items.playerCard.helpers.ShouldRunDouble(p)
                     local result = callback[2](_, c, p, f, shouldDouble, p:GetCardRNG(card.Id))
                     local shouldContinueDouble = true
 
@@ -430,11 +432,22 @@ for _, card in pairs(lootcards) do
 			ModName = "Loot Deck",
             Name = card.Name,
 			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 2, cardFrontPath),
-            Hide = card.Holographic
+            Hide = card.IsHolographic
 		}
 
 		Encyclopedia.AddCard(encyclopediaOptions)
 	end
+
+    lootcards[card.Id] = card
+    lootcardKeys[card.Tag] = card
+
+    if newCard == true or newCard == nil then
+        LootDeckAPI.RegisterLootCard(LootDeckHelpers.GenerateHolographicCard(card), false)
+    end
+end
+
+for _, card in pairs(lootcards) do
+    LootDeckAPI.RegisterLootCard(card, false)
 end
 
 for _, challenge in pairs(lootdeckChallenges) do
@@ -501,12 +514,4 @@ for _, trinket in pairs(trinkets) do
 			ModName = "Loot Deck"
 		})
 	end
-end
-
-for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
 end

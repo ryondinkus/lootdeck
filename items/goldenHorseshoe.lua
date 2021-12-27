@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Spawns a glitch item in every treasure room
 local Names = {

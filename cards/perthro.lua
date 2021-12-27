@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Reroll a random item from the player's inventory
 local Names = {

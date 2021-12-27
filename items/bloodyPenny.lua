@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Gives a chance for killing an enemy to drop a tarotcard
 local Names = {

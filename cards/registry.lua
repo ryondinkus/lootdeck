@@ -79,36 +79,7 @@ local cards = {
 local holoCards = {}
 
 for _, card in pairs(cards) do
-    card.HUDAnimationName = "Idle"
-    card.PickupAnimationName = "Idle"
-    card.UseAnimationName = "IdleFast"
-
-    local holoCard = table.deepCopy(card)
-    holoCard.Holographic = true
-    holoCard.HUDAnimationName = "IdleHolo"
-    holoCard.PickupAnimationName = "IdleHolo"
-    holoCard.UseAnimationName = "IdleFastHolo"
-
-    local callbacks = {}
-
-    for _, callback in pairs(card.callbacks) do
-        if callback[1] == ModCallbacks.MC_USE_CARD then
-            table.insert(callbacks, callback)
-            break
-        end
-    end
-
-    holoCard.callbacks = callbacks
-
-    local holographicCardName = "Holographic "..card.Name
-    local holographicCardId = Isaac.GetCardIdByName(holographicCardName)
-
-    holoCard.Tag = "holographic"..card.Tag
-    holoCard.Id = holographicCardId
-	holoCard.Descriptions.en_us = card.Descriptions.en_us .. "#{{ColorRainbow}}HOLOGRAPHIC: Effect doubled!"
-	holoCard.Descriptions.spa = card.Descriptions.spa .. "#{{ColorRainbow}}HOLOGRÁFICA: ¡Efecto doble!"
-
-    table.insert(holoCards, holoCard)
+    table.insert(holoCards, LootDeckHelpers.GenerateHolographicCard(card))
 end
 
 lootcards = {}

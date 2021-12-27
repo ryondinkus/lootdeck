@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local items = include("items/registry")
 
 -- trinket; 1/10 tears replaced with Worm Tears, which have endless range and create slowing creep on collision

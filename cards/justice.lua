@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local entityVariants = include("entityVariants/registry")
 
 -- Spawn a Justice Haunt that attacks a random enemy and confuses them, steals 4 pickups from them, then dies

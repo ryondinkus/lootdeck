@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Spawns 1-3 of a pickup determined by the Glyph of Balance algorithm
 local Names = {

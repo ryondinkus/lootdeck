@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Gives the Holy Mantle effect for the room (negates damage once with minimal cooldown)
 local Names = {

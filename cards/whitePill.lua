@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Poison fart | weaken all enemies (they take 2x damage) | do nothing
 local Names = {

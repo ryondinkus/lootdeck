@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
 -- If not possible, like at the beginning of the level, give the player a penny

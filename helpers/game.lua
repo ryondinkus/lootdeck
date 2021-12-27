@@ -1,10 +1,10 @@
 local H = {}
 
-function lootdeckHelpers.AreEnemiesInRoom(room)
+function LootDeckHelpers.AreEnemiesInRoom(room)
     return room:GetAliveEnemiesCount() ~= 0
 end
 
-function lootdeckHelpers.CheckForSecretRooms(room)
+function LootDeckHelpers.CheckForSecretRooms(room)
     for i=0,7 do
         local door = room:GetDoor(i)
         if door ~= nil then
@@ -15,7 +15,7 @@ function lootdeckHelpers.CheckForSecretRooms(room)
     end
 end
 
-function lootdeckHelpers.CheckForTintedRocks(room)
+function LootDeckHelpers.CheckForTintedRocks(room)
     for i=0,room:GetGridSize() do
         local rock = room:GetGridEntity(i)
         if rock then
@@ -27,15 +27,15 @@ function lootdeckHelpers.CheckForTintedRocks(room)
 end
 
 -- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
-function lootdeckHelpers.AreTrinketsOnGround()
+function LootDeckHelpers.AreTrinketsOnGround()
     local isTrinketOnGround = false
-    lootdeckHelpers.ForEachEntityInRoom(function()
+    LootDeckHelpers.ForEachEntityInRoom(function()
         isTrinketOnGround = true
     end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET)
     return isTrinketOnGround
 end
 
-function lootdeckHelpers.OpenAllDoors(room, p)
+function LootDeckHelpers.OpenAllDoors(room, p)
 	for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
 		local door = room:GetDoor(i)
 		if door then
@@ -50,7 +50,7 @@ function lootdeckHelpers.OpenAllDoors(room, p)
 	end
 end
 
-function lootdeckHelpers.CheckFinalFloorBossKilled()
+function LootDeckHelpers.CheckFinalFloorBossKilled()
 	local level = Game():GetLevel()
 	local labyrinth = level:GetCurses() & LevelCurse.CURSE_OF_LABYRINTH > 0
 	if (lootdeck.f.floorBossCleared == 1 and not labyrinth)
@@ -60,7 +60,7 @@ function lootdeckHelpers.CheckFinalFloorBossKilled()
 	return false
 end
 
-function lootdeckHelpers.IsInChallenge(challengeName)
+function LootDeckHelpers.IsInChallenge(challengeName)
     local challengeId = Isaac.GetChallengeIdByName(challengeName)
     return Isaac.GetChallenge() == challengeId
 end

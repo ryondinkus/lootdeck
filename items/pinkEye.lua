@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- On damamge taken, chance to fire a poison creep tear at attacker
 local Names = {

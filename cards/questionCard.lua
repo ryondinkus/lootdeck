@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Spawns a permacharmed copy of an enemy in the room, spawns a random permacharmed enemy if no enemies in room
 local Names = {

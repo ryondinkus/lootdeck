@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 local Name = "Double Lucky Penny"
 local Tag = "doubleLuckyPenny"

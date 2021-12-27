@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Rerolls the enemies in the room using the D10
 local Names = {

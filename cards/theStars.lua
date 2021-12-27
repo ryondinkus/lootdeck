@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Grants an item from the item pool or (1% chance) possibly the planitarium pool
 local Names = {

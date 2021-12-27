@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Grants a temporary effect of a random battery item for the rest of the floor
 local Names = {

@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Gives a chance of reviving in the previous room with half a heart
 local Names = {

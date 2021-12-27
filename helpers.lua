@@ -1,4 +1,4 @@
-lootdeckHelpers = {}
+LootDeckHelpers = {}
 
 local helperFiles = {
     include("helpers/data"),
@@ -14,6 +14,6 @@ local helperFiles = {
 
 for _, file in pairs(helperFiles) do
     for key, func in pairs(file) do
-        lootdeckHelpers[key] = func
+        LootDeckHelpers[key] = func
     end
 end

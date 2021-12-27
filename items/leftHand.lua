@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local entitySubTypes = include("entitySubTypes/registry")
 
 -- Swap the pools of Red Chests and Gold Chests

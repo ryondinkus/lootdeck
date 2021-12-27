@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local items = include("items/registry")
 
 -- trinket; All penny spawns are either double pennies or nothing

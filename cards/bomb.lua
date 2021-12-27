@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 
 -- Explodes a random enemy or (if there are no enemies in the room) explodes the player
 local Names = {

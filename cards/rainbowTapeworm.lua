@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local items = include("items/registry")
 
 -- trinket; 50% chance each room to grant a temporary copy of a random passive you already have

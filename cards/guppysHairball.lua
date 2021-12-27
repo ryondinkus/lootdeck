@@ -1,5 +1,5 @@
 
-local helper = lootdeckHelpers
+local helper = LootDeckHelpers
 local items = include("items/registry")
 
 -- Gives the Guppy's Hairball item
