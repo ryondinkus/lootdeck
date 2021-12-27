@@ -10,10 +10,10 @@ local Tag = "death"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts",
+    en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts#{{Warning}} WARNING: Due to modding API weirdness, reviving with this card will reset your streak and make you unable to continue the run if quit.",
     spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.", "Holographic Effect: You revive with 4 Empty Bones Hearts.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.", "WARNING: Due to modding API weirdness, reviving with this card will reset your streak and make you unable to continue the run if quit.", "Holographic Effect: You revive with 4 Empty Bones Hearts.")
 
 local ReviveTag = string.format("%sRevive", Tag)
 
