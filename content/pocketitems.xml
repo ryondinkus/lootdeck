@@ -147,14 +147,14 @@
         description="Take damage, gain money"
         hud="Swallowed Penny"
 				type="special"
-				mimiccharge="4"
+				mimiccharge="6"
 				pickup="904"
     />
 	<card name="Counterfeit Penny"
         description="Gain additional money"
 				hud="Counterfeit Penny"
 				type="special"
-				mimiccharge="4"
+				mimiccharge="12"
 				pickup="904"
     />
 	<card name="Cain's Eye"
@@ -406,7 +406,7 @@
 				description="Duplicate them"
 				hud="Jera"
 				type="special"
-				mimiccharge="1"
+				mimiccharge="4"
 				pickup="904"
 		/>
 	<card name="Pills!"
