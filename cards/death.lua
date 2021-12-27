@@ -11,7 +11,7 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
     en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts#{{Warning}} WARNING: Due to modding API weirdness, reviving with this card will reset your streak and make you unable to continue the run if quit.",
-    spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos"
+    spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos#{{Warning}} ADVERTENCIA: Por motivos derivados de la API, revivir con esta carta reiniciará tu racha de victorias y será imposible continuar la partida si sales de ella"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.", "WARNING: Due to modding API weirdness, reviving with this card will reset your streak and make you unable to continue the run if quit.", "Holographic Effect: You revive with 4 Empty Bones Hearts.")
 

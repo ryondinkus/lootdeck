@@ -10,7 +10,7 @@ local Tag = "swallowedPenny"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
     en_us = "On damage taken, lose 1 cent and fire a penny tear in a random direction# The penny tear has 2x damage and drops a Penny and a puddle of creep when it makes contact",
-    spa = "50% de posibilidad de generar un penny al recibir daño"
+    spa = "Al recibir daño, perderás y dispararás una moneda en una dirección aleatoria# Esta moneda hace tu daño x2 y genera tanto una moneda como un charco de Creep al hacer contacto"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On damage taken, lose 1 cent and fire a penny tear in a random direction", "- The penny tear will have 2x damage.", "- On contact with enemies, obstacles, or the floor, penny tears will turn into a normal Penny (or rarely, other coin types) and leave a puddle of creep behind.", "- Additional copies will fire extra penny tears in random directions, at the cost of additional cents.")
 
