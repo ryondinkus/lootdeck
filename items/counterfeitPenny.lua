@@ -21,22 +21,22 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
 		local chance = 0
 		if helper.IsCoin(pi, true) then
 			local chanceTable = {
-				[2252] = 18,
-				[2253] = 18,
-				[2254] = 10,
-				[2257] = 18,
-				[9192] = 25
+				[2252] = 18, -- Double Nickel
+				[2253] = 18, -- Double Dime
+				[2254] = 10, -- Double Lucky Penny
+				[2257] = 10, -- Double Charged Penny
+				[9192] = 25  -- Charged Penny
 			}
-			chance = chanceTable[pi.Variant]
+			chance = chanceTable[pi.Variant] or 0
 		else
 			local chanceTable = {
-				40,
-				33,
-				33,
-				33,
-				25
+				40, -- Penny
+				33, -- Nickel
+				33, -- Dime
+				33, -- Double Penny
+				25  -- Lucky Penny
 			}
-			chance = chanceTable[pi.SubType]
+			chance = chanceTable[pi.SubType] or 0
 		end
 	    if helper.PercentageChance(chance * p:GetCollectibleNum(Id), 90) and (pi.Price == 0 or helper.CanBuyPickup(p, pi)) then
 			local room = Game():GetRoom()
