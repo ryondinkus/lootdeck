@@ -17,8 +17,12 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
     if sprite:IsEventTriggered("DropSound") then
         lootdeck.sfx:Play(SoundEffect.SOUND_NICKELDROP)
     end
-    if not sprite:IsPlaying("Touched") and not sprite:IsFinished("Touched") and sprite:IsEventTriggered("DropSound")then
+    if not sprite:IsPlaying("Touched") and not sprite:IsFinished("Touched") and sprite:IsEventTriggered("DropSound") then
         data.shouldShake = true
+    end
+
+    if sprite:IsFinished("Touched") then
+        sprite:Play("Idle", true)
     end
 
     if data.isColliding ~= 0 and data.isColliding == data.prevIsColliding then
