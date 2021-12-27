@@ -17,7 +17,6 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On player death, you ha
 local ReviveTag = string.format("%sRevive", Tag)
 
 local function MC_ENTITY_TAKE_DMG()
-    local sfx = lootdeck.sfx
     helper.ForEachPlayer(function(p, data)
 		if p:HasCollectible(Id) then
 			data[ReviveTag] = false
