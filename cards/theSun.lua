@@ -20,17 +20,15 @@ local WikiDescription = helper.GenerateEncyclopediaPage("After using, defeating 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.sunUsed = true
     lootdeck.f.removeSun = true
-    for i=0,3 do
-        if p:GetCard(i) == Id or p:GetCard(i) == lootcardKeys.holographictheSun.Id then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
-            p:SetCard(i, 0)
-        end
-    end
+
     if helper.CheckFinalFloorBossKilled() then
-        Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, UseFlag.USE_NOANIM)
-    end
+		lootdeck.f.sunTimer = 0
+    else
+		lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
+	end
+
     p:AddNullCostume(costumes.sun)
-    lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
+
 	if shouldDouble then
 		p:GetData().lootdeck[Tag .. "Double"] = true
 	end
@@ -38,15 +36,40 @@ end
 
 local function MC_POST_UPDATE()
     if lootdeck.f.removeSun then
+		helper.ForEachPlayer(function(p)
+			for i=0,3 do
+				if p:GetCard(i) == Id or p:GetCard(i) == lootcardKeys.holographictheSun.Id then
+					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
+					p:SetCard(i, 0)
+				end
+			end
+		end)
+
 		helper.ForEachEntityInRoom(function(entity)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
 			entity:Remove()
 		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
+
 		helper.ForEachEntityInRoom(function(entity)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
 			entity:Remove()
 		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, lootcardKeys.holographictheSun.Id)
+
     end
+	
+	if lootdeck.f.sunTimer then
+		local sunTimer = lootdeck.f.sunTimer
+		if sunTimer + 1 < 5 * 30 then
+			if sunTimer % 30 == 0 then
+				lootdeck.sfx:Play(SoundEffect.SOUND_HEARTBEAT, 2, 0, false, 1)
+			end
+			lootdeck.f.sunTimer = sunTimer + 1
+		else
+			Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
+			lootdeck.f.sunTimer = nil
+		end
+		Game():Darken(sunTimer/150, 1)
+	end
 end
 
 local function MC_PRE_SPAWN_CLEAN_AWARD()
@@ -56,10 +79,9 @@ local function MC_PRE_SPAWN_CLEAN_AWARD()
 
 	if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
 		lootdeck.f.floorBossCleared = lootdeck.f.floorBossCleared + 1
-	end
-
-	if helper.CheckFinalFloorBossKilled() and lootdeck.f.sunUsed then
-		Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
+		if helper.CheckFinalFloorBossKilled() and lootdeck.f.sunUsed then
+			lootdeck.f.sunTimer = 0
+		end
 	end
 end
 
