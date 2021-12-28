@@ -17,22 +17,10 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("After using, defeating the boss of the current floor triggers the Forget Me Now effect, which restarts the floor.", "- The effect will also trigger on use if the current floor's boss is already defeated.", "On use, all other instances of this card are removed and cannot be found for the rest of the run.", "Holographic Effect: Grants full mapping on the restarted floor.")
 
-local whiteOverlay = Sprite()
-whiteOverlay:Load("gfx/coloroverlays/overlay.anm2")
-whiteOverlay:ReplaceSpritesheet(0, "gfx/coloroverlays/black_overlay.png")
-whiteOverlay:LoadGraphics()
-whiteOverlay:Play("Idle", true)
-
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.sunUsed = true
     lootdeck.f.removeSun = true
 
-    for i=0,3 do
-        if p:GetCard(i) == Id or p:GetCard(i) == lootcardKeys.holographictheSun.Id then
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
-            p:SetCard(i, 0)
-        end
-    end
     if helper.CheckFinalFloorBossKilled() then
 		lootdeck.f.sunTimer = 0
     else
@@ -48,15 +36,27 @@ end
 
 local function MC_POST_UPDATE()
     if lootdeck.f.removeSun then
+		helper.ForEachPlayer(function(p)
+			for i=0,3 do
+				if p:GetCard(i) == Id or p:GetCard(i) == lootcardKeys.holographictheSun.Id then
+					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
+					p:SetCard(i, 0)
+				end
+			end
+		end)
+
 		helper.ForEachEntityInRoom(function(entity)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
 			entity:Remove()
 		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, Id)
+
 		helper.ForEachEntityInRoom(function(entity)
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, entity.Position, Vector.Zero, nil)
 			entity:Remove()
 		end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, lootcardKeys.holographictheSun.Id)
+
     end
+	
 	if lootdeck.f.sunTimer then
 		local sunTimer = lootdeck.f.sunTimer
 		if sunTimer + 1 < 5 * 30 then
@@ -68,6 +68,7 @@ local function MC_POST_UPDATE()
 			Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
 			lootdeck.f.sunTimer = nil
 		end
+		Game():Darken(sunTimer/150, 1)
 	end
 end
 
@@ -98,15 +99,6 @@ local function MC_POST_NEW_LEVEL()
 	lootdeck.f.floorBossCleared = 0
 end
 
-local function MC_POST_RENDER()
-    if lootdeck.f.sunTimer then
-		 whiteOverlay.Color = Color(whiteOverlay.Color.R,whiteOverlay.Color.G,whiteOverlay.Color.B,
-		 							lootdeck.f.sunTimer/200,
-									whiteOverlay.Color.RO,whiteOverlay.Color.GO,whiteOverlay.Color.BO)
-		whiteOverlay:RenderLayer(0, Vector.Zero)
-     end
-end
-
 return {
     Name = Name,
     Names = Names,
@@ -132,10 +124,6 @@ return {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
-        },
-		{
-			ModCallbacks.MC_POST_RENDER,
-			MC_POST_RENDER
-		}
+        }
     }
 }
