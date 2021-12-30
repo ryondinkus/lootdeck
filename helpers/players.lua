@@ -21,7 +21,7 @@ function LootDeckHelpers.IsSoulHeartFarty(p)
     return false
 end
 
-function LootDeckHelpers.RemoveHearts(player, hpValue)
+function LootDeckHelpers.RemoveMaxHearts(player, hpValue)
     for i=1,hpValue do
 		if LootDeckHelpers.GetPlayerHeartTotal(player) > 2 then
 			if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN and i % 2 == 0 then

@@ -157,14 +157,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 		print(data.redHp)
         if data.redHp then
             if (p:GetSubPlayer() == nil) then
-                helper.RemoveHearts(p, data.redHp)
+                helper.RemoveMaxHearts(p, data.redHp)
             else
-                helper.RemoveHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THEFORGOTTEN), data.redHp)
+                helper.RemoveMaxHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THEFORGOTTEN), data.redHp)
             end
             data.redHp = nil
         end
         if data.soulHp then
-            helper.RemoveHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
+            helper.RemoveMaxHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
             data.soulHp = nil
         end
     end)
