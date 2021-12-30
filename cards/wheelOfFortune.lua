@@ -30,7 +30,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
     local sfx = lootdeck.sfx
     local room = game:GetRoom()
 
-    helper.RandomChance(rng, shouldDouble,
+    helper.RunRandomFunction(rng, shouldDouble,
     function()
         p:AddCoins(1)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)

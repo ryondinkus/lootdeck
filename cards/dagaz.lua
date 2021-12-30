@@ -19,7 +19,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
     local level = Game():GetLevel()
 
-    helper.RandomChance(rng, shouldDouble,
+    helper.RunRandomFunction(rng, shouldDouble,
     function()
         sfx:Play(SoundEffect.SOUND_SUPERHOLY,1,0)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GROUND_GLOW, 0, p.Position, Vector.Zero, p)

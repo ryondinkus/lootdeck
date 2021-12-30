@@ -13,21 +13,20 @@ function LootDeckHelpers.LoadData()
 end
 
 function LootDeckHelpers.SaveKey(key, value)
-    local savedData = {}
-    if lootdeck:HasData() then
-        savedData = json.decode(lootdeck:LoadData())
-    end
+    local savedData = LootDeckHelpers.LoadData() or {}
     LootDeckHelpers.SetNestedValue(savedData, key, value)
-    lootdeck:SaveData(json.encode(savedData))
+    LootDeckHelpers.SaveData(savedData)
 end
 
 function LootDeckHelpers.LoadKey(key)
-    if lootdeck:HasData() then
-        return json.decode(lootdeck:LoadData())[key]
+    local savedData = LootDeckHelpers.LoadData()
+
+    if savedData then
+        return savedData[key]
     end
 end
 
-function LootDeckHelpers.SaveDataFromEntities(data)
+function LootDeckHelpers.FlattenEntityData(data)
     if data ~= nil then
         if type(data) == "userdata" then
             if data.InitSeed then
@@ -36,7 +35,7 @@ function LootDeckHelpers.SaveDataFromEntities(data)
         elseif type(data) == "table" then
             local output = {}
             for key, item in pairs(data) do
-                output[key] = LootDeckHelpers.SaveDataFromEntities(item)
+                output[key] = LootDeckHelpers.FlattenEntityData(item)
             end
             return output
         else
@@ -45,12 +44,12 @@ function LootDeckHelpers.SaveDataFromEntities(data)
     end
 end
 
-function LootDeckHelpers.LoadEntitiesFromSaveData(data)
+function LootDeckHelpers.RehydrateEntityData(data)
     if data ~= nil and type(data) == "table" then
         if LootDeckHelpers.IsArray(data) or data.savedType ~= "userdata" then
             local output = {}
             for key, item in pairs(data) do
-                output[key] = LootDeckHelpers.LoadEntitiesFromSaveData(item)
+                output[key] = LootDeckHelpers.RehydrateEntityData(item)
             end
             return output
         else
@@ -79,7 +78,7 @@ function LootDeckHelpers.SaveGame()
         data.familiars[tostring(familiar.InitSeed)] = familiar:GetData()
     end, EntityType.ENTITY_FAMILIAR)
 
-    LootDeckHelpers.SaveData(LootDeckHelpers.SaveDataFromEntities(data))
+    LootDeckHelpers.SaveData(LootDeckHelpers.FlattenEntityData(data))
 end
 
 return H

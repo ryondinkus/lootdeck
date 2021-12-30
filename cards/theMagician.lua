@@ -44,7 +44,7 @@ local function MC_EVALUATE_CACHE(_, p, f)
     end
 	if f == CacheFlag.CACHE_TEARFLAG then
         if data.magician then
-            p.TearFlags = p.TearFlags | helper.NewTearflag(71)
+            p.TearFlags = p.TearFlags | helper.ConvertBitSet64ToBitSet128(71)
         end
     end
 end

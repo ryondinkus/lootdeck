@@ -1,13 +1,13 @@
 local H = {}
 
 -- function to convert tearflags to new BitSet128
-function LootDeckHelpers.NewTearflag(x)
+function LootDeckHelpers.ConvertBitSet64ToBitSet128(x)
     return x >= 64 and BitSet128(0,1<<(x - 64)) or BitSet128(1<<x,0)
 end
 
-function LootDeckHelpers.TableContains(table, element)
-    if table then
-        for _, value in pairs(table) do
+function LootDeckHelpers.TableContains(t, element)
+    if t then
+        for _, value in pairs(t) do
             if value == element then
                 return true
             end
@@ -31,7 +31,10 @@ end
 function LootDeckHelpers.SetNestedValue(t, key, value)
     if t and type(t) == "table" then
         if key:find("%.") then
-            local levelKey, nextLevelKey = key:match('(.*)%.(.*)')
+            local levelKey, nextLevelKey = key:match('([^.]+)%.(.*)')
+            if t[levelKey] == nil and nextLevelKey then
+                t[levelKey] = {}
+            end
             return LootDeckHelpers.SetNestedValue(t[levelKey], nextLevelKey, value)
         else
             t[key] = value
@@ -48,8 +51,12 @@ function LootDeckHelpers.IsArray(t)
     return true
 end
 
-function LootDeckHelpers.RandomChance(rng, shouldDouble, ...)
+function LootDeckHelpers.RunRandomFunction(rng, shouldDouble, ...)
     local functions = {...}
+
+    if not rng then
+        rng = lootdeck.rng
+    end
 
     local effectIndex = rng:RandomInt(#functions) + 1
 
@@ -67,8 +74,12 @@ function LootDeckHelpers.PercentageChance(percent, max, rng)
     else
         value = percent
     end
-    if rng then return rng:RandomInt(99) + 1 <= value
-    else return lootdeck.rng:RandomInt(99) + 1 <= value end
+
+    if not rng then
+        rng = lootdeck.rng
+    end
+
+    return rng:RandomInt(99) + 1 <= value
 end
 
 return H

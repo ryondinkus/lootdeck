@@ -32,7 +32,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
             tear.CollisionDamage = tear.CollisionDamage * 2
             tear.Size = tear.Size * 2
             tear.Scale = tear.Scale * 2
-            local poisonFlags = helper.NewTearflag(4) | helper.NewTearflag(62) | helper.NewTearflag(33)
+            local poisonFlags = helper.ConvertBitSet64ToBitSet128(4) | helper.ConvertBitSet64ToBitSet128(62) | helper.ConvertBitSet64ToBitSet128(33)
             tear:GetData().arc = true
             tear:AddTearFlags(poisonFlags)
             tear.FallingSpeed = -20

@@ -25,7 +25,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
         poof.Color = Color(0.6,0,0.6,1,0,0,0)
     end)
 
-    return helper.RandomChance(rng, shouldDouble,
+    return helper.RunRandomFunction(rng, shouldDouble,
         function()
             helper.ForEachPlayer(function(player)
                 sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)

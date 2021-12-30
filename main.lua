@@ -64,7 +64,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                 local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
                 if savedFamiliarData then
                     local familiarData = familiar:GetData()
-                    for key, value in pairs(helper.LoadEntitiesFromSaveData(savedFamiliarData)) do
+                    for key, value in pairs(helper.RehydrateEntityData(savedFamiliarData)) do
                         familiarData[key] = value
                     end
                 end
@@ -100,14 +100,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 helper.ForEachPlayer(function(p, pData)
                     local savedPlayerData = data.players[tostring(p.InitSeed)]
                     if savedPlayerData then
-                        for key, value in pairs(helper.LoadEntitiesFromSaveData(savedPlayerData)) do
+                        for key, value in pairs(helper.RehydrateEntityData(savedPlayerData)) do
                             pData[key] = value
                         end
                     end
                 end)
 
                 if data.global then
-                    for key, value in pairs(helper.LoadEntitiesFromSaveData(data.global)) do
+                    for key, value in pairs(helper.RehydrateEntityData(data.global)) do
                         lootdeck.f[key] = value
                     end
                 end

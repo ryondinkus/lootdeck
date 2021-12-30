@@ -26,7 +26,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
 	end
 
-	helper.RandomChance(rng, shouldDouble,
+	helper.RunRandomFunction(rng, shouldDouble,
 	function ()
 		coinPickup()
 		p:AddCoins(4)

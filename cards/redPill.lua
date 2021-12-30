@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
     local sfx = lootdeck.sfx
 	local data = p:GetData().lootdeck
 
-	return helper.RandomChance(rng, shouldDouble,
+	return helper.RunRandomFunction(rng, shouldDouble,
 		function()
 			if not data[Tag] then data[Tag] = 0 end
 			data[Tag] = data[Tag] + 1

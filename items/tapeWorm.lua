@@ -37,7 +37,7 @@ local function MC_POST_FIRE_TEAR(_, tear)
             end
         end
 
-        if not tear:HasTearFlags(helper.NewTearflag(77)) then
+        if not tear:HasTearFlags(helper.ConvertBitSet64ToBitSet128(77)) then
             local animationToPlay = sprite:GetAnimation()
             sprite:Load("gfx/tears/tapeworm tear.anm2", true)
             sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", spriteSheetDirection))

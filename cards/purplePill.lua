@@ -19,7 +19,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local sfx = lootdeck.sfx
 	local data = p:GetData().lootdeck
 
-    helper.RandomChance(rng, shouldDouble,
+    helper.RunRandomFunction(rng, shouldDouble,
     function()
         if (f & UseFlag.USE_MIMIC ~= 0) then
             data[Tag .. "Charge"] = true

@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 	local room = Game():GetRoom()
     local tempPickups = {}
 
-	helper.RandomChance(rng, shouldDouble,
+	helper.RunRandomFunction(rng, shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_DEATH_CARD,1,0)
         Game():ShakeScreen(15)
