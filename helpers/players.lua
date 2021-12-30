@@ -251,13 +251,14 @@ function lootdeckHelpers.GetStartingItemsFromPlayer(p)
     return startingItems[index]
 end
 
-function lootdeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
+function lootdeckHelpers.GetPlayerInventory(p, blacklist, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
     for i = 1, numCollectibles do
         local collectible = itemConfig:GetCollectible(i)
         if collectible
+		and (not lootdeckHelpers.TableContains(blacklist, collectible.ID))
         and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
         and (not ignoreStartingItems or not lootdeckHelpers.TableContains(lootdeckHelpers.GetStartingItemsFromPlayer(p), i))
 		and (not ignoreQuestItems or not collectible:HasTags(ItemConfig.TAG_QUEST)) then
@@ -277,8 +278,8 @@ function lootdeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreSt
     return allHeld
 end
 
-function lootdeckHelpers.GetRandomItemIdInInventory(p, ignoreId, ignoreActives)
-    local inventory = lootdeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives)
+function lootdeckHelpers.GetRandomItemIdInInventory(p, blackList, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
+    local inventory = lootdeckHelpers.GetPlayerInventory(p, blackList, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
 
     local itemIndex = lootdeck.rng:RandomInt(#inventory) + 1
 
