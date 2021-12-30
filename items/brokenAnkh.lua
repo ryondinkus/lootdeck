@@ -21,6 +21,7 @@ local function MC_ENTITY_TAKE_DMG()
 		if p:HasCollectible(Id) then
 			data[ReviveTag] = false
 			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
+				data[Tag] = true
 				data[ReviveTag] = true
 			end
 		end
@@ -45,7 +46,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    helper.RevivePlayerPostPlayerUpdate(p, Tag, ReviveTag, function()
+    helper.RevivePlayerPostPlayerUpdate(p, Tag, function()
         local data = p:GetData().lootdeck
         data[ReviveTag] = nil
     end)

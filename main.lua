@@ -154,7 +154,6 @@ end)
 -- Temporary health callback
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     helper.ForEachPlayer(function(p, data)
-		print(data.redHp)
         if data.redHp then
             if (p:GetSubPlayer() == nil) then
                 helper.RemoveMaxHearts(p, data.redHp)

@@ -37,7 +37,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function() end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
+    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function() end, Tag);
 end
 
 local function MC_POST_FIRE_TEAR(_, tear)

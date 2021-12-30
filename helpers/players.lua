@@ -62,7 +62,6 @@ function LootDeckHelpers.AddTemporaryHealth(p, hp) -- hp is calculated in half h
     else
         if not data.redHp then data.redHp = 0 end
         data.redHp = data.redHp + amountToAdd
-		print(data.redHp)
     end
     p:AddMaxHearts(hp)
     p:AddHearts(hp)
@@ -109,12 +108,14 @@ function LootDeckHelpers.HolyMantleEffect(p, sound, effectVariant, effectSubtype
     p:SetMinDamageCooldown(60)
 end
 
-function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
+function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
     local game = Game()
     local data = p:GetData().lootdeck
     local sprite = p:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
+	local reviveTag = string.format("%sRevive", tag)
+
     if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
 	or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() == 19) then
@@ -128,7 +129,6 @@ function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callbac
 				p:GetOtherTwin():Revive()
 				p:GetOtherTwin():SetMinDamageCooldown(60)
 			end
-            data[tag] = true
             local enterDoor = level.EnterDoor
             local door = room:GetDoor(enterDoor)
             local direction = door and door.Direction or Direction.NO_DIRECTION
@@ -150,8 +150,13 @@ function LootDeckHelpers.HasActiveItem(p)
     return false
 end
 
-function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag)
-    if not p:HasCollectible(collectibleId) then return end
+function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag)
+	local finishedTag = string.format("%sFinished", tag)
+	local roomClearedTag = string.format("%sRoomCleared", tag)
+	local greedModeWaveTag = string.format("%sGreedModeWave", tag)
+	local bossRushBossesTag = string.format("%sBossRushBosses", tag)
+
+	if not p:HasCollectible(collectibleId) then return end
     local data = p:GetData().lootdeck
     local game = Game()
     if not data[roomClearedTag] and not LootDeckHelpers.AreEnemiesInRoom(game:GetRoom()) then

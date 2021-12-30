@@ -25,6 +25,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             data[Tag] = data[Tag] + 1
         end
     end
+	data[ReviveTag] = true
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
     local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
@@ -35,7 +36,7 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
-        if data[ReviveTag] then
+        if data[Tag] then
             p:AddMaxHearts(-24)
             p:AddSoulHearts(-24)
             p:AddBoneHearts(-12)
@@ -51,7 +52,7 @@ local function MC_POST_NEW_ROOM()
                 p:AddHearts(2)
             end
             if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN or p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
-                while p:GetBoneHearts() > 3 do
+                while p:GetBoneHearts() > data[Tag] do
                     p:AddBoneHearts(-1)
                 end
                 p:AddSoulHearts(1)
@@ -67,7 +68,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    helper.RevivePlayerPostPlayerUpdate(p, ReviveTag, Tag)
+    helper.RevivePlayerPostPlayerUpdate(p, Tag)
 end
 
 return {

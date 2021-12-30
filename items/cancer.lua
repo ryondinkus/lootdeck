@@ -57,7 +57,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
             p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
             p:EvaluateItems()
         end
-    end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
+    end, Tag);
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
