@@ -24,7 +24,11 @@ end
 function LootDeckHelpers.RemoveHearts(player, hpValue)
     for i=1,hpValue do
 		if LootDeckHelpers.GetPlayerHeartTotal(player) > 2 then
-        	player:AddMaxHearts(-2)
+			if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN and i % 2 == 0 then
+        		player:AddMaxHearts(-2)
+			else
+				player:AddMaxHearts(-1)
+			end
 		end
     end
 end
@@ -32,15 +36,17 @@ end
 function LootDeckHelpers.GetPlayerHeartTotal(p)
     local heartTotal = p:GetMaxHearts()
     if LootDeckHelpers.IsSoulHeartFarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
-    if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts() * 2) end
+    if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts()) end
     return heartTotal
 end
 
 function LootDeckHelpers.FindHealthToAdd(p, hp)
     local heartTotal = LootDeckHelpers.GetPlayerHeartTotal(p)
-    if heartTotal < p:GetHeartLimit() then
-        local remainder = math.floor((p:GetHeartLimit() - heartTotal)/2)
-        local amountToAdd = math.floor(hp/2)
+	local heartLimit = p:GetHeartLimit()
+	if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartLimit = heartLimit / 2 end
+    if heartTotal < heartLimit then
+        local remainder = math.floor(heartLimit - heartTotal)
+        local amountToAdd = math.floor(hp)
         if remainder < amountToAdd then amountToAdd = remainder end
 		return amountToAdd
     end
@@ -56,6 +62,7 @@ function LootDeckHelpers.AddTemporaryHealth(p, hp) -- hp is calculated in half h
     else
         if not data.redHp then data.redHp = 0 end
         data.redHp = data.redHp + amountToAdd
+		print(data.redHp)
     end
     p:AddMaxHearts(hp)
     p:AddHearts(hp)
