@@ -23,7 +23,7 @@ end
 
 function LootDeckHelpers.RemoveMaxHearts(player, hpValue)
     for i=1,hpValue do
-		if LootDeckHelpers.GetPlayerHeartTotal(player) > 2 then
+		if LootDeckHelpers.GetPlayerMaxHeartTotal(player) > 2 then
 			if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN and i % 2 == 0 then
         		player:AddMaxHearts(-2)
 			else
@@ -33,7 +33,7 @@ function LootDeckHelpers.RemoveMaxHearts(player, hpValue)
     end
 end
 
-function LootDeckHelpers.GetPlayerHeartTotal(p)
+function LootDeckHelpers.GetPlayerMaxHeartTotal(p)
     local heartTotal = p:GetMaxHearts()
     if LootDeckHelpers.IsSoulHeartFarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
     if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts()) end
@@ -41,7 +41,7 @@ function LootDeckHelpers.GetPlayerHeartTotal(p)
 end
 
 function LootDeckHelpers.FindHealthToAdd(p, hp)
-    local heartTotal = LootDeckHelpers.GetPlayerHeartTotal(p)
+    local heartTotal = LootDeckHelpers.GetPlayerMaxHeartTotal(p)
 	local heartLimit = p:GetHeartLimit()
 	if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartLimit = heartLimit / 2 end
     if heartTotal < heartLimit then
