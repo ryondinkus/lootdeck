@@ -21,7 +21,7 @@ function LootDeckHelpers.IsSoulHeartFarty(p)
     return false
 end
 
-function LootDeckHelpers.RemoveHeartsOnNewRoomEnter(player, hpValue)
+function LootDeckHelpers.RemoveHearts(player, hpValue)
     for i=1,hpValue do
 		if LootDeckHelpers.GetPlayerHeartTotal(player) > 2 then
         	player:AddMaxHearts(-2)
