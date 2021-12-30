@@ -29,7 +29,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData().lootdeck
     if data[Tag] then
-        if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
+        if helper.CheckHolyMantleDamage(damageAmount, damageFlags, damageSource) then
             helper.HolyMantleEffect(p)
             data[Tag] = data[Tag] - 1
     		if data[Tag] == 1 then

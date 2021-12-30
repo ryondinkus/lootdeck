@@ -86,7 +86,7 @@ function LootDeckHelpers.TakeSelfDamage(p, dmg, canKill, prioritizeRedHearts)
 	p:ResetDamageCooldown()
 end
 
-function LootDeckHelpers.HolyMantleDamage(damageAmount, damageFlags, damageSource)
+function LootDeckHelpers.CheckHolyMantleDamage(damageAmount, damageFlags, damageSource)
     local ignoreFlags = DamageFlag.DAMAGE_DEVIL | DamageFlag.DAMAGE_IV_BAG | DamageFlag.DAMAGE_FAKE | DamageFlag.DAMAGE_RED_HEARTS
     local includeFlags = DamageFlag.DAMAGE_CURSED_DOOR
     if (Game():GetRoom():GetType() == RoomType.ROOM_SACRIFICE and damageSource.Type == 0) then
@@ -103,9 +103,9 @@ function LootDeckHelpers.HolyMantleDamage(damageAmount, damageFlags, damageSourc
     return false
 end
 
-function LootDeckHelpers.HolyMantleEffect(p, sound, effect, effectSubtype)
+function LootDeckHelpers.HolyMantleEffect(p, sound, effectVariant, effectSubtype)
     lootdeck.sfx:Play(sound or SoundEffect.SOUND_HOLY_MANTLE,1,0)
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, effect or EffectVariant.POOF02, effectSubtype or 11, p.Position, Vector.Zero, p)
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, effectVariant or EffectVariant.POOF02, effectSubtype or 11, p.Position, Vector.Zero, p)
     p:SetMinDamageCooldown(60)
 end
 
