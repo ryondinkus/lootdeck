@@ -62,7 +62,7 @@ local function MC_POST_NEW_ROOM()
             data[ReviveTag] = nil
 
             p:AnimateCard(Id, "UseItem")
-            helper.PlayLootcardUseAnimation(data, Id)
+            helper.PlayLootcardUseAnimation(p, Id)
         end
     end)
 end

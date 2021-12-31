@@ -25,7 +25,7 @@ local function MC_USE_ITEM(_, type, rng, p)
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end
     if heldLootcard then
-        helper.PlayLootcardUseAnimation(data, heldLootcard.Id)
+        helper.PlayLootcardUseAnimation(p, heldLootcard.Id)
     end
     p:PlayExtraAnimation("UseItem")
 end

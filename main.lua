@@ -281,7 +281,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-            helper.PlayLootcardPickupAnimation(data, lootcard.Id)
+            helper.PlayLootcardPickupAnimation(p, lootcard.Id)
         end
 	end
 end, PickupVariant.PICKUP_TAROTCARD)
@@ -295,7 +295,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
-                lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
+                lootcardAnimationContainer = helper.CreateCardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
                     local color = lac.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                         lac.Color = Color(color.R, color.G, color.B, 0.5)
@@ -321,7 +321,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 if Isaac.GetFrameCount() % 2 == 0 then
                     lootcardAnimationContainer.sprite:Update()
                 end
-                lootcardAnimationContainer.sprite:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
+                lootcardAnimationContainer.sprite:Render(helper.GetHUDCardPosition(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation and data.lootcardHUDAnimation.sprite then
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
@@ -373,7 +373,7 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 
     if heldLootcard then
-        helper.PlayLootcardUseAnimation(data, heldLootcard.Id)
+        helper.PlayLootcardUseAnimation(p, heldLootcard.Id)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
@@ -409,7 +409,7 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
                     if f & UseFlag.USE_MIMIC == 0 then
                         local data = p:GetData().lootdeck
                         if result == nil then
-                            helper.PlayLootcardUseAnimation(data, card.Id)
+                            helper.PlayLootcardUseAnimation(p, card.Id)
                         end
                         data.isHoldingLootcard = false
                     end
