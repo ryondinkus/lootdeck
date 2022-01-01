@@ -16,11 +16,30 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On player death, you ha
 
 local ReviveTag = string.format("%sRevive", Tag)
 
+local function PostRevive()
+	local sfx = lootdeck.sfx
+	helper.ForEachPlayer(function(p, data)
+		if data[Tag] then
+			if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
+				p:AddHearts(-1)
+				p:AddHearts(1)
+			end
+			p:AnimateCollectible(Id)
+			local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, p.Position, Vector.Zero, nil)
+			poof.Color = Color(0,0,0,1,0.5,0.5,0.5)
+			sfx:Play(SoundEffect.SOUND_HOLY,1,0)
+			data[Tag] = nil
+		end
+		data[ReviveTag] = nil
+	end)
+end
+
 local function MC_ENTITY_TAKE_DMG()
     helper.ForEachPlayer(function(p, data)
 		if p:HasCollectible(Id) then
 			data[ReviveTag] = false
 			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
+				data[Tag] = true
 				data[ReviveTag] = true
 			end
 		end
@@ -28,27 +47,11 @@ local function MC_ENTITY_TAKE_DMG()
 end
 
 local function MC_POST_NEW_ROOM()
-    local sfx = lootdeck.sfx
-    helper.ForEachPlayer(function(p, data)
-        if data[Tag] then
-            if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
-                p:AddHearts(-1)
-                p:AddHearts(1)
-            end
-            p:AnimateCollectible(Id)
-            local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, p.Position, Vector.Zero, nil)
-            poof.Color = Color(0,0,0,1,0.5,0.5,0.5)
-            sfx:Play(SoundEffect.SOUND_HOLY,1,0)
-            data[Tag] = nil
-        end
-    end)
+	PostRevive()
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    helper.RevivePlayerPostPlayerUpdate(p, Tag, ReviveTag, function()
-        local data = p:GetData().lootdeck
-        data[ReviveTag] = nil
-    end)
+    helper.RevivePlayerPostPlayerUpdate(p, Tag, PostRevive)
 end
 
 return {

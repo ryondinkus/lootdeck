@@ -102,12 +102,15 @@ function lootdeckHelpers.HolyMantleEffect(p, sound, effect, effectSubtype)
     p:SetMinDamageCooldown(60)
 end
 
-function lootdeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callback)
+function lootdeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
     local game = Game()
     local data = p:GetData().lootdeck
     local sprite = p:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
+	local roomDesc = level:GetCurrentRoomDesc()
+	local reviveTag = string.format("%sRevive", tag)
+
     if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
 	or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() == 19) then
@@ -121,16 +124,18 @@ function lootdeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, reviveTag, callbac
 				p:GetOtherTwin():Revive()
 				p:GetOtherTwin():SetMinDamageCooldown(60)
 			end
-            data[tag] = true
-            local enterDoor = level.EnterDoor
-            local door = room:GetDoor(enterDoor)
-            local direction = door and door.Direction or Direction.NO_DIRECTION
-            game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
-            level.LeaveDoor = enterDoor
+			if not (roomDesc.Data.Type == RoomType.ROOM_DUNGEON
+			and roomDesc.Data.Variant == 666) then
+				local enterDoor = level.EnterDoor
+				local door = room:GetDoor(enterDoor)
+				local direction = door and door.Direction or Direction.NO_DIRECTION
+				game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
+				level.LeaveDoor = enterDoor
+			end
             if callback then
                 callback()
             end
-        end
+		end
     end
 end
 
