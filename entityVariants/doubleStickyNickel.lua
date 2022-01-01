@@ -97,7 +97,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_UPDATE,
             MC_POST_PICKUP_UPDATE,

@@ -13,14 +13,14 @@ function LootDeckHelpers.GenerateHolographicCard(card)
 
     local callbacks = {}
 
-    for _, callback in pairs(card.callbacks) do
+    for _, callback in pairs(card.Callbacks) do
         if callback[1] == ModCallbacks.MC_USE_CARD then
             table.insert(callbacks, callback)
             break
         end
     end
 
-    holoCard.callbacks = callbacks
+    holoCard.Callbacks = callbacks
 
     local holographicCardName = "Holographic "..card.Name
     local holographicCardId = Isaac.GetCardIdByName(holographicCardName)

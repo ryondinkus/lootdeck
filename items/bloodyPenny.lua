@@ -48,7 +48,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,
             MC_ENTITY_TAKE_DMG

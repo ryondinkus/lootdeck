@@ -20,7 +20,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_PRE_PICKUP_COLLISION,
             MC_PRE_PICKUP_COLLISION,

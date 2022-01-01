@@ -41,7 +41,7 @@ return {
 	  Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_PEFFECT_UPDATE,
             MC_POST_PEFFECT_UPDATE

@@ -53,7 +53,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
 		{
             ModCallbacks.MC_PRE_PICKUP_COLLISION,
             MC_PRE_PICKUP_COLLISION,

@@ -137,7 +137,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
                     local lootcard = helper.GetLootcardById(delayedCard.cardId)
 
                     if lootcard then
-                        for _, callback in pairs(lootcard.callbacks) do
+                        for _, callback in pairs(lootcard.Callbacks) do
                             if callback[1] == ModCallbacks.MC_USE_CARD then
                                 local p = delayedCard.player:ToPlayer()
                                 callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, p:GetCardRNG(callback[3]))
@@ -380,8 +380,8 @@ end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 LootDeckAPI = {}
 
 function LootDeckAPI.RegisterLootCard(card, newCard)
-    if card.callbacks then
-        for _, callback in pairs(card.callbacks) do
+    if card.Callbacks then
+        for _, callback in pairs(card.Callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     local shouldDouble = card.IsHolographic or items.playerCard.helpers.ShouldRunDouble(p)
@@ -451,32 +451,32 @@ for _, card in pairs(lootcards) do
 end
 
 for _, challenge in pairs(lootdeckChallenges) do
-    if challenge.callbacks then
-        for _, callback in pairs(challenge.callbacks) do
+    if challenge.Callbacks then
+        for _, callback in pairs(challenge.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, variant in pairs(entityVariants) do
-    if variant.callbacks then
-        for _, callback in pairs(variant.callbacks) do
+    if variant.Callbacks then
+        for _, callback in pairs(variant.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, subType in pairs(entitySubTypes) do
-    if subType.callbacks then
-        for _, callback in pairs(subType.callbacks) do
+    if subType.Callbacks then
+        for _, callback in pairs(subType.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, item in pairs(items) do
-    if item.callbacks then
-        for _, callback in pairs(item.callbacks) do
+    if item.Callbacks then
+        for _, callback in pairs(item.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
@@ -498,8 +498,8 @@ for _, item in pairs(items) do
 end
 
 for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
+    if trinket.Callbacks then
+        for _, callback in pairs(trinket.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end

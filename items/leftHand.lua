@@ -68,7 +68,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_UPDATE,
             MC_POST_PICKUP_UPDATE
