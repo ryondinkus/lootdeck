@@ -1,10 +1,16 @@
 local H = {}
 
 function LootDeckHelpers.AreEnemiesInRoom(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     return room:GetAliveEnemiesCount() ~= 0
 end
 
-function LootDeckHelpers.CheckForSecretRooms(room)
+function LootDeckHelpers.GetSecretRoomDoorPosition(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     for i=0,7 do
         local door = room:GetDoor(i)
         if door ~= nil then
@@ -15,7 +21,10 @@ function LootDeckHelpers.CheckForSecretRooms(room)
     end
 end
 
-function LootDeckHelpers.CheckForTintedRocks(room)
+function LootDeckHelpers.GetTintedRockPosition(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     for i=0,room:GetGridSize() do
         local rock = room:GetGridEntity(i)
         if rock then
@@ -35,22 +44,31 @@ function LootDeckHelpers.AreTrinketsOnGround()
     return isTrinketOnGround
 end
 
-function LootDeckHelpers.OpenAllDoors(room, p)
+function LootDeckHelpers.OpenAllDoors(p, force, revealSecretDoors, room)
+    if not room then
+        room = Game():GetRoom()
+    end
+    if force == nil then
+        force = true
+    end
+    if revealSecretDoors == nil then
+        revealSecretDoors = true
+    end
 	for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
 		local door = room:GetDoor(i)
 		if door then
 			if door:IsLocked() then
-				door:TryUnlock(p, true)
+				door:TryUnlock(p, force)
 			end
-			if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+			if revealSecretDoors and (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
 				door:TryBlowOpen(true, p)
 			end
-			door:Open()
+            door:Open()
 		end
 	end
 end
 
-function LootDeckHelpers.CheckFinalFloorBossKilled()
+function LootDeckHelpers.IsFinalFloorBossKilled()
 	local level = Game():GetLevel()
 	local labyrinth = level:GetCurses() & LevelCurse.CURSE_OF_LABYRINTH > 0
 	if (lootdeck.f.floorBossCleared == 1 and not labyrinth)

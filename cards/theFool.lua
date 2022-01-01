@@ -27,9 +27,8 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
-        local room = Game():GetRoom()
         if data[Tag] then
-			helper.OpenAllDoors(room, p)
+			helper.OpenAllDoors(p)
             data[Tag] = nil
         end
 		if data[Tag .. "Double"] then

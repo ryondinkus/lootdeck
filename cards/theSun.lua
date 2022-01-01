@@ -26,7 +26,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             p:SetCard(i, 0)
         end
     end
-    if helper.CheckFinalFloorBossKilled() then
+    if helper.IsFinalFloorBossKilled() then
         Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, UseFlag.USE_NOANIM)
     end
     p:AddNullCostume(costumes.sun)
@@ -58,7 +58,7 @@ local function MC_PRE_SPAWN_CLEAN_AWARD()
 		lootdeck.f.floorBossCleared = lootdeck.f.floorBossCleared + 1
 	end
 
-	if helper.CheckFinalFloorBossKilled() and lootdeck.f.sunUsed then
+	if helper.IsFinalFloorBossKilled() and lootdeck.f.sunUsed then
 		Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
 	end
 end

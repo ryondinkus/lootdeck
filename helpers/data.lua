@@ -30,7 +30,7 @@ function LootDeckHelpers.FlattenEntityData(data)
     if data ~= nil then
         if type(data) == "userdata" then
             if data.InitSeed then
-                return { savedType = "userdata", initSeed = tostring(data.InitSeed) }
+                return { _type = "userdata", initSeed = tostring(data.InitSeed) }
             end
         elseif type(data) == "table" then
             local output = {}
@@ -46,7 +46,7 @@ end
 
 function LootDeckHelpers.RehydrateEntityData(data)
     if data ~= nil and type(data) == "table" then
-        if LootDeckHelpers.IsArray(data) or data.savedType ~= "userdata" then
+        if LootDeckHelpers.IsArray(data) or data._type ~= "userdata" then
             local output = {}
             for key, item in pairs(data) do
                 output[key] = LootDeckHelpers.RehydrateEntityData(item)
