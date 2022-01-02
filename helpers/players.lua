@@ -131,10 +131,10 @@ function lootdeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
 				local direction = door and door.Direction or Direction.NO_DIRECTION
 				game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
 				level.LeaveDoor = enterDoor
+			elseif callback then
+				callback()
 			end
-            if callback then
-                callback()
-            end
+			data[reviveTag] = nil
 		end
     end
 end

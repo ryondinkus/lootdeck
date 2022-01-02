@@ -41,10 +41,9 @@ local function PostRevive()
 				p:AddSoulHearts(1)
 			end
 			lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
-			data[Tag] = nil
 			data[ReviveTag] = nil
 			p:AnimateCard(Id, "UseItem")
-			helper.PlayLootcardUseAnimation(p, Id)
+			helper.PlayLootcardUseAnimation(data, Id)
 		end
 	end)
 end
@@ -69,6 +68,9 @@ end
 
 local function MC_POST_NEW_ROOM()
 	PostRevive()
+	helper.ForEachPlayer(function(p, data)
+		data[Tag] = nil
+	end)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
