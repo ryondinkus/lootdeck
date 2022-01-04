@@ -1,7 +1,7 @@
 local H = {}
 
 -- function to check if player can only use soul/black hearts
-function LootDeckHelpers.IsSoulHeartFarty(p)
+function LootDeckHelpers.IsSoulHeartBart(player)
     local soulHeartMarties = {
         PlayerType.PLAYER_XXX,
         PlayerType.PLAYER_BLACKJUDAS,
@@ -14,15 +14,15 @@ function LootDeckHelpers.IsSoulHeartFarty(p)
         PlayerType.PLAYER_BETHANY_B,
     }
     for i,v in ipairs(soulHeartMarties) do
-        if p:GetPlayerType() == v then
+        if player:GetPlayerType() == v then
             return true
         end
     end
     return false
 end
 
-function LootDeckHelpers.RemoveMaxHearts(player, hpValue)
-    for i=1,hpValue do
+function LootDeckHelpers.RemoveMaxHearts(player, hp)
+    for i=1, hp do
 		if LootDeckHelpers.GetPlayerMaxHeartTotal(player) > 2 then
 			if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN and i % 2 == 0 then
         		player:AddMaxHearts(-2)
@@ -33,38 +33,50 @@ function LootDeckHelpers.RemoveMaxHearts(player, hpValue)
     end
 end
 
-function LootDeckHelpers.GetPlayerMaxHeartTotal(p)
-    local heartTotal = p:GetMaxHearts()
-    if LootDeckHelpers.IsSoulHeartFarty(p) then heartTotal = heartTotal + p:GetSoulHearts() end
-    if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartTotal = heartTotal + (p:GetBoneHearts()) end
+function LootDeckHelpers.GetPlayerMaxHeartTotal(player)
+    local heartTotal = player:GetMaxHearts()
+    if LootDeckHelpers.IsSoulHeartBart(player) then
+        heartTotal = heartTotal + player:GetSoulHearts()
+    end
+    if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
+        heartTotal = heartTotal + (player:GetBoneHearts())
+    end
     return heartTotal
 end
 
-function LootDeckHelpers.FindHealthToAdd(p, hp)
-    local heartTotal = LootDeckHelpers.GetPlayerMaxHeartTotal(p)
-	local heartLimit = p:GetHeartLimit()
-	if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then heartLimit = heartLimit / 2 end
+function LootDeckHelpers.FindHealthToAdd(player, hp)
+    local heartTotal = LootDeckHelpers.GetPlayerMaxHeartTotal(player)
+	local heartLimit = player:GetHeartLimit()
+	if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
+        heartLimit = heartLimit / 2
+    end
     if heartTotal < heartLimit then
         local remainder = math.floor(heartLimit - heartTotal)
         local amountToAdd = math.floor(hp)
-        if remainder < amountToAdd then amountToAdd = remainder end
+        if remainder < amountToAdd then
+            amountToAdd = remainder
+        end
 		return amountToAdd
     end
     return 0
 end
 
-function LootDeckHelpers.AddTemporaryHealth(p, hp) -- hp is calculated in half hearts
-	local data = p:GetData().lootdeck
-    local amountToAdd = LootDeckHelpers.FindHealthToAdd(p, hp)
-    if p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
-        if not data.soulHp then data.soulHp = 0 end
+function LootDeckHelpers.AddTemporaryHealth(player, hp) -- hp is calculated in half hearts
+	local data = player:GetData().lootdeck
+    local amountToAdd = LootDeckHelpers.FindHealthToAdd(player, hp)
+    if player:GetPlayerType() == PlayerType.PLAYER_THESOUL then
+        if not data.soulHp then
+            data.soulHp = 0
+        end
         data.soulHp = data.soulHp + amountToAdd
     else
-        if not data.redHp then data.redHp = 0 end
+        if not data.redHp then
+            data.redHp = 0
+        end
         data.redHp = data.redHp + amountToAdd
     end
-    p:AddMaxHearts(hp)
-    p:AddHearts(hp)
+    player:AddMaxHearts(hp)
+    player:AddHearts(hp)
     lootdeck.sfx:Play(SoundEffect.SOUND_VAMP_GULP,1,0)
 end
 
@@ -77,12 +89,16 @@ function LootDeckHelpers.GetPlayerOrSubPlayerByType(player, type)
     return nil
 end
 
-function LootDeckHelpers.TakeSelfDamage(p, dmg, canKill, prioritizeRedHearts)
+function LootDeckHelpers.TakeSelfDamage(player, damage, canKill, prioritizeRedHearts)
 	local flags = (DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_NO_MODIFIERS | DamageFlag.DAMAGE_NO_PENALTIES)
-	if not canKill then flags = flags | DamageFlag.DAMAGE_NOKILL end
-	if prioritizeRedHearts then flags = flags | DamageFlag.DAMAGE_RED_HEARTS end
-	p:TakeDamage(dmg,flags,EntityRef(p),0)
-	p:ResetDamageCooldown()
+	if not canKill then
+        flags = flags | DamageFlag.DAMAGE_NOKILL
+    end
+	if prioritizeRedHearts then
+        flags = flags | DamageFlag.DAMAGE_RED_HEARTS
+    end
+	player:TakeDamage(damage,flags,EntityRef(player),0)
+	player:ResetDamageCooldown()
 end
 
 function LootDeckHelpers.CheckHolyMantleDamage(damageAmount, damageFlags, damageSource)
@@ -102,16 +118,16 @@ function LootDeckHelpers.CheckHolyMantleDamage(damageAmount, damageFlags, damage
     return false
 end
 
-function LootDeckHelpers.HolyMantleEffect(p, sound, effectVariant, effectSubtype)
-    lootdeck.sfx:Play(sound or SoundEffect.SOUND_HOLY_MANTLE,1,0)
-    Isaac.Spawn(EntityType.ENTITY_EFFECT, effectVariant or EffectVariant.POOF02, effectSubtype or 11, p.Position, Vector.Zero, p)
-    p:SetMinDamageCooldown(60)
+function LootDeckHelpers.HolyMantleEffect(player, sfx, effectVariant, effectSubType)
+    lootdeck.sfx:Play(sfx or SoundEffect.SOUND_HOLY_MANTLE,1,0)
+    Isaac.Spawn(EntityType.ENTITY_EFFECT, effectVariant or EffectVariant.POOF02, effectSubType or 11, player.Position, Vector.Zero, player)
+    player:SetMinDamageCooldown(60)
 end
 
-function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
+function LootDeckHelpers.RevivePlayerPostPlayerUpdate(player, tag, callback)
     local game = Game()
-    local data = p:GetData().lootdeck
-    local sprite = p:GetSprite()
+    local data = player:GetData().lootdeck
+    local sprite = player:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
 	local reviveTag = string.format("%sRevive", tag)
@@ -120,14 +136,14 @@ function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
 	or (sprite:IsPlaying("ForgottenDeath") and sprite:GetFrame() == 19) then
         if data[reviveTag] then
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
-                p:AddBoneHearts(1)
+            if player:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN then
+                player:AddBoneHearts(1)
             end
-            p:Revive()
-			p:SetMinDamageCooldown(60)
-			if p:GetOtherTwin() then
-				p:GetOtherTwin():Revive()
-				p:GetOtherTwin():SetMinDamageCooldown(60)
+            player:Revive()
+			player:SetMinDamageCooldown(60)
+			if player:GetOtherTwin() then
+				player:GetOtherTwin():Revive()
+				player:GetOtherTwin():SetMinDamageCooldown(60)
 			end
             local enterDoor = level.EnterDoor
             local door = room:GetDoor(enterDoor)
@@ -141,23 +157,23 @@ function LootDeckHelpers.RevivePlayerPostPlayerUpdate(p, tag, callback)
     end
 end
 
-function LootDeckHelpers.HasActiveItem(p)
+function LootDeckHelpers.HasActiveItem(player)
     for i=0,3 do
-        if p:GetActiveItem(i) ~= 0 then
+        if player:GetActiveItem(i) ~= 0 then
             return true
         end
     end
     return false
 end
 
-function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initialize, callback, tag)
+function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(player, collectibleId, initialize, callback, tag)
 	local finishedTag = string.format("%sFinished", tag)
 	local roomClearedTag = string.format("%sRoomCleared", tag)
 	local greedModeWaveTag = string.format("%sGreedModeWave", tag)
 	local bossRushBossesTag = string.format("%sBossRushBosses", tag)
 
-	if not p:HasCollectible(collectibleId) then return end
-    local data = p:GetData().lootdeck
+	if not player:HasCollectible(collectibleId) then return end
+    local data = player:GetData().lootdeck
     local game = Game()
     if not data[roomClearedTag] and not LootDeckHelpers.AreEnemiesInRoom(game:GetRoom()) then
         data[roomClearedTag] = true
@@ -166,7 +182,7 @@ function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initi
     local isFinished = (data[finishedTag] or data[finishedTag] == nil)
     local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
 
-    local currentBosses = LootDeckHelpers.ListBossesInRoom(p.Position, true)
+    local currentBosses = LootDeckHelpers.ListBossesInRoom(player.Position, true)
 
     local shouldInitializeBecauseOfBossRush = true
 
@@ -182,8 +198,8 @@ function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(p, collectibleId, initi
         shouldInitializeBecauseOfBossRush = false
     end
 
-    if p:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and LootDeckHelpers.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
-        initialize(p)
+    if player:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and LootDeckHelpers.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
+        initialize(player)
     end
 
     if game:IsGreedMode() then
@@ -214,7 +230,7 @@ function LootDeckHelpers.ForEachPlayer(callback, collectibleId)
     return shouldReturn
 end
 
-function LootDeckHelpers.GetStartingItemsFromPlayer(p)
+function LootDeckHelpers.GetStartingItemsFromPlayer(player)
     local startingItems =
     {
         {CollectibleType.COLLECTIBLE_D6},
@@ -259,11 +275,11 @@ function LootDeckHelpers.GetStartingItemsFromPlayer(p)
         {CollectibleType.COLLECTIBLE_ANIMA_SOLA},
         {CollectibleType.COLLECTIBLE_RECALL}
     }
-    local index = p:GetPlayerType() + 1
+    local index = player:GetPlayerType() + 1
     return startingItems[index]
 end
 
-function LootDeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
+function LootDeckHelpers.GetPlayerInventory(player, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
@@ -271,9 +287,9 @@ function LootDeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreSt
         local collectible = itemConfig:GetCollectible(i)
         if collectible
         and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
-        and (not ignoreStartingItems or not LootDeckHelpers.TableContains(LootDeckHelpers.GetStartingItemsFromPlayer(p), i))
+        and (not ignoreStartingItems or not LootDeckHelpers.TableContains(LootDeckHelpers.GetStartingItemsFromPlayer(player), i))
 		and (not ignoreQuestItems or not collectible:HasTags(ItemConfig.TAG_QUEST)) then
-            inv[i] = p:GetCollectibleNum(i)
+            inv[i] = player:GetCollectibleNum(i)
         end
     end
     local allHeld = {}
@@ -289,8 +305,8 @@ function LootDeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives, ignoreSt
     return allHeld
 end
 
-function LootDeckHelpers.GetRandomItemIdInInventory(p, ignoreId, ignoreActives)
-    local inventory = LootDeckHelpers.GetPlayerInventory(p, ignoreId, ignoreActives)
+function LootDeckHelpers.GetRandomItemIdInInventory(player, ignoreId, ignoreActives)
+    local inventory = LootDeckHelpers.GetPlayerInventory(player, ignoreId, ignoreActives)
 
     local itemIndex = lootdeck.rng:RandomInt(#inventory) + 1
 
@@ -306,19 +322,19 @@ function LootDeckHelpers.GetPlayerSpriteOffset(p)
     return offsetVector
 end
 
-function LootDeckHelpers.AddActiveCharge(p, value, animate)
+function LootDeckHelpers.AddActiveCharge(player, value, animate)
     if animate then
-        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BATTERY, 0, p.Position - LootDeckHelpers.GetPlayerSpriteOffset(p), Vector.Zero, p)
+        Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BATTERY, 0, player.Position - LootDeckHelpers.GetPlayerSpriteOffset(player), Vector.Zero, player)
 		lootdeck.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE,1,0)
     end
     for i=0,3 do
-        if p:GetActiveItem(i) ~= 0 then
-            if p:NeedsCharge(i) then
-                p:SetActiveCharge(p:GetActiveCharge(i) + value, i)
-                if not p:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and p:GetBatteryCharge(i) > 0 then
-                    p:SetActiveCharge(p:GetActiveCharge(i), i)
+        if player:GetActiveItem(i) ~= 0 then
+            if player:NeedsCharge(i) then
+                player:SetActiveCharge(player:GetActiveCharge(i) + value, i)
+                if not player:HasCollectible(CollectibleType.COLLECTIBLE_BATTERY) and player:GetBatteryCharge(i) > 0 then
+                    player:SetActiveCharge(player:GetActiveCharge(i), i)
                 end
-                Game():GetHUD():FlashChargeBar(p, i)
+                Game():GetHUD():FlashChargeBar(player, i)
                 return true
             end
         end
@@ -326,7 +342,7 @@ function LootDeckHelpers.AddActiveCharge(p, value, animate)
 	return false
 end
 
-function LootDeckHelpers.GetPlayerControllerIndex(p)
+function LootDeckHelpers.GetPlayerControllerIndex(player)
     local controllerIndexes = {}
     LootDeckHelpers.ForEachPlayer(function(player)
         for _, index in pairs(controllerIndexes) do
@@ -337,7 +353,7 @@ function LootDeckHelpers.GetPlayerControllerIndex(p)
         table.insert(controllerIndexes, player.ControllerIndex)
     end)
     for i, index in pairs(controllerIndexes) do
-        if index == p.ControllerIndex then
+        if index == player.ControllerIndex then
             return i - 1
         end
     end

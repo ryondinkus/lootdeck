@@ -97,8 +97,8 @@ local ESAU_HUD_OFFSET_VECTORS = {
     [10] = Vector(16, 6)
 }
 
-function LootDeckHelpers.GetHUDCardPosition(p, sprite)
-    local controllerIndex = LootDeckHelpers.GetPlayerControllerIndex(p)
+function LootDeckHelpers.GetHUDCardPosition(player, sprite)
+    local controllerIndex = LootDeckHelpers.GetPlayerControllerIndex(player)
     local BottomRight = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
     local BottomLeft = Vector(0, Isaac.GetScreenHeight())
     local TopRight = Vector(Isaac.GetScreenWidth(), 0)
@@ -108,24 +108,24 @@ function LootDeckHelpers.GetHUDCardPosition(p, sprite)
 
     local hudOffsetVector = Vector.Zero
 
-    if controllerIndex ~= 0 and p.SubType == PlayerType.PLAYER_ESAU then
+    if controllerIndex ~= 0 and player.SubType == PlayerType.PLAYER_ESAU then
         return fuckOffVector
     end
 
     -- Jacob in first player slot
-    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_JACOB then
+    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_JACOB then
         hudOffsetVector = JACOB_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(11, 41) + hudOffsetVector
     end
 
     -- Esau in second player slot
-    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_ESAU then
+    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_ESAU then
         hudOffsetVector = ESAU_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(BottomRight.X - 10, BottomRight.Y - 44) - hudOffsetVector
     end
 
     -- Player 2 (top right)
-    if controllerIndex == 1 and p.SubType ~= PlayerType.PLAYER_ESAU then
+    if controllerIndex == 1 and player.SubType ~= PlayerType.PLAYER_ESAU then
         if sprite then
             sprite.Scale = Vector(0.5, 0.5)
         end
@@ -134,7 +134,7 @@ function LootDeckHelpers.GetHUDCardPosition(p, sprite)
     end
 
     -- Player 3 (bottom left)
-    if controllerIndex == 2 and p.SubType ~= PlayerType.PLAYER_ESAU then
+    if controllerIndex == 2 and player.SubType ~= PlayerType.PLAYER_ESAU then
         if sprite then
             sprite.Scale = Vector(0.5, 0.5)
         end
@@ -143,7 +143,7 @@ function LootDeckHelpers.GetHUDCardPosition(p, sprite)
     end
 
     -- Player 4 (bottom right)
-    if controllerIndex == 3 and p.SubType ~= PlayerType.PLAYER_ESAU then
+    if controllerIndex == 3 and player.SubType ~= PlayerType.PLAYER_ESAU then
         if sprite then
             sprite.Scale = Vector(0.5, 0.5)
         end
@@ -178,8 +178,8 @@ function LootDeckHelpers.StartLootcardAnimation(lootcardAnimationContainer, loot
     end
 end
 
-function LootDeckHelpers.PlayLootcardPickupAnimation(p, cardId)
-    local data = p:GetData().lootdeck
+function LootDeckHelpers.PlayLootcardPickupAnimation(player, cardId)
+    local data = player:GetData().lootdeck
     local card = LootDeckHelpers.GetLootcardById(cardId)
 
     if card then
@@ -197,8 +197,8 @@ function LootDeckHelpers.PlayLootcardPickupAnimation(p, cardId)
     end
 end
 
-function LootDeckHelpers.PlayLootcardUseAnimation(p, cardId)
-    local data = p:GetData().lootdeck
+function LootDeckHelpers.PlayLootcardUseAnimation(player, cardId)
+    local data = player:GetData().lootdeck
     local card = LootDeckHelpers.GetLootcardById(cardId)
 
     if card then

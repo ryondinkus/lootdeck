@@ -79,31 +79,31 @@ function LootDeckHelpers.CalculateRefund(price)
 	}
 end
 
-function LootDeckHelpers.CustomCoinPrePickupCollision(pi, e, amount, sfx, isFinished)
-    local p = e:ToPlayer() or 0
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
-    if p ~= 0 then
+function LootDeckHelpers.CustomCoinPrePickupCollision(pickup, collidingEntity, numberOfCoins, sfx, isFinished)
+    local player = collidingEntity:ToPlayer() or 0
+    local data = pickup:GetData()
+    local sprite = pickup:GetSprite()
+    if player ~= 0 then
          if data.canTake then
-            p:AddCoins(amount)
+            player:AddCoins(numberOfCoins)
             if sfx then
                lootdeck.sfx:Play(sfx)
             end
-            pi.Velocity = Vector.Zero
-            pi.Touched = true
-            pi.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+            pickup.Velocity = Vector.Zero
+            pickup.Touched = true
+            pickup.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
             sprite:Play("Collect", true)
             if isFinished then
-                isFinished(p)
+                isFinished(player)
             end
-            pi:Die()
+            pickup:Die()
         end
     end
 end
 
-function LootDeckHelpers.CustomCoinPickupUpdate(pi, sfx)
-    local data = pi:GetData()
-    local sprite = pi:GetSprite()
+function LootDeckHelpers.CustomCoinPickupUpdate(pickup, sfx)
+    local data = pickup:GetData()
+    local sprite = pickup:GetSprite()
     if sfx and sprite:IsEventTriggered("DropSound") then
         lootdeck.sfx:Play(sfx)
     end
@@ -113,33 +113,33 @@ function LootDeckHelpers.CustomCoinPickupUpdate(pi, sfx)
 end
 
 -- function that returns a consumable based on what glyph of balance would drop
-function LootDeckHelpers.GlyphOfBalance(p, rng)
-    if p:GetMaxHearts() <= 0 and p:GetSoulHearts() <= 4 and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
+function LootDeckHelpers.GlyphOfBalance(player, rng)
+    if player:GetMaxHearts() <= 0 and player:GetSoulHearts() <= 4 and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
-    elseif p:GetHearts() <= 1 and p:GetMaxHearts() > 0 then
+    elseif player:GetHearts() <= 1 and player:GetMaxHearts() > 0 then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL}
-    elseif p:GetNumKeys() <= 0 then
+    elseif player:GetNumKeys() <= 0 then
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
-    elseif p:GetNumBombs() <= 0 then
+    elseif player:GetNumBombs() <= 0 then
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-    elseif p:GetHearts() < p:GetMaxHearts() then
+    elseif player:GetHearts() < player:GetMaxHearts() then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL}
-    elseif p:GetNumCoins() < 15 then
+    elseif player:GetNumCoins() < 15 then
         return {PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY}
-    elseif p:GetNumKeys() < 5 then
+    elseif player:GetNumKeys() < 5 then
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
-    elseif p:GetNumBombs() < 5 then
+    elseif player:GetNumBombs() < 5 then
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-    elseif p:GetTrinket(0) == 0 and not LootDeckHelpers.AreTrinketsOnGround() then
+    elseif player:GetTrinket(0) == 0 and not LootDeckHelpers.AreTrinketsOnGround() then
         return {PickupVariant.PICKUP_TRINKET, 0}
-    elseif p:GetHearts() + p:GetSoulHearts() < 12 and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST and p:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
+    elseif player:GetHearts() + player:GetSoulHearts() < 12 and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     else
         return {(rng:RandomInt(4) + 1) * 10, 1}
     end
 end
 
-function LootDeckHelpers.IsCoin(pi, customOnly)
+function LootDeckHelpers.IsCoin(pickup, onlyCustom)
 	local customCoinVariants = {
 		20,
 		2252, -- double nickel
@@ -150,11 +150,11 @@ function LootDeckHelpers.IsCoin(pi, customOnly)
 		2257, -- double charged penny
 		9192  -- charged penny
 	}
-	if customOnly then
+	if onlyCustom then
 		table.remove(customCoinVariants, 1)
 	end
 	for k,v in pairs(customCoinVariants) do
-		if pi.Variant == v then
+		if pickup.Variant == v then
 			return true
 		end
 	end
