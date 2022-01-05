@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 
     return helper.RunRandomFunction(rng, shouldDouble,

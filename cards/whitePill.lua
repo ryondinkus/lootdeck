@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Creates a poison fart, like The Bean effect.", "- Weakens and slows all enemies in the room, similar to XI - Strength?.", "- Does nothing.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 
     helper.RunRandomFunction(rng, shouldDouble,

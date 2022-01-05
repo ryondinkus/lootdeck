@@ -15,8 +15,15 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on a random enemy in the room, dealing 40 damage to it and all enemies around it.", "If used with no targetable enemies in the room, the explosion will spawn on the player instead.", "Holographic Effect: Explodes on two enemies at once, if able.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
-	local target = helper.GetRandomEnemy(rng) or p
+local function MC_USE_CARD(_, c, p, f, _, isDouble, rng)
+	local target = helper.GetRandomEnemy(rng, Tag)
+    if not target then
+        if not isDouble then
+            target = p
+        else
+            return
+        end
+    end
     Isaac.Explode(target.Position, nil, 40)
     if target == p then
         return false

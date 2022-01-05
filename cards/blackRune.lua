@@ -16,7 +16,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Deals 40 damage to all room enemies.","- Spawns a random Card Reading portal, which will warp you to a random room. Higher priority is given to special room warps.", "- Lose 3 Coins, Keys, and Bombs, if possible. Spawn 3 chests.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 	local room = Game():GetRoom()
     local tempPickups = {}

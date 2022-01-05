@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of either effects:", "- Take 1 Half Heart of damage, gain 4 Coins. This damage can kill the player.", "- Take 1 Full Heart of damage, gain 8 Coins. This damage can kill the player.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     helper.RunRandomFunction(rng, shouldDouble,
     function()
 		helper.TakeSelfDamage(p, 1, true, true)

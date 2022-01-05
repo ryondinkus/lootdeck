@@ -25,7 +25,7 @@ local arcadeItems = {
     CollectibleType.COLLECTIBLE_CRYSTAL_BALL
 }
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local game = Game()
     local sfx = lootdeck.sfx
     local room = game:GetRoom()

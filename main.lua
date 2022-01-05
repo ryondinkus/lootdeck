@@ -385,7 +385,7 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
                     local shouldDouble = card.IsHolographic or items.playerCard.helpers.ShouldRunDouble(p)
-                    local result = callback[2](_, c, p, f, shouldDouble, p:GetCardRNG(card.Id))
+                    local result = callback[2](_, c, p, f, shouldDouble, false, p:GetCardRNG(card.Id))
                     local shouldContinueDouble = true
 
                     if type(result) == "table" then
@@ -395,7 +395,7 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
 
                     if shouldDouble and shouldContinueDouble and callback[4] then
                         if not callback[5] then
-                            callback[2](_, c, p, f, false, p:GetCardRNG(card.Id))
+                            callback[2](_, c, p, f, false, true, p:GetCardRNG(card.Id))
                         else
                             table.insert(lootdeck.f.delayedCards, {
                                 player = p,

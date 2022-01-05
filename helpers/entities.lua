@@ -44,7 +44,7 @@ function LootDeckHelpers.GetRandomEnemy(rng, tag, filter)
     end)
     local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]
     if chosenEnemy and tag then
-        chosenEnemy:GetData().lootdeck[tag] = true
+        chosenEnemy:GetData()[tag] = true
     end
     return chosenEnemy
 end
