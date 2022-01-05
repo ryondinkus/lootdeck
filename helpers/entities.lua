@@ -44,7 +44,7 @@ function LootDeckHelpers.GetRandomEnemy(rng, tag, filter)
     end)
     local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]
     if chosenEnemy and tag then
-        chosenEnemy:GetData()[tag] = true
+        chosenEnemy:GetData().lootdeck[tag] = true
     end
     return chosenEnemy
 end
@@ -113,20 +113,20 @@ function LootDeckHelpers.ForEachEntityInRoom(callback, entityType, entityVariant
         end
 
         if shouldReturn and extraFilters ~= nil then
-            shouldReturn = extraFilters(entity)
+            shouldReturn = extraFilters(entity, entity:GetData())
         end
 
         if shouldReturn then
-            callback(entity)
+            callback(entity, entity:GetData())
         end
 	  end
 end
 
-function LootDeckHelpers.RemoveHitFamiliars(id, hitTag)
+function LootDeckHelpers.RemoveHitFamiliars(hitTag, variant)
     LootDeckHelpers.ForEachEntityInRoom(function(entity)
         entity:Remove()
-    end, EntityType.ENTITY_FAMILIAR, id, nil, function(entity)
-        return entity:GetData()[hitTag] == true
+    end, EntityType.ENTITY_FAMILIAR, variant, nil, function(_, entityData)
+        return entityData[hitTag] == true
     end)
 end
 
@@ -138,29 +138,29 @@ function LootDeckHelpers.Spawn(type, variant, subType, position, velocity, spawn
         entity = Isaac.Spawn(type, variant or 0, subType or 0, position, velocity, spawner)
     end
     if Isaac.GetChallenge() == lootdeckChallenges.gimmeTheLoot.Id then
-        entity:GetData()[lootdeckChallenges.gimmeTheLoot.Tag] = true
+        entity:GetData().lootdeck[lootdeckChallenges.gimmeTheLoot.Tag] = true
     end
 
     return entity
 end
 
 -- function for registering basic loot cards that spawn items
-function LootDeckHelpers.SpawnEntity(p, spawnType, spawnVariant, spawnSubtype, uses, position, sound, effect, effectAmount)
+function LootDeckHelpers.SpawnEntity(player, type, variant, subType, count, position, sfx, effect, effectCount)
     local output = {
-        effects = {},
-        entities = {}
+        entities = {},
+        effects = {}
     }
     if effect then
-        for i=1,(effectAmount or 1) do
-            local newEffect = Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+        for i=1,(effectCount or 1) do
+            local newEffect = Isaac.Spawn(EntityType.ENTITY_EFFECT, effect, 0, position or player.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), player)
             table.insert(output.effects, newEffect)
         end
     end
-    if sound then
-        lootdeck.sfx:Play(sound)
+    if sfx then
+        lootdeck.sfx:Play(sfx)
     end
-    for i = 1,(uses or 1) do
-        local entity = LootDeckHelpers.Spawn(spawnType, spawnVariant or 0, spawnSubtype or 0, position or p.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), p)
+    for i = 1,(count or 1) do
+        local entity = LootDeckHelpers.Spawn(type, variant or 0, subType or 0, position or player.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), player)
 
         table.insert(output.entities, entity)
     end
