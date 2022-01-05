@@ -35,9 +35,11 @@ local function MC_USE_CARD(_, c, p, flags, shouldDouble)
         else
             data[Tag .. "DischargeMimic"] = true
         end
-        if (flags & UseFlag.USE_VOID == 0) then
-            data[Tag .. "DischargeVoid"] = true
-        end
+
+        -- this doesnt work because cards cannot get the USE_VOID flag LOL XD
+        -- if (flags & UseFlag.USE_VOID == 0) then
+        --     data[Tag .. "DischargeVoid"] = true
+        -- end
 
 		if shouldDouble then
 			data[Tag .. "Double"] = true
@@ -62,27 +64,28 @@ local function MC_POST_NEW_ROOM()
         helper.ForEachPlayer(function(p, data)
             for j=0,3 do
 				local currentCard = p:GetCard(j)
-                if currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id and data[Tag .. "RemoveCard"] then
+                if (currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id) and data[Tag .. "RemoveCard"] then
                     p:SetCard(j, 0)
                     data[Tag .. "RemoveCard"] = nil
                 end
             end
             if data[Tag .. "DischargeMimic"] then
                 for j=0,3 do
-                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_BLANK_CARD then
+                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_BLANK_CARD or p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
                         p:DischargeActiveItem(j)
                         data[Tag .. "DischargeMimic"] = nil
                     end
                 end
             end
-            if data[Tag .. "DischargeVoid"] then
-                for j=0,3 do
-                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
-                        p:DischargeActiveItem(j)
-                        data[Tag .. "DischargeVoid"] = nil
-                    end
-                end
-            end
+            -- *folds hands on desk* *tilts head* *smiles* voidy no worky
+            -- if data[Tag .. "DischargeVoid"] then
+            --     for j=0,3 do
+            --         if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
+            --             p:DischargeActiveItem(j)
+            --             data[Tag .. "DischargeVoid"] = nil
+            --         end
+            --     end
+            -- end
 			if data[Tag .. "Double"] then
 				helper.OpenAllDoors(p)
 				data[Tag .. "Double"] = nil
