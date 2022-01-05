@@ -140,7 +140,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
                         for _, callback in pairs(lootcard.Callbacks) do
                             if callback[1] == ModCallbacks.MC_USE_CARD then
                                 local p = delayedCard.player:ToPlayer()
-                                callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, p:GetCardRNG(callback[3]))
+                                callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, true, p:GetCardRNG(callback[3]))
                             end
                         end
                     end
