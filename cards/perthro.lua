@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.", "Holographic Effect: Destroys and grants a new item, then destroys and grants another.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local data = p:GetData().lootdeck
     local inv = helper.GetPlayerInventory(p, false, false, true, true)
     if helper.LengthOfTable(inv) > 0 then

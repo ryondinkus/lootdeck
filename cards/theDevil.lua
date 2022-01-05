@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 1 Heart Devil Deal from the current room pool.", "Holographic Effect: Spawns two Devil Deals.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local game = Game()
     local itemPool = game:GetItemPool()
     local room = game:GetRoom()

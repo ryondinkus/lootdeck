@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 1-3 consumables based on the Glyph of Balance algorithm. This spawns whatever consumable you have least of.", "Holographic Effect: Spawns twice as many consumables.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local reward = helper.GlyphOfBalance(p, rng)
     local room = Game():GetRoom()
     for i=0, rng:RandomInt(3) do

@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns 3 Loot Cards.", "Holographic Effect: Spawns 6 Loot Cards.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local game = Game()
     local sfx = lootdeck.sfx
     local room = game:GetRoom()
