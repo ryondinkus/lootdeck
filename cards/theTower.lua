@@ -52,6 +52,8 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		end
 		local target
 
+		print(data[counterTag])
+
 		if data[counterTag] == 1 then
 			target = p
 		else
@@ -64,10 +66,10 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 			end
 		end
 		
-		if target ~= p or previousResult ~= data[Tag] then
+		if target ~= p or previousResult < data[Tag] then
 			Isaac.Explode(target.Position, nil, 40)
+			data[counterTag] = data[counterTag] - 1
 		end
-		data[counterTag] = data[counterTag] - 1
 
 		return previousResult + 1
 	end,
