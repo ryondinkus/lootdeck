@@ -42,17 +42,11 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
     local numberOfEnemies = #helper.ListEnemiesInRoom(true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(counterTag, previousResult)
 
-		if not previousResult then
-			previousResult = 1
-		end
-
 		local data = p:GetData().lootdeck
 		if data[counterTag] > numberOfEnemies then
 			data[counterTag] = numberOfEnemies
 		end
 		local target
-
-		print(data[counterTag])
 
 		if data[counterTag] == 1 then
 			target = p
@@ -66,12 +60,12 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 			end
 		end
 		
-		if target ~= p or previousResult < data[Tag] then
+		if target ~= p or (not previousResult or previousResult < data[Tag]) then
 			Isaac.Explode(target.Position, nil, 40)
 			data[counterTag] = data[counterTag] - 1
 		end
 
-		return previousResult + 1
+		return (previousResult or 1) + 1
 	end,
 	function()
 		local enemies = helper.ListEnemiesInRoom()
