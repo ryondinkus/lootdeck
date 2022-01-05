@@ -36,7 +36,7 @@ local function MC_POST_UPDATE()
     local game = Game()
     helper.ForEachPlayer(function(p, data)
         if data[preRerollEnemySeedList] and #data[preRerollEnemySeedList] > 0 then
-            for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, function(_, eData) return not eData[chosenEnemy] end)) do
+            for _, enemy in ipairs(helper.ListEnemiesInRoom(false, function(_, eData) return not eData[chosenEnemy] end)) do
                 local isRerolledEnemy = true
                 for _, initSeed in ipairs(data[preRerollEnemySeedList]) do
                     if enemy.InitSeed == initSeed then
@@ -56,10 +56,10 @@ local function MC_POST_UPDATE()
 
         if data[shouldRerollEnemyTag] then
             local rng = p:GetCollectibleRNG(Id)
-            local target = helper.FindRandomEnemy(p.Position, rng) or 0
+            local target = helper.GetRandomEnemy(rng) or 0
             if target ~= 0 then
                 local enemyInitSeeds = {}
-                for _, enemy in ipairs(helper.ListEnemiesInRoom(p.Position, false, function(_, eData) return not eData[chosenEnemy] end)) do
+                for _, enemy in ipairs(helper.ListEnemiesInRoom(false, function(_, eData) return not eData[chosenEnemy] end)) do
                     table.insert(enemyInitSeeds, enemy.InitSeed)
                 end
                 data[preRerollEnemySeedList] = enemyInitSeeds

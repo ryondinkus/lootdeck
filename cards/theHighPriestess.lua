@@ -27,7 +27,7 @@ end
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local data = p:GetData().lootdeck
 
-    if #helper.ListEnemiesInRoom(p.Position) > 0 then
+    if #helper.ListEnemiesInRoom() > 0 then
         data[Tag] = 1
         if shouldDouble then
             data[Tag] = data[Tag] + 1
@@ -40,14 +40,16 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ClearStaggerSpawn(Tag)
+    LootDeckHelpers.ForEachPlayer(function(player)
+        helper.StopStaggerSpawn(player, Tag)
+    end)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     if p:GetData().lootdeck[Tag] then
         local rng = p:GetCardRNG(Id)
-    	helper.StaggerSpawn(Tag, p, 15, (rng:RandomInt(6) + 1) * (p:GetData().lootdeck[Tag] or 0), function(player)
-    		SpawnFinger(helper.FindRandomEnemy(player.Position, rng) or 0)
+    	helper.StaggerSpawn(Tag, p, 15, (rng:RandomInt(6) + 1) * (p:GetData().lootdeck[Tag] or 0), function()
+    		SpawnFinger(helper.GetRandomEnemy(rng) or 0)
     	end)
     end
 end

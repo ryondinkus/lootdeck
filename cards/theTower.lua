@@ -25,7 +25,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 		data[Tag] = data[Tag] + 1
 	end
 
-	local enemies = helper.ListEnemiesInRoom(p.Position)
+	local enemies = helper.ListEnemiesInRoom()
 	for _, enemy in ipairs(enemies) do
 		enemy:GetData()[Tag] = 1
 	end
@@ -34,37 +34,39 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ClearStaggerSpawn(Tag)
+    LootDeckHelpers.ForEachPlayer(function(player)
+        helper.StopStaggerSpawn(player, Tag)
+    end)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
 	local rng = p:GetCardRNG(Id)
-    local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
-    helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
-		local data = player:GetData().lootdeck
+    local numberOfEnemies = #helper.ListEnemiesInRoom(true, function(_, eData) return eData[Tag] end) + 1
+    helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(counterName)
+		local data = p:GetData().lootdeck
 		if data[counterName] > numberOfEnemies then
 			data[counterName] = numberOfEnemies
 		end
 		local target
 
 		if data[counterName] == 1 then
-			target = player
+			target = p
 		else
-			local enemy = helper.FindRandomEnemy(player.Position, rng, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
+			local enemy = helper.GetRandomEnemy(rng, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
 			if enemy then
 				target = enemy
 				enemy:GetData()[Tag] = nil
 			else
-				target = player
+				target = p
 			end
 		end
 		Isaac.Explode(target.Position, nil, 40)
 		data[counterName] = data[counterName] - 1
 	end,
-	function(player)
-		helper.ClearChosens(player.Position)
+	function()
+		helper.ClearChosenEnemies(Tag)
 	end,
-	1)
+	true)
 end
 
 return {

@@ -34,13 +34,15 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ClearStaggerSpawn(Tag)
+    LootDeckHelpers.ForEachPlayer(function(player)
+        helper.StopStaggerSpawn(player, Tag)
+    end)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     local rng = p:GetCardRNG(Id)
-	helper.StaggerSpawn(Tag, p, 15, 3, function(player, _, pastInitSeed)
-		local target = helper.FindRandomEnemy(player.Position, rng, nil, function(entity) return entity.InitSeed ~= pastInitSeed end) or 0
+	helper.StaggerSpawn(Tag, p, 15, 3, function(_, pastInitSeed)
+		local target = helper.GetRandomEnemy(rng, nil, function(entity) return entity.InitSeed ~= pastInitSeed end) or 0
 		if target ~= 0 then
             for i=0,4 do
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, target.Position, Vector.FromAngle(rng:RandomInt(360)) * 5, nil)

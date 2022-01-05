@@ -1,18 +1,21 @@
 local H = {}
 
--- helper function for using FindRandomEnemy with noDupes, resets chosen enemy counter in case of multiple uses of tower card, for example
-function LootDeckHelpers.ClearChosens(pos)
-    local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
+function LootDeckHelpers.ClearChosenEnemies(tag)
+    local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
+    local count = 0
     for i, entity in pairs(entities) do
         local data = entity:GetData()
-        if data.chosen then
-            data.chosen = nil
+        if data[tag] then
+            data[tag] = nil
+            count = count + 1
         end
     end
+
+    return count
 end
 
-function LootDeckHelpers.ListEnemiesInRoom(pos, ignoreVulnerability, filter)
-	local entities = Isaac.FindInRadius(pos, 1875, EntityPartition.ENEMY)
+function LootDeckHelpers.ListEnemiesInRoom(ignoreVulnerability, filter)
+	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500,EntityPartition.ENEMY)
 	local enemies = {}
 	for _, entity in pairs(entities) do
 		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
@@ -22,65 +25,66 @@ function LootDeckHelpers.ListEnemiesInRoom(pos, ignoreVulnerability, filter)
 	return enemies
 end
 
-function LootDeckHelpers.ListBossesInRoom(pos, ignoreMiniBosses, filter)
-	local enemies = LootDeckHelpers.ListEnemiesInRoom(pos, true, filter)
-    local bosses = {}
-
-    for _, enemy in pairs(enemies) do
-        if enemy:IsBoss() and (enemy.Type == EntityType.ENTITY_THE_HAUNT or enemy.Type == EntityType.ENTITY_MASK_OF_INFAMY or enemy:IsVulnerableEnemy()) and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == EntityType.ENTITY_MASK_OF_INFAMY or enemy.SpawnerType == EntityType.ENTITY_THE_HAUNT))) then
-            table.insert(bosses, enemy)
-        end
-    end
-
-    return bosses
+function LootDeckHelpers.ListBossesInRoom(ignoreMiniBosses, filter)
+	return LootDeckHelpers.ListEnemiesInRoom(true, function(enemy, enemyData)
+        return (not filter or filter(enemy, enemyData))
+            and enemy:IsBoss()
+            and (enemy.Type == EntityType.ENTITY_THE_HAUNT or enemy.Type == EntityType.ENTITY_MASK_OF_INFAMY or enemy:IsVulnerableEnemy())
+            and (not ignoreMiniBosses or (ignoreMiniBosses and (enemy.SpawnerType == 0 or enemy.SpawnerType == EntityType.ENTITY_MASK_OF_INFAMY or enemy.SpawnerType == EntityType.ENTITY_THE_HAUNT)))
+    end)
 end
 
 -- function for finding random enemy in the room
-function LootDeckHelpers.FindRandomEnemy(pos, rng, tag, filter)
-	local enemies = LootDeckHelpers.ListEnemiesInRoom(pos, false, filter)
-    local chosenEnt = enemies[rng:RandomInt(#enemies) + 1]
-    if chosenEnt and tag then
-        chosenEnt:GetData()[tag] = true
+function LootDeckHelpers.GetRandomEnemy(rng, tag, filter)
+    if not rng then
+        rng = lootdeck.rng
     end
-    return chosenEnt
+	local enemies = LootDeckHelpers.ListEnemiesInRoom(false, function(enemy, enemyData)
+        return (not filter or filter(enemy, enemyData)) and (not tag or not enemyData[tag])
+    end)
+    local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]
+    if chosenEnemy and tag then
+        chosenEnemy:GetData()[tag] = true
+    end
+    return chosenEnemy
 end
 
-function LootDeckHelpers.StaggerSpawn(key, p, interval, occurences, callback, onEnd, noAutoDecrement)
-	local data = p:GetData().lootdeck
-    if data[key] and data[key] > 0 then
-		local timerName = key.."Timer"
-		local counterName = key.."Counter"
-		if not data[timerName] then data[timerName] = 0 end
-		if not data[counterName] then data[counterName] = occurences end
+function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callback, onEnd, noAutoDecrement)
+	local data = player:GetData().lootdeck
+    if data[tag] and (type(data[tag]) ~= "number" or data[tag] > 0) then
+		local timerTag = tag.."Timer"
+		local counterTag = tag.."Counter"
+		if not data[timerTag] then data[timerTag] = 0 end
+		if not data[counterTag] then data[counterTag] = occurences end
 
-        data[timerName] = data[timerName] - 1
-        if data[timerName] <= 0 then
-			local result = callback(p, counterName)
-            if data[key] >= 2 then
-                callback(p, counterName, result)
+        data[timerTag] = data[timerTag] - 1
+        if data[timerTag] <= 0 then
+			local previousResult
+
+            for i = 1, tag do
+                previousResult = callback(counterTag, previousResult)
             end
-            data[timerName] = interval
-			if noAutoDecrement ~= 1 then
-				data[counterName] = data[counterName] - 1
+
+            data[timerTag] = interval
+			if not noAutoDecrement then
+				data[counterTag] = data[counterTag] - 1
 			end
-            if data[counterName] <= 0 then
-                data[key] = nil
-				data[timerName] = nil
-				data[counterName] = nil
+            if data[counterTag] <= 0 then
+                LootDeckHelpers.StopStaggerSpawn(player, tag)
 				if onEnd then
-					onEnd(p)
+					onEnd()
 				end
             end
         end
     end
 end
 
-function LootDeckHelpers.ClearStaggerSpawn(tag)
-    LootDeckHelpers.ForEachPlayer(function(_, data)
-        data[tag] = nil
-        data[tag.."Timer"] = nil
-        data[tag.."Counter"] = nil
-    end)
+function LootDeckHelpers.StopStaggerSpawn(player, tag)
+    local data = player:GetData()
+
+    data[tag] = nil
+    data[tag.."Timer"] = nil
+    data[tag.."Counter"] = nil
 end
 
 function LootDeckHelpers.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)

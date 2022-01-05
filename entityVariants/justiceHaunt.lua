@@ -42,7 +42,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 data.state = "STATE_ATTACK"
             end
         else
-            data.target = helper.FindRandomEnemy(f.Position, rng)
+            data.target = helper.GetRandomEnemy(rng)
         end
         if not helper.AreEnemiesInRoom(room) then
             data.state = "STATE_DEAD"

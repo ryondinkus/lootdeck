@@ -182,7 +182,7 @@ function LootDeckHelpers.TriggerOnRoomEntryPEffectUpdate(player, collectibleId, 
     local isFinished = (data[finishedTag] or data[finishedTag] == nil)
     local isBossRush = game:GetRoom():GetType() == RoomType.ROOM_BOSSRUSH
 
-    local currentBosses = LootDeckHelpers.ListBossesInRoom(player.Position, true)
+    local currentBosses = LootDeckHelpers.ListBossesInRoom(true)
 
     local shouldInitializeBecauseOfBossRush = true
 

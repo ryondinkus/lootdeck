@@ -16,7 +16,7 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.", "- All cleaved enemies will drop a Full Red Heart.", "Holographic Effect: Splits all enemies, then splits them again.")
 
 local function MC_USE_CARD(_, c, p, f, _, rng)
-    local enemies = helper.ListEnemiesInRoom(p.Position)
+    local enemies = helper.ListEnemiesInRoom()
     if #enemies > 0 then
         for _, entity in pairs(enemies) do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), entity)
