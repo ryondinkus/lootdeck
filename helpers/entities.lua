@@ -61,7 +61,7 @@ function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callbac
         if data[timerTag] <= 0 then
 			local previousResult
 
-            for i = 1, tag do
+            for i = 1, data[tag] do
                 previousResult = callback(counterTag, previousResult)
             end
 
@@ -80,7 +80,7 @@ function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callbac
 end
 
 function LootDeckHelpers.StopStaggerSpawn(player, tag)
-    local data = player:GetData()
+    local data = player:GetData().lootdeck
 
     data[tag] = nil
     data[tag.."Timer"] = nil
