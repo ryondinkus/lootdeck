@@ -21,7 +21,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.sunUsed = true
     lootdeck.f.removeSun = true
 
-    if helper.CheckFinalFloorBossKilled() then
+    if helper.IsFinalFloorBossKilled() then
 		  lootdeck.f.sunTimer = 0
     else
 		  lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
@@ -79,7 +79,7 @@ local function MC_PRE_SPAWN_CLEAN_AWARD()
 
 	if roomDesc.Clear and room:GetType() == RoomType.ROOM_BOSS then
 		lootdeck.f.floorBossCleared = lootdeck.f.floorBossCleared + 1
-		if helper.CheckFinalFloorBossKilled() and lootdeck.f.sunUsed then
+		if helper.IsFinalFloorBossKilled() and lootdeck.f.sunUsed then
 			lootdeck.f.sunTimer = 0
 		end
 	end

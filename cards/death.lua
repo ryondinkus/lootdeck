@@ -47,7 +47,7 @@ local function PostRevive()
 			lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
 			data[ReviveTag] = nil
 			p:AnimateCard(Id, "UseItem")
-			helper.PlayLootcardUseAnimation(data, Id)
+			helper.PlayLootcardUseAnimation(p, Id)
 		end
 	end)
 end

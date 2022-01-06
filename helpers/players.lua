@@ -291,7 +291,7 @@ function LootDeckAPI.GetPlayerInventory(player, blacklist, ignoreId, ignoreActiv
     for i = 1, numCollectibles do
         local collectible = itemConfig:GetCollectible(i)
         if collectible
-		and (not lootdeckHelpers.TableContains(blacklist, collectible.ID))
+		and (not LootDeckAPI.TableContains(blacklist, collectible.ID))
         and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
         and (not ignoreStartingItems or not LootDeckAPI.TableContains(LootDeckAPI.GetStartingItemsFromPlayer(player), i))
 		and (not ignoreQuestItems or not collectible:HasTags(ItemConfig.TAG_QUEST)) then
