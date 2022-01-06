@@ -17,6 +17,37 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "Yo
 
 local ReviveTag = string.format("%sRevive", Tag)
 
+local function PostRevive()
+	helper.ForEachPlayer(function(p, data)
+		if data[Tag] then
+			p:AddMaxHearts(-24)
+			p:AddSoulHearts(-24)
+			p:AddBoneHearts(-12)
+			p:AddBoneHearts(data[Tag])
+			if p:GetOtherTwin() then
+				p:GetOtherTwin():AddMaxHearts(-24)
+				p:GetOtherTwin():AddSoulHearts(-24)
+				p:GetOtherTwin():AddBoneHearts(-12)
+				p:GetOtherTwin():AddBoneHearts(data[Tag])
+			end
+			if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
+				p:AddMaxHearts(2, false)
+				p:AddHearts(2)
+			end
+			if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN or p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
+				while p:GetBoneHearts() > data[Tag] do
+					p:AddBoneHearts(-1)
+				end
+				p:AddSoulHearts(1)
+			end
+			lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
+			data[ReviveTag] = nil
+			p:AnimateCard(Id, "UseItem")
+			helper.PlayLootcardUseAnimation(data, Id)
+		end
+	end)
+end
+
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData().lootdeck
     if not data[Tag] then
@@ -25,6 +56,8 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
             data[Tag] = data[Tag] + 1
         end
     end
+	data[ReviveTag] = true
+
     Game():ShakeScreen(15)
     lootdeck.sfx:Play(SoundEffect.SOUND_DEATH_CARD, 1, 0)
     local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, p)
@@ -34,40 +67,14 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ForEachPlayer(function(p, data)
-        if data[ReviveTag] then
-            p:AddMaxHearts(-24)
-            p:AddSoulHearts(-24)
-            p:AddBoneHearts(-12)
-            p:AddBoneHearts(data[Tag])
-            if p:GetOtherTwin() then
-                p:GetOtherTwin():AddMaxHearts(-24)
-                p:GetOtherTwin():AddSoulHearts(-24)
-                p:GetOtherTwin():AddBoneHearts(-12)
-                p:GetOtherTwin():AddBoneHearts(data[Tag])
-            end
-            if p:GetPlayerType() == PlayerType.PLAYER_KEEPER or p:GetPlayerType() == PlayerType.PLAYER_KEEPER_B then
-                p:AddMaxHearts(2, false)
-                p:AddHearts(2)
-            end
-            if p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN or p:GetPlayerType() == PlayerType.PLAYER_THESOUL then
-                while p:GetBoneHearts() > 3 do
-                    p:AddBoneHearts(-1)
-                end
-                p:AddSoulHearts(1)
-            end
-            lootdeck.sfx:Play(SoundEffect.SOUND_UNHOLY,1,0)
-            data[Tag] = nil
-            data[ReviveTag] = nil
-
-            p:AnimateCard(Id, "UseItem")
-            helper.PlayLootcardUseAnimation(data, Id)
-        end
-    end)
+	PostRevive()
+	helper.ForEachPlayer(function(p, data)
+		data[Tag] = nil
+	end)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    helper.RevivePlayerPostPlayerUpdate(p, ReviveTag, Tag)
+	helper.RevivePlayerPostPlayerUpdate(p, Tag, PostRevive)
 end
 
 return {
@@ -84,13 +91,13 @@ return {
             MC_USE_CARD,
             Id
         },
+		{
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
+        },
         {
             ModCallbacks.MC_POST_PLAYER_UPDATE,
             MC_POST_PLAYER_UPDATE
-        },
-        {
-            ModCallbacks.MC_POST_NEW_ROOM,
-            MC_POST_NEW_ROOM
         }
     }
 }
