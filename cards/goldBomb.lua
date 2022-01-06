@@ -15,7 +15,7 @@ local Descriptions = {
 }
 local HolographicDescriptions = {
 	en_us = "Explodes on {{ColorRainbow}}6{{CR}} random enemies, {{ColorRainbow}}two at at time{{CR}} , dealing 40 damage to each#{{Warning}} If no enemies are in the room initally, this will explode on the player",
-	spa = "{{ColorRainbow}}6{{CR}} enemigos aleatorios explotan, {{ColorRainbow}}two at at time{{CR}} , provocando 40 de daño#{{Warning}} Si no hay enemigos en la sala, el jugador explotará"
+	spa = "{{ColorRainbow}}6{{CR}} enemigos aleatorios explotan, {{ColorRainbow}}dos a la vez{{CR}} , provocando 40 de daño#{{Warning}} Si no hay enemigos en la sala, el jugador explotará"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on three random enemies in the room, dealing 40 damage to each enemy and all enemies around them.", "If used with no targetable enemies in the room, an explosion will spawn on the player instead.", "- This only applies to the inital explosion. If the first or second explosion wipes out all enemies in the room, any subsequent explosions will simply not happen.", "Holographic Effect: Creates 6 explosions, two at a time, if able.")
 

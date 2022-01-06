@@ -15,10 +15,10 @@ local Descriptions = {
     spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
 }
 local HolographicDescriptions = {
-    en_us = "On use, fills in all the pits in the current room with rock bridges#{{ColorRainbow}}",
-    spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
+    en_us = "On use, fills in all the pits in the current room with rock bridges#{{ColorRainbow}}Destroys all rocks in the room",
+    spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra#{{ColorRainbow}}Destruye todos los piedras en la sala"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: Fills in all holes in the current room.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Fills in all holes in the current room.# Holographic Effect: Breaks all rocks in the room")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local room = Game():GetRoom()

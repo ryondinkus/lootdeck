@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits",
     spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber dos golpes"
 }
+local HolographicDescriptions = {
+    en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb {{ColorRainbow}}three{{CR}} hits",
+    spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber {{ColorRainbow}}tres{{CR}} golpes"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.", "Holographic Effect: The Holy Mantle can absorb three hits.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
@@ -73,6 +77,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

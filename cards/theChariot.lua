@@ -15,8 +15,8 @@ local Descriptions = {
     spa = "{{Heart}} +1 contenedor de corazón durante la habitación# {{ArrowUp}} +0.5 de daño por cada contenedor de corazón que tengas"
 }
 local HolographicDescriptions = {
-    en_us = "{{Heart}} {{ColorRainbow}}+2{{CR}} Heart Container for the room# {{ArrowUp}} +0.5 damage for every Heart Container you have",
-    spa = "{{Heart}} {{ColorRainbow}}+2{{CR}} contenedor de corazón durante la habitación# {{ArrowUp}} +0.5 de daño por cada contenedor de corazón que tengas"
+    en_us = "{{Heart}} {{ColorRainbow}}+2{{CR}} Heart Containers for the room# {{ArrowUp}} +0.5 damage for every Heart Container you have",
+    spa = "{{Heart}} {{ColorRainbow}}+2{{CR}} contenedores de corazón durante la habitación# {{ArrowUp}} +0.5 de daño por cada contenedor de corazón que tengas"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a temporary Heart Container for the room.", "Adds +0.5 Damage for every Heart Container you have for the duration of the room.", "Holographic Effect: Grants an extra Heart Container.")
 

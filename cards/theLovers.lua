@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "{{Heart}} +2 Heart Containers for the room",
     spa = "Otorga 2 contenedores de corazón durante la habitación"
 }
+local HolographicDescriptions = {
+    en_us = "{{Heart}} {{ColorRainbow}}+3{{CR}} Heart Containers for the room",
+    spa = "Otorga {{ColorRainbow}}3{{CR}} contenedores de corazón durante la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.", "Holographic Effect: Grants 3 temporary heart containers.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
@@ -43,6 +47,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

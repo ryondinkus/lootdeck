@@ -14,8 +14,8 @@ local Descriptions = {
     spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar#La habitación a la que te teletransportes tendrá las puertas abiertas"
 }
 local HolographicDescriptions = {
-    en_us = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room# The room you teleport into will have its doors opened#{{ColorRainbow}} Deals 40 damage to every enemy in the room",
-    spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar#La habitación a la que te teletransportes tendrá las puertas abiertas#{{ColorRainbow}} Hacer 40 de daño a todos los enemigos de la habitación"
+    en_us = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room# The room you teleport into will have its doors opened#{{ColorRainbow}}Deals 40 damage to every enemy in the room",
+    spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar#La habitación a la que te teletransportes tendrá las puertas abiertas#{{ColorRainbow}}Hacer 40 de daño a todos los enemigos de la habitación"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: Triggers the Necronomicon effect on room entry, dealing 40 damage to all enemies.")
 

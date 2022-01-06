@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns 5-10 Shopkeepers",
     spa = "Genera 5-10 cuidadores de tiendas"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}10-20{{CR}} Shopkeepers",
+    spa = "Genera {{ColorRainbow}}10-20{{CR}} cuidadores de tiendas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.", "Holographic Effect: Spawns twice as many shopkeepers, two at at time.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
@@ -48,6 +52,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
             {

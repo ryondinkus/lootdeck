@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Pauses all enemies and projectiles in the room# Effect wears off after 10 seconds# Stops the game clock for the duration of the effect",
     spa = "Detiene a todos los enemigos y proyectiles en la sala#Dura 10 segundos#El reloj del juego se detiene al activar el efecto"
 }
+local HolographicDescriptions = {
+    en_us = "Pauses all enemies and projectiles in the room# Effect wears off after {{ColorRainbow}}20{{CR}} seconds# Stops the game clock for the duration of the effect",
+    spa = "Detiene a todos los enemigos y proyectiles en la sala#Dura {{ColorRainbow}}20{{CR}} segundos#El reloj del juego se detiene al activar el efecto"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Pauses all enemies and projectiles in the room.", "- The effect lasts for 10 seconds.", "- The in-game clock does not increment for the duration of the effect.", "Holographic Effect: The effect lasts for 20 seconds.")
 
 local SavedTimeTag = Tag.."SavedTime"
@@ -97,6 +101,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

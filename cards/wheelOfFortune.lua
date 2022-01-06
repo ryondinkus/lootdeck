@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} Gain 1 Coin#{{Warning}} Take a Half Heart of damage (non-lethal)#{{LootCard}} Spawns 3 Loot Cards#{{Coin}}{{ArrowDown}} Lose 4 Coins#{{Coin}}{{ArrowUp}} Gain 5 Coins#{{ArcadeRoom}} Spawn a random Arcade-exclusive item",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} Ganas una moneda#{{Warning}} recibes medio corazón de daño (no fatal)#{{LootCard}} Genera 3 cartas de Loot#{{Coin}}{{ArrowDown}} Pierdes 4 monedas#{{Coin}}{{ArrowUp}} Ganas 5 monedas#{{ArcadeRoom}} Genera un objeto aleatorio exclusivo del Arcade"
 }
+local HolographicDescriptions = {
+    en_us = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} Gain {{ColorRainbow}}2{{CR}} Coin#{{Warning}} Take a {{ColorRainbow}}Full Heart{{CR}} of damage (non-lethal)#{{LootCard}} Spawns {{ColorRainbow}}6{{CR}} Loot Cards#{{Coin}}{{ArrowDown}} Lose {{ColorRainbow}}8{{CR}} Coins#{{Coin}}{{ArrowUp}} Gain {{ColorRainbow}}10{{CR}} Coins#{{ArcadeRoom}} Spawn {{ColorRainbow}}2{{CR}} random Arcade-exclusive items",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} Ganas {{ColorRainbow}}2{{CR}} moneda#{{Warning}} recibes {{ColorRainbow}}un corazón{{CR}} de daño (no fatal)#{{LootCard}} Genera {{ColorRainbow}}6{{CR}} cartas de Loot#{{Coin}}{{ArrowDown}} Pierdes {{ColorRainbow}}8{{CR}} monedas#{{Coin}}{{ArrowUp}} Ganas {{ColorRainbow}}10{{CR}} monedas#{{ArcadeRoom}} Genera {{ColorRainbow}}2{{CR}} objetos aleatorios exclusivos del Arcade"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Take a Half Heart of damage. The damage will be negated if it would kill the player.", "- Spawns 3 Loot Cards", "- Lose 4 Coins", "- Gain 5 Coins", "- Spawn a random arcade-exclusive item", "Holographic Effect: Performs the same random effect twice.")
 
 local arcadeItems = {
@@ -79,6 +83,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

@@ -13,14 +13,18 @@ local Descriptions = {
 	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player",
 	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: Spawns explosions two at a time.")
+local HolographicDescriptions = {
+	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player#{{ColorRainbow}}All explosions have random bomb effects",
+	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador#{{ColorRainbow}}Todas las explosiones tienen efectos de bomba aleatorios"
+}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: All spawned explosions have a random bomb effect. This can be the effect from Sad Bombs, Blood Bombs, Butt Bombs, or Bomber Boy.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData().lootdeck
 	data[Tag] = 1
 
 	if shouldDouble then
-		data[Tag] = data[Tag] + 1
+        data[Tag .. "Double"] = shouldDouble
 	end
 
 	local enemies = helper.ListEnemiesInRoom()
@@ -59,9 +63,19 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 				target = p
 			end
 		end
-		
+
 		if target ~= p or (not previousResult or previousResult < data[Tag]) then
-			Isaac.Explode(target.Position, nil, 40)
+            local flags
+            if data[Tag .. "Double"] then
+                local bombFlags = {
+                    TearFlags.TEAR_SAD_BOMB,
+                    TearFlags.TEAR_BUTT_BOMB,
+                    TearFlags.TEAR_CROSS_BOMB,
+                    TearFlags.TEAR_BLOOD_BOMB
+                }
+                flags = bombFlags[rng:RandomInt(#bombFlags) + 1]
+            end
+			Game():BombExplosionEffects(target.Position, 40, flags)
 			data[counterTag] = data[counterTag] - 1
 		end
 
@@ -72,6 +86,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		for _, enemy in ipairs(enemies) do
 			enemy:GetData()[Tag] = true
 		end
+        p:GetData().lootdeck[Tag .. "Double"] = nil
 	end,
 	true)
 end
@@ -83,6 +98,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
             {
