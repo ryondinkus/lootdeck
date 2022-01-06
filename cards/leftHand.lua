@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- trinket; Swap the pools of Red Chests and Gold Chests

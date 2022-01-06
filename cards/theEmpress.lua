@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- Fires two tears at once with a demon costume and red tears for the room

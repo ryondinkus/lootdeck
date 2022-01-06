@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Teleport 2.0 effect
 local Names = {

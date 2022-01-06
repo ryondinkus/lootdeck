@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 local MenuName = "Lootdeck"
 local SubMenuName = "Settings"

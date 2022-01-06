@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Drops 1-6 Mom's Fingers on random enemies in the room
@@ -40,7 +40,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    LootDeckHelpers.ForEachPlayer(function(player)
+    LootDeckAPI.ForEachPlayer(function(player)
         helper.StopStaggerSpawn(player, Tag)
     end)
 end

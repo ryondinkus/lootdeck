@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Gives a chance for a coin to spawn when the player takes damage
 local Names = {

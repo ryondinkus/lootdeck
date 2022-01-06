@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- Temporary tears up and brain worm effect for the room, as well as a brain costume

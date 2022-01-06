@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Gives massive firerate increase on room entry, quickly decreases over time
 local Names = {

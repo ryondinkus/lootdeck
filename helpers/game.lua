@@ -1,13 +1,13 @@
 local H = {}
 
-function LootDeckHelpers.AreEnemiesInRoom(room)
+function LootDeckAPI.AreEnemiesInRoom(room)
     if not room then
         room = Game():GetRoom()
     end
     return room:GetAliveEnemiesCount() ~= 0
 end
 
-function LootDeckHelpers.GetSecretRoomDoorPosition(room)
+function LootDeckAPI.GetSecretRoomDoorPosition(room)
     if not room then
         room = Game():GetRoom()
     end
@@ -21,7 +21,7 @@ function LootDeckHelpers.GetSecretRoomDoorPosition(room)
     end
 end
 
-function LootDeckHelpers.GetTintedRockPosition(room)
+function LootDeckAPI.GetTintedRockPosition(room)
     if not room then
         room = Game():GetRoom()
     end
@@ -36,15 +36,15 @@ function LootDeckHelpers.GetTintedRockPosition(room)
 end
 
 -- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
-function LootDeckHelpers.AreTrinketsOnGround()
+function LootDeckAPI.AreTrinketsOnGround()
     local isTrinketOnGround = false
-    LootDeckHelpers.ForEachEntityInRoom(function()
+    LootDeckAPI.ForEachEntityInRoom(function()
         isTrinketOnGround = true
     end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET)
     return isTrinketOnGround
 end
 
-function LootDeckHelpers.OpenAllDoors(p, force, revealSecretDoors, room)
+function LootDeckAPI.OpenAllDoors(p, force, revealSecretDoors, room)
     if not room then
         room = Game():GetRoom()
     end
@@ -68,7 +68,7 @@ function LootDeckHelpers.OpenAllDoors(p, force, revealSecretDoors, room)
 	end
 end
 
-function LootDeckHelpers.IsFinalFloorBossKilled()
+function LootDeckAPI.IsFinalFloorBossKilled()
 	local level = Game():GetLevel()
 	local labyrinth = level:GetCurses() & LevelCurse.CURSE_OF_LABYRINTH > 0
 	if (lootdeck.f.floorBossCleared == 1 and not labyrinth)
@@ -78,7 +78,7 @@ function LootDeckHelpers.IsFinalFloorBossKilled()
 	return false
 end
 
-function LootDeckHelpers.IsInChallenge(challengeName)
+function LootDeckAPI.IsInChallenge(challengeName)
     local challengeId = Isaac.GetChallengeIdByName(challengeName)
     return Isaac.GetChallenge() == challengeId
 end

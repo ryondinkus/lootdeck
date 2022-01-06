@@ -2,31 +2,31 @@ local json = include("json")
 
 local H = {}
 
-function LootDeckHelpers.SaveData(data)
+function LootDeckAPI.SaveData(data)
     lootdeck:SaveData(json.encode(data))
 end
 
-function LootDeckHelpers.LoadData()
+function LootDeckAPI.LoadData()
     if lootdeck:HasData() then
         return json.decode(lootdeck:LoadData())
     end
 end
 
-function LootDeckHelpers.SaveKey(key, value)
-    local savedData = LootDeckHelpers.LoadData() or {}
-    LootDeckHelpers.SetNestedValue(savedData, key, value)
-    LootDeckHelpers.SaveData(savedData)
+function LootDeckAPI.SaveKey(key, value)
+    local savedData = LootDeckAPI.LoadData() or {}
+    LootDeckAPI.SetNestedValue(savedData, key, value)
+    LootDeckAPI.SaveData(savedData)
 end
 
-function LootDeckHelpers.LoadKey(key)
-    local savedData = LootDeckHelpers.LoadData()
+function LootDeckAPI.LoadKey(key)
+    local savedData = LootDeckAPI.LoadData()
 
     if savedData then
         return savedData[key]
     end
 end
 
-function LootDeckHelpers.FlattenEntityData(data)
+function LootDeckAPI.FlattenEntityData(data)
     if data ~= nil then
         if type(data) == "userdata" then
             if data.InitSeed then
@@ -35,7 +35,7 @@ function LootDeckHelpers.FlattenEntityData(data)
         elseif type(data) == "table" then
             local output = {}
             for key, item in pairs(data) do
-                output[key] = LootDeckHelpers.FlattenEntityData(item)
+                output[key] = LootDeckAPI.FlattenEntityData(item)
             end
             return output
         else
@@ -44,23 +44,23 @@ function LootDeckHelpers.FlattenEntityData(data)
     end
 end
 
-function LootDeckHelpers.RehydrateEntityData(data)
+function LootDeckAPI.RehydrateEntityData(data)
     if data ~= nil and type(data) == "table" then
-        if LootDeckHelpers.IsArray(data) or data._type ~= "userdata" then
+        if LootDeckAPI.IsArray(data) or data._type ~= "userdata" then
             local output = {}
             for key, item in pairs(data) do
-                output[key] = LootDeckHelpers.RehydrateEntityData(item)
+                output[key] = LootDeckAPI.RehydrateEntityData(item)
             end
             return output
         else
-            return LootDeckHelpers.GetEntityByInitSeed(data.initSeed)
+            return LootDeckAPI.GetEntityByInitSeed(data.initSeed)
         end
     else
         return data
     end
 end
 
-function LootDeckHelpers.SaveGame()
+function LootDeckAPI.SaveGame()
     local data = {
         seed = Game():GetSeeds():GetPlayerInitSeed(),
         players = {},
@@ -70,15 +70,15 @@ function LootDeckHelpers.SaveGame()
         unlocks = lootdeck.unlocks or {}
     }
 
-    LootDeckHelpers.ForEachPlayer(function(p)
+    LootDeckAPI.ForEachPlayer(function(p)
         data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
     end)
 
-    LootDeckHelpers.ForEachEntityInRoom(function(familiar)
+    LootDeckAPI.ForEachEntityInRoom(function(familiar)
         data.familiars[tostring(familiar.InitSeed)] = familiar:GetData()
     end, EntityType.ENTITY_FAMILIAR)
 
-    LootDeckHelpers.SaveData(LootDeckHelpers.FlattenEntityData(data))
+    LootDeckAPI.SaveData(LootDeckAPI.FlattenEntityData(data))
 end
 
 return H

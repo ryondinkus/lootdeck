@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Gives an extra penny for each penny picked up

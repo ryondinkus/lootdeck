@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- Gives magneto effect for the room and a glowing costume

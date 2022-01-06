@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Credit Card Baby"
 local Tag = "creditCardBaby"

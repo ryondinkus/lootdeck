@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Rerolls an enemy in a room and drops an extra reward per room
 local Names = {

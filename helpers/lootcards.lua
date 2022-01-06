@@ -1,6 +1,6 @@
 local H = {}
 
-function LootDeckHelpers.GenerateHolographicCard(card)
+function LootDeckAPI.GenerateHolographicCard(card)
     card.HUDAnimationName = "Idle"
     card.PickupAnimationName = "Idle"
     card.UseAnimationName = "IdleFast"
@@ -33,14 +33,14 @@ function LootDeckHelpers.GenerateHolographicCard(card)
 	return holoCard
 end
 
-function LootDeckHelpers.GetWeightedLootCardId(includeHolos, rng)
+function LootDeckAPI.GetWeightedLootCardId(includeHolos, rng)
     local cards = {}
     for _ ,card in pairs(lootcards) do
         if not card.IsHolographic then
             table.insert(cards, card)
         end
     end
-    if LootDeckHelpers.LengthOfTable(cards) > 0 then
+    if LootDeckAPI.LengthOfTable(cards) > 0 then
         local csum = 0
         local outcome = cards[0]
         for _, card in pairs(cards) do
@@ -56,7 +56,7 @@ function LootDeckHelpers.GetWeightedLootCardId(includeHolos, rng)
             end
             csum = csum + weight
         end
-        if lootdeck.unlocks.gimmeTheLoot and includeHolos and LootDeckHelpers.PercentageChance(lootdeck.mcmOptions.HoloCardChance) then
+        if lootdeck.unlocks.gimmeTheLoot and includeHolos and LootDeckAPI.PercentageChance(lootdeck.mcmOptions.HoloCardChance) then
             return lootcardKeys["holographic"..outcome.Tag].Id
         else
             return outcome.Id
@@ -64,16 +64,16 @@ function LootDeckHelpers.GetWeightedLootCardId(includeHolos, rng)
     end
 end
 
-function LootDeckHelpers.GetLootcardById(id)
+function LootDeckAPI.GetLootcardById(id)
     return lootcards[id]
 end
 
-function LootDeckHelpers.IsHolographic(id)
+function LootDeckAPI.IsHolographic(id)
     return lootcards[id] and lootcards[id].IsHolographic
 end
 
 -- function for registering basic loot cards that copy item effects
-function LootDeckHelpers.UseItemEffect(p, itemEffect, sound)
+function LootDeckAPI.UseItemEffect(p, itemEffect, sound)
     p:UseActiveItem(itemEffect, false)
     if sound then
         lootdeck.sfx:Play(sound,1,0)
@@ -81,18 +81,18 @@ function LootDeckHelpers.UseItemEffect(p, itemEffect, sound)
 end
 
 -- function for registering basic loot cards that give items
-function LootDeckHelpers.GiveItem(p, itemID, sound)
+function LootDeckAPI.GiveItem(p, itemID, sound)
     p:AddCollectible(itemID)
     if sound then
         lootdeck.sfx:Play(sound,1,0)
     end
 end
 
-function LootDeckHelpers.FuckYou(p, type, variant, subtype, uses)
+function LootDeckAPI.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            LootDeckHelpers.SpawnEntity(p, type, variant or 0, subtype or 0, 1, Game():GetRoom():FindFreePickupSpawnPosition(p.Position))
+            LootDeckAPI.SpawnEntity(p, type, variant or 0, subtype or 0, 1, Game():GetRoom():FindFreePickupSpawnPosition(p.Position))
         end
     end
 end

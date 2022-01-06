@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- Gives the bloody penny item

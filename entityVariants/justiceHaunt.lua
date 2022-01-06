@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Justice Haunt"
 local Tag = "justiceHaunt"

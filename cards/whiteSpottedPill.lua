@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Shuffle values of coins, keys, and bombs | reroll all items in room | reroll all of your passives
 local Names = {

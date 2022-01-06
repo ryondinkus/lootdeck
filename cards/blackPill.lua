@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Instakill all enemies in room (80 dmg on bosses) | Confuse all enemies in room | Deal full heart of damage
 local Names = {

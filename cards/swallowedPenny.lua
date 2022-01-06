@@ -1,5 +1,5 @@
 
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- Gives the swallowed penny item

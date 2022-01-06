@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- 50% chance each room to grant a temporary copy of a random passive you already have
 local Names = {

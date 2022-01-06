@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Explodes each enemy in the room and then the player
 local Names = {
@@ -32,7 +32,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    LootDeckHelpers.ForEachPlayer(function(player)
+    LootDeckAPI.ForEachPlayer(function(player)
         helper.StopStaggerSpawn(player, Tag)
     end)
 end

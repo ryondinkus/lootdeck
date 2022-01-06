@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Gives a chance of reviving in the previous room with half a heart
 local Names = {

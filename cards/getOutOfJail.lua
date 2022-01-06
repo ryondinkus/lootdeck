@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Allows player to phase through enemies and projectiles for 5 seconds
 local Names = {

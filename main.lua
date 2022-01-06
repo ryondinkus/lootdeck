@@ -11,6 +11,8 @@ function table.deepCopy(original)
 	return copy
 end
 
+LootDeckAPI = {}
+
 include("helpers")
 include("helpers/achievements")
 include("cards/registry")
@@ -44,7 +46,7 @@ lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
@@ -377,8 +379,6 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
-LootDeckAPI = {}
-
 function LootDeckAPI.RegisterLootCard(card, newCard)
     if card.Callbacks then
         for _, callback in pairs(card.Callbacks) do
@@ -442,7 +442,7 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
     lootcardKeys[card.Tag] = card
 
     if newCard == true or newCard == nil then
-        LootDeckAPI.RegisterLootCard(LootDeckHelpers.GenerateHolographicCard(card), false)
+        LootDeckAPI.RegisterLootCard(LootDeckAPI.GenerateHolographicCard(card), false)
     end
 end
 

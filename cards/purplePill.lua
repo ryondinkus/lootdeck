@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- A 1 in 3 chance of recharging your active item, +1 firerate, or -1 firerate
 local Names = {

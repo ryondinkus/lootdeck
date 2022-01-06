@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- A 1 in 3 chance of gaining the book of belial effect for the room,

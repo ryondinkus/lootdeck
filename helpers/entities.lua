@@ -1,6 +1,6 @@
 local H = {}
 
-function LootDeckHelpers.ClearChosenEnemies(tag)
+function LootDeckAPI.ClearChosenEnemies(tag)
     local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
     local count = 0
     for i, entity in pairs(entities) do
@@ -14,7 +14,7 @@ function LootDeckHelpers.ClearChosenEnemies(tag)
     return count
 end
 
-function LootDeckHelpers.ListEnemiesInRoom(ignoreVulnerability, filter)
+function LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, filter)
 	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500,EntityPartition.ENEMY)
 	local enemies = {}
 	for _, entity in pairs(entities) do
@@ -25,8 +25,8 @@ function LootDeckHelpers.ListEnemiesInRoom(ignoreVulnerability, filter)
 	return enemies
 end
 
-function LootDeckHelpers.ListBossesInRoom(ignoreMiniBosses, filter)
-	return LootDeckHelpers.ListEnemiesInRoom(true, function(enemy, enemyData)
+function LootDeckAPI.ListBossesInRoom(ignoreMiniBosses, filter)
+	return LootDeckAPI.ListEnemiesInRoom(true, function(enemy, enemyData)
         return (not filter or filter(enemy, enemyData))
             and enemy:IsBoss()
             and (enemy.Type == EntityType.ENTITY_THE_HAUNT or enemy.Type == EntityType.ENTITY_MASK_OF_INFAMY or enemy:IsVulnerableEnemy())
@@ -35,11 +35,11 @@ function LootDeckHelpers.ListBossesInRoom(ignoreMiniBosses, filter)
 end
 
 -- function for finding random enemy in the room
-function LootDeckHelpers.GetRandomEnemy(rng, tag, filter)
+function LootDeckAPI.GetRandomEnemy(rng, tag, filter)
     if not rng then
         rng = lootdeck.rng
     end
-	local enemies = LootDeckHelpers.ListEnemiesInRoom(false, function(enemy, enemyData)
+	local enemies = LootDeckAPI.ListEnemiesInRoom(false, function(enemy, enemyData)
         return (not filter or filter(enemy, enemyData)) and (not tag or not enemyData[tag])
     end)
     local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]
@@ -49,7 +49,7 @@ function LootDeckHelpers.GetRandomEnemy(rng, tag, filter)
     return chosenEnemy
 end
 
-function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callback, onEnd, noAutoDecrement)
+function LootDeckAPI.StaggerSpawn(tag, player, interval, occurences, callback, onEnd, noAutoDecrement)
 	local data = player:GetData().lootdeck
     if data[tag] and (type(data[tag]) ~= "number" or data[tag] > 0) then
 		local timerTag = tag.."Timer"
@@ -70,7 +70,7 @@ function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callbac
 				data[counterTag] = data[counterTag] - 1
 			end
             if data[counterTag] <= 0 then
-                LootDeckHelpers.StopStaggerSpawn(player, tag)
+                LootDeckAPI.StopStaggerSpawn(player, tag)
 				if onEnd then
 					onEnd()
 				end
@@ -79,7 +79,7 @@ function LootDeckHelpers.StaggerSpawn(tag, player, interval, occurences, callbac
     end
 end
 
-function LootDeckHelpers.StopStaggerSpawn(player, tag)
+function LootDeckAPI.StopStaggerSpawn(player, tag)
     local data = player:GetData().lootdeck
 
     data[tag] = nil
@@ -87,7 +87,7 @@ function LootDeckHelpers.StopStaggerSpawn(player, tag)
     data[tag.."Counter"] = nil
 end
 
-function LootDeckHelpers.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)
+function LootDeckAPI.ForEachEntityInRoom(callback, entityType, entityVariant, entitySubType, extraFilters)
     local filters = {
         Type = entityType,
         Variant = entityVariant,
@@ -122,15 +122,15 @@ function LootDeckHelpers.ForEachEntityInRoom(callback, entityType, entityVariant
 	  end
 end
 
-function LootDeckHelpers.RemoveHitFamiliars(hitTag, variant)
-    LootDeckHelpers.ForEachEntityInRoom(function(entity)
+function LootDeckAPI.RemoveHitFamiliars(hitTag, variant)
+    LootDeckAPI.ForEachEntityInRoom(function(entity)
         entity:Remove()
     end, EntityType.ENTITY_FAMILIAR, variant, nil, function(_, entityData)
         return entityData[hitTag] == true
     end)
 end
 
-function LootDeckHelpers.Spawn(type, variant, subType, position, velocity, spawner, seed)
+function LootDeckAPI.Spawn(type, variant, subType, position, velocity, spawner, seed)
     local entity
     if seed then
         entity = Game():Spawn(type, variant or 0, position, velocity, spawner, subType or 0, seed)
@@ -145,7 +145,7 @@ function LootDeckHelpers.Spawn(type, variant, subType, position, velocity, spawn
 end
 
 -- function for registering basic loot cards that spawn items
-function LootDeckHelpers.SpawnEntity(player, type, variant, subType, count, position, sfx, effect, effectCount)
+function LootDeckAPI.SpawnEntity(player, type, variant, subType, count, position, sfx, effect, effectCount)
     local output = {
         entities = {},
         effects = {}
@@ -160,7 +160,7 @@ function LootDeckHelpers.SpawnEntity(player, type, variant, subType, count, posi
         lootdeck.sfx:Play(sfx)
     end
     for i = 1,(count or 1) do
-        local entity = LootDeckHelpers.Spawn(type, variant or 0, subType or 0, position or player.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), player)
+        local entity = LootDeckAPI.Spawn(type, variant or 0, subType or 0, position or player.Position, Vector.FromAngle(lootdeck.rng:RandomInt(360)), player)
 
         table.insert(output.entities, entity)
     end
@@ -168,7 +168,7 @@ function LootDeckHelpers.SpawnEntity(player, type, variant, subType, count, posi
     return output
 end
 
-function LootDeckHelpers.GetEntityByInitSeed(initSeed)
+function LootDeckAPI.GetEntityByInitSeed(initSeed)
     local entities = Isaac.GetRoomEntities()
 
     for _, entity in pairs(entities) do

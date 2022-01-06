@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Explodes three random enemies in the room
 local Names = {
@@ -34,7 +34,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 end
 
 local function MC_POST_NEW_ROOM()
-    LootDeckHelpers.ForEachPlayer(function(player)
+    LootDeckAPI.ForEachPlayer(function(player)
         helper.StopStaggerSpawn(player, Tag)
     end)
 end

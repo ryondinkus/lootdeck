@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- 1/10 tears replaced with Worm Tears, which have endless range and create slowing creep on collision
 local Names = {

@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- All penny spawns are either double pennies or nothing

@@ -1,6 +1,6 @@
 local H = {}
 
-function LootDeckHelpers.CreateSprite(animationPath, spritesheetPath, animationName)
+function LootDeckAPI.CreateSprite(animationPath, spritesheetPath, animationName)
 	local sprite = Sprite()
 	sprite:Load(animationPath, true)
 	sprite:Play(animationName and animationName or sprite:GetDefaultAnimationName(), true)
@@ -97,8 +97,8 @@ local ESAU_HUD_OFFSET_VECTORS = {
     [10] = Vector(16, 6)
 }
 
-function LootDeckHelpers.GetHUDCardPosition(player, sprite)
-    local controllerIndex = LootDeckHelpers.GetPlayerControllerIndex(player)
+function LootDeckAPI.GetHUDCardPosition(player, sprite)
+    local controllerIndex = LootDeckAPI.GetPlayerControllerIndex(player)
     local BottomRight = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
     local BottomLeft = Vector(0, Isaac.GetScreenHeight())
     local TopRight = Vector(Isaac.GetScreenWidth(), 0)
@@ -156,10 +156,10 @@ function LootDeckHelpers.GetHUDCardPosition(player, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
-function LootDeckHelpers.CreateCardAnimation(animationContainer, animationPath, animationName, callback)
+function LootDeckAPI.CreateCardAnimation(animationContainer, animationPath, animationName, callback)
     if not animationContainer or not animationContainer.sprite then
         animationContainer = {
-            sprite = LootDeckHelpers.CreateSprite(animationPath, nil, animationName),
+            sprite = LootDeckAPI.CreateSprite(animationPath, nil, animationName),
             frameCount = 0
         }
         if callback then
@@ -169,7 +169,7 @@ function LootDeckHelpers.CreateCardAnimation(animationContainer, animationPath, 
     return animationContainer
 end
 
-function LootDeckHelpers.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
+function LootDeckAPI.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
     lootcardAnimationContainer.sprite:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag:gsub("holographic", "")))
     lootcardAnimationContainer.sprite:LoadGraphics()
     if animationName then
@@ -178,18 +178,18 @@ function LootDeckHelpers.StartLootcardAnimation(lootcardAnimationContainer, loot
     end
 end
 
-function LootDeckHelpers.PlayLootcardPickupAnimation(player, cardId)
+function LootDeckAPI.PlayLootcardPickupAnimation(player, cardId)
     local data = player:GetData().lootdeck
-    local card = LootDeckHelpers.GetLootcardById(cardId)
+    local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
         local animationName = card.PickupAnimationName
         if Game():GetRoom():HasWater() then
             animationName = animationName.."Water"
         end
-        data.lootcardPickupAnimation = LootDeckHelpers.CreateCardAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+        data.lootcardPickupAnimation = LootDeckAPI.CreateCardAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
-        LootDeckHelpers.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
+        LootDeckAPI.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
         if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
             data.lootcardUseAnimation.sprite:SetLastFrame()
@@ -197,18 +197,18 @@ function LootDeckHelpers.PlayLootcardPickupAnimation(player, cardId)
     end
 end
 
-function LootDeckHelpers.PlayLootcardUseAnimation(player, cardId)
+function LootDeckAPI.PlayLootcardUseAnimation(player, cardId)
     local data = player:GetData().lootdeck
-    local card = LootDeckHelpers.GetLootcardById(cardId)
+    local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
         local animationName = card.UseAnimationName
         if Game():GetRoom():HasWater() then
             animationName = animationName.."Water"
         end
-        data.lootcardUseAnimation = LootDeckHelpers.CreateCardAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+        data.lootcardUseAnimation = LootDeckAPI.CreateCardAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
-        LootDeckHelpers.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
+        LootDeckAPI.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
         if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
             data.lootcardPickupAnimation.sprite:SetLastFrame()
         end

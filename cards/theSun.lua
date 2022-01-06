@@ -1,5 +1,5 @@
 local costumes = include("costumes/registry")
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- As soon as the floor boss is defeated, the floor will be restarted using the "Forget Me Now" effect
 -- This card is only usable once per run

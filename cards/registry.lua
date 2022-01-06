@@ -79,7 +79,7 @@ local cards = {
 local holoCards = {}
 
 for _, card in pairs(cards) do
-    table.insert(holoCards, LootDeckHelpers.GenerateHolographicCard(card))
+    table.insert(holoCards, LootDeckAPI.GenerateHolographicCard(card))
 end
 
 lootcards = {}

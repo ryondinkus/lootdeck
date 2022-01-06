@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Gives an extra large and damage-boosted tear in each new room, the number of tears in each room being the number of curved horns
 local Names = {

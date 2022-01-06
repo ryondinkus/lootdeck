@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- A 1 in 2 chance of removing curses for the floor or gaining a soul heart
 local Names = {

@@ -1,6 +1,6 @@
 local H = {}
 
-function LootDeckHelpers.FeckDechoEdmundMcmillen(player, pickup)
+function LootDeckAPI.FeckDechoEdmundMcmillen(player, pickup)
     return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3)))
     and not (pickup.Variant == 10 and (pickup.SubType == 1 or pickup.SubType == 2 or pickup.SubType == 5 or pickup.SubType == 9) and not player:CanPickRedHearts())
     and not (pickup.Variant == 10 and (pickup.SubType == 3 or pickup.SubType == 8 or pickup.SubType == 10) and not player:CanPickSoulHearts())
@@ -10,7 +10,7 @@ function LootDeckHelpers.FeckDechoEdmundMcmillen(player, pickup)
     and not (pickup.Variant == 10 and pickup.SubType == 12 and not player:CanPickRottenHearts())
 end
 
-function LootDeckHelpers.CanBuyPickup(player, pickup)
+function LootDeckAPI.CanBuyPickup(player, pickup)
 	if pickup.Price > -6 and pickup.Price ~= 0 and not player:IsHoldingItem() then
         if (pickup.Price == -1 and player:GetMaxHearts() >= 2)
         or (pickup.Price == -2 and player:GetMaxHearts() >= 4)
@@ -19,14 +19,14 @@ function LootDeckHelpers.CanBuyPickup(player, pickup)
 		then
             return true
         elseif pickup.Price > 0 and player:GetNumCoins() >= pickup.Price    -- this shop item is affordable
-        and LootDeckHelpers.FeckDechoEdmundMcmillen(player, pickup) then
+        and LootDeckAPI.FeckDechoEdmundMcmillen(player, pickup) then
             return true
         end
     end
 	return false
 end
 
-function LootDeckHelpers.CalculateRefund(price)
+function LootDeckAPI.CalculateRefund(price)
 	if price == -1 then
 		return {
 			EntityType.ENTITY_PICKUP,
@@ -79,7 +79,7 @@ function LootDeckHelpers.CalculateRefund(price)
 	}
 end
 
-function LootDeckHelpers.CustomCoinPrePickupCollision(pickup, collidingEntity, numberOfCoins, sfx, isFinished)
+function LootDeckAPI.CustomCoinPrePickupCollision(pickup, collidingEntity, numberOfCoins, sfx, isFinished)
     local player = collidingEntity:ToPlayer() or 0
     local data = pickup:GetData()
     local sprite = pickup:GetSprite()
@@ -101,7 +101,7 @@ function LootDeckHelpers.CustomCoinPrePickupCollision(pickup, collidingEntity, n
     end
 end
 
-function LootDeckHelpers.CustomCoinPickupUpdate(pickup, sfx)
+function LootDeckAPI.CustomCoinPickupUpdate(pickup, sfx)
     local data = pickup:GetData()
     local sprite = pickup:GetSprite()
     if sfx and sprite:IsEventTriggered("DropSound") then
@@ -113,7 +113,7 @@ function LootDeckHelpers.CustomCoinPickupUpdate(pickup, sfx)
 end
 
 -- function that returns a consumable based on what glyph of balance would drop
-function LootDeckHelpers.GlyphOfBalance(player, rng)
+function LootDeckAPI.GlyphOfBalance(player, rng)
     if player:GetMaxHearts() <= 0 and player:GetSoulHearts() <= 4 and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     elseif player:GetHearts() <= 1 and player:GetMaxHearts() > 0 then
@@ -130,7 +130,7 @@ function LootDeckHelpers.GlyphOfBalance(player, rng)
         return {PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL}
     elseif player:GetNumBombs() < 5 then
         return {PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL}
-    elseif player:GetTrinket(0) == 0 and not LootDeckHelpers.AreTrinketsOnGround() then
+    elseif player:GetTrinket(0) == 0 and not LootDeckAPI.AreTrinketsOnGround() then
         return {PickupVariant.PICKUP_TRINKET, 0}
     elseif player:GetHearts() + player:GetSoulHearts() < 12 and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
@@ -139,7 +139,7 @@ function LootDeckHelpers.GlyphOfBalance(player, rng)
     end
 end
 
-function LootDeckHelpers.IsCoin(pickup, onlyCustom)
+function LootDeckAPI.IsCoin(pickup, onlyCustom)
 	local customCoinVariants = {
 		20,
 		2252, -- double nickel

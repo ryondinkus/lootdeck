@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Grants a temporary effect of a random battery item for the rest of the floor
 local Names = {

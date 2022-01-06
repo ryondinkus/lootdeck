@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Explodes a random enemy or (if there are no enemies in the room) explodes the player
 local Names = {

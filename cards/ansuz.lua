@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Teleport to Treasure Room, Shop, or Boss, with priority given to unvisited rooms
 local Names = {

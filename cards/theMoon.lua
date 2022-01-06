@@ -1,4 +1,4 @@
-local helper = LootDeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns 5-10 shopkeepers around the room
 local Names = {
@@ -24,7 +24,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    LootDeckHelpers.ForEachPlayer(function(player)
+    LootDeckAPI.ForEachPlayer(function(player)
         helper.StopStaggerSpawn(player, Tag)
     end)
 end
