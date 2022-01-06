@@ -10,10 +10,10 @@ local Name = Names.en_us
 local Tag = "counterfeitPenny"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
-    en_us = "Get an additional +1 Coin every time you gain Coins",
-    spa = "Recibes una moneda adicional cada vez que consigues monedas"
+    en_us = "When picking up a coin of any type, there is a low chance for the coin to respawn, similar to a Golden Penny# Rarer coin types have a lower chance to respawn",
+    spa = "Al tomar una moneda de cualquier tipo, hay una posibilidad de que esta moneda reaparazca, de forma similar a una moneda dorada#Mayor rareza = menor posibilidad de aparición"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Gain an additional +1 Coin whenever you gain coins.")
+local WikiDescription = helper.GenerateEncyclopediaPage("When picking up a coin of any type, there is a low chance for the coin to respawn, similar to a Golden Penny.", "- Penny: 40%", "- Nickel: 33%", "- Dime: 33%", "- Double Penny: 33%", "- Lucky Penny: 25%", "- Charged Penny: 25%", "- Double Coins (except Double Pennies) are half as likely to respawn as their single counterpart.", "- Additional copies increase the respawn chance by 25%, up to 90%")
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
 	if e:ToPlayer() and helper.IsCoin(pi) then

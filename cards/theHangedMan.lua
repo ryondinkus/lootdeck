@@ -11,10 +11,10 @@ local Tag = "theHangedMan"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "Grants the {{Collectible53}} Magneto effect for the room, causing pickups to be drawn towards you",
-    spa = "Otorga el efecto del {{Collectible53}} Imán durante la habitación"
+    en_us = "On use, fills in all the pits in the current room with rock bridges",
+    spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: Fills in all holes in the current room.")
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, fills all of the pits in the current room with rock bridges.", "Holographic Effect: Destroys all rocks and secret room doors in the room, as well.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local room = Game():GetRoom()

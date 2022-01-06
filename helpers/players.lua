@@ -130,7 +130,8 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
     local sprite = player:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
-	local reviveTag = string.format("%sRevive", tag)
+	  local roomDesc = level:GetCurrentRoomDesc()
+	  local reviveTag = string.format("%sRevive", tag)
 
     if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
@@ -145,15 +146,19 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
 				player:GetOtherTwin():Revive()
 				player:GetOtherTwin():SetMinDamageCooldown(60)
 			end
-            local enterDoor = level.EnterDoor
-            local door = room:GetDoor(enterDoor)
-            local direction = door and door.Direction or Direction.NO_DIRECTION
-            game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
-            level.LeaveDoor = enterDoor
-            if callback then
-                callback()
-            end
-        end
+      
+			if not (roomDesc.Data.Type == RoomType.ROOM_DUNGEON
+			and roomDesc.Data.Variant == 666) then
+				local enterDoor = level.EnterDoor
+				local door = room:GetDoor(enterDoor)
+				local direction = door and door.Direction or Direction.NO_DIRECTION
+				game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
+				level.LeaveDoor = enterDoor
+			elseif callback then
+				callback()
+			end
+			data[reviveTag] = nil
+		end
     end
 end
 
@@ -279,13 +284,14 @@ function LootDeckAPI.GetStartingItemsFromPlayer(player)
     return startingItems[index]
 end
 
-function LootDeckAPI.GetPlayerInventory(player, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
+function LootDeckAPI.GetPlayerInventory(player, blacklist, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
     local itemConfig = Isaac.GetItemConfig()
     local numCollectibles = #itemConfig:GetCollectibles()
     local inv = {}
     for i = 1, numCollectibles do
         local collectible = itemConfig:GetCollectible(i)
         if collectible
+		and (not lootdeckHelpers.TableContains(blacklist, collectible.ID))
         and (not ignoreActives or collectible.Type ~= ItemType.ITEM_ACTIVE)
         and (not ignoreStartingItems or not LootDeckAPI.TableContains(LootDeckAPI.GetStartingItemsFromPlayer(player), i))
 		and (not ignoreQuestItems or not collectible:HasTags(ItemConfig.TAG_QUEST)) then
@@ -305,8 +311,8 @@ function LootDeckAPI.GetPlayerInventory(player, ignoreId, ignoreActives, ignoreS
     return allHeld
 end
 
-function LootDeckAPI.GetRandomItemIdInInventory(player, ignoreId, ignoreActives)
-    local inventory = LootDeckAPI.GetPlayerInventory(player, ignoreId, ignoreActives)
+function LootDeckAPI.GetRandomItemIdInInventory(player, blackList, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
+    local inventory = LootDeckAPI.GetPlayerInventory(player, blackList, ignoreId, ignoreActives, ignoreStartingItems, ignoreQuestItems)
 
     local itemIndex = lootdeck.rng:RandomInt(#inventory) + 1
 
