@@ -15,7 +15,7 @@ local Descriptions = {
     spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
 }
 local HolographicDescriptions = {
-    en_us = "On use, fills in all the pits in the current room with rock bridges",
+    en_us = "On use, fills in all the pits in the current room with rock bridges#{{ColorRainbow}}",
     spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Magneto effect for the room, which causes pickups to be drawn toward your position.", "Holographic Effect: Fills in all holes in the current room.")

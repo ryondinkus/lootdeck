@@ -11,10 +11,10 @@ local Tag = "twoOfDiamonds"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price",
-    spa = "Otorga el efecto de las {{Collectible64}} Ofertas de Steam durante el piso"
+    en_us = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price# Grants a Two of Diamonds Baby familiar for the floor, who gives a 1 second {{Collectible202}} Midas' Touch effect to enemies on contact",
+    spa = "Otorga el efecto de las {{Collectible64}} Ofertas de Steam durante el piso#Otorga un familiar del 2 de diamantes durante el piso, quien aplica el efecto del {{Collectible202}} Toque de Midas al contacto"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Holographic Effect: Grants two Steam Sale effects.")
+local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Grants a Two of Diamonds Baby familiar for the floor.", "- On contact with enemies, Two of Diamonds Baby will turn enemies into a gold statue for 1 second, like Midas' Touch.", "Holographic Effect: Grants two Steam Sale effects and two familiars.")
 
 local function MC_USE_CARD(_, c, p)
     local data = p:GetData().lootdeck

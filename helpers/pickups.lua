@@ -1,6 +1,6 @@
 local H = {}
 
-function LootDeckAPI.FeckDechoEdmundMcmillen(player, pickup)
+function LootDeckAPI.CanPickupPickup(player, pickup)
     return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3)))
     and not (pickup.Variant == 10 and (pickup.SubType == 1 or pickup.SubType == 2 or pickup.SubType == 5 or pickup.SubType == 9) and not player:CanPickRedHearts())
     and not (pickup.Variant == 10 and (pickup.SubType == 3 or pickup.SubType == 8 or pickup.SubType == 10) and not player:CanPickSoulHearts())
@@ -19,7 +19,7 @@ function LootDeckAPI.CanBuyPickup(player, pickup)
 		then
             return true
         elseif pickup.Price > 0 and player:GetNumCoins() >= pickup.Price    -- this shop item is affordable
-        and LootDeckAPI.FeckDechoEdmundMcmillen(player, pickup) then
+        and LootDeckAPI.CanPickupPickup(player, pickup) then
             return true
         end
     end
