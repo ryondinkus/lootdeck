@@ -11,7 +11,11 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
     en_us = "Random chance for any of these effects:#{{Coin}} Gain 1 Coin#{{Card}} Spawn 2 Loot Cards#{{Warning}} Take a Full Heart of damage (non-lethal)#{{Coin}} Gain 4 Coins#{{Card}} Spawns 5 Loot Cards#{{Coin}} Gain 6 Coins# The rolled effect multiplies for each player!",
-    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}} Ganar una moneda#{{Card}}Generar 2 cartas de loot#{{Warning}}Recibir un corazón de daño (no fatal)#{{Coin}}Ganar 6 monedas#¡El efecto se multiplica para cada jugador!"
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}} Ganar una moneda#{{Card}}Generar 2 cartas de loot#{{Warning}}Recibir un corazón de daño (no fatal)#{{Coin}} Ganar 4 monedas#{{Card}} Generar 5 cartas de loot#{{Coin}}Ganar 6 monedas#¡El efecto se multiplica para cada jugador!"
+}
+local HolographicDescriptions = {
+    en_us = "Random chance for any of these effects:#{{Coin}} Gain {{ColorRainbow}}2{{CR}} Coins#{{Card}} Spawn {{ColorRainbow}}4{{CR}} Loot Cards#{{Warning}} Take {{ColorRainbow}}2{{CR}} Full Hearts of damage (non-lethal)#{{Coin}} Gain {{ColorRainbow}}8{{CR}} Coins#{{Card}} Spawns {{ColorRainbow}}10{{CR}} Loot Cards#{{Coin}} Gain {{ColorRainbow}}12{{CR}} Coins# The rolled effect multiplies for each player!",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}} Ganar {{ColorRainbow}}2{{CR}} monedas#{{Card}}Generar {{ColorRainbow}}4{{CR}} cartas de loot#{{Warning}}Recibir {{ColorRainbow}}2{{CR}} corazónes de daño (no fatal)#{{Coin}} Ganar {{ColorRainbow}}8{{CR}} monedas#{{Card}} Generar {{ColorRainbow}}10{{CR}} cartas de loot#{{Coin}}Ganar {{ColorRainbow}}12{{CR}} monedas#¡El efecto se multiplica para cada jugador!"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of six effects:", "- Gain 1 Coin", "- Spawns 2 Loot Cards", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "- Gain 4 Coins", "- Spawns 5 Loot Cards", "- Gain 6 Coins", "The triggered effect will be multiplied for each player.", "- This applies to Twin Characters, such as Jacob and Esau and The Forgotten", "Holographic Effect: Performs the same random effect twice.")
 
@@ -84,6 +88,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

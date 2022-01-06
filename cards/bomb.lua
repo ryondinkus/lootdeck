@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Explodes on a random enemy, dealing 40 damage#{{Warning}} If no enemies are in the room, this will explode on the player",
     spa = "Un enemigo aleatorio explotará, provocando 40 de daño#{{Warning}} Si no hay enemigos en la sala, el jugador explotará"
 }
+local HolographicDescriptions = {
+    en_us = "Explodes on {{ColorRainbow}}2{{CR}} random enemies, dealing 40 damage#{{Warning}} If no enemies are in the room, this will explode on the player",
+    spa = "{{ColorRainbow}}2{{CR}} enemigos aleatorio explotará, provocando 40 de daño#{{Warning}} Si no hay enemigos en la sala, el jugador explotará"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on a random enemy in the room, dealing 40 damage to it and all enemies around it.", "If used with no targetable enemies in the room, the explosion will spawn on the player instead.", "Holographic Effect: Explodes on two enemies at once, if able.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -43,6 +47,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

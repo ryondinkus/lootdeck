@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: 5% chance to drop a Loot Card on enemy death",
     spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Matar a un enemigo otorga un 5% de posibilidad de que suelte una carta de loot"
 }
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: 5% chance to drop a Loot Card on enemy death",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} un objeto pasivo tras usarla#Efecto pasivo: Matar a un enemigo otorga un 5% de posibilidad de que suelte una carta de loot"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Enemies have a 5% chance to drop a Loot Card on death.", "- Effect stacks +5% for every instance of the passive and caps at 25%.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,6 +31,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

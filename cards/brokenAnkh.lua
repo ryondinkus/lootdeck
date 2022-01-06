@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: On death, 1/6 chance to revive with half a heart",
     spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Al morir, tienes una probabilidad de 1/6 de revivir con medio corazón de alma"
 }
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: On death, 1/6 chance to revive with half a heart",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} objeto pasivo tras usarla#Efecto pasivo: Al morir, tienes una probabilidad de 1/6 de revivir con medio corazón de alma"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: On player death, you have a 1/6 chance of reviving with half a heart.", "- Additional copies of the passive grant an extra revival chance up to 3/6.", "Holographic Effect: Grants two copies of the passive.")
 
 -- BUG: When you revive, your streak is still lost, and saving/continuing is disabled. this is because Revive() is bugged and the game still thinks you're dead
@@ -29,6 +33,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

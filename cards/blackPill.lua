@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:# Instantly kill all enemies in the room (80 damage to bosses)# Confuses all room enemies#{{Warning}} Take a Full Heart of damage (non-fatal)",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Matar a todos los enemigos de la habitación instantaneamente (80 de daño a jefes)#Confundir a todos los enemigos de la habitación#{{Warning}} Recibir un corazón de daño (no fatal)"
 }
+local HolographicDescriptions = {
+    en_us = "Random chance for any of these effects:# Instantly kill all enemies in the room ({{ColorRainbow}}160{{CR}} damage to bosses)# Confuses all room enemies#{{Warning}} Take {{ColorRainbow}}2 Full Hearts{{CR}} of damage (non-fatal)",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Matar a todos los enemigos de la habitación instantaneamente (({{ColorRainbow}}160{{CR}} de daño a jefes)#Confundir a todos los enemigos de la habitación#{{Warning}} Recibir {{ColorRainbow}}2 corazónes{{CR}} de daño (no fatal)"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Instantly kills all enemies in the room. Deals 80 damage to bosses.", "- Confuses all enemies in the room for 5 seconds.", "- Take a Full Heart of damage. The damage will be negated if it would kill the player.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -68,6 +72,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

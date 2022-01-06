@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Teleport to either the Treasure Room, Shop, or Boss Room# Priority is given to unvisited rooms",
     spa = "Te teletransporta a la Sala del Tesoro, la Tienda o la Sala del jefe#Se le da prioridad a salas no visitadas"
 }
+local HolographicDescriptions = {
+    en_us = "Teleport to either the Treasure Room, Shop, or Boss Room# Priority is given to unvisited rooms# {{ColorRainbow}}Grants {{Collectible21}} The Compass effect for the floor",
+    spa = "Te teletransporta a la Sala del Tesoro, la Tienda o la Sala del jefe#Se le da prioridad a salas no visitadas# {{ColorRainbow}}Otorga el efecto de {{Collectible21}} La Brújula durante el piso"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Random teleport to either the Treasure Room, Shop, or Boss Room.", "- Unvisited rooms are prioritized.", "- On floors with no Treasure Rooms, Shops, or Bosses, teleports you to a random room.", "Holographic Effect: Grants the Compass effect.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -59,6 +63,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

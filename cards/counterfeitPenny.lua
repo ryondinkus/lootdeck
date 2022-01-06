@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: Get an additional +1 Coin every time you gain Coins",
     spa = "Añáde un objeto pasivo tras usarla:#Efecto pasivo: Recibes una moneda adicional cada vez que consigues monedas"
 }
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: Get an additional +1 Coin every time you gain Coins",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} objeto pasivo tras usarla:#Efecto pasivo: Recibes una moneda adicional cada vez que consigues monedas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Gain an additional +1 Coin whenever you gain coins.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,6 +31,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

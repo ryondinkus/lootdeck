@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with 3 Empty Bones Hearts",
     spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con 3 Corazones de Hueso vacíos"
 }
+local HolographicDescriptions = {
+    en_us = "{{Warning}} Kills you on use#{{EmptyBoneHeart}} Revives you with {{ColorRainbow}}4{{CR}} Empty Bones Hearts",
+    spa = "{{Warning}} Mueres al utilizarla#{{EmptyBoneHeart}} Revives con {{ColorRainbow}}4{{CR}} Corazones de Hueso vacíos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Kills you on use.", "You revive with 3 Empty Bones Hearts.", "Holographic Effect: You revive with 4 Empty Bones Hearts.")
 
 local ReviveTag = string.format("%sRevive", Tag)
@@ -78,6 +82,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

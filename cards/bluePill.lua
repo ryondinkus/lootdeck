@@ -14,6 +14,10 @@ local Descriptions = {
 	en_us = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key",
 	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Card}} Genera una carta de loor#{{Card}} Genera 3 cartas de loot#Pierdes una moneda, una llave y una bomba"
 }
+local HolographicDescriptions = {
+	en_us = "Random chance for any of these effects:#{{Card}} Spawn {{ColorRainbow}}2{{CR}} Loot Cards#{{Card}} Spawn {{ColorRainbow}}6{{CR}} Loot Cards#{{ArrowDown}} Lose {{ColorRainbow}}2{{CR}} Coins, Bombs, and Keys",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Card}} Genera {{ColorRainbow}}2{{CR}} cartas de loot#{{Card}} Genera {{ColorRainbow}}6{{CR}} cartas de loot#Pierdes {{ColorRainbow}}2{{CR}} monedas, {{ColorRainbow}}2{{CR}} llaves y {{ColorRainbow}}2{{CR}} bombas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -57,6 +61,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {
