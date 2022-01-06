@@ -26,7 +26,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     lootdeck.f.removeSun = true
 
     if helper.IsFinalFloorBossKilled() then
-		  lootdeck.f.sunTimer = 0
+		lootdeck.f.sunTimer = 0
     else
 		  lootdeck.sfx:Play(SoundEffect.SOUND_CHOIR_UNLOCK, 1, 0)
 	  end
@@ -68,6 +68,14 @@ local function MC_POST_UPDATE()
 				lootdeck.sfx:Play(SoundEffect.SOUND_HEARTBEAT, 2, 0, false, 1)
 			end
 			lootdeck.f.sunTimer = sunTimer + 1
+
+            local room = Game():GetRoom()
+            for i=0,room:GetGridSize() do
+                local gridEntity = room:GetGridEntity(i)
+                if gridEntity and gridEntity:GetType() == GridEntityType.GRID_TRAPDOOR then
+                    room:RemoveGridEntity(i, 0, false)
+                end
+            end
 		else
 			Isaac.GetPlayer(0):UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW)
 			lootdeck.f.sunTimer = nil
