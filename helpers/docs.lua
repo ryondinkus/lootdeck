@@ -13,12 +13,17 @@ function LootDeckHelpers.GenerateEncyclopediaPage(...)
 end
 
 function LootDeckHelpers.AddExternalItemDescriptionCard(card)
-	if EID and card.Descriptions then
-        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(card, EID.addCard)
+	if EID and (card.Descriptions or card.HolographicDescriptions) then
+
 		local cardFrontPathTag = card.Tag
+		local descriptions = card.Descriptions
 		if card.IsHolographic then
 			cardFrontPathTag = cardFrontPathTag:gsub("holographic", "")
+			descriptions = card.HolographicDescriptions
 		end
+
+        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(card.Id, card.Names, descriptions, EID.addCard)
+
 		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", cardFrontPathTag)
 		local cardFrontSprite = Sprite()
         cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
@@ -34,20 +39,22 @@ end
 
 function LootDeckHelpers.AddExternalItemDescriptionItem(item)
 	if EID and item.Descriptions then
-        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(item, EID.addCollectible)
+        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(item.Id, item.Names, item.Descriptions, EID.addCollectible)
 	end
 end
 
 function LootDeckHelpers.AddExternalItemDescriptionTrinket(trinket)
 	if EID and trinket.Descriptions then
-        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(trinket, EID.addTrinket)
+        LootDeckHelpers.RegisterExternalItemDescriptionLanguages(trinket.Id, trinket.Names, trinket.Descriptions, EID.addTrinket)
 	end
 end
 
-function LootDeckHelpers.RegisterExternalItemDescriptionLanguages(obj, func)
-    for language, description in pairs(obj.Descriptions) do
-        func(EID, obj.Id, description, obj.Names[language], language)
-    end
+function LootDeckHelpers.RegisterExternalItemDescriptionLanguages(id, names, descriptions, func)
+    if descriptions then
+		for language, description in pairs(descriptions) do
+			func(EID, id, description, names[language], language)
+		end
+	end
 end
 
 return H
