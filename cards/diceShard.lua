@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail",
     spa = "Rebobina los eventos de la habitación, igual que {{Collectible422}} el Reloj de Arena Brillante, pero reapareces en la misma habitación y no en la anterior#{{Warning}} Si se utiliza en el principio de un nuevo piso sin visitar habitaciones, el efecto fallará"
 }
+local HolographicDescriptions = {
+    en_us = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail#{{ColorRainbow}}The reset room will have all of its doors opened",
+    spa = "Rebobina los eventos de la habitación, igual que {{Collectible422}} el Reloj de Arena Brillante, pero reapareces en la misma habitación y no en la anterior#{{Warning}} Si se utiliza en el principio de un nuevo piso sin visitar habitaciones, el efecto fallará#{{ColorRainbow}}La habitación reiniciada tendrá las puertas abiertas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, undoes all of the events of the current room, similar to the Glowing Hourglass effect.", "- Unlike Glowing Hourglass, you will be rewinded to the start of the current room instead of the previous room. As such, this card cannot be used as a teleport.", "- If used in the starting room of a new floor, without visiting any other rooms, the effect will fail and spawn a Penny.", "Holographic Effect: The reset room will have all of its doors opened.")
 
 local blackOverlay = Sprite()
@@ -123,6 +127,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

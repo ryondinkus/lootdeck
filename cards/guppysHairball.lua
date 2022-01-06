@@ -15,6 +15,10 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: Every instance of damage taken has a 1/6 chance to be blocked",
     spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Cada vez que se reciba daño, hay una posibilidad de 1/6 de bloquearlo"
 }
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: Every instance of damage taken has a 1/6 chance to be blocked",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} objeto pasivo tras usarla#Efecto pasivo: Cada vez que se reciba daño, hay una posibilidad de 1/6 de bloquearlo"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Every instance of damage taken has a 1/6 chance to be blocked.", "- Additional copies of the passive add an extra 1/6 chance, up to 3/6.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
@@ -28,6 +32,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

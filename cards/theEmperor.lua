@@ -14,6 +14,10 @@ local Descriptions = {
 	en_us = "Permanently charms every enemy in the room, excluding bosses",
 	spa = "Aplica encantamiento permanente a todos los enemigos de la habitación, exceptuando a los jefes"
 }
+local HolographicDescriptions = {
+	en_us = "Permanently charms every enemy in the room, excluding bosses#{{ColorRainbow}}All permacharmed enemies become champions",
+	spa = "Aplica encantamiento permanente a todos los enemigos de la habitación, exceptuando a los jefes#{{ColorRainbow}}Todos los enemigos encantados se convierten en campeones"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Permanently charms every enemy in the room. This does not include bosses.", "Holographic Effect: All enemies charmed this way become champions.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -61,6 +65,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

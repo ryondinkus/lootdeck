@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns a random 1 Heart Devil Deal from the current room pool",
     spa = "Genera un Trato con el Diablo de 1 corazón de la pool de la habitación actual"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} random 1 Heart Devil Deal from the current room pool",
+    spa = "Genera {{ColorRainbow}}2{{CR}} Tratos con el Diablo de 1 corazón de la pool de la habitación actual"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 1 Heart Devil Deal from the current room pool.", "Holographic Effect: Spawns two Devil Deals.")
 
 local function MC_USE_CARD(_, c, p, f, _, _, rng)
@@ -62,6 +66,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns a permanently charmed clone of a random enemy in the room# If there are no enemies, spawns a permanently charmed Gaper",
     spa = "Genera un clon encantado de un enemigo en la habitación#Si no hay enemigos en la habitación, genera un Gaper encantado"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} permanently charmed clones of a random enemy in the room# If there are no enemies, spawns {{ColorRainbow}}2{{CR}} permanently charmed Gapers",
+    spa = "Genera {{ColorRainbow}}2{{CR}} clones encantados de un enemigo en la habitación#Si no hay enemigos en la habitación, genera {{ColorRainbow}}2{{CR}} Gapers encantados"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.", "Holographic Effect: Spawns two charmed copies of two different random enemies.")
 
 local function MC_USE_CARD(_, c, p, f, _, _, rng)
@@ -34,6 +38,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

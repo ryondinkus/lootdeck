@@ -12,8 +12,12 @@ local Tag = "redPill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-	en_us = "Random chance for any of these effects:#{{ArrowUp}} +1 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1 Half Heart of damage (non-fatal)",
-	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} +1 de daño durante la habitación#{{Heart}} +1 contenedor de corazón durante la habitación#{{Warning}} Recibir medio corazón de daño (no fatal)"
+	en_us = "Random chance for any of these effects:#{{ArrowUp}} +2 Damage for the room#{{Heart}} +1 Heart Container for the room#{{Warning}} Take 1 Half Heart of damage (non-fatal)",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} +2 de daño durante la habitación#{{Heart}} +1 contenedor de corazón durante la habitación#{{Warning}} Recibir medio corazón de daño (no fatal)"
+}
+local HolographicDescriptions = {
+	en_us = "Random chance for any of these effects:#{{ArrowUp}} {{ColorRainbow}}+4{{CR}} Damage for the room#{{Heart}} {{ColorRainbow}}+2{{CR}} Heart Container for the room#{{Warning}} Take {{ColorRainbow}}1 Full Heart{{CR}} of damage (non-fatal)",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{ArrowUp}} {{ColorRainbow}}+4{{CR}} de daño durante la habitación#{{Heart}} {{ColorRainbow}}+2{{CR}} contenedor de corazón durante la habitación#{{Warning}} Recibir {{ColorRainbow}}un corazón{{CR}} de daño (no fatal)"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- +1 Damage up for the room", "- +1 filled Heart Container for the room", "- Take 1 Half Heart of damage. The damage will be negated if it would kill the player.", "Holographic Effect: Performs the same random effect twice.")
 
@@ -71,6 +75,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

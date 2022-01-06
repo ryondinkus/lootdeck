@@ -379,6 +379,10 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
+local EIDLootCardIcon = Sprite()
+EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
+EID:addIcon("LootCard", "Idle", 0, 9, 9, -1, 0, EIDLootCardIcon)
+
 function LootDeckAPI.RegisterLootCard(card, newCard)
     if card.Callbacks then
         for _, callback in pairs(card.Callbacks) do

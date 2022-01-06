@@ -9,8 +9,8 @@ local Name = Names.en_us
 local Tag = "playerCard"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
-    en_us = "{{Card}} Spawns a Loot Card on pickup# All Loot Card effects are doubled, similar to {{Collectible451}} Tarot Cloth",
-    spa = "{{Card}} Genera una carta de loot al tomarlo#Todos los efectos de las cartasde Lootse duplican, igual al {{Collectible451}} Tapete de Tarot"
+    en_us = "{{LootCard}} Spawns a Loot Card on pickup# All Loot Card effects are doubled, similar to {{Collectible451}} Tarot Cloth",
+    spa = "{{LootCard}} Genera una carta de loot al tomarlo#Todos los efectos de las cartasde Lootse duplican, igual al {{Collectible451}} Tapete de Tarot"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Loot Card.", "All Loot Card effects are now doubled, similar to the effect of Tarot Cloth.")
 

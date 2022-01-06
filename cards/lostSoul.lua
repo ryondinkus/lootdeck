@@ -12,7 +12,11 @@ local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
     en_us = "Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up# If used while a Lost Soul already exists, it will spawn a Found Soul instead. The two souls will fall in love, spawn a Soul Heart, and fly away.",
-    spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Genera un Alma Perdida familiar, que encontrará las piedras marcadas y entradas a Salas Secretas y las explotará#Si ya se tiene un Alma Perdida, se generará un Alma Encontrada en su lugar en medio de la habitación, las dos almas se enamorarán y volarán lejos, soltando un corazón rojo"
+    spa = "Genera un Alma Perdida familiar, que encontrará las piedras marcadas y entradas a Salas Secretas y las explotará#Si ya se tiene un Alma Perdida, se generará un Alma Encontrada en su lugar en medio de la habitación, las dos almas se enamorarán y volarán lejos, soltando un Corazón de Alma"
+}
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Lost Soul familiars, who will fall in love, spawn a Soul Heart, and fly away.",
+    spa = "Genera {{ColorRainbow}}2{{CR}} Alma Perdida familiares, que se enamorarán y volarán lejos, soltando un Corazón de Alma"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Lost Soul familiar, who will discover Tinted Rocks and Secret Rooms and blow them up.", "- Lost Soul will prioritize Secret Rooms over Tinted Rocks.", "If used while a Lost Soul familiar already exists, it will instead spawn a Found Soul in the center of the room. The two souls will fall in love and fly away, spawning one Soul Heart.", "Holographic Effect: Spawns two Lost Souls, who instantly fall in love and spawn a Soul Heart.")
 
@@ -36,6 +40,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

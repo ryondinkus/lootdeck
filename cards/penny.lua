@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns a Penny",
     spa = "Genera un penny"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Pennies",
+    spa = "Genera {{ColorRainbow}}2{{CR}} pennies"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Penny on use.", "Holographic Effect: Spawns two Pennies.")
 
 local function MC_USE_CARD(_, c, p)
@@ -26,6 +30,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

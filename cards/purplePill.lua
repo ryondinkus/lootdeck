@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:#{{Battery}} Recharge your active item#{{ArrowUp}} +0.27 Tears for the room#{{ArrowDown}} -0.27 Tears for the room",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Battery}} Recarga tu objeto activo#{{ArrowUp}} +0.27 de lágrimas durante la habitación#{{ArrowDown}} -0.27 de lágrimas durante la habitación)"
 }
+local HolographicDescriptions = {
+    en_us = "Random chance for any of these effects:#{{Battery}} Recharge your active item#{{ArrowUp}} {{ColorRainbow}}+0.61{{CR}} Tears for the room#{{ArrowDown}} {{ColorRainbow}}-0.42{{CR}} Tears for the room",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Battery}} Recarga tu objeto activo#{{ArrowUp}} {{ColorRainbow}}+0.61{{CR}} de lágrimas durante la habitación#{{ArrowDown}} {{ColorRainbow}}-0.42{{CR}} de lágrimas durante la habitación)"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Recharge one of your active items (+6 charge).", "- +0.27 Tears for the room.", "- -0.27 Tears for the room.", "Holographic Effect: Performs the same random effect twice.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
@@ -78,6 +82,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

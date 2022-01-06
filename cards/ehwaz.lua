@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "{{Collectible285}} D10 effect on use, rerolling all enemies in the room.# All rerolled enemies will have 50% HP.",
     spa = "Efecto del {{Collectible285}} D10, al usarse rerolea a todos los enemigos de la habitación#Todos los enemigos reroleados tendrán 50% de salud"
 }
+local HolographicDescriptions = {
+    en_us = "{{Collectible285}} D10 effect on use, rerolling all enemies in the room {{ColorRainbow}}twice{{CR}}.# All rerolled enemies will have 50% HP.",
+    spa = "Efecto del {{Collectible285}} D10, al usarse rerolea a todos los enemigos de la habitación {{ColorRainbow}}dos veces{{CR}}#Todos los enemigos reroleados tendrán 50% de salud"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the D10 effect, rerolling all enemies in the room.", "All rerolled enemies will have 50% HP.", "Holographic Effect: Rerolls all room enemies, then rerolls them again.")
 
 local function MC_USE_CARD(_, c, p)
@@ -34,6 +38,7 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
     Callbacks = {
         {

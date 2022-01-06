@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Destroys one of your items at random#{{Collectible}} Grants a new item from the current room pool",
     spa = "Destruye uno de tus objetos aleatoriamente#{{Collectible}} Genera un nuevo objeto basado en la pool de la habitación"
 }
+local HolographicDescriptions = {
+    en_us = "Destroys {{ColorRainbow}}2{{CR}} of your items at random#{{Collectible}} Grants {{ColorRainbow}}2{{CR}} new items from the current room pool",
+    spa = "Destruye {{ColorRainbow}}2{{CR}} de tus objetos aleatoriamente#{{Collectible}} Genera {{ColorRainbow}}2{{CR}} nuevos objetos basado en la pool de la habitación"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a random item you possess. This includes passives or actives", "Instantly grants a new item from the current room pool.", "Holographic Effect: Destroys and grants a new item, then destroys and grants another.")
 
 local function MC_USE_CARD(_, c, p, f, _, _, rng)
@@ -74,6 +78,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {

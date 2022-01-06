@@ -9,7 +9,7 @@ local Name = Names.en_us
 local Tag = "lootDeck"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
-    en_us = "{{Card}} Grants a Loot Card on use",
+    en_us = "{{LootCard}} Grants a Loot Card on use",
     spa = "Genera una carta de Loos al usarlo"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a Loot Card on use.")

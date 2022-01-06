@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Grants the player invincibility and the ability to phase through enemies for 5 seconds",
     spa = "El jugador se vuelve invencible y puede traspasar a los enemigos por 5 segundos"
 }
+local HolographicDescriptions = {
+    en_us = "Grants the player invincibility and the ability to phase through enemies for {{ColorRainbow}}10{{CR}} seconds",
+    spa = "El jugador se vuelve invencible y puede traspasar a los enemigos por {{ColorRainbow}}10{{CR}} segundos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("For 5 seconds, the player is invincibile and can phase through enemies.", "Holographic Effect: The effect lasts for 10 seconds.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
@@ -75,6 +79,7 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
         {
