@@ -18,7 +18,9 @@ local originalFireDelayTag = string.format("%sOriginalFireDelay", Tag)
 local finishedTag = string.format("%sFinished", Tag)
 local roomClearedTag = string.format("%sRoomCleared", Tag)
 local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
-local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
+
+local RUNTIME = 3 * 30
+local RATE_MULTIPLIER = 10
 
 local function Initialize(p)
     local game = Game()
@@ -27,7 +29,7 @@ local function Initialize(p)
         if data[finishedTag] or data[finishedTag] == nil then
             data[originalFireDelayTag] = p.MaxFireDelay
         end
-        data[Tag] = 0
+        data[Tag] = RUNTIME
         data[finishedTag] = false
         data[roomClearedTag] = nil
         if game:IsGreedMode() then
@@ -52,8 +54,8 @@ end
 local function MC_POST_PEFFECT_UPDATE(_, p)
     helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function()
         local data = p:GetData().lootdeck
-        if data[Tag] then
-            data[Tag] = data[Tag] + 1
+        if data[Tag] and data[Tag] > 0 then
+            data[Tag] = data[Tag] - 1
             p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
             p:EvaluateItems()
         end
@@ -64,8 +66,8 @@ local function MC_EVALUATE_CACHE(_, p, f)
     local data = p:GetData().lootdeck
     if f == CacheFlag.CACHE_FIREDELAY then
         if data[Tag] then
-            local newDelay = p.MaxFireDelay - 10 + (data[Tag]/(p.MaxFireDelay))
-            if newDelay < data[originalFireDelayTag] then
+            local newDelay = p.MaxFireDelay - ((data[originalFireDelayTag] - (data[originalFireDelayTag] / RATE_MULTIPLIER)) * (data[Tag] / RUNTIME))
+            if data[Tag] > 0 then
                 p.MaxFireDelay = newDelay
             else
                 data[Tag] = nil
