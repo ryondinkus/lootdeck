@@ -1,5 +1,5 @@
 
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- Gives the swallowed penny item
@@ -28,8 +28,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

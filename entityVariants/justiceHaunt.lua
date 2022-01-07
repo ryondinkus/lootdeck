@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Justice Haunt"
 local Tag = "justiceHaunt"
@@ -42,7 +42,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
                 data.state = "STATE_ATTACK"
             end
         else
-            data.target = helper.FindRandomEnemy(f.Position, rng)
+            data.target = helper.GetRandomEnemy(rng)
         end
         if not helper.AreEnemiesInRoom(room) then
             data.state = "STATE_DEAD"
@@ -87,7 +87,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_FAMILIAR_INIT,
             MC_FAMILIAR_INIT,

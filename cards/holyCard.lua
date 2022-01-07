@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns 10 "Holy Shield" familiars that block bullets and die after blocking
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Spawns 10 Holy Shield orbitals, which die after blocking one projectile.",
     spa = "Genera 10 Escudos Sagrados orbitales, se destruyen al bloquear un proyectil"
+}
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}20{{CR}} Holy Shield orbitals, which die after blocking one projectile.",
+    spa = "Genera {{ColorRainbow}}20{{CR}} Escudos Sagrados orbitales, se destruyen al bloquear un proyectil"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break.", "Holographic Effect: Spawns 20 Holy Shields.")
 
@@ -32,8 +36,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

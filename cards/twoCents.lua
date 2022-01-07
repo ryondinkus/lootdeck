@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns two pennies
 local Names = {
@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns a Double Penny",
     spa = "Genera una moneda doble"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Double Pennies",
+    spa = "Genera {{ColorRainbow}}2{{CR}} monedas dobles"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Double Penny on use.", "Holographic Effect: Spawns two Double Pennies.")
 
 local function MC_USE_CARD(_, c, p)
@@ -26,8 +30,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

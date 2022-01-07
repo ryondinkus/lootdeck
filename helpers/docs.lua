@@ -1,6 +1,6 @@
 local H = {}
 
-function lootdeckHelpers.GenerateEncyclopediaPage(...)
+function LootDeckAPI.GenerateEncyclopediaPage(...)
     local output = {
         {str = "Effect", fsize = 2, clr = 3, halign = 0}
     }
@@ -12,42 +12,49 @@ function lootdeckHelpers.GenerateEncyclopediaPage(...)
     return {output}
 end
 
-function lootdeckHelpers.AddExternalItemDescriptionCard(card)
-	if EID and card.Descriptions then
-        lootdeckHelpers.RegisterExternalItemDescriptionLanguages(card, EID.addCard)
+function LootDeckAPI.AddExternalItemDescriptionCard(card)
+	if EID and (card.Descriptions or card.HolographicDescriptions) then
+
 		local cardFrontPathTag = card.Tag
-		if card.Holographic then
+		local descriptions = card.Descriptions
+		if card.IsHolographic then
 			cardFrontPathTag = cardFrontPathTag:gsub("holographic", "")
+			descriptions = card.HolographicDescriptions
 		end
+
+        LootDeckAPI.RegisterExternalItemDescriptionLanguages(card.Id, card.Names, descriptions, EID.addCard)
+
 		local cardFrontPath = string.format("gfx/ui/lootcard_fronts/%s.png", cardFrontPathTag)
 		local cardFrontSprite = Sprite()
         cardFrontSprite:Load("gfx/ui/eid_lootcard_fronts.anm2", true)
 		cardFrontSprite:ReplaceSpritesheet(0, cardFrontPath)
 		cardFrontSprite:LoadGraphics()
 		local cardFrontAnim = "Idle"
-		if card.Holographic then
+		if card.IsHolographic then
 			cardFrontAnim = "IdleHolo"
 		end
 		EID:addIcon("Card"..card.Id, cardFrontAnim, -1, 8, 8, 0, 1, cardFrontSprite)
 	end
 end
 
-function lootdeckHelpers.AddExternalItemDescriptionItem(item)
+function LootDeckAPI.AddExternalItemDescriptionItem(item)
 	if EID and item.Descriptions then
-        lootdeckHelpers.RegisterExternalItemDescriptionLanguages(item, EID.addCollectible)
+        LootDeckAPI.RegisterExternalItemDescriptionLanguages(item.Id, item.Names, item.Descriptions, EID.addCollectible)
 	end
 end
 
-function lootdeckHelpers.AddExternalItemDescriptionTrinket(trinket)
+function LootDeckAPI.AddExternalItemDescriptionTrinket(trinket)
 	if EID and trinket.Descriptions then
-        lootdeckHelpers.RegisterExternalItemDescriptionLanguages(trinket, EID.addTrinket)
+        LootDeckAPI.RegisterExternalItemDescriptionLanguages(trinket.Id, trinket.Names, trinket.Descriptions, EID.addTrinket)
 	end
 end
 
-function lootdeckHelpers.RegisterExternalItemDescriptionLanguages(obj, func)
-    for language, description in pairs(obj.Descriptions) do
-        func(EID, obj.Id, description, obj.Names[language], language)
-    end
+function LootDeckAPI.RegisterExternalItemDescriptionLanguages(id, names, descriptions, func)
+    if descriptions then
+		for language, description in pairs(descriptions) do
+			func(EID, id, description, names[language], language)
+		end
+	end
 end
 
 return H

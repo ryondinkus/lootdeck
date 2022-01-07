@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- Gives magneto effect for the room and a glowing costume
@@ -14,7 +14,11 @@ local Descriptions = {
     en_us = "On use, fills in all the pits in the current room with rock bridges",
     spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, fills all of the pits in the current room with rock bridges.", "Holographic Effect: Destroys all rocks and secret room doors in the room, as well.")
+local HolographicDescriptions = {
+    en_us = "On use, fills in all the pits in the current room with rock bridges#{{ColorRainbow}}Destroys all rocks in the room",
+    spa = "Al usarse, rellena todos los precipicios y acantilados en la sala con puentes de piedra#{{ColorRainbow}}Destruye todos los piedras en la sala"
+}
+local WikiDescription = helper.GenerateEncyclopediaPage("Fills in all holes in the current room.# Holographic Effect: Breaks all rocks in the room")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
 	local room = Game():GetRoom()
@@ -41,8 +45,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

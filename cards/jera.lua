@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Meat Cleaver effect
 local Names = {
@@ -13,10 +13,14 @@ local Descriptions = {
     en_us = "Triggers the {{Collectible631}} Meat Cleaver effect, splitting all room enemies in half with half their respective HP# All cleaved enemies will drop a Full Red Heart# If used with no enemies in the room, it will damage the player for one full heart and drop a Full Red Heart",
     spa = "Activa el efecto del {{Collectible631}} Cuchillo de Carnicero, partiendo a los enemigos a la mitad con la mitad de sus PS respectivos#Los enemigos partidos soltarán un Corazón Rojo#Si se usa en una habitación sin enemigos, dañará al jugador y soltará un Corazón Rojo"
 }
+local HolographicDescriptions = {
+    en_us = "Triggers the {{Collectible631}} Meat Cleaver effect {{ColorRainbow}}twice{{CR}} , splitting all room enemies in half with half their respective HP# All cleaved enemies will drop a Full Red Heart# If used with no enemies in the room, it will damage the player for one full heart and drop a Full Red Heart",
+    spa = "Activa el efecto del {{Collectible631}} Cuchillo de Carnicero {{ColorRainbow}}dos veces{{CR}} , partiendo a los enemigos a la mitad con la mitad de sus PS respectivos#Los enemigos partidos soltarán un Corazón Rojo#Si se usa en una habitación sin enemigos, dañará al jugador y soltará un Corazón Rojo"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Meat Cleaver effect, which splits all room enemies in half with half of their respective HP.", "- All cleaved enemies will drop a Full Red Heart.", "Holographic Effect: Splits all enemies, then splits them again.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
-    local enemies = helper.ListEnemiesInRoom(p.Position)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
+    local enemies = helper.ListEnemiesInRoom()
     if #enemies > 0 then
         for _, entity in pairs(enemies) do
             helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL, entity.Position, Vector.FromAngle(rng:RandomInt(360)), entity)
@@ -40,8 +44,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

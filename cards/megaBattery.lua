@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a mega battery
 local Names = {
@@ -12,6 +12,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Spawns a Mega Battery",
     spa = "Genera una Mega batería"
+}
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Mega Batteries",
+    spa = "Genera {{ColorRainbow}}2{{CR}} Mega baterías"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Mega Battery on use.", "Holographic Effect: Spawns two Mega Batteries.")
 
@@ -27,8 +31,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

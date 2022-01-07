@@ -1,11 +1,13 @@
 local H = {}
 
-function lootdeckHelpers.RegisterSprite(anm2Root, sprRoot, anmName)
+function LootDeckAPI.CreateSprite(animationPath, spritesheetPath, animationName)
 	local sprite = Sprite()
-	sprite:Load(anm2Root, true)
-	sprite:Play(anmName and anmName or sprite:GetDefaultAnimationName(), true)
+	sprite:Load(animationPath, true)
+	sprite:Play(animationName and animationName or sprite:GetDefaultAnimationName(), true)
 	sprite:Update()
-	if sprRoot then sprite:ReplaceSpritesheet(0, sprRoot) end
+	if spritesheetPath then
+        sprite:ReplaceSpritesheet(0, spritesheetPath)
+    end
 	sprite:LoadGraphics()
 
 	return sprite
@@ -95,8 +97,8 @@ local ESAU_HUD_OFFSET_VECTORS = {
     [10] = Vector(16, 6)
 }
 
-function lootdeckHelpers.GetCardPositionWithHUDOffset(p, sprite)
-    local controllerIndex = lootdeckHelpers.GetPlayerControllerIndex(p)
+function LootDeckAPI.GetHUDCardPosition(player, sprite)
+    local controllerIndex = LootDeckAPI.GetPlayerControllerIndex(player)
     local BottomRight = Vector(Isaac.GetScreenWidth(), Isaac.GetScreenHeight())
     local BottomLeft = Vector(0, Isaac.GetScreenHeight())
     local TopRight = Vector(Isaac.GetScreenWidth(), 0)
@@ -106,39 +108,45 @@ function lootdeckHelpers.GetCardPositionWithHUDOffset(p, sprite)
 
     local hudOffsetVector = Vector.Zero
 
-    if controllerIndex ~= 0 and p.SubType == PlayerType.PLAYER_ESAU then
+    if controllerIndex ~= 0 and player.SubType == PlayerType.PLAYER_ESAU then
         return fuckOffVector
     end
 
     -- Jacob in first player slot
-    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_JACOB then
+    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_JACOB then
         hudOffsetVector = JACOB_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(11, 41) + hudOffsetVector
     end
 
     -- Esau in second player slot
-    if controllerIndex == 0 and p.SubType == PlayerType.PLAYER_ESAU then
+    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_ESAU then
         hudOffsetVector = ESAU_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(BottomRight.X - 10, BottomRight.Y - 44) - hudOffsetVector
     end
 
     -- Player 2 (top right)
-    if controllerIndex == 1 and p.SubType ~= PlayerType.PLAYER_ESAU then
-        sprite.Scale = Vector(0.5, 0.5)
+    if controllerIndex == 1 and player.SubType ~= PlayerType.PLAYER_ESAU then
+        if sprite then
+            sprite.Scale = Vector(0.5, 0.5)
+        end
         hudOffsetVector = SECOND_PLAYER_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(TopRight.X - 147, TopRight.Y + 44) + hudOffsetVector
     end
 
     -- Player 3 (bottom left)
-    if controllerIndex == 2 and p.SubType ~= PlayerType.PLAYER_ESAU then
-        sprite.Scale = Vector(0.5, 0.5)
+    if controllerIndex == 2 and player.SubType ~= PlayerType.PLAYER_ESAU then
+        if sprite then
+            sprite.Scale = Vector(0.5, 0.5)
+        end
         hudOffsetVector = THIRD_PLAYER_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(BottomLeft.X + 21.5, BottomLeft.Y + 5) + hudOffsetVector
     end
 
     -- Player 4 (bottom right)
-    if controllerIndex == 3 and p.SubType ~= PlayerType.PLAYER_ESAU then
-        sprite.Scale = Vector(0.5, 0.5)
+    if controllerIndex == 3 and player.SubType ~= PlayerType.PLAYER_ESAU then
+        if sprite then
+            sprite.Scale = Vector(0.5, 0.5)
+        end
         hudOffsetVector = FOURTH_PLAYER_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(BottomRight.X - 154, BottomRight.Y + 5.5) - hudOffsetVector
     end
@@ -148,10 +156,10 @@ function lootdeckHelpers.GetCardPositionWithHUDOffset(p, sprite)
     return Vector(BottomRight.X - 15, BottomRight.Y - 12) - hudOffsetVector
 end
 
-function lootdeckHelpers.RegisterAnimation(animationContainer, animationPath, animationName, callback)
+function LootDeckAPI.CreateCardAnimation(animationContainer, animationPath, animationName, callback)
     if not animationContainer or not animationContainer.sprite then
         animationContainer = {
-            sprite = lootdeckHelpers.RegisterSprite(animationPath, nil, animationName),
+            sprite = LootDeckAPI.CreateSprite(animationPath, nil, animationName),
             frameCount = 0
         }
         if callback then
@@ -161,7 +169,7 @@ function lootdeckHelpers.RegisterAnimation(animationContainer, animationPath, an
     return animationContainer
 end
 
-function lootdeckHelpers.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
+function LootDeckAPI.StartLootcardAnimation(lootcardAnimationContainer, lootcardTag, animationName)
     lootcardAnimationContainer.sprite:ReplaceSpritesheet(0, string.format("gfx/ui/lootcard_fronts/%s.png", lootcardTag:gsub("holographic", "")))
     lootcardAnimationContainer.sprite:LoadGraphics()
     if animationName then
@@ -170,17 +178,18 @@ function lootdeckHelpers.StartLootcardAnimation(lootcardAnimationContainer, loot
     end
 end
 
-function lootdeckHelpers.PlayLootcardPickupAnimation(data, id)
-    local card = lootdeckHelpers.GetLootcardById(id)
+function LootDeckAPI.PlayLootcardPickupAnimation(player, cardId)
+    local data = player:GetData().lootdeck
+    local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
         local animationName = card.PickupAnimationName
         if Game():GetRoom():HasWater() then
             animationName = animationName.."Water"
         end
-        data.lootcardPickupAnimation = lootdeckHelpers.RegisterAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+        data.lootcardPickupAnimation = LootDeckAPI.CreateCardAnimation(data.lootcardPickupAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
-        lootdeckHelpers.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
+        LootDeckAPI.StartLootcardAnimation(data.lootcardPickupAnimation, card.Tag, animationName)
         data.isHoldingLootcard = true
         if data.lootcardUseAnimation and data.lootcardUseAnimation.sprite then
             data.lootcardUseAnimation.sprite:SetLastFrame()
@@ -188,17 +197,18 @@ function lootdeckHelpers.PlayLootcardPickupAnimation(data, id)
     end
 end
 
-function lootdeckHelpers.PlayLootcardUseAnimation(data, id)
-    local card = lootdeckHelpers.GetLootcardById(id)
+function LootDeckAPI.PlayLootcardUseAnimation(player, cardId)
+    local data = player:GetData().lootdeck
+    local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
         local animationName = card.UseAnimationName
         if Game():GetRoom():HasWater() then
             animationName = animationName.."Water"
         end
-        data.lootcardUseAnimation = lootdeckHelpers.RegisterAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
+        data.lootcardUseAnimation = LootDeckAPI.CreateCardAnimation(data.lootcardUseAnimation, "gfx/ui/item_dummy_animation.anm2", animationName)
 
-        lootdeckHelpers.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
+        LootDeckAPI.StartLootcardAnimation(data.lootcardUseAnimation, card.Tag, animationName)
         if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
             data.lootcardPickupAnimation.sprite:SetLastFrame()
         end

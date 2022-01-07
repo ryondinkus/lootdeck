@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 local Names = {
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb two hits",
     spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber dos golpes"
+}
+local HolographicDescriptions = {
+    en_us = "Grants a {{Collectible313}} Holy Mantle effect that can absorb {{ColorRainbow}}three{{CR}} hits",
+    spa = "Otorga un efecto del {{Collectible313}} Manto Sagrado que puede absorber {{ColorRainbow}}tres{{CR}} golpes"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.", "Holographic Effect: The Holy Mantle can absorb three hits.")
 
@@ -29,7 +33,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
     local data = p:GetData().lootdeck
     if data[Tag] then
-        if helper.HolyMantleDamage(damageAmount, damageFlags, damageSource) then
+        if helper.CheckHolyMantleDamage(damageAmount, damageFlags, damageSource) then
             helper.HolyMantleEffect(p)
             data[Tag] = data[Tag] - 1
     		if data[Tag] == 1 then
@@ -73,8 +77,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entitySubTypes = include("entitySubTypes/registry")
 
 -- Swap the pools of Red Chests and Gold Chests
@@ -68,7 +68,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_UPDATE,
             MC_POST_PICKUP_UPDATE

@@ -1,5 +1,5 @@
 local entityVariants = include("entityVariants/registry")
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- A 1 in 3 chance of spawning a tarotcard, thee tarotcards, or losing one coin, bomb, and key
 local Names = {
@@ -11,16 +11,20 @@ local Tag = "bluePill"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-	en_us = "Random chance for any of these effects:#{{Card}} Spawn 1 Loot Card#{{Card}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key",
-	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Card}} Genera una carta de loor#{{Card}} Genera 3 cartas de loot#Pierdes una moneda, una llave y una bomba"
+	en_us = "Random chance for any of these effects:#{{LootCard}} Spawn 1 Loot Card#{{LootCard}} Spawn 3 Loot Cards#{{ArrowDown}} Lose a Coin, Bomb, and Key",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{LootCard}} Genera una carta de loor#{{LootCard}} Genera 3 cartas de loot#Pierdes una moneda, una llave y una bomba"
+}
+local HolographicDescriptions = {
+	en_us = "Random chance for any of these effects:#{{LootCard}} Spawn {{ColorRainbow}}2{{CR}} Loot Cards#{{LootCard}} Spawn {{ColorRainbow}}6{{CR}} Loot Cards#{{ArrowDown}} Lose {{ColorRainbow}}2{{CR}} Coins, Bombs, and Keys",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{LootCard}} Genera {{ColorRainbow}}2{{CR}} cartas de loot#{{LootCard}} Genera {{ColorRainbow}}6{{CR}} cartas de loot#Pierdes {{ColorRainbow}}2{{CR}} monedas, {{ColorRainbow}}2{{CR}} llaves y {{ColorRainbow}}2{{CR}} bombas"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Spawns a Loot Card.", "- Spawns 3 Loot Cards", "- Lose a Coin, Key, and Bomb, if possible.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local sfx = lootdeck.sfx
 	local room = Game():GetRoom()
 
-	helper.RandomChance(rng, shouldDouble,
+	helper.RunRandomFunction(rng, shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		local cardId = helper.GetWeightedLootCardId(true, rng)
@@ -57,8 +61,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

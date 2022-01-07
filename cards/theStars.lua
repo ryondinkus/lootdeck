@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Grants an item from the item pool or (1% chance) possibly the planitarium pool
 local Names = {
@@ -13,9 +13,13 @@ local Descriptions = {
     en_us = "Instantly grants an item from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead",
     spa = "Te regala instantaneamente un objeto de la {{TreasureRoom}} Sala del tesoro#1% de posibilidad de que sea un objeto del Planetario"
 }
+local HolographicDescriptions = {
+    en_us = "Instantly grants {{ColorRainbow}}2{{CR}} items from the {{TreasureRoom}} Treasure Room pool# 1% chance to grant a Planetarium item instead",
+    spa = "Te regala instantaneamente {{ColorRainbow}}2{{CR}} objetos de la {{TreasureRoom}} Sala del tesoro#1% de posibilidad de que sea un objeto del Planetario"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Instantly grants an item from the Treasure Room pool.", "- 1% chance to instead grant a Planetarium item.", "Holographic Effect: Grants a treasure item, then another.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local game = Game()
     local room = game:GetRoom()
     local itemPool = game:GetItemPool()
@@ -48,8 +52,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

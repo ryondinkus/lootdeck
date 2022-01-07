@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Gives an extra large and damage-boosted tear in each new room, the number of tears in each room being the number of curved horns
 local Names = {
@@ -37,7 +37,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function() end, Tag, finishedTag, roomClearedTag, greedModeWaveTag, bossRushBossesTag);
+    helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function() end, Tag);
 end
 
 local function MC_POST_FIRE_TEAR(_, tear)
@@ -63,7 +63,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM

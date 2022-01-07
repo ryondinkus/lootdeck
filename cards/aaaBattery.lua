@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- trinket; Grants a temporary effect of a random battery item for the rest of the floor
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: For each new floor, grants a random temporary battery item",
     spa = "Añade un objeto pasivo tras usarla#Efecto pasivo: Por cada piso, otorgará un objeto de batería aleatorio"
+}
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: For each new floor, grants a random temporary battery item",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} objeto pasivo tras usarla#Efecto pasivo: Por cada piso, otorgará un objeto de batería aleatorio"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Grants a random temporary battery item for each new floor.", "- Additional copies of the passive grant extra battery items.", "Holographic Effect: Grants two copies of the passive.")
 
@@ -29,8 +33,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

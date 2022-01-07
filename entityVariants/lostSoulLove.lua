@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Lost Soul Love"
 local Tag = "lostSoulLove"
@@ -42,7 +42,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
 		{
             ModCallbacks.MC_FAMILIAR_UPDATE,
             MC_FAMILIAR_UPDATE,

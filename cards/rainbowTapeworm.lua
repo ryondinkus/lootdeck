@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local items = include("items/registry")
 
 -- trinket; 50% chance each room to grant a temporary copy of a random passive you already have
@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Adds a unique passive item on use# Passive: On room entry, 50% chance to temporarily duplicate one of your existing passives",
     spa = "Añade un objeto pasivo al usarla#Efecto pasivo: Al entrar a una habitación, hay un 50% de duplicar uno de tus objetos pasivos temporalmente"
 }
+local HolographicDescriptions = {
+    en_us = "Adds {{ColorRainbow}}2 copies of a{{CR}} unique passive item on use# Passive: On room entry, 50% chance to temporarily duplicate one of your existing passives",
+    spa = "Añade {{ColorRainbow}}2 copias de un{{CR}} objeto pasivo al usarla#Efecto pasivo: Al entrar a una habitación, hay un 50% de duplicar uno de tus objetos pasivos temporalmente"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: When entering a room, 50% chance to duplicate one of your passives for the rest of the room.", "Holographic Effect: Grants two copies of the passive.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,8 +31,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

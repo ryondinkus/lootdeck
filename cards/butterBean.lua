@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Farts
 local Names = {
@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Creates a {{Collectible294}} Butter Bean fart, which knocks back enemies.",
     spa = "Crea un pedo de {{Collectible294}} frijol de mantequilla, puede empujar a los enemigos"
 }
+local HolographicDescriptions = {
+    en_us = "Creates {{ColorRainbow}}2{{CR}} {{Collectible294}} Butter Bean farts, which knock back enemies.",
+    spa = "Crea {{ColorRainbow}}2{{CR}} pedos de {{Collectible294}} frijol de mantequilla, puede empujar a los enemigos"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Does a Butter Bean fart on use, which knocks back enemies and deals damage if they hit walls.", "Holographic Effect: Creates two Butter Bean farts in quick succession.")
 
 local function MC_USE_CARD(_, c, p)
@@ -26,8 +30,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

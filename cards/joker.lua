@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns a Devil Hand that "steals" any item and brings it next to the player
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
 	en_us = "Spawns a Devil Hand familiar which follows the player# On room entry, Devil Hand steals any item in the room (shop items included) and brings it to the player# If the item is taken before the Devil Hand can grab it, it will get angry and punch the ground, creating a shockwave.",
 	spa = "Genera una mano del Diablo familiar que robará cualquier objeto de la sala (incluyendo tiendas) y se lo entregará al jugador#Si no hay objetos en la sala, el efecto falla"
+}
+local HolographicDescriptions = {
+	en_us = "Spawns {{ColorRainbow}}2{{CR}} Devil Hand familiars which follow the player# On room entry, Devil Hand steals any item in the room (shop items included) and brings it to the player# If the item is taken before the Devil Hand can grab it, it will get angry and punch the ground, creating a shockwave.",
+	spa = "Genera {{ColorRainbow}}2{{CR}} mano del Diablo familiares que robará cualquier objeto de la sala (incluyendo tiendas) y se lo entregará al jugador#Si no hay objetos en la sala, el efecto falla"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Devil Hand familiar.", "On room entry, Devil Hand steals any item in the room and moves it next to the player.", "- This includes shop items and devil deals", "- This can steal non-shop items trapped behind obstacles, allowing the player to access them.", "- If the player takes the item before Devil Hand can grab it, Devil Hand will get angry and punch the ground, creating a shockwave that can damage the player.", "Holographic Effect: Spawns two Devil Hands.")
 
@@ -33,8 +37,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Lost Soul Baby"
 local Tag = "lostSoulBaby"
@@ -25,13 +25,13 @@ local function MC_FAMILIAR_UPDATE(_, f)
     end, EntityType.ENTITY_FAMILIAR, 1297)
     if data.state == "STATE_IDLE" then
         f:FollowParent()
-        data.targetPos = lostSoulLove or helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
+        data.targetPos = lostSoulLove or helper.GetSecretRoomDoorPosition() or helper.GetTintedRockPosition(room)
         if data.targetPos then
             data.state = "STATE_ACTIVE"
         end
     end
     if data.state == "STATE_ACTIVE" then
-        data.targetPos = lostSoulLove or helper.CheckForSecretRooms(room) or helper.CheckForTintedRocks(room)
+        data.targetPos = lostSoulLove or helper.GetSecretRoomDoorPosition() or helper.GetTintedRockPosition(room)
         if data.targetPos then
             f:RemoveFromFollowers()
             local dir = (data.targetPos - f.Position):Normalized()
@@ -101,7 +101,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_FAMILIAR_INIT,
             MC_FAMILIAR_INIT,

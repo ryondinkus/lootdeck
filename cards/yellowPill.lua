@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local entityVariants = include("entityVariants/registry")
 
@@ -15,9 +15,13 @@ local Descriptions = {
 	en_us = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} +4 Coins#{{Coin}}{{ArrowUp}} +7 Coins#{{Coin}}{{ArrowDown}} -4 Coins",
 	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}}{{ArrowUp}} +4 monedas#{{Coin}}{{ArrowUp}} +7 monedas#{{Coin}}{{ArrowDown}} -4 monedas"
 }
+local HolographicDescriptions = {
+	en_us = "Random chance for any of these effects:#{{Coin}}{{ArrowUp}} {{ColorRainbow}}+8{{CR}} Coins#{{Coin}}{{ArrowUp}} {{ColorRainbow}}+14{{CR}} Coins#{{Coin}}{{ArrowDown}} {{ColorRainbow}}-4{{CR}} Coins",
+	spa = "Probabilidad de que ocurra uno de los siguientes efectos:#{{Coin}}{{ArrowUp}} {{ColorRainbow}}+8{{CR}} monedas#{{Coin}}{{ArrowUp}} {{ColorRainbow}}+14{{CR}} monedas#{{Coin}}{{ArrowDown}} {{ColorRainbow}}-4{{CR}} monedas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Gain 4 Coins", "- Gain 7 Coins", "- Lose 4 Coins, if able.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local sfx = lootdeck.sfx
 
 	local function coinPickup()
@@ -26,7 +30,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
 		Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACKED_ORB_POOF, 0, p.Position, Vector.Zero, p)
 	end
 
-	helper.RandomChance(rng, shouldDouble,
+	helper.RunRandomFunction(rng, shouldDouble,
 	function ()
 		coinPickup()
 		p:AddCoins(4)
@@ -53,8 +57,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

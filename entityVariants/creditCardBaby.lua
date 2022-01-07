@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Credit Card Baby"
 local Tag = "creditCardBaby"
@@ -102,7 +102,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_FAMILIAR_INIT,
             MC_FAMILIAR_INIT,

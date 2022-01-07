@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a permacharmed void portal
 local Names = {
@@ -12,6 +12,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Spawns a permanently charmed Portal enemy, who spawns other permanently charmed enemies until disappearing",
     spa = "Genera un enemigo Portal encantado, quien genera otros enemigos encantados hasta desaparecer"
+}
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} permanently charmed Portal enemies, who spawns other permanently charmed enemies until disappearing",
+    spa = "Genera {{ColorRainbow}}2{{CR}} enemigos Portal encantados, quien genera otros enemigos encantados hasta desaparecer"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed Portal enemy. Portal will spawn other permanently charmed enemies until it disappears.", "Holographic Effect: Spawns two permacharmed portals.")
 
@@ -31,8 +35,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

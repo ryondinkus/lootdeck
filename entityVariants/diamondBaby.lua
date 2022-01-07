@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 local Name = "Diamond Baby"
 local Tag = "diamondBaby"
@@ -31,7 +31,7 @@ return {
     Name = Name,
     Tag = Tag,
 	Id = Id,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_FAMILIAR_INIT,
             MC_FAMILIAR_INIT,

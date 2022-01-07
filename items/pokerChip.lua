@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- All penny spawns are either double pennies or nothing
@@ -79,7 +79,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_PICKUP_UPDATE,
             MC_POST_PICKUP_UPDATE

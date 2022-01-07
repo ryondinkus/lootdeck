@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Allows player to phase through enemies and projectiles for 5 seconds
 local Names = {
@@ -12,6 +12,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Grants the player invincibility and the ability to phase through enemies for 5 seconds",
     spa = "El jugador se vuelve invencible y puede traspasar a los enemigos por 5 segundos"
+}
+local HolographicDescriptions = {
+    en_us = "Grants the player invincibility and the ability to phase through enemies for {{ColorRainbow}}10{{CR}} seconds",
+    spa = "El jugador se vuelve invencible y puede traspasar a los enemigos por {{ColorRainbow}}10{{CR}} segundos"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("For 5 seconds, the player is invincibile and can phase through enemies.", "Holographic Effect: The effect lasts for 10 seconds.")
 
@@ -75,8 +79,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

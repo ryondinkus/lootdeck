@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a nickel
 local Names = {
@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns a Nickel",
     spa = "Genera un nickel"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Nickels",
+    spa = "Genera {{ColorRainbow}}2{{CR}} nickels"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Nickel on use.", "Holographic Effect: Spawns two Nickels.")
 
 local function MC_USE_CARD(_, c, p)
@@ -26,8 +30,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

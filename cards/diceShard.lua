@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Resets the current room (using the glowing hourglass effect) but spawns you inside the room
 -- If not possible, like at the beginning of the level, give the player a penny
@@ -13,6 +13,10 @@ local Weight = 2
 local Descriptions = {
     en_us = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail",
     spa = "Rebobina los eventos de la habitación, igual que {{Collectible422}} el Reloj de Arena Brillante, pero reapareces en la misma habitación y no en la anterior#{{Warning}} Si se utiliza en el principio de un nuevo piso sin visitar habitaciones, el efecto fallará"
+}
+local HolographicDescriptions = {
+    en_us = "Rewinds the events of the current room, like {{Collectible422}} Glowing Hourglass, but respawns you in the current room instead of the previous#{{Warning}} If used in the starting room of a new floor without visiting any other rooms, the effect will fail#{{ColorRainbow}}The reset room will have all of its doors opened",
+    spa = "Rebobina los eventos de la habitación, igual que {{Collectible422}} el Reloj de Arena Brillante, pero reapareces en la misma habitación y no en la anterior#{{Warning}} Si se utiliza en el principio de un nuevo piso sin visitar habitaciones, el efecto fallará#{{ColorRainbow}}La habitación reiniciada tendrá las puertas abiertas"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, undoes all of the events of the current room, similar to the Glowing Hourglass effect.", "- Unlike Glowing Hourglass, you will be rewinded to the start of the current room instead of the previous room. As such, this card cannot be used as a teleport.", "- If used in the starting room of a new floor, without visiting any other rooms, the effect will fail and spawn a Penny.", "Holographic Effect: The reset room will have all of its doors opened.")
 
@@ -35,9 +39,11 @@ local function MC_USE_CARD(_, c, p, flags, shouldDouble)
         else
             data[Tag .. "DischargeMimic"] = true
         end
-        if (flags & UseFlag.USE_VOID == 0) then
-            data[Tag .. "DischargeVoid"] = true
-        end
+
+        -- this doesnt work because cards cannot get the USE_VOID flag LOL XD
+        -- if (flags & UseFlag.USE_VOID == 0) then
+        --     data[Tag .. "DischargeVoid"] = true
+        -- end
 
 		if shouldDouble then
 			data[Tag .. "Double"] = true
@@ -62,29 +68,30 @@ local function MC_POST_NEW_ROOM()
         helper.ForEachPlayer(function(p, data)
             for j=0,3 do
 				local currentCard = p:GetCard(j)
-                if currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id and data[Tag .. "RemoveCard"] then
+                if (currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id) and data[Tag .. "RemoveCard"] then
                     p:SetCard(j, 0)
                     data[Tag .. "RemoveCard"] = nil
                 end
             end
             if data[Tag .. "DischargeMimic"] then
                 for j=0,3 do
-                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_BLANK_CARD then
+                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_BLANK_CARD or p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
                         p:DischargeActiveItem(j)
                         data[Tag .. "DischargeMimic"] = nil
                     end
                 end
             end
-            if data[Tag .. "DischargeVoid"] then
-                for j=0,3 do
-                    if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
-                        p:DischargeActiveItem(j)
-                        data[Tag .. "DischargeVoid"] = nil
-                    end
-                end
-            end
+            -- *folds hands on desk* *tilts head* *smiles* voidy no worky
+            -- if data[Tag .. "DischargeVoid"] then
+            --     for j=0,3 do
+            --         if p:GetActiveItem(j) == CollectibleType.COLLECTIBLE_VOID then
+            --             p:DischargeActiveItem(j)
+            --             data[Tag .. "DischargeVoid"] = nil
+            --         end
+            --     end
+            -- end
 			if data[Tag .. "Double"] then
-				helper.OpenAllDoors(room, p)
+				helper.OpenAllDoors(p)
 				data[Tag .. "Double"] = nil
 			end
         end)
@@ -120,8 +127,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

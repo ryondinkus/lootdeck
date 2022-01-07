@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Gives a chance for killing an enemy to drop a tarotcard
 local Names = {
@@ -48,7 +48,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,
             MC_ENTITY_TAKE_DMG

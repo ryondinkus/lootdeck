@@ -1,10 +1,16 @@
 local H = {}
 
-function lootdeckHelpers.AreEnemiesInRoom(room)
+function LootDeckAPI.AreEnemiesInRoom(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     return room:GetAliveEnemiesCount() ~= 0
 end
 
-function lootdeckHelpers.CheckForSecretRooms(room)
+function LootDeckAPI.GetSecretRoomDoorPosition(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     for i=0,7 do
         local door = room:GetDoor(i)
         if door ~= nil then
@@ -15,7 +21,10 @@ function lootdeckHelpers.CheckForSecretRooms(room)
     end
 end
 
-function lootdeckHelpers.CheckForTintedRocks(room)
+function LootDeckAPI.GetTintedRockPosition(room)
+    if not room then
+        room = Game():GetRoom()
+    end
     for i=0,room:GetGridSize() do
         local rock = room:GetGridEntity(i)
         if rock then
@@ -27,30 +36,39 @@ function lootdeckHelpers.CheckForTintedRocks(room)
 end
 
 -- helper function for GlyphOfBalance(), makes shit less ocopmlicationsed
-function lootdeckHelpers.AreTrinketsOnGround()
+function LootDeckAPI.AreTrinketsOnGround()
     local isTrinketOnGround = false
-    lootdeckHelpers.ForEachEntityInRoom(function()
+    LootDeckAPI.ForEachEntityInRoom(function()
         isTrinketOnGround = true
     end, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TRINKET)
     return isTrinketOnGround
 end
 
-function lootdeckHelpers.OpenAllDoors(room, p)
+function LootDeckAPI.OpenAllDoors(p, force, revealSecretDoors, room)
+    if not room then
+        room = Game():GetRoom()
+    end
+    if force == nil then
+        force = true
+    end
+    if revealSecretDoors == nil then
+        revealSecretDoors = true
+    end
 	for i=0, DoorSlot.NUM_DOOR_SLOTS - 1 do
 		local door = room:GetDoor(i)
 		if door then
 			if door:IsLocked() then
-				door:TryUnlock(p, true)
+				door:TryUnlock(p, force)
 			end
-			if (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
+			if revealSecretDoors and (door:IsRoomType(RoomType.ROOM_SECRET) or door:IsRoomType(RoomType.ROOM_SUPERSECRET)) and door:GetSprite():GetAnimation() == "Hidden" then
 				door:TryBlowOpen(true, p)
 			end
-			door:Open()
+            door:Open()
 		end
 	end
 end
 
-function lootdeckHelpers.CheckFinalFloorBossKilled()
+function LootDeckAPI.IsFinalFloorBossKilled()
 	local level = Game():GetLevel()
 	local labyrinth = level:GetCurses() & LevelCurse.CURSE_OF_LABYRINTH > 0
 	if (lootdeck.f.floorBossCleared == 1 and not labyrinth)
@@ -60,7 +78,7 @@ function lootdeckHelpers.CheckFinalFloorBossKilled()
 	return false
 end
 
-function lootdeckHelpers.IsInChallenge(challengeName)
+function LootDeckAPI.IsInChallenge(challengeName)
     local challengeId = Isaac.GetChallengeIdByName(challengeName)
     return Isaac.GetChallenge() == challengeId
 end

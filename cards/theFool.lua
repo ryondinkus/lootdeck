@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Teleport 2.0 effect
 local Names = {
@@ -12,6 +12,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room# The room you teleport into will have its doors opened",
     spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar#La habitación a la que te teletransportes tendrá las puertas abiertas"
+}
+local HolographicDescriptions = {
+    en_us = "Triggers the {{Collectible419}} Teleport 2.0 effect, teleporting you to an unvisited room# The room you teleport into will have its doors opened#{{ColorRainbow}}Deals 40 damage to every enemy in the room",
+    spa = "Activa el efecto de {{Colelctible419}} Teletransporte 2.0, teletrasnportándote a una habitación sin visitar#La habitación a la que te teletransportes tendrá las puertas abiertas#{{ColorRainbow}}Hacer 40 de daño a todos los enemigos de la habitación"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: Triggers the Necronomicon effect on room entry, dealing 40 damage to all enemies.")
 
@@ -27,9 +31,8 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
-        local room = Game():GetRoom()
         if data[Tag] then
-			helper.OpenAllDoors(room, p)
+			helper.OpenAllDoors(p)
             data[Tag] = nil
         end
 		if data[Tag .. "Double"] then
@@ -47,8 +50,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

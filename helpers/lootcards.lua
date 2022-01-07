@@ -1,13 +1,46 @@
 local H = {}
 
-function lootdeckHelpers.GetWeightedLootCardId(includeHolos, rng)
+function LootDeckAPI.GenerateHolographicCard(card)
+    card.HUDAnimationName = "Idle"
+    card.PickupAnimationName = "Idle"
+    card.UseAnimationName = "IdleFast"
+
+    local holoCard = table.deepCopy(card)
+    holoCard.IsHolographic = true
+    holoCard.HUDAnimationName = "IdleHolo"
+    holoCard.PickupAnimationName = "IdleHolo"
+    holoCard.UseAnimationName = "IdleFastHolo"
+
+    local callbacks = {}
+
+    for _, callback in pairs(card.Callbacks) do
+        if callback[1] == ModCallbacks.MC_USE_CARD then
+            table.insert(callbacks, callback)
+            break
+        end
+    end
+
+    holoCard.Callbacks = callbacks
+
+    local holographicCardName = "Holographic "..card.Name
+    local holographicCardId = Isaac.GetCardIdByName(holographicCardName)
+
+    holoCard.Tag = "holographic"..card.Tag
+    holoCard.Id = holographicCardId
+	holoCard.Descriptions.en_us = card.Descriptions.en_us .. "#{{ColorRainbow}}HOLOGRAPHIC: Effect doubled!"
+	holoCard.Descriptions.spa = card.Descriptions.spa .. "#{{ColorRainbow}}HOLOGRÁFICA: ¡Efecto doble!"
+
+	return holoCard
+end
+
+function LootDeckAPI.GetWeightedLootCardId(includeHolos, rng)
     local cards = {}
     for _ ,card in pairs(lootcards) do
-        if not card.Holographic then
+        if not card.IsHolographic then
             table.insert(cards, card)
         end
     end
-    if lootdeckHelpers.LengthOfTable(cards) > 0 then
+    if LootDeckAPI.LengthOfTable(cards) > 0 then
         local csum = 0
         local outcome = cards[0]
         for _, card in pairs(cards) do
@@ -23,7 +56,7 @@ function lootdeckHelpers.GetWeightedLootCardId(includeHolos, rng)
             end
             csum = csum + weight
         end
-        if lootdeck.unlocks.gimmeTheLoot and includeHolos and lootdeckHelpers.PercentageChance(lootdeck.mcmOptions.HoloCardChance) then
+        if lootdeck.unlocks.gimmeTheLoot and includeHolos and LootDeckAPI.PercentageChance(lootdeck.mcmOptions.HoloCardChance) then
             return lootcardKeys["holographic"..outcome.Tag].Id
         else
             return outcome.Id
@@ -31,16 +64,16 @@ function lootdeckHelpers.GetWeightedLootCardId(includeHolos, rng)
     end
 end
 
-function lootdeckHelpers.GetLootcardById(id)
+function LootDeckAPI.GetLootcardById(id)
     return lootcards[id]
 end
 
-function lootdeckHelpers.IsHolographic(id)
-    return lootcards[id] and lootcards[id].Holographic
+function LootDeckAPI.IsHolographic(id)
+    return lootcards[id] and lootcards[id].IsHolographic
 end
 
 -- function for registering basic loot cards that copy item effects
-function lootdeckHelpers.UseItemEffect(p, itemEffect, sound)
+function LootDeckAPI.UseItemEffect(p, itemEffect, sound)
     p:UseActiveItem(itemEffect, false)
     if sound then
         lootdeck.sfx:Play(sound,1,0)
@@ -48,18 +81,18 @@ function lootdeckHelpers.UseItemEffect(p, itemEffect, sound)
 end
 
 -- function for registering basic loot cards that give items
-function lootdeckHelpers.GiveItem(p, itemID, sound)
+function LootDeckAPI.GiveItem(p, itemID, sound)
     p:AddCollectible(itemID)
     if sound then
         lootdeck.sfx:Play(sound,1,0)
     end
 end
 
-function lootdeckHelpers.FuckYou(p, type, variant, subtype, uses)
+function LootDeckAPI.FuckYou(p, type, variant, subtype, uses)
     lootdeck.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ,1,0)
     if type then
         for i = 1,(uses or 1) do
-            lootdeckHelpers.SpawnEntity(p, type, variant or 0, subtype or 0, 1, Game():GetRoom():FindFreePickupSpawnPosition(p.Position))
+            LootDeckAPI.SpawnEntity(p, type, variant or 0, subtype or 0, 1, Game():GetRoom():FindFreePickupSpawnPosition(p.Position))
         end
     end
 end

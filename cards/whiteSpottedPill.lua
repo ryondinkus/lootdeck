@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Shuffle values of coins, keys, and bombs | reroll all items in room | reroll all of your passives
 local Names = {
@@ -13,12 +13,16 @@ local Descriptions = {
     en_us = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs# Rerolls all item pedestals in the room# Rerolls all of your passives",
     spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Pone de revés tu cantidad de monedas, llaves y bombas#Rerolea todos los objetos de pedestales#Rerolea todos tus objetos pasivos"
 }
+local HolographicDescriptions = {
+    en_us = "Random chance for any of these effects:# Swaps the amounts of your coins, keys, and bombs {{ColorRainbow}}twice{{CR}}# Rerolls all item pedestals in the room {{ColorRainbow}}twice{{CR}}# Rerolls all of your passives {{ColorRainbow}}twice{{CR}}",
+    spa = "Probabilidad de que ocurra uno de los siguientes efectos:#Pone de revés tu cantidad de monedas, llaves y bombas {{ColorRainbow}}dos veces{{CR}}#Rerolea todos los objetos de pedestales {{ColorRainbow}}dos veces{{CR}}#Rerolea todos tus objetos pasivos {{ColorRainbow}}dos veces{{CR}}"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of three effects:", "- Swaps the amounts of your coins, keys, and bombs.", "- Rerolls all pedestals in the room.", "- Rerolls all of your passive items.", "Holographic Effect: Performs the same random effect twice.")
 
-local function MC_USE_CARD(_, c, p, f, shouldDouble, rng)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 
-    return helper.RandomChance(rng, shouldDouble,
+    return helper.RunRandomFunction(rng, shouldDouble,
         function()
             sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
             local coins = p:GetNumCoins()
@@ -45,8 +49,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

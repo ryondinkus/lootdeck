@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns four pennies
 local Names = {
@@ -10,8 +10,12 @@ local Tag = "fourCents"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 2
 local Descriptions = {
-    en_us = "Spawns four Pennies",
+    en_us = "Spawns 4 Pennies",
     spa = "Genera 4 pennies"
+}
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}8{{CR}} Pennies",
+    spa = "Genera {{ColorRainbow}}8{{CR}} pennies"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns four Pennies on use.", "Holographic Effect: Spawns eight Pennies.")
 
@@ -26,8 +30,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

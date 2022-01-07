@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a glitch item in every treasure room
 local Names = {
@@ -39,7 +39,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM

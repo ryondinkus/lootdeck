@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Gives a chance of reviving in the previous room with half a heart
 local Names = {
@@ -53,7 +53,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    helper.RevivePlayerPostPlayerUpdate(p, Tag, PostRevive)
+  helper.RevivePlayerPostPlayerUpdate(p, Tag, PostRevive)
 end
 
 return {
@@ -63,7 +63,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
 		{
             ModCallbacks.MC_ENTITY_TAKE_DMG,
             MC_ENTITY_TAKE_DMG,

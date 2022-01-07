@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- On damamge taken, chance to fire a poison creep tear at attacker
 local Names = {
@@ -27,12 +27,17 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
                 return
             end
 
-            local targetDir = (target.Position - p.Position):Normalized() * 5
+            local targetDir
+            if target.Type == EntityType.ENTITY_NULL then
+                targetDir = Vector.FromAngle(lootdeck.rng:RandomInt(360)) * 5
+            else
+                targetDir = (target.Position - p.Position):Normalized() * 5
+            end
             local tear = Isaac.Spawn(EntityType.ENTITY_TEAR, TearVariant.EYE_BLOOD, 0, p.Position, targetDir, nil):ToTear()
             tear.CollisionDamage = tear.CollisionDamage * 2
             tear.Size = tear.Size * 2
             tear.Scale = tear.Scale * 2
-            local poisonFlags = helper.NewTearflag(4) | helper.NewTearflag(62) | helper.NewTearflag(33)
+            local poisonFlags = helper.ConvertBitSet64ToBitSet128(4) | helper.ConvertBitSet64ToBitSet128(62) | helper.ConvertBitSet64ToBitSet128(33)
             tear:GetData().arc = true
             tear:AddTearFlags(poisonFlags)
             tear.FallingSpeed = -20
@@ -54,7 +59,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_ENTITY_TAKE_DMG,
             MC_ENTITY_TAKE_DMG,

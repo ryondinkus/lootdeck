@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Spawns a penny
@@ -14,6 +14,10 @@ local Descriptions = {
     en_us = "Spawns a Charged Penny, which recharges your active on pickup",
     spa = "Genera un penny cargado, el cual recarga tu objeto activo al tomarlo"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} Charged Pennies, which recharge your active on pickup",
+    spa = "Genera {{ColorRainbow}}2{{CR}} pennies cargado, el cual recarga tu objeto activo al tomarlo"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a Charged Penny on use. Charged Pennies are worth 1 cent and recharge your active item.", "Holographic Effect: Spawns two Charged Pennies.")
 
 local function MC_USE_CARD(_, c, p)
@@ -27,8 +31,9 @@ return {
 	Id = Id,
     Weight = Weight,
 	Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
 	WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,
                 MC_USE_CARD,

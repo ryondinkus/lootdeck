@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a 15c item from the item pool
 local Names = {
@@ -13,9 +13,13 @@ local Descriptions = {
     en_us = "Spawns a random 15c item from the current room pool",
     spa = "Genera un objeto con un costo de 15 monedas de la pool de la habitación actual"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}2{{CR}} random 15c items from the current room pool",
+    spa = "Genera {{ColorRainbow}}2{{CR}} objetos con un costo de 15 monedas de la pool de la habitación actual"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a random 15c item from the current room pool.", "Holographic Effect: Spawns two 15c items.")
 
-local function MC_USE_CARD(_, c, p, f, _, rng)
+local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local game = Game()
     local itemPool = game:GetItemPool()
     local room = game:GetRoom()
@@ -48,8 +52,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

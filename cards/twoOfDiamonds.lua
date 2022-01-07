@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local entityVariants = include("entityVariants/registry")
 
 -- Grants Steam Sale effect for the floor + little card familiar
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "Grants the {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price# Grants a Two of Diamonds Baby familiar for the floor, who gives a 1 second {{Collectible202}} Midas' Touch effect to enemies on contact",
     spa = "Otorga el efecto de las {{Collectible64}} Ofertas de Steam durante el piso#Otorga un familiar del 2 de diamantes durante el piso, quien aplica el efecto del {{Collectible202}} Toque de Midas al contacto"
+}
+local HolographicDescriptions = {
+    en_us = "Grants {{ColorRainbow}}2{{CR}} {{Collectible64}} Steam Sale effect for the floor, causing all shop items to be half price# Grants {{ColorRainbow}}2{{CR}} Two of Diamonds Baby familiars for the floor, who gives a 1 second {{Collectible202}} Midas' Touch effect to enemies on contact",
+    spa = "Otorga {{ColorRainbow}}2{{CR}} efectos de las {{Collectible64}} Ofertas de Steam durante el piso#Otorga {{ColorRainbow}}2{{CR}} familiares del 2 de diamantes durante el piso, quien aplica el efecto del {{Collectible202}} Toque de Midas al contacto"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Grants a Two of Diamonds Baby familiar for the floor.", "- On contact with enemies, Two of Diamonds Baby will turn enemies into a gold statue for 1 second, like Midas' Touch.", "Holographic Effect: Grants two Steam Sale effects and two familiars.")
 
@@ -47,8 +51,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

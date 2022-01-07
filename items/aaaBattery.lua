@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Grants a temporary effect of a random battery item for the rest of the floor
 local Names = {
@@ -70,7 +70,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL

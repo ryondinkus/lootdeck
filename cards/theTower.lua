@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Explodes each enemy in the room and then the player
 local Names = {
@@ -13,19 +13,21 @@ local Descriptions = {
 	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player",
 	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: Spawns explosions two at a time.")
-
-local chosenTag = Tag.."Chosen"
+local HolographicDescriptions = {
+	en_us = "{{Warning}} On use, explodes on every enemy in the room, then the player#{{ColorRainbow}}All explosions have random bomb effects",
+	spa = "{{Warning}} Al usarla, todos los enemigos en la habitación explotarán luego explotará el jugador#{{ColorRainbow}}Todas las explosiones tienen efectos de bomba aleatorios"
+}
+local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: All spawned explosions have a random bomb effect. This can be the effect from Sad Bombs, Blood Bombs, Butt Bombs, or Bomber Boy.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData().lootdeck
 	data[Tag] = 1
 
 	if shouldDouble then
-		data[Tag] = data[Tag] + 1
+        data[Tag .. "Double"] = shouldDouble
 	end
 
-	local enemies = helper.ListEnemiesInRoom(p.Position)
+	local enemies = helper.ListEnemiesInRoom()
 	for _, enemy in ipairs(enemies) do
 		enemy:GetData()[Tag] = 1
 	end
@@ -34,37 +36,59 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ClearStaggerSpawn(Tag)
+    LootDeckAPI.ForEachPlayer(function(player)
+        helper.StopStaggerSpawn(player, Tag)
+    end)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
 	local rng = p:GetCardRNG(Id)
-    local numberOfEnemies = #helper.ListEnemiesInRoom(p.Position, true, function(_, eData) return eData[Tag] end) + 1
-    helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(player, counterName)
-		local data = player:GetData().lootdeck
-		if data[counterName] > numberOfEnemies then
-			data[counterName] = numberOfEnemies
+    local numberOfEnemies = #helper.ListEnemiesInRoom(true, function(_, eData) return eData[Tag] end) + 1
+    helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(counterTag, previousResult)
+
+		local data = p:GetData().lootdeck
+		if data[counterTag] > numberOfEnemies then
+			data[counterTag] = numberOfEnemies
 		end
 		local target
 
-		if data[counterName] == 1 then
-			target = player
+		if data[counterTag] == 1 then
+			target = p
 		else
-			local enemy = helper.FindRandomEnemy(player.Position, rng, Tag, function(_, eData) return eData[Tag] and not eData[chosenTag] end)
+			local enemy = helper.GetRandomEnemy(rng, nil, function(_, eData) return eData[Tag] end)
 			if enemy then
 				target = enemy
 				enemy:GetData()[Tag] = nil
 			else
-				target = player
+				target = p
 			end
 		end
-		Isaac.Explode(target.Position, nil, 40)
-		data[counterName] = data[counterName] - 1
+
+		if target ~= p or (not previousResult or previousResult < data[Tag]) then
+            local flags
+            if data[Tag .. "Double"] then
+                local bombFlags = {
+                    TearFlags.TEAR_SAD_BOMB,
+                    TearFlags.TEAR_BUTT_BOMB,
+                    TearFlags.TEAR_CROSS_BOMB,
+                    TearFlags.TEAR_BLOOD_BOMB
+                }
+                flags = bombFlags[rng:RandomInt(#bombFlags) + 1]
+            end
+			Game():BombExplosionEffects(target.Position, 40, flags)
+			data[counterTag] = data[counterTag] - 1
+		end
+
+		return (previousResult or 1) + 1
 	end,
-	function(player)
-		helper.ClearChosens(player.Position)
+	function()
+		local enemies = helper.ListEnemiesInRoom()
+		for _, enemy in ipairs(enemies) do
+			enemy:GetData()[Tag] = true
+		end
+        p:GetData().lootdeck[Tag .. "Double"] = nil
 	end,
-	1)
+	true)
 end
 
 return {
@@ -74,8 +98,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,
                 MC_USE_CARD,

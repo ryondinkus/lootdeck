@@ -11,6 +11,8 @@ function table.deepCopy(original)
 	return copy
 end
 
+LootDeckAPI = {}
+
 include("helpers")
 include("helpers/achievements")
 include("cards/registry")
@@ -44,7 +46,7 @@ lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
 
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
@@ -64,7 +66,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                 local savedFamiliarData = data.familiars[tostring(familiar.InitSeed)]
                 if savedFamiliarData then
                     local familiarData = familiar:GetData()
-                    for key, value in pairs(helper.LoadEntitiesFromSaveData(savedFamiliarData)) do
+                    for key, value in pairs(helper.RehydrateEntityData(savedFamiliarData)) do
                         familiarData[key] = value
                     end
                 end
@@ -100,14 +102,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
                 helper.ForEachPlayer(function(p, pData)
                     local savedPlayerData = data.players[tostring(p.InitSeed)]
                     if savedPlayerData then
-                        for key, value in pairs(helper.LoadEntitiesFromSaveData(savedPlayerData)) do
+                        for key, value in pairs(helper.RehydrateEntityData(savedPlayerData)) do
                             pData[key] = value
                         end
                     end
                 end)
 
                 if data.global then
-                    for key, value in pairs(helper.LoadEntitiesFromSaveData(data.global)) do
+                    for key, value in pairs(helper.RehydrateEntityData(data.global)) do
                         lootdeck.f[key] = value
                     end
                 end
@@ -137,10 +139,10 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
                     local lootcard = helper.GetLootcardById(delayedCard.cardId)
 
                     if lootcard then
-                        for _, callback in pairs(lootcard.callbacks) do
+                        for _, callback in pairs(lootcard.Callbacks) do
                             if callback[1] == ModCallbacks.MC_USE_CARD then
                                 local p = delayedCard.player:ToPlayer()
-                                callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, p:GetCardRNG(callback[3]))
+                                callback[2](nil, delayedCard.cardId, p, delayedCard.flags, false, true, p:GetCardRNG(callback[3]))
                             end
                         end
                     end
@@ -156,14 +158,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
     helper.ForEachPlayer(function(p, data)
         if data.redHp then
             if (p:GetSubPlayer() == nil) then
-                helper.RemoveHeartsOnNewRoomEnter(p, data.redHp)
+                helper.RemoveMaxHearts(p, data.redHp)
             else
-                helper.RemoveHeartsOnNewRoomEnter(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THEFORGOTTEN), data.redHp)
+                helper.RemoveMaxHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THEFORGOTTEN), data.redHp)
             end
             data.redHp = nil
         end
         if data.soulHp then
-            helper.RemoveHeartsOnNewRoomEnter(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
+            helper.RemoveMaxHearts(helper.GetPlayerOrSubPlayerByType(p, PlayerType.PLAYER_THESOUL), data.soulHp)
             data.soulHp = nil
         end
     end)
@@ -281,7 +283,7 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
         if lootcard then
-            helper.PlayLootcardPickupAnimation(data, lootcard.Id)
+            helper.PlayLootcardPickupAnimation(p, lootcard.Id)
         end
 	end
 end, PickupVariant.PICKUP_TAROTCARD)
@@ -295,7 +297,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
-                lootcardAnimationContainer = helper.RegisterAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
+                lootcardAnimationContainer = helper.CreateCardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
                     local color = lac.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
                         lac.Color = Color(color.R, color.G, color.B, 0.5)
@@ -321,7 +323,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 if Isaac.GetFrameCount() % 2 == 0 then
                     lootcardAnimationContainer.sprite:Update()
                 end
-                lootcardAnimationContainer.sprite:Render(helper.GetCardPositionWithHUDOffset(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
+                lootcardAnimationContainer.sprite:Render(helper.GetHUDCardPosition(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation and data.lootcardHUDAnimation.sprite then
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
@@ -373,17 +375,21 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 
     if heldLootcard then
-        helper.PlayLootcardUseAnimation(data, heldLootcard.Id)
+        helper.PlayLootcardUseAnimation(p, heldLootcard.Id)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
-for _, card in pairs(lootcards) do
-    if card.callbacks then
-        for _, callback in pairs(card.callbacks) do
+local EIDLootCardIcon = Sprite()
+EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
+EID:addIcon("LootCard", "Idle", 0, 9, 9, -1, 0, EIDLootCardIcon)
+
+function LootDeckAPI.RegisterLootCard(card, newCard)
+    if card.Callbacks then
+        for _, callback in pairs(card.Callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
                 lootdeck:AddCallback(callback[1], function(_, c, p, f)
-                    local shouldDouble = card.Holographic or items.playerCard.helpers.ShouldRunDouble(p)
-                    local result = callback[2](_, c, p, f, shouldDouble, p:GetCardRNG(card.Id))
+                    local shouldDouble = card.IsHolographic or items.playerCard.helpers.ShouldRunDouble(p)
+                    local result = callback[2](_, c, p, f, shouldDouble, false, p:GetCardRNG(card.Id))
                     local shouldContinueDouble = true
 
                     if type(result) == "table" then
@@ -393,7 +399,7 @@ for _, card in pairs(lootcards) do
 
                     if shouldDouble and shouldContinueDouble and callback[4] then
                         if not callback[5] then
-                            callback[2](_, c, p, f, false, p:GetCardRNG(card.Id))
+                            callback[2](_, c, p, f, false, true, p:GetCardRNG(card.Id))
                         else
                             table.insert(lootdeck.f.delayedCards, {
                                 player = p,
@@ -407,7 +413,7 @@ for _, card in pairs(lootcards) do
                     if f & UseFlag.USE_MIMIC == 0 then
                         local data = p:GetData().lootdeck
                         if result == nil then
-                            helper.PlayLootcardUseAnimation(data, card.Id)
+                            helper.PlayLootcardUseAnimation(p, card.Id)
                         end
                         data.isHoldingLootcard = false
                     end
@@ -430,40 +436,51 @@ for _, card in pairs(lootcards) do
 			ModName = "Loot Deck",
             Name = card.Name,
 			Spr = Encyclopedia.RegisterSprite("gfx/ui/lootcard_fronts.anm2", card.HUDAnimationName, 2, cardFrontPath),
-            Hide = card.Holographic
+            Hide = card.IsHolographic
 		}
 
 		Encyclopedia.AddCard(encyclopediaOptions)
 	end
+
+    lootcards[card.Id] = card
+    lootcardKeys[card.Tag] = card
+
+    if newCard == true or newCard == nil then
+        LootDeckAPI.RegisterLootCard(LootDeckAPI.GenerateHolographicCard(card), false)
+    end
+end
+
+for _, card in pairs(lootcards) do
+    LootDeckAPI.RegisterLootCard(card, false)
 end
 
 for _, challenge in pairs(lootdeckChallenges) do
-    if challenge.callbacks then
-        for _, callback in pairs(challenge.callbacks) do
+    if challenge.Callbacks then
+        for _, callback in pairs(challenge.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, variant in pairs(entityVariants) do
-    if variant.callbacks then
-        for _, callback in pairs(variant.callbacks) do
+    if variant.Callbacks then
+        for _, callback in pairs(variant.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, subType in pairs(entitySubTypes) do
-    if subType.callbacks then
-        for _, callback in pairs(subType.callbacks) do
+    if subType.Callbacks then
+        for _, callback in pairs(subType.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
 end
 
 for _, item in pairs(items) do
-    if item.callbacks then
-        for _, callback in pairs(item.callbacks) do
+    if item.Callbacks then
+        for _, callback in pairs(item.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
@@ -485,8 +502,8 @@ for _, item in pairs(items) do
 end
 
 for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
+    if trinket.Callbacks then
+        for _, callback in pairs(trinket.Callbacks) do
             lootdeck:AddCallback(table.unpack(callback))
         end
     end
@@ -501,12 +518,4 @@ for _, trinket in pairs(trinkets) do
 			ModName = "Loot Deck"
 		})
 	end
-end
-
-for _, trinket in pairs(trinkets) do
-    if trinket.callbacks then
-        for _, callback in pairs(trinket.callbacks) do
-            lootdeck:AddCallback(table.unpack(callback))
-        end
-    end
 end

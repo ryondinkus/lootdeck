@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns 5-10 shopkeepers around the room
 local Names = {
@@ -13,6 +13,10 @@ local Descriptions = {
     en_us = "Spawns 5-10 Shopkeepers",
     spa = "Genera 5-10 cuidadores de tiendas"
 }
+local HolographicDescriptions = {
+    en_us = "Spawns {{ColorRainbow}}10-20{{CR}} Shopkeepers",
+    spa = "Genera {{ColorRainbow}}10-20{{CR}} cuidadores de tiendas"
+}
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 5-10 Shopkeepers in the current room.", "Holographic Effect: Spawns twice as many shopkeepers, two at at time.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
@@ -24,7 +28,9 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.ClearStaggerSpawn(Tag)
+    LootDeckAPI.ForEachPlayer(function(player)
+        helper.StopStaggerSpawn(player, Tag)
+    end)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
@@ -46,8 +52,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
             {
                 ModCallbacks.MC_USE_CARD,
                 MC_USE_CARD,

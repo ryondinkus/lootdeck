@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 local costumes = include("costumes/registry")
 
 -- Fires two tears at once with a demon costume and red tears for the room
@@ -13,6 +13,10 @@ local Weight = 1
 local Descriptions = {
     en_us = "{{ArrowUp}} * 1.3 damage multiplier# Grants the {{Collectible245}} 20/20 effect for the room, allowing you to shoot two tears at once",
     spa = "{{ArrowUp}} Multiplicador de daño x1.3# Otorga el efecto de {{Collectible245}} 20/20 durante la habitación"
+}
+local HolographicDescriptions = {
+    en_us = "{{ArrowUp}} * 1.3 damage multiplier# Grants {{ColorRainbow}}2{{CR}} {{Collectible245}} 20/20 effects for the room, allowing you to shoot {{ColorRainbow}}three{{CR}} tears at once",
+    spa = "{{ArrowUp}} Multiplicador de daño x1.3# Otorga {{ColorRainbow}}2{{CR}} efectos de {{Collectible245}} 20/20 durante la habitación"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a x1.3 Damage multiplier and the 20/20 effect for the room, allowing you to shoot two tears at once.", "Holographic Effect: Grants a triple shot with thinner range.")
 
@@ -68,8 +72,9 @@ return {
 	Id = Id,
     Weight = Weight,
     Descriptions = Descriptions,
+    HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_CARD,
             MC_USE_CARD,

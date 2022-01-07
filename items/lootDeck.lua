@@ -1,4 +1,4 @@
-local helper = lootdeckHelpers
+local helper = LootDeckAPI
 
 -- Spawns a lootcard
 local Names = {
@@ -9,7 +9,7 @@ local Name = Names.en_us
 local Tag = "lootDeck"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
-    en_us = "{{Card}} Grants a Loot Card on use",
+    en_us = "{{LootCard}} Grants a Loot Card on use",
     spa = "Genera una carta de Loos al usarlo"
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a Loot Card on use.")
@@ -25,7 +25,7 @@ local function MC_USE_ITEM(_, type, rng, p)
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end
     if heldLootcard then
-        helper.PlayLootcardUseAnimation(data, heldLootcard.Id)
+        helper.PlayLootcardUseAnimation(p, heldLootcard.Id)
     end
     p:PlayExtraAnimation("UseItem")
 end
@@ -45,7 +45,7 @@ return {
 	Id = Id,
     Descriptions = Descriptions,
     WikiDescription = WikiDescription,
-    callbacks = {
+    Callbacks = {
         {
             ModCallbacks.MC_USE_ITEM,
             MC_USE_ITEM,
