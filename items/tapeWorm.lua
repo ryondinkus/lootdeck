@@ -14,28 +14,36 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go.", "- Additional copies of the passive increase the chance up to 25%")
 
+local function GetSpriteSheetDirection(tear)
+    local spriteSheetDirection
+    local sprite = tear:GetSprite()
+    if math.abs(tear.Velocity.X) > math.abs(tear.Velocity.Y) then
+        spriteSheetDirection = "side"
+        if tear.Velocity.X < 0 then
+            sprite.FlipX = true
+        else
+            sprite.FlipX = false
+        end
+    elseif math.abs(tear.Velocity.Y) > math.abs(tear.Velocity.X) then
+        if tear.Velocity.Y < 0 then
+            spriteSheetDirection = "back"
+        else
+            spriteSheetDirection = "front"
+        end
+    end
+    return spriteSheetDirection
+end
+
 local function MC_POST_FIRE_TEAR(_, tear)
     local p = tear:GetLastParent():ToPlayer()
     if p:HasCollectible(Id) and helper.PercentageChance(10 * p:GetCollectibleNum(Id), 25) then
-        tear.FallingSpeed = 0
-        tear.FallingAcceleration = -0.1
+        tear.FallingSpeed = -8
+        tear.FallingAcceleration = 0
         tear:GetData()[Tag] = true
+        tear:AddTearFlags(TearFlags.TEAR_BOUNCE)
 
         local sprite = tear:GetSprite()
-        local spriteSheetDirection
-
-        if math.abs(tear.Velocity.X) > math.abs(tear.Velocity.Y) then
-            spriteSheetDirection = "side"
-            if tear.Velocity.X < 0 then
-                sprite.FlipX = true
-            end
-        elseif math.abs(tear.Velocity.Y) > math.abs(tear.Velocity.X) then
-            if tear.Velocity.Y < 0 then
-                spriteSheetDirection = "back"
-            else
-                spriteSheetDirection = "front"
-            end
-        end
+        local spriteSheetDirection = GetSpriteSheetDirection(tear)
 
         if not tear:HasTearFlags(helper.ConvertBitSet64ToBitSet128(77)) then
             local animationToPlay = sprite:GetAnimation()
@@ -49,13 +57,16 @@ end
 
 local function MC_POST_TEAR_UPDATE(_, tear)
     if tear:GetData()[Tag] then
-        if Isaac.GetFrameCount() % 4 == 0 then
+        local sprite = tear:GetSprite()
+        if Isaac.GetFrameCount() % 15 == 0 then
             local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_WHITE, 0, tear.Position, Vector.Zero, tear)
             creep:GetSprite().Scale = Vector(1, 1) * 0.3
         end
         if tear.StickTarget then
             tear.FallingAcceleration = 0.1
         end
+        sprite:ReplaceSpritesheet(0, string.format("gfx/tears/tapeworm tear %s.png", GetSpriteSheetDirection(tear)))
+        sprite:LoadGraphics()
     end
 end
 
