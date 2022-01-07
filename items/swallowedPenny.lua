@@ -19,11 +19,13 @@ local function MC_ENTITY_TAKE_DMG(_, e)
     local rng = p:GetCollectibleRNG(Id)
     if p:HasCollectible(Id) then
         for i=1,p:GetCollectibleNum(Id) do
-            local tear = p:FireTear(p.Position, Vector.FromAngle(rng:RandomInt(360)) * 10, false, true, false, p, 2)
-			tear:ChangeVariant(TearVariant.COIN)
-			tear:GetData()[Id] = true
-			p:AddCoins(-1)
-			lootdeck.sfx:Play(SoundEffect.SOUND_LITTLE_SPIT, 1, 0)
+            if p:GetNumCoins() > 0 then
+                local tear = p:FireTear(p.Position, Vector.FromAngle(rng:RandomInt(360)) * 10, false, true, false, p, 2)
+                tear:ChangeVariant(TearVariant.COIN)
+                tear:GetData()[Id] = true
+                p:AddCoins(-1)
+                lootdeck.sfx:Play(SoundEffect.SOUND_LITTLE_SPIT, 1, 0)
+            end
 		end
     end
 end
