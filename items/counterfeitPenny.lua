@@ -1,5 +1,4 @@
 local helper = LootDeckAPI
-local entityVariants = include("entityVariants/registry")
 
 -- Gives an extra penny for each penny picked up
 local Names = {
@@ -21,27 +20,27 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
 		local chance = 0
 		if helper.IsCoin(pi, true) then
 			local chanceTable = {
-				[2252] = 18, -- Double Nickel
-				[2253] = 18, -- Double Dime
+				[2252] = 10, -- Double Nickel
+				[2253] = 7.5, -- Double Dime
 				[2254] = 10, -- Double Lucky Penny
 				[2257] = 10, -- Double Charged Penny
-				[9192] = 25  -- Charged Penny
+				[9192] = 10  -- Charged Penny
 			}
 			chance = chanceTable[pi.Variant] or 0
 		else
 			local chanceTable = {
-				40, -- Penny
-				33, -- Nickel
-				33, -- Dime
-				33, -- Double Penny
-				25  -- Lucky Penny
+				20, -- Penny
+				20, -- Nickel
+				15, -- Dime
+				20, -- Double Penny
+				20  -- Lucky Penny
 			}
 			chance = chanceTable[pi.SubType] or 0
 		end
 	    if helper.PercentageChance(chance * p:GetCollectibleNum(Id), 90) and (pi.Price == 0 or helper.CanBuyPickup(p, pi)) then
 			local room = Game():GetRoom()
 	        local spawnPoint = room:FindFreePickupSpawnPosition(room:GetRandomPosition(0), 0, true)
-	        local coin = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, pi.SubType, spawnPoint, Vector.Zero, pi.Parent)
+	        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, pi.SubType, spawnPoint, Vector.Zero, pi.Parent)
 		end
 	end
 end
