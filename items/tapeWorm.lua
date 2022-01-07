@@ -9,10 +9,10 @@ local Name = Names.en_us
 local Tag = "tapeWorm"
 local Id = Isaac.GetItemIdByName(Name)
 local Descriptions = {
-    en_us = "10% chance to fire a Worm Tear, which has endless range and spawns slowing creep",
-    spa = "10% de posibilidad de lanzar una lágrima con efecto de gusano, con rango infinito y suelta rastro ralentizador"
+    en_us = "10% chance to fire a Worm Tear, which has very high range, spawns slowing creep, and bounces off obstacles like {{Collectible221}} Rubber Cement",
+    spa = "10% de posibilidad de lanzar una lágrima con efecto de gusano, con rango alto, suelta rastro ralentizador, y rebota en los obstáculos como {{Collectible221}} Pegamento Elástico"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have endless range, and spawn a streak of slowing creep wherever they go.", "- Additional copies of the passive increase the chance up to 25%")
+local WikiDescription = helper.GenerateEncyclopediaPage("10% chance to fire a Worm Tear.", "- Worm Tears have very high range, occasionally spawn slowing creep, and bounce off of enemies, obstacles, and walls like Rubber Cement.", "- Additional copies of the passive increase the chance up to 25%")
 
 local function GetSpriteSheetDirection(tear)
     local spriteSheetDirection
