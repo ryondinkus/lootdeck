@@ -71,7 +71,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                     end
                 end
             end, EntityType.ENTITY_FAMILIAR)
-            helper.RemoveHitFamiliars(entityVariants.holyShield.Id, entityVariants.holyShield.Tag)
+            helper.RemoveHitFamiliars(entityVariants.holyShield.Tag, entityVariants.holyShield.Id)
         end
     end
 
@@ -298,9 +298,9 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 lootcardAnimationContainer = helper.CreateCardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
-                    local color = lac.Color
+                    local color = lac.sprite.Color
                     if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
-                        lac.Color = Color(color.R, color.G, color.B, 0.5)
+                        lac.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end)
                 data.lootcardHUDAnimation = lootcardAnimationContainer

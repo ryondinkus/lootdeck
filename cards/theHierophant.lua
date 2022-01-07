@@ -22,7 +22,11 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Ma
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
     local data = p:GetData().lootdeck
-    data[Tag] = 2
+    if data[Tag] then
+        data[Tag] = data[Tag] + 2
+    else
+        data[Tag] = 2
+    end
     if shouldDouble then
         data[Tag] = data[Tag] + 1
     end

@@ -39,7 +39,7 @@ local function MC_PRE_FAMILIAR_COLLISION(_, f, e)
 end
 
 local function MC_POST_NEW_ROOM()
-    helper.RemoveHitFamiliars(Id, Tag)
+    helper.RemoveHitFamiliars(Tag, Id)
 end
 
 return {

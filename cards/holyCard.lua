@@ -21,7 +21,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield orbitals. Holy Shields can block one projectile, which causes them to break.", "Holographic Effect: Spawns 20 Holy Shields.")
 
 local function MC_USE_CARD(_, c, p)
-    helper.RemoveHitFamiliars(entityVariants.holyShield.Id)
+    helper.RemoveHitFamiliars(nil, entityVariants.holyShield.Id)
 	local data = p:GetData().lootdeck
 	data[Tag] = 1
 	helper.SpawnEntity(p, EntityType.ENTITY_FAMILIAR, entityVariants.holyShield.Id, 0, 10, Vector.Zero, SoundEffect.SOUND_HOLY)

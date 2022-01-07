@@ -20,15 +20,16 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Spawns a permanently charmed copy of a random enemy in the room.", "If no enemies are in the room on use, spawns a permanently charmed Smiling Gaper.", "Holographic Effect: Spawns two charmed copies of two different random enemies.")
 
 local function MC_USE_CARD(_, c, p, f, _, _, rng)
-    local enemy = helper.GetRandomEnemy(rng, nil, function(entity) return not entity:IsBoss() end)
+    local enemy = helper.GetRandomEnemy(rng, nil, function(entity) return not entity:IsBoss() and not EntityRef(entity).IsCharmed end)
 
+    local friend
     if enemy then
-        local friend = Isaac.Spawn(enemy.Type, enemy.Variant, enemy.SubType, p.Position, Vector.Zero, p)
-        friend:AddCharmed(EntityRef(p), -1)
+        friend = Isaac.Spawn(enemy.Type, enemy.Variant, enemy.SubType, p.Position, Vector.Zero, p)
     else
-        local friend = Isaac.Spawn(EntityType.ENTITY_GAPER, 1, 0, p.Position, Vector.Zero, p)
-        friend:AddCharmed(EntityRef(p), -1)
+        friend = Isaac.Spawn(EntityType.ENTITY_GAPER, 1, 0, p.Position, Vector.Zero, p)
     end
+
+    friend:AddCharmed(EntityRef(p), -1)
 end
 
 return {

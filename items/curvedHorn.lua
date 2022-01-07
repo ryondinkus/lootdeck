@@ -17,7 +17,6 @@ local WikiDescription = helper.GenerateEncyclopediaPage("In a room with active e
 local finishedTag = string.format("%sFinished", Tag)
 local roomClearedTag = string.format("%sRoomCleared", Tag)
 local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
-local bossRushBossesTag = string.format("%sBossRushBosses", Tag)
 
 local function Initialize(p)
     local game = Game()
