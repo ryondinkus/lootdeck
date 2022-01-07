@@ -384,10 +384,52 @@ EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
 EID:addIcon("LootCard", "Idle", 0, 9, 9, -1, 0, EIDLootCardIcon)
 
 function LootDeckAPI.RegisterLootCard(card, newCard)
+
+    local failed = false
+
+    local missingNameMessage = "A lootcard is missing the 'Name' and 'Names.en_us' properties, so it will not be registered"
+    if not card.Name then
+        if card.Names and card.Names.en_us then
+            card.Name = card.Names.en_us
+        else
+            LootDeckAPI.PrintError(missingNameMessage)
+            failed = true
+        end
+    else
+        if not card.Names then
+            card.Names = { en_us = card.Name }
+        elseif not card.Names.en_us then
+            card.Names.en_us = card.Name
+        end
+    end
+
+    if not card.Id then
+        LootDeckAPI.PrintError("%s is missing the 'Id' property, so it will not be registered", card.Name or "A lootcard")
+        failed = true
+    end
+
+    if not card.Tag then
+        LootDeckAPI.PrintError("%s is missing the 'Tag' property, so it will not be registered", card.Name or "A lootcard")
+        failed = true
+    end
+
+    if not card.Weight then
+        card.Weight = 1
+    end
+
+    if failed then return end
+
+    if lootcards[card.Id] and lootcards[card.Id].RemoveCallbacks then
+        for _, removeCallbacks in pairs(lootcards[card.Id].RemoveCallbacks) do
+            removeCallbacks()
+        end
+    end
+
     if card.Callbacks then
+        card.RemoveCallbacks = {}
         for _, callback in pairs(card.Callbacks) do
             if callback[1] == ModCallbacks.MC_USE_CARD then
-                lootdeck:AddCallback(callback[1], function(_, c, p, f)
+                local function useCardCallback(_, c, p, f)
                     local shouldDouble = card.IsHolographic or items.playerCard.helpers.ShouldRunDouble(p)
                     local result = callback[2](_, c, p, f, shouldDouble, false, p:GetCardRNG(card.Id))
                     local shouldContinueDouble = true
@@ -417,9 +459,12 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
                         end
                         data.isHoldingLootcard = false
                     end
-                end, card.Id)
+                end
+                lootdeck:AddCallback(callback[1], useCardCallback, card.Id)
+                table.insert(card.RemoveCallbacks, function() lootdeck:RemoveCallback(callback[1], useCardCallback) end)
             else
                 lootdeck:AddCallback(table.unpack(callback))
+                table.insert(card.RemoveCallbacks, function() lootdeck:RemoveCallback(callback[1], callback[2]) end)
             end
         end
     end

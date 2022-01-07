@@ -57,4 +57,12 @@ function LootDeckAPI.RegisterExternalItemDescriptionLanguages(id, names, descrip
 	end
 end
 
+function LootDeckAPI.PrintError(msg, ...)
+	local params = {...}
+	
+	local error = "[LootDeckAPI] Error | "..string.format(msg, table.unpack(params) or "")
+	print(error)
+	Isaac.DebugString(error)
+end
+
 return H
