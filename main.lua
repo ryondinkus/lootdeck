@@ -379,9 +379,11 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
-local EIDLootCardIcon = Sprite()
-EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
-EID:addIcon("LootCard", "Idle", 0, 9, 9, -1, 0, EIDLootCardIcon)
+if EID then
+   local EIDLootCardIcon = Sprite()
+    EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
+    EID:addIcon("LootCard", "Idle", 0, 9, 9, -1, 0, EIDLootCardIcon)
+end
 
 function LootDeckAPI.RegisterLootCard(card, newCard)
 
@@ -403,9 +405,14 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
         end
     end
 
-    if not card.Id then
-        LootDeckAPI.PrintError("%s is missing the 'Id' property, so it will not be registered", card.Name or "A lootcard")
-        failed = true
+    if not card.Id and card.Name then
+        local cardId = Isaac.GetCardIdByName(card.Name)
+        if cardId and cardId ~= -1 then
+            card.Id = cardId
+        else
+            LootDeckAPI.PrintError("%s is missing the 'Id' property or could not find a card with the name %s, so it will not be registered", card.Name or "A lootcard", card.Name or "")
+            failed = true
+        end
     end
 
     if not card.Tag then

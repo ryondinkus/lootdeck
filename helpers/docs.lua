@@ -50,7 +50,7 @@ function LootDeckAPI.AddExternalItemDescriptionTrinket(trinket)
 end
 
 function LootDeckAPI.RegisterExternalItemDescriptionLanguages(id, names, descriptions, func)
-    if descriptions then
+    if EID and descriptions then
 		for language, description in pairs(descriptions) do
 			func(EID, id, description, names[language], language)
 		end
