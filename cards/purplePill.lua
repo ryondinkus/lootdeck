@@ -21,7 +21,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local sfx = lootdeck.sfx
-	local data = p:GetData().lootdeck
+	local data = helper.GetLootDeckData(p)
 
     helper.RunRandomFunction(rng, shouldDouble,
     function()
@@ -60,7 +60,7 @@ local function MC_POST_NEW_ROOM()
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_FIREDELAY then
         if data[Tag] then
             p.MaxFireDelay = p.MaxFireDelay + data[Tag]
@@ -69,9 +69,9 @@ local function MC_EVALUATE_CACHE(_, p, f)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    if p:GetData().lootdeck[Tag.."Charge"] then
+    if helper.GetLootDeckData(p)[Tag.."Charge"] then
         helper.AddActiveCharge(p, 6, true)
-        p:GetData().lootdeck[Tag.."Charge"] = nil
+        helper.GetLootDeckData(p)[Tag.."Charge"] = nil
     end
 end
 

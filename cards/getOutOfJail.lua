@@ -20,7 +20,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("For 5 seconds, the player is invincibile and can phase through enemies.", "Holographic Effect: The effect lasts for 10 seconds.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     data[Tag] = 5 * 60
     if shouldDouble then
         data[Tag] = data[Tag] * 2
@@ -33,7 +33,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
 end
 
 local function MC_PRE_PLAYER_COLLISION(_, p, collider)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         if collider.Type == EntityType.ENTITY_PROJECTILE or collider:IsEnemy() then
             return true
@@ -42,7 +42,7 @@ local function MC_PRE_PLAYER_COLLISION(_, p, collider)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         local alpha = p.Color.A
         if data[Tag] - 1 > 0 then
@@ -67,7 +67,7 @@ end
 local function MC_ENTITY_TAKE_DMG(_, entity)
     local p = entity:ToPlayer() or 0
 
-    if p ~= 0 and p:GetData().lootdeck[Tag] then
+    if p ~= 0 and helper.GetLootDeckData(p)[Tag] then
         return false
     end
 end

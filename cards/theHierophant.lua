@@ -21,7 +21,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a unique Holy Mantle that can absorb two hits.", "Holographic Effect: The Holy Mantle can absorb three hits.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         data[Tag] = data[Tag] + 2
     else
@@ -35,7 +35,7 @@ end
 
 local function MC_ENTITY_TAKE_DMG(_, e, damageAmount, damageFlags, damageSource)
     local p = e:ToPlayer()
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         if helper.CheckHolyMantleDamage(damageAmount, damageFlags, damageSource) then
             helper.HolyMantleEffect(p)

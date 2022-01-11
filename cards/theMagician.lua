@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Grants a +0.31 Tears Up
 
 -- If it ever gets fixed, AddTrinketEffect() would be better here
 local function MC_USE_CARD(_, c, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if not data.magician then data.magician = 1
     else data.magician = data.magician + 1 end
 	p:AddNullCostume(costumes.magician)
@@ -31,7 +31,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_FIREDELAY then
         if data.magician then
             p.MaxFireDelay = p.MaxFireDelay - (data.magician)

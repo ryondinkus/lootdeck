@@ -19,7 +19,7 @@ local function ShouldRunDouble(p)
 end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         if p:IsExtraAnimationFinished() then
             data[Tag] = nil

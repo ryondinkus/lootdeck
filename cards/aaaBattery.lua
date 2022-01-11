@@ -23,7 +23,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique
 local function MC_USE_CARD(_, c, p)
     helper.GiveItem(p, items.aaaBattery.Id, SoundEffect.SOUND_VAMP_GULP)
     items.aaaBattery.helpers.GivePlayerItem(p)
-    p:GetData().lootdeck[Tag .. "Played"] = false
+    helper.GetLootDeckData(p)[Tag .. "Played"] = false
 end
 
 return {

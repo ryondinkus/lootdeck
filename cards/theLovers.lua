@@ -21,7 +21,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants two temporary Heart Containers for the duration of the room.", "Holographic Effect: Grants 3 temporary heart containers.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
 	local tempHealth = 4
 	if shouldDouble then
 		tempHealth = tempHealth + 2

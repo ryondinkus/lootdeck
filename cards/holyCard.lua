@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Spawns 10 Holy Shield o
 
 local function MC_USE_CARD(_, c, p)
     helper.RemoveHitFamiliars(nil, entityVariants.holyShield.Id)
-	local data = p:GetData().lootdeck
+	local data = helper.GetLootDeckData(p)
 	data[Tag] = 1
 	helper.SpawnEntity(p, EntityType.ENTITY_FAMILIAR, entityVariants.holyShield.Id, 0, 10, Vector.Zero, SoundEffect.SOUND_HOLY)
 	local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 5, p.Position, Vector.Zero, p)

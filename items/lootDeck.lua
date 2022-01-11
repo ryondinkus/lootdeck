@@ -20,7 +20,7 @@ local function MC_USE_ITEM(_, type, rng, p)
 
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))
 
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data.lootcardPickupAnimation then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
     end

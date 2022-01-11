@@ -51,12 +51,6 @@ local InitializeMCM = include("modConfigMenu")
 
 local rng = lootdeck.rng
 
-lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_INIT, function(_, p)
-    if not p:GetData().lootdeck then
-        p:GetData().lootdeck = {}
-    end
-end)
-
 lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
     if lootdeck:HasData() then
         local data = helper.LoadData()
@@ -208,7 +202,7 @@ end)
 --========== LOOTCARD HUD RENDERING ==========
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, function(_, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     local playerAnimation = p:GetSprite():GetAnimation()
 
     local notExtraAnimations = {
@@ -278,7 +272,6 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, function(_, card, col
 	if not p:IsExtraAnimationFinished() then
 		return
 	end
-	local data = p:GetData().lootdeck
 
 	if card.Price == 0 or helper.CanBuyPickup(p, card) then
         local lootcard = helper.GetLootcardById(card.SubType)
@@ -337,7 +330,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
 
     if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
@@ -350,7 +343,7 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_CARD, function(_, c, p)
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
 
     if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
@@ -364,7 +357,7 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     local heldLootcard = helper.GetLootcardById(p:GetCard(0))
 
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
 
     if data.lootcardPickupAnimation and data.lootcardPickupAnimation.sprite then
         data.lootcardPickupAnimation.sprite:SetLastFrame()
@@ -460,7 +453,7 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
                     end
 
                     if f & UseFlag.USE_MIMIC == 0 then
-                        local data = p:GetData().lootdeck
+                        local data = helper.GetLootDeckData(p)
                         if result == nil then
                             helper.PlayLootcardUseAnimation(p, card.Id)
                         end

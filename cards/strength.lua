@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect,
 local function MC_USE_CARD(_, c, p)
 	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D7)
 
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     local sprite = p:GetSprite()
     if not data[Tag] then
         data[Tag] = 1
@@ -40,7 +40,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_DAMAGE then
         if data[Tag] then
             p.Damage = p.Damage + data[Tag]

@@ -50,7 +50,7 @@ function LootDeckAPI.GetRandomEnemy(rng, tag, filter)
 end
 
 function LootDeckAPI.StaggerSpawn(tag, player, interval, occurences, callback, onEnd, noAutoDecrement)
-	local data = player:GetData().lootdeck
+	local data = LootDeckAPI.GetLootDeckData(player)
     if data[tag] and (type(data[tag]) ~= "number" or data[tag] > 0) then
 		local timerTag = tag.."Timer"
 		local counterTag = tag.."Counter"
@@ -80,7 +80,7 @@ function LootDeckAPI.StaggerSpawn(tag, player, interval, occurences, callback, o
 end
 
 function LootDeckAPI.StopStaggerSpawn(player, tag)
-    local data = player:GetData().lootdeck
+    local data = LootDeckAPI.GetLootDeckData(player)
 
     data[tag] = nil
     data[tag.."Timer"] = nil

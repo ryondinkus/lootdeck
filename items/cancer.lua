@@ -25,7 +25,7 @@ local RATE_MULTIPLIER = 10
 local function Initialize(p)
     local game = Game()
     if helper.AreEnemiesInRoom(game:GetRoom()) then
-        local data = p:GetData().lootdeck
+        local data = helper.GetLootDeckData(p)
         if data[finishedTag] or data[finishedTag] == nil then
             data[originalFireDelayTag] = p.MaxFireDelay
         end
@@ -42,7 +42,7 @@ end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p)
-        local data = p:GetData().lootdeck
+        local data = helper.GetLootDeckData(p)
         data[Tag] = nil
         data[finishedTag] = nil
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
@@ -53,7 +53,7 @@ end
 
 local function MC_POST_PEFFECT_UPDATE(_, p)
     helper.TriggerOnRoomEntryPEffectUpdate(p, Id, Initialize, function()
-        local data = p:GetData().lootdeck
+        local data = helper.GetLootDeckData(p)
         if data[Tag] and data[Tag] > 0 then
             data[Tag] = data[Tag] - 1
             p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
@@ -63,7 +63,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_FIREDELAY then
         if data[Tag] then
             local newDelay = p.MaxFireDelay - ((data[originalFireDelayTag] - (data[originalFireDelayTag] / RATE_MULTIPLIER)) * (data[Tag] / RUNTIME))

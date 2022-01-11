@@ -34,7 +34,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble)
     p:AddNullCostume(costumes.sun)
 
 	if shouldDouble then
-		p:GetData().lootdeck[Tag .. "Double"] = true
+		helper.GetLootDeckData(p)[Tag .. "Double"] = true
 	end
 end
 

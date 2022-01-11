@@ -21,7 +21,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants the Steam Sale effect for the floor, causing shop items to be sold at half price.", "Grants a Two of Diamonds Baby familiar for the floor.", "- On contact with enemies, Two of Diamonds Baby will turn enemies into a gold statue for 1 second, like Midas' Touch.", "Holographic Effect: Grants two Steam Sale effects and two familiars.")
 
 local function MC_USE_CARD(_, c, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE)
     p:AddCollectible(CollectibleType.COLLECTIBLE_STEAM_SALE, 0, false)
     if not data.sale then data.sale = 1

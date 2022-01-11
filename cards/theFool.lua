@@ -20,7 +20,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers the Teleport 2.0 effect, which teleports you to an unvisited room with certain priority given to special rooms.", "The room you teleport into will have all of its doors opened, including locked doors.", "Holographic Effect: Triggers the Necronomicon effect on room entry, dealing 40 damage to all enemies.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-	local data = p:GetData().lootdeck
+	local data = helper.GetLootDeckData(p)
 	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_TELEPORT_2)
     data[Tag] = true
 	if shouldDouble then

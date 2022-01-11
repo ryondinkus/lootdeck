@@ -60,7 +60,7 @@ local function MC_POST_UPDATE()
 end
 
 local function MC_POST_PROJECTILE_UPDATE(_, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     local global = lootdeck.f
     if global[Tag] then
         if global[Tag] >= 300 then

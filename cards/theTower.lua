@@ -20,7 +20,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on every enemy in the room, dealing 40 damage to any enemy in the explosion.", "After exploding on all enemies, it will explode on the player.", "Holographic Effect: All spawned explosions have a random bomb effect. This can be the effect from Sad Bombs, Blood Bombs, Butt Bombs, or Bomber Boy.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
 	data[Tag] = 1
 
 	if shouldDouble then
@@ -46,7 +46,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
     local numberOfEnemies = #helper.ListEnemiesInRoom(true, function(_, eData) return eData[Tag] end) + 1
     helper.StaggerSpawn(Tag, p, 7, numberOfEnemies, function(counterTag, previousResult)
 
-		local data = p:GetData().lootdeck
+		local data = helper.GetLootDeckData(p)
 		if data[counterTag] > numberOfEnemies then
 			data[counterTag] = numberOfEnemies
 		end
@@ -86,7 +86,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
 		for _, enemy in ipairs(enemies) do
 			enemy:GetData()[Tag] = true
 		end
-        p:GetData().lootdeck[Tag .. "Double"] = nil
+        helper.GetLootDeckData(p)[Tag .. "Double"] = nil
 	end,
 	true)
 end

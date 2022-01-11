@@ -20,7 +20,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explosion on three random enemies in the room, dealing 40 damage to each enemy and all enemies around them.", "If used with no targetable enemies in the room, an explosion will spawn on the player instead.", "- This only applies to the inital explosion. If the first or second explosion wipes out all enemies in the room, any subsequent explosions will simply not happen.", "Holographic Effect: Creates 6 explosions, two at a time, if able.")
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
-	local data = p:GetData().lootdeck
+	local data = helper.GetLootDeckData(p)
 	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
         for i=0,4 do
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)) * 5, nil)

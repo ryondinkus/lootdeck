@@ -53,7 +53,7 @@ local function PostRevive()
 end
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if not data[Tag] then
         data[Tag] = 3
         if shouldDouble then

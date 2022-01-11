@@ -6,7 +6,7 @@ local Id = Isaac.GetEntityVariantByName(Name)
 
 local function MC_PRE_PICKUP_COLLISION(_, pi, e)
     helper.CustomCoinPrePickupCollision(pi, e, 2, nil, function(p)
-        local data = p:GetData().lootdeck
+        local data = helper.GetLootDeckData(p)
         local hud = Game():GetHUD()
         hud:ShowItemText("Lucky Pennies", "Luck Up")
         p:PlayExtraAnimation("Happy")
@@ -27,7 +27,7 @@ local function MC_POST_PICKUP_UPDATE(_, pi)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if data[Tag] then
         p.Luck = p.Luck + (2 * data[Tag])
     end

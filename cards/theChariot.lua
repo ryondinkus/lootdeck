@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("Grants a temporary Hear
 
 local function MC_USE_CARD(_, c, p)
     helper.AddTemporaryHealth(p, 2)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if not data.chariot then data.chariot = true end
     p:AddNullCostume(costumes.chariot)
     p:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
@@ -30,7 +30,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_DAMAGE then
         if data.chariot then
             if helper.IsSoulHeartBart(p) or p:GetPlayerType() == PlayerType.PLAYER_THEFORGOTTEN_B then

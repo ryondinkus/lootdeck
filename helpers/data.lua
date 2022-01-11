@@ -71,7 +71,7 @@ function LootDeckAPI.SaveGame()
     }
 
     LootDeckAPI.ForEachPlayer(function(p)
-        data.players[tostring(p.InitSeed)] = p:GetData().lootdeck
+        data.players[tostring(p.InitSeed)] = LootDeckAPI.GetLootDeckData(p)
     end)
 
     LootDeckAPI.ForEachEntityInRoom(function(familiar)

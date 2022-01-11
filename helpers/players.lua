@@ -62,7 +62,7 @@ function LootDeckAPI.FindHealthToAdd(player, hp)
 end
 
 function LootDeckAPI.AddTemporaryHealth(player, hp) -- hp is calculated in half hearts
-	local data = player:GetData().lootdeck
+	local data = LootDeckAPI.GetLootDeckData(player)
     local amountToAdd = LootDeckAPI.FindHealthToAdd(player, hp)
     if player:GetPlayerType() == PlayerType.PLAYER_THESOUL then
         if not data.soulHp then
@@ -126,7 +126,7 @@ end
 
 function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
     local game = Game()
-    local data = player:GetData().lootdeck
+    local data = LootDeckAPI.GetLootDeckData(player)
     local sprite = player:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
@@ -178,7 +178,7 @@ function LootDeckAPI.TriggerOnRoomEntryPEffectUpdate(player, collectibleId, init
 	local bossRushBossesTag = string.format("%sBossRushBosses", tag)
 
 	if not player:HasCollectible(collectibleId) then return end
-    local data = player:GetData().lootdeck
+    local data = LootDeckAPI.GetLootDeckData(player)
     local game = Game()
     if not data[roomClearedTag] and not LootDeckAPI.AreEnemiesInRoom(game:GetRoom()) then
         data[roomClearedTag] = true
@@ -227,7 +227,7 @@ function LootDeckAPI.ForEachPlayer(callback, collectibleId)
     for x = 0, Game():GetNumPlayers() - 1 do
         local p = Isaac.GetPlayer(x)
         if not collectibleId or (collectibleId and p:HasCollectible(collectibleId)) then
-            if callback(p, p:GetData().lootdeck) == false then
+            if callback(p, LootDeckAPI.GetLootDeckData(p)) == false then
                 shouldReturn = false
             end
         end
@@ -350,18 +350,30 @@ end
 
 function LootDeckAPI.GetPlayerControllerIndex(player)
     local controllerIndexes = {}
-    LootDeckAPI.ForEachPlayer(function(player)
+    LootDeckAPI.ForEachPlayer(function(p)
         for _, index in pairs(controllerIndexes) do
-            if index == player.ControllerIndex then
+            if index == p.ControllerIndex then
                 return
             end
         end
-        table.insert(controllerIndexes, player.ControllerIndex)
+        table.insert(controllerIndexes, p.ControllerIndex)
     end)
     for i, index in pairs(controllerIndexes) do
         if index == player.ControllerIndex then
             return i - 1
         end
+    end
+end
+
+function LootDeckAPI.GetLootDeckData(player)
+    if player then
+        local data = player:GetData()
+
+        if not data.lootdeck then
+            data.lootdeck = {}
+        end
+
+        return data.lootdeck
     end
 end
 

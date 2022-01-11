@@ -21,7 +21,7 @@ local HolographicDescriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a x1.3 Damage multiplier and the 20/20 effect for the room, allowing you to shoot two tears at once.", "Holographic Effect: Grants a triple shot with thinner range.")
 
 local function MC_USE_CARD(_, c, p)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     local itemConfig = Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_20_20)
     p:AddCollectible(CollectibleType.COLLECTIBLE_20_20, 0, false)
     if not data.empress then data.empress = 1
@@ -36,7 +36,7 @@ local function MC_USE_CARD(_, c, p)
 end
 
 local function MC_EVALUATE_CACHE(_, p, f)
-    local data = p:GetData().lootdeck
+    local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_DAMAGE then
         if data.empress and p:GetCollectibleNum(CollectibleType.COLLECTIBLE_20_20) <= data.empress then
             p.Damage = p.Damage * 1.334

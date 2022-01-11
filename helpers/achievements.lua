@@ -76,7 +76,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 				
 				for pi = 0, game:GetNumPlayers() - 1 do
 					local p = Isaac.GetPlayer(pi)
-					local data = p:GetData().lootdeck
+					local data = LootDeckAPI.GetLootDeckData(p)
 					
 					if not data.AchievementDisplayAPIControls then
 						data.AchievementDisplayAPIControls = p.Velocity
@@ -118,7 +118,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
 					
 					for pi = 0, game:GetNumPlayers() - 1 do
 						local p = Isaac.GetPlayer(pi)
-						local data = p:GetData().lootdeck
+						local data = LootDeckAPI.GetLootDeckData(p)
 						
 						if data.AchievementDisplayAPIControls then
 							p.ControlsEnabled = true

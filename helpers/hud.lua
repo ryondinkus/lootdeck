@@ -179,7 +179,7 @@ function LootDeckAPI.StartLootcardAnimation(lootcardAnimationContainer, lootcard
 end
 
 function LootDeckAPI.PlayLootcardPickupAnimation(player, cardId)
-    local data = player:GetData().lootdeck
+    local data = LootDeckAPI.GetLootDeckData(player)
     local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
@@ -198,7 +198,7 @@ function LootDeckAPI.PlayLootcardPickupAnimation(player, cardId)
 end
 
 function LootDeckAPI.PlayLootcardUseAnimation(player, cardId)
-    local data = player:GetData().lootdeck
+    local data = LootDeckAPI.GetLootDeckData(player)
     local card = LootDeckAPI.GetLootcardById(cardId)
 
     if card then
