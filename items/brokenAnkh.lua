@@ -33,8 +33,11 @@ local function PostRevive()
 	end)
 end
 
-local function MC_ENTITY_TAKE_DMG(_, e, damage)
-    helper.ForEachPlayer(function(p, data)
+local function MC_ENTITY_TAKE_DMG(_, entity, damage)
+	local p = entity:ToPlayer()
+
+	if p then
+		local data = helper.GetLootDeckData(p)
 		if p:HasCollectible(Id) and damage >= helper.GetTotalHearts(p) then
 			data[ReviveTag] = false
 			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
@@ -42,7 +45,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, damage)
 				data[ReviveTag] = true
 			end
 		end
-    end)
+	end
 end
 
 local function MC_POST_NEW_ROOM()
