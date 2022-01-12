@@ -33,6 +33,11 @@ function LootDeckAPI.RemoveMaxHearts(player, hp)
     end
 end
 
+function LootDeckAPI.GetTotalHearts(player)
+    -- bone hearts included in GetHearts
+    return player:GetBlackHearts() + player:GetBoneHearts() + player:GetEternalHearts() + player:GetHearts() - player:GetRottenHearts() + player:GetSoulHearts()
+end
+
 function LootDeckAPI.GetPlayerMaxHeartTotal(player)
     local heartTotal = player:GetMaxHearts()
     if LootDeckAPI.IsSoulHeartBart(player) then
@@ -130,8 +135,8 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
     local sprite = player:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
-	  local roomDesc = level:GetCurrentRoomDesc()
-	  local reviveTag = string.format("%sRevive", tag)
+    local roomDesc = level:GetCurrentRoomDesc()
+    local reviveTag = string.format("%sRevive", tag)
 
     if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)
@@ -146,15 +151,17 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
 				player:GetOtherTwin():Revive()
 				player:GetOtherTwin():SetMinDamageCooldown(60)
 			end
-      
+
 			if not (roomDesc.Data.Type == RoomType.ROOM_DUNGEON
 			and roomDesc.Data.Variant == 666) then
+                data[tag.."PreviousRoomIndex"] = level:GetPreviousRoomIndex()
 				local enterDoor = level.EnterDoor
 				local door = room:GetDoor(enterDoor)
 				local direction = door and door.Direction or Direction.NO_DIRECTION
 				game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
 				level.LeaveDoor = enterDoor
 			elseif callback then
+                data[tag.."PreviousRoomIndex"] = level:GetCurrentRoomIndex()
 				callback()
 			end
 			data[reviveTag] = nil
