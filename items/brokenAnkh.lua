@@ -28,6 +28,7 @@ local function PostRevive()
 			local poof = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, p.Position, Vector.Zero, nil)
 			poof.Color = Color(0,0,0,1,0.5,0.5,0.5)
 			sfx:Play(SoundEffect.SOUND_HOLY,1,0)
+            data[Tag] = nil
 			data[ReviveTag] = nil
 			data[Tag.."PreviousRoomIndex"] = nil
 		end
@@ -51,9 +52,6 @@ end
 
 local function MC_POST_NEW_ROOM()
 	PostRevive()
-	helper.ForEachPlayer(function(_, data)
-		data[Tag] = nil
-	end)
 end
 
 local function MC_POST_PLAYER_UPDATE(_, p)
