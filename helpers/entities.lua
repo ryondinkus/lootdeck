@@ -137,6 +137,7 @@ function LootDeckAPI.Spawn(type, variant, subType, position, velocity, spawner, 
     else
         entity = Isaac.Spawn(type, variant or 0, subType or 0, position, velocity, spawner)
     end
+
     if Isaac.GetChallenge() == lootdeckChallenges.gimmeTheLoot.Id then
         entity:GetData()[lootdeckChallenges.gimmeTheLoot.Tag] = true
     end

@@ -17,7 +17,6 @@ local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
 	if pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1) then
-		local data = pickup:GetData()
 	    local hasItem = false
 
 	    helper.ForEachPlayer(function()
@@ -54,13 +53,9 @@ local function MC_POST_PICKUP_UPDATE(_, pickup)
 	                    newVariant = entityVariants.doubleChargedPenny.Id
 	                end
 
-					if data[lootdeckChallenges.gimmeTheLoot.Tag] then
-						helper.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup)
-						pickup:Remove()
-					elseif Isaac.GetChallenge() ~= lootdeckChallenges.gimmeTheLoot.Id then
-	                	Isaac.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup)
-						pickup:Remove()
-					end
+					local newPickup = helper.Spawn(EntityType.ENTITY_PICKUP, newVariant, newSubType, pickup.Position, pickup.Velocity, pickup):ToPickup()
+					newPickup.OptionsPickupIndex = pickup.OptionsPickupIndex
+					pickup:Remove()
 	            else
 	                pickup:Remove()
 					local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pickup.Position, pickup.Velocity, pickup)
