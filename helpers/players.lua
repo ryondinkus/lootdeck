@@ -152,16 +152,16 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
 				player:GetOtherTwin():SetMinDamageCooldown(60)
 			end
 
-            data[tag.."PreviousRoomIndex"] = level:GetPreviousRoomIndex()
-
 			if not (roomDesc.Data.Type == RoomType.ROOM_DUNGEON
 			and roomDesc.Data.Variant == 666) then
+                data[tag.."PreviousRoomIndex"] = level:GetPreviousRoomIndex()
 				local enterDoor = level.EnterDoor
 				local door = room:GetDoor(enterDoor)
 				local direction = door and door.Direction or Direction.NO_DIRECTION
 				game:StartRoomTransition(level:GetPreviousRoomIndex(),direction,0)
 				level.LeaveDoor = enterDoor
 			elseif callback then
+                data[tag.."PreviousRoomIndex"] = level:GetCurrentRoomIndex()
 				callback()
 			end
 			data[reviveTag] = nil
