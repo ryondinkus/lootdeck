@@ -33,6 +33,11 @@ function LootDeckAPI.RemoveMaxHearts(player, hp)
     end
 end
 
+function LootDeckAPI.GetTotalHearts(player)
+    -- bone hearts included in GetHearts
+    return player:GetBlackHearts() + player:GetBrokenHearts() + player:GetEternalHearts() + player:GetGoldenHearts() + player:GetHearts() + player:GetJarHearts() + player:GetRottenHearts() + player:GetSoulHearts()
+end
+
 function LootDeckAPI.GetPlayerMaxHeartTotal(player)
     local heartTotal = player:GetMaxHearts()
     if LootDeckAPI.IsSoulHeartBart(player) then
@@ -130,8 +135,8 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
     local sprite = player:GetSprite()
     local level = game:GetLevel()
     local room = level:GetCurrentRoom()
-	  local roomDesc = level:GetCurrentRoomDesc()
-	  local reviveTag = string.format("%sRevive", tag)
+    local roomDesc = level:GetCurrentRoomDesc()
+    local reviveTag = string.format("%sRevive", tag)
 
     if (sprite:IsPlaying("Death") and sprite:GetFrame() == 55)
 	or (sprite:IsPlaying("LostDeath") and sprite:GetFrame() == 37)

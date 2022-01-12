@@ -33,9 +33,9 @@ local function PostRevive()
 	end)
 end
 
-local function MC_ENTITY_TAKE_DMG()
+local function MC_ENTITY_TAKE_DMG(_, e, damage)
     helper.ForEachPlayer(function(p, data)
-		if p:HasCollectible(Id) then
+		if p:HasCollectible(Id) and damage >= helper.GetTotalHearts(p) then
 			data[ReviveTag] = false
 			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
 				data[Tag] = true
