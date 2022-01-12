@@ -40,7 +40,7 @@ local function MC_ENTITY_TAKE_DMG(_, entity, damage)
 		local twin = p:GetOtherTwin()
 		if (p:HasCollectible(Id) or (twin and twin:HasCollectible(Id))) and damage >= helper.GetTotalHearts(p) then
 			data[ReviveTag] = false
-			if helper.PercentageChance(100, 100) then
+			if helper.PercentageChance((100/6) * p:GetCollectibleNum(Id), 50) then
 				data[Tag] = true
 				data[ReviveTag] = true
 			end
