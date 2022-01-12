@@ -35,7 +35,6 @@ end
 
 local function MC_ENTITY_TAKE_DMG(_, entity, damage)
 	local p = entity:ToPlayer()
-
 	if p then
 		local data = helper.GetLootDeckData(p)
 		local twin = p:GetOtherTwin()

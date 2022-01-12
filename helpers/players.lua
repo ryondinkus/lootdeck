@@ -35,7 +35,7 @@ end
 
 function LootDeckAPI.GetTotalHearts(player)
     -- bone hearts included in GetHearts
-    return player:GetBlackHearts() + player:GetBrokenHearts() + player:GetEternalHearts() + player:GetGoldenHearts() + player:GetHearts() + player:GetJarHearts() + player:GetRottenHearts() + player:GetSoulHearts()
+    return player:GetBlackHearts() + player:GetBoneHearts() + player:GetEternalHearts() + player:GetHearts() - player:GetRottenHearts() + player:GetSoulHearts()
 end
 
 function LootDeckAPI.GetPlayerMaxHeartTotal(player)
@@ -151,7 +151,7 @@ function LootDeckAPI.RevivePlayerPostPlayerUpdate(player, tag, callback)
 				player:GetOtherTwin():Revive()
 				player:GetOtherTwin():SetMinDamageCooldown(60)
 			end
-      
+
 			if not (roomDesc.Data.Type == RoomType.ROOM_DUNGEON
 			and roomDesc.Data.Variant == 666) then
 				local enterDoor = level.EnterDoor
