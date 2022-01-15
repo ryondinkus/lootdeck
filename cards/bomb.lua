@@ -56,5 +56,55 @@ return {
             Id,
             true
         }
+    },
+    Tests = {
+        {
+            action = TestActions.RESTART,
+            arguments = {}
+        },
+        {
+            action = TestActions.GIVE_CARD,
+            arguments = {
+                id = Id
+            }
+        },
+		{
+            action = TestActions.ENABLE_DEBUG_FLAG,
+            arguments = {
+                flag = 8
+            }
+        },
+        {
+            action = TestActions.GIVE_ITEM,
+            arguments = {
+				id = CollectibleType.COLLECTIBLE_BLANK_CARD
+			}
+        },
+        {
+            action = TestActions.SPAWN,
+            arguments = {
+                type = EntityType.ENTITY_HORF
+            }
+        },
+        {
+            action = TestActions.WAIT_FOR_SECONDS,
+            arguments = {
+                seconds = 2
+            }
+        },
+        {
+            action = TestActions.USE_ITEM,
+            arguments = {}
+        },
+        {
+            action = TestActions.WAIT_FOR_SECONDS,
+            arguments = {
+                seconds = 2
+            }
+        },
+        {
+            action = TestActions.USE_ITEM,
+            arguments = {}
+        }
     }
 }

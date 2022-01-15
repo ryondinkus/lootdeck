@@ -40,5 +40,17 @@ return {
             true,
 			0.5
         }
+    },
+    Tests = {
+        {
+            action = TestActions.GIVE_CARD,
+            arguments = {
+                id = Id
+            }
+        },
+        {
+            action = TestActions.USE_PILL_CARD,
+            arguments = {}
+        }
     }
 }

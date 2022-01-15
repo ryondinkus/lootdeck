@@ -490,6 +490,10 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
     lootcards[card.Id] = card
     lootcardKeys[card.Tag] = card
 
+    if Test and card.Tests then
+        Test.RegisterTests(card.Tag, card.Tests)
+    end
+
     if newCard == true or newCard == nil then
         LootDeckAPI.RegisterLootCard(LootDeckAPI.GenerateHolographicCard(card), false)
     end

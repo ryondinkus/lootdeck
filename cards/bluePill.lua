@@ -69,5 +69,35 @@ return {
             MC_USE_CARD,
             Id
         }
+    },
+    Tests = {
+        {
+            action = TestActions.GIVE_CARD,
+            arguments = {
+                id = Id
+            }
+        },
+		{
+            action = TestActions.ENABLE_DEBUG_FLAG,
+            arguments = {
+                flag = 8
+            }
+        },
+        {
+            action = TestActions.GIVE_ITEM,
+            arguments = {
+				id = CollectibleType.COLLECTIBLE_BLANK_CARD
+			}
+        },
+        {
+            action = TestActions.USE_ITEM,
+            arguments = {}
+        },
+        {
+            action = TestActions.REPEAT,
+            arguments = {
+				times = 9
+			}
+        }
     }
 }

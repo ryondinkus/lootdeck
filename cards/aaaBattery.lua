@@ -42,5 +42,13 @@ return {
             Id,
             true
         }
+    },
+    Tests = {
+        {
+            action = TestActions.EXECUTE_LUA,
+            arguments = {
+                code = "Isaac.GetPlayer(0).Position = Game():GetRoom():GetCenterPos()"
+            }
+        }
     }
 }
