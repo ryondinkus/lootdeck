@@ -35,11 +35,11 @@ function LootDeckAPI.ListBossesInRoom(ignoreMiniBosses, filter)
 end
 
 -- function for finding random enemy in the room
-function LootDeckAPI.GetRandomEnemy(rng, tag, filter)
+function LootDeckAPI.GetRandomEnemy(rng, tag, filter, ignoreVulnerability)
     if not rng then
         rng = lootdeck.rng
     end
-	local enemies = LootDeckAPI.ListEnemiesInRoom(false, function(enemy, enemyData)
+	local enemies = LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, function(enemy, enemyData)
         return (not filter or filter(enemy, enemyData)) and (not tag or not enemyData[tag])
     end)
     local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]

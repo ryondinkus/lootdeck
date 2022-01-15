@@ -24,7 +24,7 @@ local RATE_MULTIPLIER = 10
 
 local function Initialize(p)
     local game = Game()
-    if helper.AreEnemiesInRoom(game:GetRoom()) then
+    if #helper.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0 then
         local data = helper.GetLootDeckData(p)
         if data[finishedTag] or data[finishedTag] == nil then
             data[originalFireDelayTag] = p.MaxFireDelay
