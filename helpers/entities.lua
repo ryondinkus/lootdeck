@@ -14,11 +14,34 @@ function LootDeckAPI.ClearChosenEnemies(tag)
     return count
 end
 
+local notEnemies = {
+    EntityType.ENTITY_BOMBDROP,
+    EntityType.ENTITY_SHOPKEEPER,
+    EntityType.ENTITY_FIREPLACE,
+    EntityType.ENTITY_STONEHEAD,
+    EntityType.ENTITY_POKY,
+    EntityType.ENTITY_ETERNALFLY,
+    EntityType.ENTITY_STONE_EYE,
+    EntityType.ENTITY_CONSTANT_STONE_SHOOTER,
+    EntityType.ENTITY_BRIMSTONE_HEAD,
+    EntityType.ENTITY_GAPING_MAW,
+    EntityType.ENTITY_BROKEN_GAPING_MAW,
+    EntityType.ENTITY_POOP,
+    EntityType.ENTITY_MOVABLE_TNT,
+    EntityType.ENTITY_QUAKE_GRIMACE,
+    EntityType.ENTITY_BOMB_GRIMACE,
+    EntityType.ENTITY_SPIKEBALL,
+    EntityType.ENTITY_DUSTY_DEATHS_HEAD,
+    EntityType.ENTITY_BALL_AND_CHAIN,
+    EntityType.ENTITY_GENERIC_PROP,
+    EntityType.ENTITY_FROZEN_ENEMY
+}
+
 function LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, filter)
-	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500,EntityPartition.ENEMY)
+	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
 	local enemies = {}
 	for _, entity in pairs(entities) do
-		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
+		if not LootDeckAPI.TableContains(notEnemies, entity.Type) and (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
             table.insert(enemies, entity)
 		end
 	end

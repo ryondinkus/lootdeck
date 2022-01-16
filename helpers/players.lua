@@ -210,7 +210,7 @@ function LootDeckAPI.TriggerOnRoomEntryPEffectUpdate(player, collectibleId, init
         shouldInitializeBecauseOfBossRush = false
     end
 
-    if player:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and LootDeckAPI.AreEnemiesInRoom(game:GetRoom()))) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
+    if player:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and #LootDeckAPI.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0)) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush)) then
         initialize(player)
     end
 

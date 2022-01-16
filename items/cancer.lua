@@ -23,7 +23,6 @@ local RUNTIME = 3 * 30
 local RATE_MULTIPLIER = 10
 
 local function Initialize(p)
-    local game = Game()
     if #helper.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0 then
         local data = helper.GetLootDeckData(p)
         if data[finishedTag] or data[finishedTag] == nil then
@@ -32,7 +31,7 @@ local function Initialize(p)
         data[Tag] = RUNTIME
         data[finishedTag] = false
         data[roomClearedTag] = nil
-        if game:IsGreedMode() then
+        if Game():IsGreedMode() then
             data[greedModeWaveTag] = 0
         end
         p:AddCacheFlags(CacheFlag.CACHE_FIREDELAY)
