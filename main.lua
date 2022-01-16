@@ -195,10 +195,11 @@ end)
 lootdeck:AddCallback(ModCallbacks.MC_EXECUTE_CMD, function(_, command, args)
     if command:lower() == "lootdeck" and args:lower() == "debugsounds" then
         lootdeck.f.debugSounds = not lootdeck.f.debugSounds
-    end
-    for soundEffectName, soundEffect in pairs(SoundEffect) do
-        if lootdeck.sfx:IsPlaying(soundEffect) then
-            print(soundEffectName)
+
+        if lootdeck.f.debugSounds then
+            print("Sound debugging started")
+        else
+            print("Sound debugging stopped")
         end
     end
 end)
