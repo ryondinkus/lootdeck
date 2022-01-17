@@ -24,6 +24,7 @@ local notEnemies = {
     EntityType.ENTITY_STONE_EYE,
     EntityType.ENTITY_CONSTANT_STONE_SHOOTER,
     EntityType.ENTITY_BRIMSTONE_HEAD,
+    EntityType.ENTITY_WALL_HUGGER,
     EntityType.ENTITY_GAPING_MAW,
     EntityType.ENTITY_BROKEN_GAPING_MAW,
     EntityType.ENTITY_POOP,
@@ -34,7 +35,7 @@ local notEnemies = {
     EntityType.ENTITY_DUSTY_DEATHS_HEAD,
     EntityType.ENTITY_BALL_AND_CHAIN,
     EntityType.ENTITY_GENERIC_PROP,
-    EntityType.ENTITY_FROZEN_ENEMY
+    EntityType.ENTITY_FROZEN_ENEMY,
 }
 
 function LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, filter)
