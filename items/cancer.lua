@@ -23,7 +23,7 @@ local RUNTIME = 3 * 30
 local RATE_MULTIPLIER = 10
 
 local function Initialize(p)
-    if #helper.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0 then
+    if helper.AreEnemiesInRoom() then
         local data = helper.GetLootDeckData(p)
         if data[finishedTag] or data[finishedTag] == nil then
             data[originalFireDelayTag] = p.MaxFireDelay

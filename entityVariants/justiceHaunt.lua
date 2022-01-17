@@ -21,7 +21,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
 	end
     if data.state == "STATE_IDLE" then
         f:FollowParent()
-        if helper.AreEnemiesInRoom(room) then
+        if helper.AreEnemiesInRoom() then
             data.state = "STATE_ACTIVE"
             sprite:Play("FloatChase", true)
         end
@@ -44,7 +44,7 @@ local function MC_FAMILIAR_UPDATE(_, f)
         else
             data.target = helper.GetRandomEnemy(rng)
         end
-        if not helper.AreEnemiesInRoom(room) then
+        if not helper.AreEnemiesInRoom() then
             data.state = "STATE_DEAD"
         end
     end
