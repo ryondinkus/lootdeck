@@ -16,7 +16,8 @@ local Descriptions = {
 local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a 50/50 chance to either spawn as Double Coins or not spawn at all.", "- Double coins still retain their respective values. (Double Nickels, Double Dimes, etc.)")
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
-	if pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1) then
+	local data = pickup:GetData()
+	if data[lootdeckChallenges.gimmeTheLoot.Tag] and (pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1)) then
 	    local hasItem = false
 
 	    helper.ForEachPlayer(function()

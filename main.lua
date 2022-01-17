@@ -32,7 +32,8 @@ local defaultStartupValues = {
     lostSoul = false,
     isInitialized = false,
     isGameStarted = false,
-    delayedCards = {}
+    delayedCards = {},
+    debugSounds = false
 }
 
 local defaultMcmOptions = {
@@ -191,13 +192,35 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
     lootdeck.f = table.deepCopy(defaultStartupValues)
 end)
 
--- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
---     for soundEffectName, soundEffect in pairs(SoundEffect) do
---         if lootdeck.sfx:IsPlaying(soundEffect) then
---             print(soundEffectName)
---         end
---     end
--- end)
+lootdeck:AddCallback(ModCallbacks.MC_EXECUTE_CMD, function(_, command, args)
+    if command:lower() == "lootdeck" and args:lower() == "debugsounds" then
+        lootdeck.f.debugSounds = not lootdeck.f.debugSounds
+
+        if lootdeck.f.debugSounds then
+            print("Sound debugging started")
+        else
+            print("Sound debugging stopped")
+        end
+    end
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function(_, command, args)
+    if lootdeck.f and lootdeck.f.debugSounds then
+        local playingSoundEffects = {}
+        for soundEffectName, soundEffect in pairs(SoundEffect) do
+            if lootdeck.sfx:IsPlaying(soundEffect) then
+                table.insert(playingSoundEffects, soundEffectName..": "..soundEffect)
+            end
+        end
+        if #playingSoundEffects > 0 then
+            print("=====Sounds playing on frame "..Isaac.GetFrameCount().."=====")
+            for _, sfx in pairs(playingSoundEffects) do
+                print(sfx)
+            end
+            print("=====End of sounds playing on frame "..Isaac.GetFrameCount().."=====")
+        end
+    end
+end)
 
 --========== LOOTCARD HUD RENDERING ==========
 

@@ -1,10 +1,7 @@
 local H = {}
 
-function LootDeckAPI.AreEnemiesInRoom(room)
-    if not room then
-        room = Game():GetRoom()
-    end
-    return room:GetAliveEnemiesCount() ~= 0
+function LootDeckAPI.AreEnemiesInRoom()
+    return #LootDeckAPI.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0
 end
 
 function LootDeckAPI.GetSecretRoomDoorPosition(room)
