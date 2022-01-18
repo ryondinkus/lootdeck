@@ -49,7 +49,7 @@ return {
             }
         },
         {
-            action = TestActions.USE_PILL_CARD,
+            action = TestActions.USE_CARD,
             arguments = {}
         }
     }

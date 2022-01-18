@@ -490,17 +490,25 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
     lootcards[card.Id] = card
     lootcardKeys[card.Tag] = card
 
-    if Test and card.Tests then
-        Test.RegisterTests(card.Tag, card.Tests)
-    end
-
     if newCard == true or newCard == nil then
         LootDeckAPI.RegisterLootCard(LootDeckAPI.GenerateHolographicCard(card), false)
     end
 end
 
+local lootdeckTests = {}
+
 for _, card in pairs(lootcards) do
     LootDeckAPI.RegisterLootCard(card, false)
+
+    if Test then
+        if not card.IsHolographic and card.Tests then
+            table.insert(lootdeckTests, { name = card.Tag, steps = card.Tests })
+        end
+    end
+end
+
+if Test then
+    Test.RegisterTests("lootdeck", lootdeckTests)
 end
 
 for _, challenge in pairs(lootdeckChallenges) do
