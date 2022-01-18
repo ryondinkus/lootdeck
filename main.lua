@@ -78,14 +78,13 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
     if player.FrameCount == 1 then
         local playerInventory = LootDeckAPI.GetPlayerInventory(player)
         local key = tostring(player.InitSeed)
-
         if #playerInventory > 0 then
             lootdeck.f.startingItems[key] = {}
 
             local savedPlayerInventory = lootdeck.f.startingItems[key]
 
             for _, id in pairs(playerInventory) do
-                savedPlayerInventory[tostring(id)] = (savedPlayerInventory[id] or 0) + 1
+                savedPlayerInventory[tostring(id)] = (savedPlayerInventory[tostring(id)] or 0) + 1
             end
         end
     end
