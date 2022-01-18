@@ -71,7 +71,11 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
         end
     end
 
-    helper.ForEachPlayer(function(player)
+    lootdeck.f.isGameStarted = true
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+    if player.FrameCount == 1 then
         local playerInventory = LootDeckAPI.GetPlayerInventory(player)
         local key = tostring(player.InitSeed)
 
@@ -84,9 +88,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
                 savedPlayerInventory[tostring(id)] = (savedPlayerInventory[id] or 0) + 1
             end
         end
-    end)
-
-    lootdeck.f.isGameStarted = true
+    end
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
