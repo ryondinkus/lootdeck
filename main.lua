@@ -327,19 +327,21 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
         local heldCardId = p:GetCard(0)
         if heldCardId ~= 0 and (lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled) then
             local heldLootcard = helper.GetLootcardById(heldCardId)
-            if heldLootcard then
 
+            local isJacobAndEsau = p.SubType == PlayerType.PLAYER_JACOB or (p.SubType == PlayerType.PLAYER_ESAU and p:GetOtherTwin())
+            
+            if heldLootcard then
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 lootcardAnimationContainer = helper.CreateCardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
                     local color = lac.sprite.Color
-                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    if isJacobAndEsau then
                         lac.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end)
                 data.lootcardHUDAnimation = lootcardAnimationContainer
 
-                if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                if isJacobAndEsau then
                     local color = lootcardAnimationContainer.sprite.Color
                     if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
                         lootcardAnimationContainer.sprite.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
@@ -360,7 +362,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 lootcardAnimationContainer.sprite:Render(helper.GetHUDCardPosition(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation and data.lootcardHUDAnimation.sprite then
-                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    if isJacobAndEsau then
                         local color = data.lootcardHUDAnimation.sprite.Color
                         data.lootcardHUDAnimation.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end
