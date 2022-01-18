@@ -1,6 +1,3 @@
-local H = {}
-
--- function to check if player can only use soul/black hearts
 function LootDeckAPI.IsSoulHeartBart(player)
     local soulHeartMarties = {
         PlayerType.PLAYER_XXX,
@@ -34,7 +31,6 @@ function LootDeckAPI.RemoveMaxHearts(player, hp)
 end
 
 function LootDeckAPI.GetTotalHearts(player)
-    -- bone hearts included in GetHearts
     return player:GetBlackHearts() + player:GetBoneHearts() + player:GetEternalHearts() + player:GetHearts() - player:GetRottenHearts() + player:GetSoulHearts()
 end
 
@@ -208,7 +204,7 @@ function LootDeckAPI.TriggerOnRoomEntryPEffectUpdate(player, collectibleId, init
         end
     else
         shouldInitializeBecauseOfBossRush = false
-    end  
+    end
 
     if player:HasCollectible(collectibleId) and ((not isBossRush and isFinished and (data[roomClearedTag] and LootDeckAPI.AreEnemiesInRoom()) or (game:IsGreedMode() and data[greedModeWaveTag] ~= game:GetLevel().GreedModeWave) or (isBossRush and shouldInitializeBecauseOfBossRush))) then
         initialize(player)
@@ -383,5 +379,3 @@ function LootDeckAPI.GetLootDeckData(player)
         return data.lootdeck
     end
 end
-
-return H

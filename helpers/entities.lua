@@ -1,7 +1,5 @@
-local H = {}
-
 function LootDeckAPI.ClearChosenEnemies(tag)
-    local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
+    local entities = LootDeckAPI.ListEnemiesInRoom(true)
     local count = 0
     for i, entity in pairs(entities) do
         local data = entity:GetData()
@@ -39,10 +37,10 @@ local notEnemies = {
 }
 
 function LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, filter)
-	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
+	local entities = Isaac.GetRoomEntities()
 	local enemies = {}
 	for _, entity in pairs(entities) do
-		if not LootDeckAPI.TableContains(notEnemies, entity.Type) and (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
+		if LootDeckAPI.TableContains(PartitionedEntities[EntityPartition.ENEMY], entity.Type) and not LootDeckAPI.TableContains(notEnemies, entity.Type) and (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
             table.insert(enemies, entity)
 		end
 	end
@@ -202,5 +200,3 @@ function LootDeckAPI.GetEntityByInitSeed(initSeed)
         end
     end
 end
-
-return H

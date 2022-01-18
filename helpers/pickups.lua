@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.CanPickupPickup(player, pickup)
     return not (pickup.Variant == 90 and not (player:NeedsCharge(0) or player:NeedsCharge(1) or player:NeedsCharge(2) or player:NeedsCharge(3)))
     and not (pickup.Variant == 10 and (pickup.SubType == 1 or pickup.SubType == 2 or pickup.SubType == 5 or pickup.SubType == 9) and not player:CanPickRedHearts())
@@ -160,5 +158,3 @@ function LootDeckAPI.IsCoin(pickup, onlyCustom)
 	end
 	return false
 end
-
-return H

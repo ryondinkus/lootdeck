@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.AreEnemiesInRoom()
     return #LootDeckAPI.ListEnemiesInRoom(true, function(entity) return not EntityRef(entity).IsCharmed end) > 0
 end
@@ -79,5 +77,3 @@ function LootDeckAPI.IsInChallenge(challengeName)
     local challengeId = Isaac.GetChallengeIdByName(challengeName)
     return Isaac.GetChallenge() == challengeId
 end
-
-return H

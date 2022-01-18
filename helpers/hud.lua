@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.CreateSprite(animationPath, spritesheetPath, animationName)
 	local sprite = Sprite()
 	sprite:Load(animationPath, true)
@@ -214,5 +212,3 @@ function LootDeckAPI.PlayLootcardUseAnimation(player, cardId)
         end
     end
 end
-
-return H
