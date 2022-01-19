@@ -21,7 +21,11 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, destroys a rand
 
 local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local data = helper.GetLootDeckData(p)
-    local inv = helper.GetPlayerInventory(p, {}, false, false, true, true)
+    local blacklist = {}
+    if helper.IsInChallenge(lootdeckChallenges.gimmeTheLoot.Name) then
+        table.insert(blacklist, CollectibleType.COLLECTIBLE_STARTER_DECK)
+    end
+    local inv = helper.GetPlayerInventory(p, blacklist, false, false, true, true)
     if helper.LengthOfTable(inv) > 0 then
         if not data[Tag] then
             local selectedItem = inv[rng:RandomInt(helper.LengthOfTable(inv))+1]

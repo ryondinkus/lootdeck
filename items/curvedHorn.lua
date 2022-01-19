@@ -20,7 +20,7 @@ local greedModeWaveTag = string.format("%sGreedModeWave", Tag)
 
 local function Initialize(p)
     local game = Game()
-    if helper.AreEnemiesInRoom(game:GetRoom()) then
+    if helper.AreEnemiesInRoom() then
         local data = helper.GetLootDeckData(p)
         data[finishedTag] = false
         data[roomClearedTag] = nil

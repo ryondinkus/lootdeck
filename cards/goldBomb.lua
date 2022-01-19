@@ -21,7 +21,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, spawns an explo
 
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local data = helper.GetLootDeckData(p)
-	if not helper.AreEnemiesInRoom(Game():GetRoom()) then
+	if not helper.AreEnemiesInRoom() then
         for i=0,4 do
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.GOLD_PARTICLE, 0, p.Position, Vector.FromAngle(rng:RandomInt(360)) * 5, nil)
         end

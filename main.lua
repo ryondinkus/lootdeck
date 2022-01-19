@@ -32,7 +32,9 @@ local defaultStartupValues = {
     lostSoul = false,
     isInitialized = false,
     isGameStarted = false,
-    delayedCards = {}
+    delayedCards = {},
+    debugSounds = false,
+    startingItems = {}
 }
 
 local defaultMcmOptions = {
@@ -70,6 +72,22 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, function(_, isContinued)
     end
 
     lootdeck.f.isGameStarted = true
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, function(_, player)
+    if player.FrameCount == 1 then
+        local playerInventory = LootDeckAPI.GetPlayerInventory(player)
+        local key = tostring(player.InitSeed)
+        if #playerInventory > 0 then
+            lootdeck.f.startingItems[key] = {}
+
+            local savedPlayerInventory = lootdeck.f.startingItems[key]
+
+            for _, id in pairs(playerInventory) do
+                savedPlayerInventory[tostring(id)] = (savedPlayerInventory[tostring(id)] or 0) + 1
+            end
+        end
+    end
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
@@ -191,13 +209,35 @@ lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
     lootdeck.f = table.deepCopy(defaultStartupValues)
 end)
 
--- lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
---     for soundEffectName, soundEffect in pairs(SoundEffect) do
---         if lootdeck.sfx:IsPlaying(soundEffect) then
---             print(soundEffectName)
---         end
---     end
--- end)
+lootdeck:AddCallback(ModCallbacks.MC_EXECUTE_CMD, function(_, command, args)
+    if command:lower() == "lootdeck" and args:lower() == "debugsounds" then
+        lootdeck.f.debugSounds = not lootdeck.f.debugSounds
+
+        if lootdeck.f.debugSounds then
+            print("Sound debugging started")
+        else
+            print("Sound debugging stopped")
+        end
+    end
+end)
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_UPDATE, function(_, command, args)
+    if lootdeck.f and lootdeck.f.debugSounds then
+        local playingSoundEffects = {}
+        for soundEffectName, soundEffect in pairs(SoundEffect) do
+            if lootdeck.sfx:IsPlaying(soundEffect) then
+                table.insert(playingSoundEffects, soundEffectName..": "..soundEffect)
+            end
+        end
+        if #playingSoundEffects > 0 then
+            print("=====Sounds playing on frame "..Isaac.GetFrameCount().."=====")
+            for _, sfx in pairs(playingSoundEffects) do
+                print(sfx)
+            end
+            print("=====End of sounds playing on frame "..Isaac.GetFrameCount().."=====")
+        end
+    end
+end)
 
 --========== LOOTCARD HUD RENDERING ==========
 
@@ -286,19 +326,21 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
         local heldCardId = p:GetCard(0)
         if heldCardId ~= 0 and (lootdeck.mus:GetCurrentMusicID() ~= Music.MUSIC_JINGLE_BOSS or p.ControlsEnabled) then
             local heldLootcard = helper.GetLootcardById(heldCardId)
-            if heldLootcard then
 
+            local isJacobAndEsau = p.SubType == PlayerType.PLAYER_JACOB or (p.SubType == PlayerType.PLAYER_ESAU and p:GetOtherTwin())
+            
+            if heldLootcard then
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
                 lootcardAnimationContainer = helper.CreateCardAnimation(lootcardAnimationContainer, "gfx/ui/lootcard_fronts.anm2", heldLootcard.HUDAnimationName, function(lac)
                     local color = lac.sprite.Color
-                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    if isJacobAndEsau then
                         lac.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end
                 end)
                 data.lootcardHUDAnimation = lootcardAnimationContainer
 
-                if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                if isJacobAndEsau then
                     local color = lootcardAnimationContainer.sprite.Color
                     if Input.IsActionPressed(ButtonAction.ACTION_DROP, p.ControllerIndex) then
                         lootcardAnimationContainer.sprite.Color = Color(color.R, color.G, color.B, math.min(color.A + 0.07, 1))
@@ -319,7 +361,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
                 lootcardAnimationContainer.sprite:Render(helper.GetHUDCardPosition(p, lootcardAnimationContainer), Vector.Zero, Vector.Zero)
             else
                 if data.lootcardHUDAnimation and data.lootcardHUDAnimation.sprite then
-                    if p.SubType == PlayerType.PLAYER_JACOB or p.SubType == PlayerType.PLAYER_ESAU then
+                    if isJacobAndEsau then
                         local color = data.lootcardHUDAnimation.sprite.Color
                         data.lootcardHUDAnimation.sprite.Color = Color(color.R, color.G, color.B, 0.5)
                     end

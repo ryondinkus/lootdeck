@@ -1,7 +1,5 @@
 local json = include("json")
 
-local H = {}
-
 function LootDeckAPI.SaveData(data)
     lootdeck:SaveData(json.encode(data))
 end
@@ -80,5 +78,3 @@ function LootDeckAPI.SaveGame()
 
     LootDeckAPI.SaveData(LootDeckAPI.FlattenEntityData(data))
 end
-
-return H

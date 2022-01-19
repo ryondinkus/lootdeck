@@ -1,6 +1,5 @@
-local H = {}
+local json = include("json")
 
--- function to convert tearflags to new BitSet128
 function LootDeckAPI.ConvertBitSet64ToBitSet128(x)
     return x >= 64 and BitSet128(0,1<<(x - 64)) or BitSet128(1<<x,0)
 end
@@ -82,4 +81,6 @@ function LootDeckAPI.PercentageChance(percent, max, rng)
     return rng:RandomInt(99) + 1 <= value
 end
 
-return H
+function LootDeckAPI.DumpTable(t)
+    print(json.encode(t))
+end

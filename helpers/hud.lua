@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.CreateSprite(animationPath, spritesheetPath, animationName)
 	local sprite = Sprite()
 	sprite:Load(animationPath, true)
@@ -119,7 +117,7 @@ function LootDeckAPI.GetHUDCardPosition(player, sprite)
     end
 
     -- Esau in second player slot
-    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_ESAU then
+    if controllerIndex == 0 and player.SubType == PlayerType.PLAYER_ESAU and player:GetOtherTwin() then
         hudOffsetVector = ESAU_HUD_OFFSET_VECTORS[hudOffset]
         return Vector(BottomRight.X - 10, BottomRight.Y - 44) - hudOffsetVector
     end
@@ -214,5 +212,3 @@ function LootDeckAPI.PlayLootcardUseAnimation(player, cardId)
         end
     end
 end
-
-return H

@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.GenerateHolographicCard(card)
     card.HUDAnimationName = "Idle"
     card.PickupAnimationName = "Idle"
@@ -96,5 +94,3 @@ function LootDeckAPI.FuckYou(p, type, variant, subtype, uses)
         end
     end
 end
-
-return H

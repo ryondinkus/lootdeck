@@ -1,7 +1,5 @@
-local H = {}
-
 function LootDeckAPI.ClearChosenEnemies(tag)
-    local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500, EntityPartition.ENEMY)
+    local entities = LootDeckAPI.ListEnemiesInRoom(true)
     local count = 0
     for i, entity in pairs(entities) do
         local data = entity:GetData()
@@ -14,11 +12,35 @@ function LootDeckAPI.ClearChosenEnemies(tag)
     return count
 end
 
+local notEnemies = {
+    EntityType.ENTITY_BOMBDROP,
+    EntityType.ENTITY_SHOPKEEPER,
+    EntityType.ENTITY_FIREPLACE,
+    EntityType.ENTITY_STONEHEAD,
+    EntityType.ENTITY_POKY,
+    EntityType.ENTITY_ETERNALFLY,
+    EntityType.ENTITY_STONE_EYE,
+    EntityType.ENTITY_CONSTANT_STONE_SHOOTER,
+    EntityType.ENTITY_BRIMSTONE_HEAD,
+    EntityType.ENTITY_WALL_HUGGER,
+    EntityType.ENTITY_GAPING_MAW,
+    EntityType.ENTITY_BROKEN_GAPING_MAW,
+    EntityType.ENTITY_POOP,
+    EntityType.ENTITY_MOVABLE_TNT,
+    EntityType.ENTITY_QUAKE_GRIMACE,
+    EntityType.ENTITY_BOMB_GRIMACE,
+    EntityType.ENTITY_SPIKEBALL,
+    EntityType.ENTITY_DUSTY_DEATHS_HEAD,
+    EntityType.ENTITY_BALL_AND_CHAIN,
+    EntityType.ENTITY_GENERIC_PROP,
+    EntityType.ENTITY_FROZEN_ENEMY,
+}
+
 function LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, filter)
-	local entities = Isaac.FindInRadius(Game():GetRoom():GetCenterPos(), 2500,EntityPartition.ENEMY)
+	local entities = Isaac.GetRoomEntities()
 	local enemies = {}
 	for _, entity in pairs(entities) do
-		if (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
+		if LootDeckAPI.TableContains(PartitionedEntities[EntityPartition.ENEMY], entity.Type) and not LootDeckAPI.TableContains(notEnemies, entity.Type) and (ignoreVulnerability or entity:IsVulnerableEnemy()) and (not filter or filter(entity, entity:GetData())) then
             table.insert(enemies, entity)
 		end
 	end
@@ -35,11 +57,11 @@ function LootDeckAPI.ListBossesInRoom(ignoreMiniBosses, filter)
 end
 
 -- function for finding random enemy in the room
-function LootDeckAPI.GetRandomEnemy(rng, tag, filter)
+function LootDeckAPI.GetRandomEnemy(rng, tag, filter, ignoreVulnerability)
     if not rng then
         rng = lootdeck.rng
     end
-	local enemies = LootDeckAPI.ListEnemiesInRoom(false, function(enemy, enemyData)
+	local enemies = LootDeckAPI.ListEnemiesInRoom(ignoreVulnerability, function(enemy, enemyData)
         return (not filter or filter(enemy, enemyData)) and (not tag or not enemyData[tag])
     end)
     local chosenEnemy = enemies[rng:RandomInt(#enemies) + 1]
@@ -178,5 +200,3 @@ function LootDeckAPI.GetEntityByInitSeed(initSeed)
         end
     end
 end
-
-return H

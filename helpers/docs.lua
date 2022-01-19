@@ -1,5 +1,3 @@
-local H = {}
-
 function LootDeckAPI.GenerateEncyclopediaPage(...)
     local output = {
         {str = "Effect", fsize = 2, clr = 3, halign = 0}
@@ -64,5 +62,3 @@ function LootDeckAPI.PrintError(msg, ...)
 	print(error)
 	Isaac.DebugString(error)
 end
-
-return H
