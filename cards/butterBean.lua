@@ -43,14 +43,15 @@ return {
     },
     Tests = {
         {
-            action = "GIVE_CARD",
-            arguments = {
-                id = Id
-            }
+            action = "RESTART",
+            id = 0
         },
         {
-            action = "USE_CARD",
-            arguments = {}
+            action = "GIVE_CARD",
+            id = Id
+        },
+        {
+            action = "USE_CARD"
         }
     }
 }

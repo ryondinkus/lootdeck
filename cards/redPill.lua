@@ -94,32 +94,83 @@ return {
     },
     Tests = {
         {
-            action = "GIVE_CARD",
-            arguments = {
-                id = Id
+            name = Tag.."Use",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "ENABLE_DEBUG_FLAG",
+                    flag = 8
+                },
+                {
+                    action = "GIVE_ITEM",
+                    id = CollectibleType.COLLECTIBLE_BLANK_CARD
+                },
+                {
+                    action = "REPEAT",
+                    times = 10,
+                    steps = {
+                        {
+                            action = "USE_ITEM"
+                        }
+                    }
+                }
             }
         },
-		{
-            action = "ENABLE_DEBUG_FLAG",
-            arguments = {
-                flag = 8
+        {
+            name = Tag.."Rng",
+            steps = {
+                {
+                    action = "REPEAT",
+                    times = 3,
+                    steps = {
+                        {
+                            action = "RESTART",
+                            id = 0
+                        },
+                        {
+                            action = "GIVE_CARD",
+                            id = Id
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        },
+                        {
+                            action = "USE_CARD"
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        },
+                        {
+                            action = "USE_ITEM",
+                            id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        },
+                        {
+                            action = "GIVE_CARD",
+                            id = Id
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        },
+                        {
+                            action = "USE_CARD"
+                        }
+                    }
+                }
             }
-        },
-        {
-            action = "GIVE_ITEM",
-            arguments = {
-				id = CollectibleType.COLLECTIBLE_BLANK_CARD
-			}
-        },
-        {
-            action = "USE_ITEM",
-            arguments = {}
-        },
-        {
-            action = "REPEAT",
-            arguments = {
-				times = 9
-			}
         }
     }
 }

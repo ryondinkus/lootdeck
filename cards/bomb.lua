@@ -59,52 +59,52 @@ return {
     },
     Tests = {
         {
-            action = "RESTART",
-            arguments = {}
-        },
-        {
-            action = "GIVE_CARD",
-            arguments = {
-                id = Id
+            name = Tag.."Enemy",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0,
+                    seed = "E6S9 3MNY"
+                },
+                {
+                    action = "MOVE_DOWN",
+                    seconds = 0.5
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_ITEM",
+                    id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "MOVE_DOWN",
+                    seconds = 0.5
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                },
             }
-        },
-		{
-            action = "ENABLE_DEBUG_FLAG",
-            arguments = {
-                flag = 8
-            }
-        },
-        {
-            action = "GIVE_ITEM",
-            arguments = {
-				id = CollectibleType.COLLECTIBLE_BLANK_CARD
-			}
-        },
-        {
-            action = "SPAWN",
-            arguments = {
-                type = EntityType.ENTITY_HORF
-            }
-        },
-        {
-            action = "WAIT_FOR_SECONDS",
-            arguments = {
-                seconds = 2
-            }
-        },
-        {
-            action = "USE_ITEM",
-            arguments = {}
-        },
-        {
-            action = "WAIT_FOR_SECONDS",
-            arguments = {
-                seconds = 2
-            }
-        },
-        {
-            action = "USE_ITEM",
-            arguments = {}
         }
     }
 }
