@@ -69,7 +69,7 @@ local function MC_POST_NEW_ROOM()
             for j=0,3 do
 				local currentCard = p:GetCard(j)
                 if (currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id) and data[Tag .. "RemoveCard"] then
-                    p:SetCard(j, 0)
+                    LootDeckAPI.RemoveCard(p, j)
                     data[Tag .. "RemoveCard"] = nil
                 end
             end
@@ -147,5 +147,242 @@ return {
             ModCallbacks.MC_POST_RENDER,
             MC_POST_RENDER
         }
+    },
+    Tests = {
+        {
+            name = Tag.."NewLevel",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                }
+            }
+        },
+        {
+            name = Tag.."Regular",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "GO_TO_DOOR"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                }
+            }
+        },
+        {
+            name = Tag.."BlankCard",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "GIVE_ITEM",
+                    id = CollectibleType.COLLECTIBLE_BLANK_CARD,
+                    charged = true
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "GO_TO_DOOR"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_ITEM"
+                }
+            }
+        },
+        {
+            name = Tag.."Void",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "SPAWN",
+                    type = EntityType.ENTITY_PICKUP,
+                    variant = PickupVariant.PICKUP_COLLECTIBLE,
+                    subType = CollectibleType.COLLECTIBLE_BLANK_CARD
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "GIVE_ITEM",
+                    id = CollectibleType.COLLECTIBLE_VOID,
+                    charged = true
+                },
+                {
+                    action = "USE_ITEM"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "CHARGE_ACTIVE_ITEM"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "GO_TO_DOOR"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_ITEM",
+                    force = true
+                }
+            }
+        },
+        {
+            name = Tag.."JandE",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 19
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id,
+                    playerIndex = 1
+                },
+                {
+                    action = "GO_TO_DOOR"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "REPEAT",
+                    times = 3,
+                    steps = {
+                        {
+                            action = "USE_CARD"
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        },
+                        {
+                            action = "USE_CARD",
+                            playerIndex = 1
+                        },
+                        {
+                            action = "WAIT_FOR_SECONDS",
+                            seconds = 1
+                        }
+                    }
+                }
+            }
+        },
+        {
+            name = Tag.."StarterDeck",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_ITEM",
+                    id = CollectibleType.COLLECTIBLE_STARTER_DECK
+                },
+                {
+                    action = "REPEAT",
+                    times = 2,
+                    steps = {
+                        {
+                            action = "GIVE_CARD",
+                            id = Id
+                        }
+                    }
+                },
+                {
+                    action = "GO_TO_DOOR"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                }
+            }
+        },
+        {
+            name = Tag.."Beast",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "RUN_COMMAND",
+                    command = "stage 13"
+                },
+                {
+                    action = "RUN_COMMAND",
+                    command = "goto x.itemdungeon.666"
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                }
+            }
+        },
     }
 }

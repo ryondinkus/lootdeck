@@ -345,3 +345,9 @@ function LootDeckAPI.GetLootDeckData(player)
         return data.lootdeck
     end
 end
+
+function LootDeckAPI.RemoveCard(player, slot)
+    for i = (slot or 0), 3 do
+        player:SetCard(i, player:GetCard(i + 1))
+    end
+end

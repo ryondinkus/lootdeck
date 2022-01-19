@@ -67,7 +67,7 @@ return {
         }
     },
 	Tests = {
-                {
+        {
             name = Tag.."Use",
             steps = {
                 {

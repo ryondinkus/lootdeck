@@ -40,5 +40,18 @@ return {
             Id,
             true
         }
+    },
+    Tests = {
+        {
+            action = "RESTART",
+            id = 0
+        },
+        {
+            action = "GIVE_CARD",
+            id = Id
+        },
+        {
+            action = "USE_CARD"
+        }
     }
 }

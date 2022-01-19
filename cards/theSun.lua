@@ -44,7 +44,7 @@ local function MC_POST_UPDATE()
 			for i=0,3 do
 				if p:GetCard(i) == Id or p:GetCard(i) == lootcardKeys.holographictheSun.Id then
 					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, p.Position, Vector.Zero, nil)
-					p:SetCard(i, 0)
+					LootDeckAPI.RemoveCard(p, i)
 				end
 			end
 		end)

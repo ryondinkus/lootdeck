@@ -105,6 +105,26 @@ return {
                     action = "USE_CARD"
                 },
             }
+        },
+        {
+            name = Tag.."Self",
+            steps = {
+                {
+                    action = "RESTART",
+                    id = 0
+                },
+                {
+                    action = "GIVE_CARD",
+                    id = Id
+                },
+                {
+                    action = "WAIT_FOR_SECONDS",
+                    seconds = 1
+                },
+                {
+                    action = "USE_CARD"
+                }
+            }
         }
     }
 }
