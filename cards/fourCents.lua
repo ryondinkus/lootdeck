@@ -42,13 +42,13 @@ return {
     },
     Tests = {
         {
-            action = TestActions.GIVE_CARD,
+            action = "GIVE_CARD",
             arguments = {
                 id = Id
             }
         },
         {
-            action = TestActions.USE_CARD,
+            action = "USE_CARD",
             arguments = {}
         }
     }
