@@ -30,6 +30,7 @@ local defaultStartupValues = {
     showOverlay = false,
     firstEnteredLevel = false,
     lostSoul = false,
+	enemiesKilledInRoom = 0,
     isInitialized = false,
     isGameStarted = false,
     delayedCards = {},
@@ -329,7 +330,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
             local heldLootcard = helper.GetLootcardById(heldCardId)
 
             local isJacobAndEsau = p.SubType == PlayerType.PLAYER_JACOB or (p.SubType == PlayerType.PLAYER_ESAU and p:GetOtherTwin())
-            
+
             if heldLootcard then
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
@@ -433,7 +434,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, function(_, pickup)
 
         if closestPlayer then
             pickup.Velocity = (closestPlayer.Position - pickup.Position):Normalized() * magnetoSpeed
-        end   
+        end
     end
 end)
 

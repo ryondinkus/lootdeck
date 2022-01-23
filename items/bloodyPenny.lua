@@ -29,7 +29,7 @@ local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
                 p = source.Entity:GetLastParent():ToPlayer()
             end
         end
-        if e.Type ~= EntityType.ENTITY_FIREPLACE and e:IsVulnerableEnemy() and amount >= e.MaxHitPoints and p and not e:GetData()[Tag] then
+        if e.Type ~= EntityType.ENTITY_FIREPLACE and e:IsVulnerableEnemy() and amount >= e.HitPoints and p and not e:GetData()[Tag] then
             local rng = p:GetCollectibleRNG(Id)
             if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25, rng) then
                 e:GetData()[Tag] = true
