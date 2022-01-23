@@ -24,7 +24,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local sfx = lootdeck.sfx
 	local room = Game():GetRoom()
 
-	helper.RunRandomFunction(rng, shouldDouble,
+	helper.RunRandomFunction(lootdeck.debug[Tag] or rng, shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		local cardId = helper.GetWeightedLootCardId(true, rng)
@@ -70,85 +70,137 @@ return {
             Id
         }
     },
-	Tests = {
-        {
-            name = Tag.."Use",
-            steps = {
-                {
-                    action = "RESTART",
-                    id = 0
-                },
-                {
-                    action = "GIVE_CARD",
-                    id = Id
-                },
-                {
-                    action = "ENABLE_DEBUG_FLAG",
-                    flag = 8
-                },
-                {
-                    action = "GIVE_ITEM",
-                    id = CollectibleType.COLLECTIBLE_BLANK_CARD
-                },
-                {
-                    action = "REPEAT",
-                    times = 10,
-                    steps = {
-                        {
-                            action = "USE_ITEM"
+	Tests = function()
+        return {
+            {
+                name = Tag.."LootCard",
+                steps = {
+                    LootDeckAPI.SetDebugFlagStep(Tag, 1),
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    LootDeckAPI.ClearDebugFlagStep(Tag)
+                }
+            },
+            {
+                name = Tag.."LootCards",
+                steps = {
+                    LootDeckAPI.SetDebugFlagStep(Tag, 2),
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    LootDeckAPI.ClearDebugFlagStep(Tag)
+                }
+            },
+            {
+                name = Tag.."Lose",
+                steps = {
+                    LootDeckAPI.SetDebugFlagStep(Tag, 3),
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    LootDeckAPI.ClearDebugFlagStep(Tag)
+                }
+            },
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "ENABLE_DEBUG_FLAG",
+                        flag = 8
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_BLANK_CARD
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 10,
+                        steps = {
+                            {
+                                action = "USE_ITEM"
+                            }
                         }
                     }
                 }
-            }
-        },
-        {
-            name = Tag.."Rng",
-            steps = {
-                {
-                    action = "REPEAT",
-                    times = 3,
-                    steps = {
-                        {
-                            action = "RESTART",
-                            id = 0
-                        },
-                        {
-                            action = "GIVE_CARD",
-                            id = Id
-                        },
-                        {
-                            action = "WAIT_FOR_SECONDS",
-                            seconds = 1
-                        },
-                        {
-                            action = "USE_CARD"
-                        },
-                        {
-                            action = "WAIT_FOR_SECONDS",
-                            seconds = 1
-                        },
-                        {
-                            action = "USE_ITEM",
-                            id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
-                        },
-                        {
-                            action = "WAIT_FOR_SECONDS",
-                            seconds = 1
-                        },
-                        {
-                            action = "GIVE_CARD",
-                            id = Id
-                        },
-                        {
-                            action = "WAIT_FOR_SECONDS",
-                            seconds = 1
-                        },
-                        {
-                            action = "USE_CARD"
+            },
+            {
+                name = Tag.."Rng",
+                steps = {
+                    {
+                        action = "REPEAT",
+                        times = 3,
+                        steps = {
+                            {
+                                action = "RESTART",
+                                id = 0
+                            },
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "WAIT_FOR_SECONDS",
+                                seconds = 1
+                            },
+                            {
+                                action = "USE_CARD"
+                            },
+                            {
+                                action = "WAIT_FOR_SECONDS",
+                                seconds = 1
+                            },
+                            {
+                                action = "USE_ITEM",
+                                id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
+                            },
+                            {
+                                action = "WAIT_FOR_SECONDS",
+                                seconds = 1
+                            },
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            }
                         }
                     }
                 }
             }
         }
-    }
+    end
 }

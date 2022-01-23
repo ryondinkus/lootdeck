@@ -57,74 +57,76 @@ return {
             true
         }
     },
-    Tests = {
-        {
-            name = Tag.."Enemy",
-            steps = {
-                {
-                    action = "RESTART",
-                    id = 0,
-                    seed = "E6S9 3MNY"
-                },
-                {
-                    action = "MOVE_DOWN",
-                    seconds = 0.5
-                },
-                {
-                    action = "GIVE_CARD",
-                    id = Id
-                },
-                {
-                    action = "WAIT_FOR_SECONDS",
-                    seconds = 1
-                },
-                {
-                    action = "USE_CARD"
-                },
-                {
-                    action = "WAIT_FOR_SECONDS",
-                    seconds = 1
-                },
-                {
-                    action = "USE_ITEM",
-                    id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
-                },
-                {
-                    action = "GIVE_CARD",
-                    id = Id
-                },
-                {
-                    action = "MOVE_DOWN",
-                    seconds = 0.5
-                },
-                {
-                    action = "WAIT_FOR_SECONDS",
-                    seconds = 1
-                },
-                {
-                    action = "USE_CARD"
-                },
-            }
-        },
-        {
-            name = Tag.."Self",
-            steps = {
-                {
-                    action = "RESTART",
-                    id = 0
-                },
-                {
-                    action = "GIVE_CARD",
-                    id = Id
-                },
-                {
-                    action = "WAIT_FOR_SECONDS",
-                    seconds = 1
-                },
-                {
-                    action = "USE_CARD"
+    Tests = function()
+        return {
+            {
+                name = Tag.."Enemy",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC,
+                        seed = "E6S9 3MNY"
+                    },
+                    {
+                        action = "MOVE_DOWN",
+                        seconds = 0.5
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "MOVE_DOWN",
+                        seconds = 0.5
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                }
+            },
+            {
+                name = Tag.."Self",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
                 }
             }
         }
-    }
+    end
 }

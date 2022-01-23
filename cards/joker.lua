@@ -46,5 +46,166 @@ return {
             Id,
             true
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_COLLECTIBLE
+                    }
+                }
+            },
+            {
+                name = Tag.."Shop",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "goto s.shop"
+                    }
+                }
+            },
+            {
+                name = Tag.."Devil",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "goto s.devil"
+                    }
+                }
+            },
+            {
+                name = Tag.."Interrupt",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_COLLECTIBLE
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD",
+                        async = true
+                    },
+                    {
+                        action = "MOVE_UP",
+                        seconds = 1
+                    }
+                }
+            },
+            {
+                name = Tag.."Double",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_COLLECTIBLE
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD",
+                        async = true
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+            {
+                name = Tag.."DoubleDouble",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_COLLECTIBLE
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_COLLECTIBLE,
+                        position = function()
+                            return Game():GetRoom():FindFreePickupSpawnPosition(Game():GetRoom():GetCenterPos())
+                        end
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD",
+                        async = true
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+        }
+    end
 }

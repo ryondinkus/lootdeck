@@ -17,7 +17,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("All coins spawns have a
 
 local function MC_POST_PICKUP_UPDATE(_, pickup)
 	local data = pickup:GetData()
-	if data[lootdeckChallenges.gimmeTheLoot.Tag] and (pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1)) then
+	if (not helper.IsInChallenge(lootdeckChallenges.gimmeTheLoot.Name) or data[lootdeckChallenges.gimmeTheLoot.Tag]) and (pickup.FrameCount == 1 or (pickup:GetSprite():IsPlaying("Appear") and pickup:GetSprite():GetFrame() == 1)) then
 	    local hasItem = false
 
 	    helper.ForEachPlayer(function()

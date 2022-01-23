@@ -102,5 +102,256 @@ return {
             ModCallbacks.MC_POST_UPDATE,
             MC_POST_UPDATE
 		},
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_HORF
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 5
+                    }
+                }
+            },
+            {
+                name = Tag.."BloodBank",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_SLOT,
+                        variant = 2 -- blood bank
+                    },
+                    {
+                        action = "MOVE_UP",
+                        seconds = 5
+                    }
+                }
+            },
+            {
+                name = Tag.."DullRazor",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "USE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DULL_RAZOR
+                    }
+                }
+            },
+            {
+                name = Tag.."IvBag",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "USE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_IV_BAG
+                    }
+                }
+            },
+            {
+                name = Tag.."CurseRoom",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "goto s.curse"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "debug 10"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            },
+            {
+                name = Tag.."SacrificeRoom",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC,
+                        seed = "ZS3Z VJ1D"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "MOVE_UP",
+                        seconds = 3
+                    }
+                }
+            },
+            {
+                name = Tag.."PoundOfFlesh",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC,
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_POUND_OF_FLESH
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "goto s.shop"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "debug 10"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 5
+                    }
+                }
+            },
+            {
+                name = Tag.."Stacking",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 3,
+                        steps = {
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            },
+                        }
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_HORF
+                    }
+                }
+            },
+            {
+                name = Tag.."HolyMantle",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_HOLY_MANTLE
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_HORF
+                    }
+                }
+            },
+            {
+                name = Tag.."HolyCard",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "USE_CARD",
+                        id = Card.CARD_HOLY
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_HORF
+                    }
+                }
+            }
+        }
+    end
 }

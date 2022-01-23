@@ -47,6 +47,7 @@ lootdeck.sfx = SFXManager()
 lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
+lootdeck.debug = {}
 
 local helper = LootDeckAPI
 local InitializeMCM = include("modConfigMenu")
@@ -414,6 +415,28 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
 
+local magnetoSpeed = 1.75
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, function(_, pickup)
+    if LootDeckAPI.IsCoin(pickup, true) and pickup.Variant ~= entityVariants.doubleStickyNickel.Id then
+        local closestPlayer
+
+        LootDeckAPI.ForEachPlayer(function(player)
+            if not closestPlayer then
+                closestPlayer = player
+            else
+                if player.Position:Distance(pickup.Position) < closestPlayer.Position:Distance(pickup.Position) then
+                    closestPlayer = player
+                end
+            end
+        end, CollectibleType.COLLECTIBLE_MAGNETO)
+
+        if closestPlayer then
+            pickup.Velocity = (closestPlayer.Position - pickup.Position):Normalized() * magnetoSpeed
+        end   
+    end
+end)
+
 if EID then
    local EIDLootCardIcon = Sprite()
     EIDLootCardIcon:Load("gfx/ui/eid_lootcard_icon.anm2", true)
@@ -544,13 +567,13 @@ for _, card in pairs(lootcards) do
 
     if Test then
         if not card.IsHolographic and card.Tests then
-            table.insert(lootdeckTests, { name = card.Tag, steps = card.Tests })
+            table.insert(lootdeckTests, { name = card.Tag, steps = card.Tests() })
         end
     end
 end
 
 if Test then
-    Test.RegisterTests("lootdeck", lootdeckTests)
+    Test.RegisterTests("lootdeck", lootdeckTests, "lootdeck")
 end
 
 for _, challenge in pairs(lootdeckChallenges) do

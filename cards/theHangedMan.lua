@@ -1,5 +1,4 @@
 local helper = LootDeckAPI
-local costumes = include("costumes/registry")
 
 -- Gives magneto effect for the room and a glowing costume
 local Names = {
@@ -53,5 +52,34 @@ return {
             MC_USE_CARD,
             Id
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC,
+                        seed = "QF4H QV36"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "stage 4"
+                    },
+                    {
+                        action = "GO_TO_DOOR",
+                        slot = DoorSlot.RIGHT0
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            }
+        }
+    end
 }

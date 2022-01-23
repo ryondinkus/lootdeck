@@ -1,5 +1,6 @@
 local helper = LootDeckAPI
 local items = include("items/registry")
+local entityVariants = include("entityVariants/registry")
 
 -- Gives the cointerfeit penny item
 local Names = {
@@ -40,5 +41,649 @@ return {
             Id,
             true
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Penny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_PENNY
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_PENNY
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."Nickel",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_NICKEL
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_NICKEL
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."Dime",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_DIME
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_DIME
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."DoublePenny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_DOUBLEPACK
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_DOUBLEPACK
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."LuckyPenny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_LUCKYPENNY
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = PickupVariant.PICKUP_COIN,
+                                subType = CoinSubType.COIN_LUCKYPENNY
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."DoubleNickel",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleNickel.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleNickel.Id
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."DoubleDime",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleDime.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleDime.Id
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."DoubleLuckyPenny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleLuckyPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleLuckyPenny.Id
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."ChargedPenny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.chargedPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.chargedPenny.Id
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                name = Tag.."DoubleChargedPenny",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_MAGNETO
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_DEEP_POCKETS
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleChargedPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "GIVE_ITEM",
+                                id = items.counterfeitPenny.Id
+                            }
+                        }
+                    },
+                    {
+                        action = "EXECUTE_LUA",
+                        code = "Isaac.GetPlayer(0):AddCoins(-Isaac.GetPlayer(0):GetNumCoins())"
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 20,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_PICKUP,
+                                variant = entityVariants.doubleChargedPenny.Id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    end
 }

@@ -40,7 +40,7 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
 	    if helper.PercentageChance(chance * p:GetCollectibleNum(Id), 90) and (pi.Price == 0 or helper.CanBuyPickup(p, pi)) then
 			local room = Game():GetRoom()
 	        local spawnPoint = room:FindFreePickupSpawnPosition(room:GetRandomPosition(0), 0, true)
-	        helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, pi.SubType, spawnPoint, Vector.Zero, pi.Parent)
+	        helper.Spawn(EntityType.ENTITY_PICKUP, pi.Variant, pi.SubType, spawnPoint, Vector.Zero, pi.Parent)
 		end
 	end
 end

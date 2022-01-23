@@ -101,18 +101,81 @@ return {
     HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
-            {
-                ModCallbacks.MC_USE_CARD,
-                MC_USE_CARD,
-                Id
-            },
+		{
+			ModCallbacks.MC_USE_CARD,
+			MC_USE_CARD,
+			Id
+		},
+		{
+			ModCallbacks.MC_POST_NEW_ROOM,
+			MC_POST_NEW_ROOM
+		},
+		{
+			ModCallbacks.MC_POST_PEFFECT_UPDATE,
+			MC_POST_PEFFECT_UPDATE
+		}
+    },
+	Tests = function ()
+		return {
 			{
-				ModCallbacks.MC_POST_NEW_ROOM,
-				MC_POST_NEW_ROOM
+				name = Tag.."Use",
+				steps = {
+					{
+						action = "RESTART",
+						id = PlayerType.PLAYER_ISAAC
+					},
+					{
+						action = "GIVE_CARD",
+						id = Id
+					},
+					{
+						action = "SPAWN",
+						type = EntityType.ENTITY_HORF
+					},
+					{
+						action = "WAIT_FOR_SECONDS",
+						seconds = 1
+					},
+					{
+						action = "USE_CARD"
+					}
+				}
 			},
-            {
-                ModCallbacks.MC_POST_PEFFECT_UPDATE,
-                MC_POST_PEFFECT_UPDATE
-            }
-    }
+			{
+				name = Tag.."Multiple",
+				steps = {
+					{
+						action = "REPEAT",
+						times = 2,
+						steps = {
+							{
+								action = "RESTART",
+								id = PlayerType.PLAYER_ISAAC,
+								seed = "2444 XYSA"
+							},
+							{
+								action = "GIVE_CARD",
+								id = Id
+							},
+							{
+								action = "GO_TO_DOOR",
+								slot = DoorSlot.UP0
+							},
+							{
+								action = "WAIT_FOR_SECONDS",
+								seconds = 1
+							},
+							{
+								action = "USE_CARD"
+							},
+							{
+								action = "WAIT_FOR_SECONDS",
+								seconds = 2
+							}
+						}
+					}
+				}
+			}
+		}
+	end
 }

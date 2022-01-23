@@ -138,5 +138,86 @@ return {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_ITEM",
+                        id = CollectibleType.COLLECTIBLE_STARTER_DECK
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "ENABLE_DEBUG_FLAG",
+                        flag = 10
+                    },
+                    {
+                        action = "USE_CARD",
+                        id = Card.CARD_EMPEROR
+                    },
+                    {
+                        action = "WAIT_FOR_KEY"
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_PICKUP,
+                        variant = PickupVariant.PICKUP_TAROTCARD,
+                        subType = Id
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                }
+            },
+            {
+                name = Tag.."After",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "ENABLE_DEBUG_FLAG",
+                        flag = 10
+                    },
+                    {
+                        action = "USE_CARD",
+                        id = Card.CARD_EMPEROR
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 5
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            }
+        }
+    end
 }

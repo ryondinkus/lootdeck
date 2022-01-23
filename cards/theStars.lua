@@ -62,5 +62,32 @@ return {
             true,
             1
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "RESTART",
+                                id = PlayerType.PLAYER_ISAAC,
+                                seed = "WNKQ RL7M"
+                            },
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    end
 }

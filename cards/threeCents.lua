@@ -40,17 +40,19 @@ return {
             true
         }
     },
-    Tests = {
-        {
-            action = "RESTART",
-            id = 0
-        },
-        {
-            action = "GIVE_CARD",
-            id = Id
-        },
-        {
-            action = "USE_CARD"
+    Tests = function()
+        return {
+            {
+                action = "RESTART",
+                id = 0
+            },
+            {
+                action = "GIVE_CARD",
+                id = Id
+            },
+            {
+                action = "USE_CARD"
+            }
         }
-    }
+    end
 }

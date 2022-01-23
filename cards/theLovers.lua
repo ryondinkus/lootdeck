@@ -59,5 +59,343 @@ return {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
         },
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            },
+            {
+                name = Tag.."JandE",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_JACOB
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_JACOB
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id,
+                        playerIndex = 1
+                    },
+                    {
+                        action = "USE_CARD",
+                        playerIndex = 1
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_JACOB
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id,
+                        playerIndex = 1
+                    },
+                    {
+                        action = "USE_CARD",
+                        playerIndex = 1
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            },
+            {
+                name = Tag.."TaintedForgotten",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN_B
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN_B
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id,
+                        playerIndex = 1
+                    },
+                    {
+                        action = "USE_CARD",
+                        playerIndex = 1
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN_B
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id,
+                        playerIndex = 1
+                    },
+                    {
+                        action = "USE_CARD",
+                        playerIndex = 1
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            },
+            {
+                name = Tag.."Forgotten",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "SWAP_SUB_PLAYERS"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SWAP_SUB_PLAYERS"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "SWAP_SUB_PLAYERS"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "SWAP_SUB_PLAYERS"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                }
+            },
+            {
+                name = Tag.."Keeper",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_KEEPER
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 5,
+                        steps = {
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            }
+                        }
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            },
+            {
+                name = Tag.."TaintedKeeper",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_KEEPER_B
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 5,
+                        steps = {
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            }
+                        }
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    }
+                }
+            }
+        }
+    end
 }

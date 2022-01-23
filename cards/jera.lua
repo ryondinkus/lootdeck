@@ -54,5 +54,55 @@ return {
             true,
             0.25
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+            {
+                name = Tag.."ENemies",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 5,
+                        steps = {
+                            {
+                                action = "SPAWN",
+                                type = EntityType.ENTITY_SPIDER
+                            }
+                        }
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            }
+        }
+    end
 }

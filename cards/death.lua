@@ -104,5 +104,166 @@ return {
             ModCallbacks.MC_POST_PLAYER_UPDATE,
             MC_POST_PLAYER_UPDATE
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+            {
+                name = Tag.."JandE",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_JACOB
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_JACOB
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id,
+                        playerIndex = 1
+                    },
+                    {
+                        action = "USE_CARD",
+                        playerIndex = 1
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    }
+                }
+            },
+            {
+                name = Tag.."Keeper",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_KEEPER
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+            {
+                name = Tag.."Forgotten",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_THEFORGOTTEN
+                    },
+                    {
+                        action = "SWAP_SUB_PLAYERS"
+                    },
+                    {
+                        action = "GO_TO_DOOR"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            },
+            {
+                name = Tag.."Beast",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "stage 13"
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "goto x.itemdungeon.666"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "USE_CARD"
+                    }
+                }
+            }
+        }
+    end
 }

@@ -48,5 +48,68 @@ return {
             Id,
             true
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 1
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "MOVE_UP",
+                        seconds = 0.5
+                    }
+                }
+            },
+            {
+                name = Tag.."Enemies",
+                steps = {
+                    {
+                        action = "REPEAT",
+                        times = 2,
+                        steps = {
+                            {
+                                action = "RESTART",
+                                id = PlayerType.PLAYER_ISAAC,
+                                seed = "KA06 QV94"
+                            },
+                            {
+                                action = "GO_TO_DOOR",
+                                slot = DoorSlot.DOWN0
+                            },
+                            {
+                                action = "WAIT_FOR_SECONDS",
+                                seconds = 1
+                            },
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            },
+                            {
+                                action = "MOVE_RIGHT",
+                                seconds = 1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    end
 }

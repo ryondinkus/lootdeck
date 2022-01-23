@@ -22,7 +22,7 @@ local function MC_ENTITY_TAKE_DMG(_, e)
             if p:GetNumCoins() > 0 then
                 local tear = p:FireTear(p.Position, Vector.FromAngle(rng:RandomInt(360)) * 10, false, true, false, p, 2)
                 tear:ChangeVariant(TearVariant.COIN)
-                tear:GetData()[Id] = true
+                tear:GetData()[Tag] = true
                 p:AddCoins(-1)
                 lootdeck.sfx:Play(SoundEffect.SOUND_LITTLE_SPIT, 1, 0)
             end
@@ -32,11 +32,11 @@ end
 
 local function MC_POST_ENTITY_REMOVE(_, tear)
 	local tearData = tear:GetData()
-	if tearData[Id] then
+	if tearData[Tag] then
 		local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER_TRAIL, 0, tear.Position, Vector.Zero, tear)
 		helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COIN, 0, tear.Position, tear.Velocity:Normalized(), tear)
 		effect:GetSprite().Scale = Vector(2,2)
-		tearData[Id] = nil
+		tearData[Tag] = nil
 	end
 end
 

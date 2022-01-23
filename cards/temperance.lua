@@ -53,5 +53,35 @@ return {
             MC_USE_CARD,
             Id
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "REPEAT",
+                        times = 6,
+                        steps = {
+                            {
+                                action = "GIVE_CARD",
+                                id = Id
+                            },
+                            {
+                                action = "USE_CARD"
+                            },
+                            {
+                                action = "WAIT_FOR_SECONDS",
+                                seconds = 0.5
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    end
 }

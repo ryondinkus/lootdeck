@@ -53,11 +53,19 @@ end
 function LootDeckAPI.RunRandomFunction(rng, shouldDouble, ...)
     local functions = {...}
 
+    local effectIndex
+
     if not rng then
         rng = lootdeck.rng
+    else
+        if type(rng) == "number" then
+            effectIndex = math.min(#functions, math.max(rng, 1))
+        end
     end
 
-    local effectIndex = rng:RandomInt(#functions) + 1
+    if not effectIndex then
+        effectIndex = rng:RandomInt(#functions) + 1
+    end
 
     if shouldDouble then
         functions[effectIndex]()
