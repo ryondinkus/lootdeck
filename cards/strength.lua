@@ -121,7 +121,7 @@ return {
                     },
                     {
                         action = "SPAWN",
-                        type = EntityType.ENTITY_HORF
+                        type = EntityType.ENTITY_BOIL
                     },
                     {
                         action = "GIVE_CARD",
@@ -139,11 +139,22 @@ return {
                         command = "debug 10"
                     },
                     {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
                         action = "GIVE_CARD",
                         id = Id
                     },
                     {
                         action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "GO_TO_DOOR"
                     },
                     {
                         action = "WAIT_FOR_SECONDS",

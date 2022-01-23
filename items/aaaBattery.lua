@@ -19,10 +19,15 @@ local function GivePlayerItem(p, data, rng)
         data = helper.GetLootDeckData(p)
     end
     local itemPool = Game():GetItemPool()
-    local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
-    while itemConfig.Type == ItemType.ITEM_ACTIVE do
-        collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM, false, (rng or lootdeck.rng):GetSeed())
+    local collectibleId
+    local itemConfig
+
+    if not rng then
+        rng = lootdeck.rng
+    end
+
+    while (not collectibleId and not itemConfig) or itemConfig.Type == ItemType.ITEM_ACTIVE do
+        collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM, false, rng:Next())
         itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
     end
     p:AddCollectible(collectibleId)
