@@ -109,5 +109,52 @@ return {
             ModCallbacks.MC_POST_NEW_LEVEL,
             MC_POST_NEW_LEVEL
         }
-    }
+    },
+    Tests = function()
+        return {
+            {
+                name = Tag.."Use",
+                steps = {
+                    {
+                        action = "RESTART",
+                        id = PlayerType.PLAYER_ISAAC
+                    },
+                    {
+                        action = "SPAWN",
+                        type = EntityType.ENTITY_HORF
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "debug 10"
+                    },
+                    {
+                        action = "GIVE_CARD",
+                        id = Id
+                    },
+                    {
+                        action = "USE_CARD"
+                    },
+                    {
+                        action = "WAIT_FOR_SECONDS",
+                        seconds = 2
+                    },
+                    {
+                        action = "RUN_COMMAND",
+                        command = "stage 2"
+                    }
+                }
+            }
+        }
+    end
 }
