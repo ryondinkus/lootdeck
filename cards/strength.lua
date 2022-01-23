@@ -48,11 +48,7 @@ local function MC_EVALUATE_CACHE(_, p, f)
 end
 
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
-    print(e.Type ~= EntityType.ENTITY_FIREPLACE)
-    print(e:IsVulnerableEnemy())
-    print(amount >= e.MaxHitPoints)
     if e.Type ~= EntityType.ENTITY_FIREPLACE and e:IsVulnerableEnemy() and amount >= e.HitPoints then
-        print("eggs")
         lootdeck.f.enemiesKilledInRoom = lootdeck.f.enemiesKilledInRoom + 1
     end
 end
