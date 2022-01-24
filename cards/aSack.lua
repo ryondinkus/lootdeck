@@ -47,36 +47,5 @@ return {
             Id,
             true
         }
-    },
-    Tests = function()
-        return {
-            {
-                name = Tag.."Use",
-                steps = {
-                    {
-                        action = "REPEAT",
-                        times = 2,
-                        steps = {
-                            {
-                                action = "RESTART",
-                                id = PlayerType.PLAYER_ISAAC,
-                                seed = "YCZW QAV7"
-                            },
-                            {
-                                action = "GIVE_CARD",
-                                id = Id
-                            },
-                            {
-                                action = "USE_CARD"
-                            },
-                            {
-                                action = "WAIT_FOR_SECONDS",
-                                seconds = 5
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    end
+    }
 }

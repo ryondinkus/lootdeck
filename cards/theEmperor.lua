@@ -77,53 +77,5 @@ return {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
         }
-    },
-    Tests = function()
-        return {
-            {
-                name = Tag.."Use",
-                steps = {
-                    {
-                        action = "RESTART",
-                        id = PlayerType.PLAYER_ISAAC,
-                        seed = "3VMW NXHF"
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "GO_TO_DOOR"
-                    },
-                    {
-                        action = "WAIT_FOR_SECONDS",
-                        seconds = 1
-                    },
-                    {
-                        action = "USE_CARD"
-                    }
-                }
-            },
-            {
-                name = Tag.."Boss",
-                steps = {
-                    {
-                        action = "RESTART",
-                        id = PlayerType.PLAYER_ISAAC
-                    },
-                    {
-                        action = "USE_CARD",
-                        id = Card.CARD_EMPEROR
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    }
-                }
-            }
-        }
-    end
+    }
 }

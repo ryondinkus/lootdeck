@@ -561,20 +561,8 @@ function LootDeckAPI.RegisterLootCard(card, newCard)
     end
 end
 
-local lootdeckTests = {}
-
 for _, card in pairs(lootcards) do
     LootDeckAPI.RegisterLootCard(card, false)
-
-    if Test then
-        if not card.IsHolographic and card.Tests then
-            table.insert(lootdeckTests, { name = card.Tag, steps = card.Tests() })
-        end
-    end
-end
-
-if Test then
-    Test.RegisterTests("lootdeck", lootdeckTests, "lootdeck")
 end
 
 for _, challenge in pairs(lootdeckChallenges) do
@@ -642,3 +630,5 @@ for _, trinket in pairs(trinkets) do
 		})
 	end
 end
+
+include("tests/registry")

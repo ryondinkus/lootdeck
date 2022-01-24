@@ -68,42 +68,5 @@ return {
             ModCallbacks.MC_POST_PEFFECT_UPDATE,
             MC_POST_PEFFECT_UPDATE
         }
-    },
-    Tests = function()
-        return {
-            {
-                name = Tag.."Use",
-                steps = {
-                    {
-                        action = "RESTART",
-                        id = PlayerType.PLAYER_ISAAC,
-                        seed = "LYCX QE8E"
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    },
-                    {
-                        action = "WAIT_FOR_SECONDS",
-                        seconds = 4
-                    },
-                    {
-                        action = "GO_TO_DOOR",
-                        slot = DoorSlot.DOWN0
-                    },
-                    {
-                        action = "WAIT_FOR_SECONDS",
-                        seconds = 1
-                    },
-                    {
-                        action = "GO_TO_DOOR",
-                        slot = DoorSlot.UP0
-                    }
-                }
-            }
-        }
-    end
+    }
 }

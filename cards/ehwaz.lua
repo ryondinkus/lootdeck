@@ -48,28 +48,5 @@ return {
             true,
             0.25
         }
-    },
-    Tests = function()
-        return {
-            {
-                action = "RESTART",
-                id = 0
-            },
-            {
-                action = "GIVE_ITEM",
-                id = CollectibleType.COLLECTIBLE_SPIDER_MOD
-            },
-            {
-                action = "GIVE_CARD",
-                id = Id
-            },
-            {
-                action = "SPAWN",
-                type = EntityType.ENTITY_HORF
-            },
-            {
-                action = "USE_CARD"
-            }
-        }
-    end
+    }
 }

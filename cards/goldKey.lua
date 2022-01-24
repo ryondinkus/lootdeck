@@ -44,20 +44,5 @@ return {
             Id,
             true
         }
-    },
-    Tests = function()
-        return {
-            {
-                action = "RESTART",
-                id = 0
-            },
-            {
-                action = "GIVE_CARD",
-                id = Id
-            },
-            {
-                action = "USE_CARD"
-            }
-        }
-    end
+    }
 }

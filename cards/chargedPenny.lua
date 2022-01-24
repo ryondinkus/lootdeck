@@ -40,40 +40,5 @@ return {
                 Id,
                 true
             }
-    },
-    Tests = function()
-        return {
-            {
-                name = Tag.."Use",
-                steps = {
-                    {
-                        action = "RESTART",
-                        id = PlayerType.PLAYER_ISAAC
-                    },
-                    {
-                        action = "GIVE_ITEM",
-                        id = CollectibleType.COLLECTIBLE_PLUM_FLUTE
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    },
-                    {
-                        action = "WAIT_FOR_SECONDS",
-                        seconds = 1
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    }
-                }
-            }
-        }
-    end
+    }
 }

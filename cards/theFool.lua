@@ -62,26 +62,5 @@ return {
             ModCallbacks.MC_POST_NEW_ROOM,
             MC_POST_NEW_ROOM
         }
-    },
-    Tests = function()
-        return {
-            {
-                name = Tag.."Use",
-                steps = {
-                    {
-                        action = "RESTART",
-                        id = PlayerType.PLAYER_ISAAC,
-                        seed = "A7AZ L4E3"
-                    },
-                    {
-                        action = "GIVE_CARD",
-                        id = Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    }
-                }
-            }
-        }
-    end
+    }
 }
