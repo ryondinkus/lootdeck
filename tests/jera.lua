@@ -3,6 +3,9 @@ local card = lootcardKeys.jera
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card with no enemies"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -18,7 +21,11 @@ return {
         }
     },
     {
-        name = card.Tag.."ENemies",
+        name = card.Tag.."Enemies",
+        instructions = {
+            "Spawn 5 spiders",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",

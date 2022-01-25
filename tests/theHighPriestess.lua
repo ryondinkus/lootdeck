@@ -3,6 +3,10 @@ local card = lootcardKeys.theHighPriestess
 return {
     {
         name = card.Tag.."Enemy",
+        instructions = {
+            "Spawns a Horf",
+            "Uses the card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -23,6 +27,10 @@ return {
     },
     {
         name = card.Tag.."Enemies",
+        instructions = {
+            "Spawns 5 spiders",
+            "Uses the card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -49,6 +57,9 @@ return {
     },
     {
         name = card.Tag.."Player",
+        instructions = {
+            "Uses the card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -65,6 +76,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Go to new room",
+            "Use the card",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

@@ -3,6 +3,12 @@ local card = lootcardKeys.curvedHorn
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Shoot in empty room",
+            "Spawn horf",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -35,6 +41,12 @@ return {
     },
     {
         name = card.Tag.."NewRoom",
+        instructions = {
+            "Use card",
+            "Shoot in empty room",
+            "Go to new room with enemies",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -67,6 +79,12 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card twice",
+            "Shoot in empty room",
+            "Go to new room",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -105,6 +123,12 @@ return {
     },
     {
         name = card.Tag.."BossRush",
+        instructions = {
+            "Debug 10 + goto boss rush",
+            "Use card",
+            "Void items to trigger BR",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -137,6 +161,12 @@ return {
     },
     {
         name = card.Tag.."ChallengeRoom",
+        instructions = {
+            "Debug 10 + goto boss challenge room",
+            "Use card",
+            "Void items to trigger BR",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -169,6 +199,12 @@ return {
     },
     {
         name = card.Tag.."WallHuggers",
+        instructions = {
+            "Use card",
+            "Go to specific wall hugger seed",
+            "Go to specific wall hugger room",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -202,6 +238,12 @@ return {
     },
     {
         name = card.Tag.."LevelTwoSpiders",
+        instructions = {
+            "debug 3",
+            "Use card",
+            "Spawn 10 Lv 2 Spiders",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",

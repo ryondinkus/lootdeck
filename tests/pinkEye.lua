@@ -3,6 +3,12 @@ local card = lootcardKeys.pinkEye
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Pink Eye Debug + Debug 3",
+            "Use card",
+            "Spawn Spider",
+            "Take damage"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -32,6 +38,12 @@ return {
     },
     {
         name = card.Tag.."Projectile",
+        instructions = {
+            "Pink Eye Debug + Debug 3",
+            "Use card",
+            "Spawn Horf",
+            "Take damage from projectile"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -61,6 +73,11 @@ return {
     },
     {
         name = card.Tag.."SelfDamage",
+        instructions = {
+            "Pink Eye Debug + Debug 3",
+            "Use card",
+            "Take damage from razor blade"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -90,6 +107,12 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card three times",
+            "Spawn Horf",
+            "Take damage from Horf",
+            "Repeat on same seed, using card once",
+        },
         steps = {
             LootDeckAPI.ClearDebugFlagStep(card.Tag),
             {

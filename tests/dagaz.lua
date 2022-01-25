@@ -3,6 +3,10 @@ local card = lootcardKeys.dagaz
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Grant Curse of the Lost",
+            "Use card 10 times",
+        },
         steps = {
             {
                 action = "RESTART",

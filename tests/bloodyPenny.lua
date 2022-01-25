@@ -3,6 +3,12 @@ local card = lootcardKeys.bloodyPenny
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Debug 3 + Debug 4",
+            "Uses card",
+            "Spawns 20 spiders",
+            "Kill them all!"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -37,6 +43,12 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Debug 3 + Debug 4",
+            "Uses card 5 times",
+            "Spawns 12 spiders",
+            "Kill them all!"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -77,6 +89,12 @@ return {
     },
     {
         name = card.Tag.."InvEnemies",
+        instructions = {
+            "Debug 3 + Debug 4 + Soy",
+            "Uses card 5 times",
+            "Spawns a grimace",
+            "Shoots at grimace for 10s"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -119,6 +137,13 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Debug 3 + Debug 4 + Soy",
+            "Uses card 5 times",
+            "Enter new room",
+            "Kill shit",
+            "On key press, use glowing hour glass and do it again"
+        },
         steps = {
             {
                 action = "RESTART",

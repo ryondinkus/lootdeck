@@ -3,6 +3,11 @@ local card = lootcardKeys.theWorld
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Spawn 5 Horfs",
+            "Use card",
+            "Go to new room twice"
+        },
         steps = {
             {
                 action = "RESTART",

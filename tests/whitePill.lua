@@ -3,6 +3,9 @@ local card = lootcardKeys.whitePill
 return {
     {
         name = card.Tag.."PoisonFart",
+        instructions = {
+            "Use poison fart effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 1),
             {
@@ -21,6 +24,9 @@ return {
     },
     {
         name = card.Tag.."Weakens",
+        instructions = {
+            "Use weaken fart effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 2),
             {
@@ -39,6 +45,9 @@ return {
     },
     {
         name = card.Tag.."Nothing",
+        instructions = {
+            "Use nothing effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 3),
             {
@@ -57,6 +66,9 @@ return {
     },
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -87,6 +99,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Glowing Hourglass, use again",
+            "Repeat two more times"
+        },
         steps = {
             {
                 action = "REPEAT",

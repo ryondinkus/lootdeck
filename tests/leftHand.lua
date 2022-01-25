@@ -3,6 +3,12 @@ local card = lootcardKeys.leftHand
 return {
     {
         name = card.Tag.."Locked",
+        instructions = {
+            "Use card",
+            "Spawn gold chest",
+            "Open chest",
+            "Repeat 9 more times"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -49,6 +55,12 @@ return {
     },
     {
         name = card.Tag.."Red",
+        instructions = {
+            "Use card",
+            "Spawn red chest",
+            "Open chest",
+            "Repeat 9 more times"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -91,6 +103,11 @@ return {
     },
     {
         name = card.Tag.."LockedBefore",
+        instructions = {
+            "Spawn gold chest",
+            "Use card",
+            "Open chest",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -131,6 +148,11 @@ return {
     },
     {
         name = card.Tag.."RedBefore",
+        instructions = {
+            "Spawn red chest",
+            "Use card",
+            "Open chest",
+        },
         steps = {
             {
                 action = "RESTART",

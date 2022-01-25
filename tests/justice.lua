@@ -3,6 +3,10 @@ local card = lootcardKeys.justice
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Spawn Horf"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -27,6 +31,11 @@ return {
     },
     {
         name = card.Tag.."Interrupt",
+        instructions = {
+            "Use card",
+            "Spawn Horf",
+            "Kill Horf after a couple of seconds"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -55,6 +64,10 @@ return {
     },
     {
         name = card.Tag.."Multiple",
+        instructions = {
+            "Use card twice",
+            "Spawn Horf"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -85,6 +98,10 @@ return {
     },
     {
         name = card.Tag.."MultipleEnemies",
+        instructions = {
+            "Use card twice",
+            "Go to room with multiple enemies"
+        },
         steps = {
             {
                 action = "RESTART",

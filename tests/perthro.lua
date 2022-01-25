@@ -3,6 +3,9 @@ local card = lootcardKeys.perthro
 return {
     {
         name = card.Tag.."NoItems",
+        instructions = {
+            "Use card with no items"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -19,6 +22,10 @@ return {
     },
     {
         name = card.Tag.."StartingItems",
+        instructions = {
+            "Use card with Cain starting items",
+            "Use card with Cain starting items + an extra Lucky Foot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -54,6 +61,10 @@ return {
     },
     {
         name = card.Tag.."ActiveItem",
+        instructions = {
+            "Give Plum Flute and 5 random passives",
+            "Use Perthro 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -104,6 +115,11 @@ return {
     },
     {
         name = card.Tag.."Persist",
+        instructions = {
+            "Give Plum Flute",
+            "Use Perthro",
+            "Go to new room before new item is granted"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -129,6 +145,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Give Plum Flute",
+            "Use Perthro",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

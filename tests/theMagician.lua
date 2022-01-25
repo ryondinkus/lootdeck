@@ -3,6 +3,11 @@ local card = lootcardKeys.theMagician
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Uses the card twice",
+            "Shoot at Horf",
+            "Exit room"
+        },
         steps = {
             {
                 action = "RESTART",

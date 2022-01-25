@@ -3,6 +3,10 @@ local card = lootcardKeys.joker
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Spawn an item"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -28,6 +32,10 @@ return {
     },
     {
         name = card.Tag.."Shop",
+        instructions = {
+            "Use card",
+            "Go to a shop"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -48,6 +56,10 @@ return {
     },
     {
         name = card.Tag.."Devil",
+        instructions = {
+            "Use card",
+            "Go to a Devil Room"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -68,6 +80,11 @@ return {
     },
     {
         name = card.Tag.."Interrupt",
+        instructions = {
+            "Use card",
+            "Spawn item",
+            "Take item before Devil Hand"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -94,6 +111,10 @@ return {
     },
     {
         name = card.Tag.."Double",
+        instructions = {
+            "Use card twice",
+            "Spawn item"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -123,6 +144,10 @@ return {
     },
     {
         name = card.Tag.."DoubleDouble",
+        instructions = {
+            "Use card twice",
+            "Spawn two items"
+        },
         steps = {
             {
                 action = "RESTART",

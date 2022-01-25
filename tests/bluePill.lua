@@ -3,6 +3,9 @@ local card = lootcardKeys.bluePill
 return {
     {
         name = card.Tag.."LootCard",
+        instructions = {
+            "Runs the spawn 1 loot effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 1),
             {
@@ -21,6 +24,9 @@ return {
     },
     {
         name = card.Tag.."LootCards",
+        instructions = {
+            "Runs the spawn 3 loot effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 2),
             {
@@ -39,6 +45,9 @@ return {
     },
     {
         name = card.Tag.."Lose",
+        instructions = {
+            "Runs the lose pickups effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 3),
             {
@@ -57,6 +66,9 @@ return {
     },
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Uses random blue pill effect 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -87,6 +99,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Uses the card",
+            "Glowing Hourglass and use card again",
+            "Repeat twice"
+        },
         steps = {
             {
                 action = "REPEAT",

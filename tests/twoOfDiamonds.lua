@@ -3,6 +3,11 @@ local card = lootcardKeys.twoOfDiamonds
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Go to shop",
+            "Go to shop on new floor"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -35,6 +40,11 @@ return {
     },
     {
         name = card.Tag.."Freeze",
+        instructions = {
+            "Use card",
+            "Spawn Horf",
+            "Run into Horf"
+        },
         steps = {
             {
                 action = "RESTART",

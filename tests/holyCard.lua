@@ -3,6 +3,11 @@ local card = lootcardKeys.holyCard
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Spawn Horf, let him shoot",
+            "Go to new room"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -30,6 +35,11 @@ return {
     },
     {
         name = card.Tag.."Charmed",
+        instructions = {
+            "Use card",
+            "Spawn Horf, charm him",
+            "Spawn Boil, let him get shot"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,11 @@ local card = lootcardKeys.aSack
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Check cards using EID",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -27,6 +32,5 @@ return {
                 }
             }
         },
-        instructions = "Use EID to check card RNG"
     }
 }

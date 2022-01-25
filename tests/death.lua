@@ -3,6 +3,10 @@ local card = lootcardKeys.death
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Go to new room",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -22,6 +26,12 @@ return {
     },
     {
         name = card.Tag.."JandE",
+        instructions = {
+            "Go to new room",
+            "Use card as Jacob",
+            "Go to new room",
+            "Use card as Esau",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -65,6 +75,10 @@ return {
     },
     {
         name = card.Tag.."Keeper",
+        instructions = {
+            "Go to new room",
+            "Use card as Keeper",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -84,6 +98,12 @@ return {
     },
     {
         name = card.Tag.."Forgotten",
+        instructions = {
+            "Go to new room",
+            "Use card as The Bones",
+            "Go to new room",
+            "Use card as The Soul",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -132,6 +152,10 @@ return {
     },
     {
         name = card.Tag.."Beast",
+        instructions = {
+            "Go to Beast fight",
+            "Use card",
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,11 @@ local card = lootcardKeys.rainbowTapeworm
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Give 4 random passives",
+            "Enter and exit room 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -53,6 +58,11 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use 5 timescard",
+            "Give 4 random passives",
+            "Enter and exit room 5 times"
+        },
         steps = {
             {
                 action = "RESTART",

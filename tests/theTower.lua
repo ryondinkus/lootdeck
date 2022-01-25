@@ -3,6 +3,10 @@ local card = lootcardKeys.theTower
 return {
 	{
 		name = card.Tag.."Use",
+		instructions = {
+			"Spawn Horf",
+			"Use card"
+		},
 		steps = {
 			{
 				action = "RESTART",
@@ -27,6 +31,11 @@ return {
 	},
 	{
 		name = card.Tag.."Multiple",
+		instructions = {
+			"Go to new room",
+			"Use card",
+			"Repeat on same seed"
+		},
 		steps = {
 			{
 				action = "REPEAT",

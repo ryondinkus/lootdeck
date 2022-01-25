@@ -3,6 +3,9 @@ local card = lootcardKeys.questionCard
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card with no enemies"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -27,6 +30,10 @@ return {
     },
     {
         name = card.Tag.."Enemies",
+        instructions = {
+            "Go to new room",
+            "Use card"
+        },
         steps = {
             {
                 action = "REPEAT",

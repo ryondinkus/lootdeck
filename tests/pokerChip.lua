@@ -4,6 +4,10 @@ local entityVariants = include("entityVariants/registry")
 return {
     {
         name = card.Tag.."Penny",
+        instructions = {
+            "Use card",
+            "Spawn 9 pennies"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -59,6 +63,10 @@ return {
     },
     {
         name = card.Tag.."Nickel",
+        instructions = {
+            "Use card",
+            "Spawn 9 nickels"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -118,6 +126,10 @@ return {
     },
     {
         name = card.Tag.."Dime",
+        instructions = {
+            "Use card",
+            "Spawn 9 dimes"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -177,6 +189,10 @@ return {
     },
     {
         name = card.Tag.."LuckyPenny",
+        instructions = {
+            "Use card",
+            "Spawn 9 lucky pennies"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -236,6 +252,10 @@ return {
     },
     {
         name = card.Tag.."GoldenPenny",
+        instructions = {
+            "Use card",
+            "Spawn 9 golden pennies"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -295,6 +315,11 @@ return {
     },
     {
         name = card.Tag.."StickyNickel",
+        instructions = {
+            "Use card",
+            "Spawn 9 sticky nickels",
+            "Walk on them"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -373,6 +398,10 @@ return {
     },
     {
         name = card.Tag.."ChargedPenny",
+        instructions = {
+            "Use card",
+            "Spawn 9 charged pennies"
+        },
         steps = {
             {
                 action = "RESTART",

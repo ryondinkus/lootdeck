@@ -4,6 +4,13 @@ local items = include("items/registry")
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Debug 3 + Dollar",
+            "Uses card",
+            "Razor Blade damage 5 times",
+            "Uses card again",
+            "Razor Blade damage 5 more times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -52,6 +59,11 @@ return {
     },
     {
         name = card.Tag.."Broke",
+        instructions = {
+            "Debug 3",
+            "Uses card",
+            "Razor Blade damage 2 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -82,6 +94,12 @@ return {
     },
     {
         name = card.Tag.."KindaBroke",
+        instructions = {
+            "Debug 3",
+            "Uses card",
+            "Grants Swallowed Penny directly (so no penny granted)",
+            "Razor Blade damage"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -110,6 +128,11 @@ return {
     },
     -- {
     --     name = card.Tag.."Cool",
+    --     instructions = {
+    --         "Deep Pockets + 10 Dollars",
+    --         "Uses card 999 times",
+    --         "Razor Blade damage",
+    --     },
     --     steps = {
     --         {
     --             action = "RESTART",

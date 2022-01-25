@@ -3,6 +3,13 @@ local card = lootcardKeys.goldBomb
 return {
     {
         name = card.Tag.."Enemy",
+        instructions = {
+            "Blow up enemy in room below",
+            "Glowing Hourglass",
+            "Blow up same enemy in room below",
+            "Glowing Hourglass",
+            "Spawn and blow up Horf"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -74,6 +81,9 @@ return {
     },
     {
         name = card.Tag.."Self",
+        instructions = {
+            "Blow up player"
+        },
         steps = {
             {
                 action = "RESTART",

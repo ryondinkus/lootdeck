@@ -3,6 +3,9 @@ local card = lootcardKeys.yellowPill
 return {
     {
         name = card.Tag.."FourCoins",
+        instructions = {
+            "Runs the spawn 4 coins effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 1),
             {
@@ -21,6 +24,9 @@ return {
     },
     {
         name = card.Tag.."SevenCoins",
+        instructions = {
+            "Runs the spawn 7 coins effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 2),
             {
@@ -39,6 +45,9 @@ return {
     },
     {
         name = card.Tag.."LoseFourCoins",
+        instructions = {
+            "Runs the lose 4 coins effect"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 3),
             {
@@ -61,6 +70,9 @@ return {
     },
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Uses random yellow pill effect 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -91,6 +103,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Uses the card",
+            "Glowing Hourglass and use card again",
+            "Repeat twice"
+        },
         steps = {
             {
                 action = "REPEAT",

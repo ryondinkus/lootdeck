@@ -2,7 +2,11 @@ local card = lootcardKeys.theEmpress
 
 return {
     {
-        name = card.Tag.."Use",
+        name = card.Tag.."Use",instructions = {
+            "Use the card twice",
+            "Shoot",
+            "Exit room"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -5,6 +5,15 @@ local entityVariants = include("entityVariants/registry")
 return {
     {
         name = card.Tag.."Penny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 pennies",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -70,6 +79,15 @@ return {
     },
     {
         name = card.Tag.."Nickel",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 nickels",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 nickels",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -135,6 +153,15 @@ return {
     },
     {
         name = card.Tag.."Dime",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 dimes",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 dimes",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -200,6 +227,15 @@ return {
     },
     {
         name = card.Tag.."DoublePenny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 double pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 double pennies",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -265,6 +301,15 @@ return {
     },
     {
         name = card.Tag.."LuckyPenny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 lucky pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 lucky pennies",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -330,6 +375,15 @@ return {
     },
     {
         name = card.Tag.."DoubleNickel",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 double nickels",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 double nickels",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -393,6 +447,15 @@ return {
     },
     {
         name = card.Tag.."DoubleDime",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 double dimes",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 double dimes",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -456,6 +519,15 @@ return {
     },
     {
         name = card.Tag.."DoubleLuckyPenny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 double lucky pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 double lucky pennies",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -519,6 +591,15 @@ return {
     },
     {
         name = card.Tag.."ChargedPenny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 charged pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 charged pennies",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -582,6 +663,15 @@ return {
     },
     {
         name = card.Tag.."DoubleChargedPenny",
+        instructions = {
+            "Magneto + Deep Pockets",
+            "Uses card",
+            "Spawn 20 double charged pennies",
+            "Wait for input",
+            "Resets coin count",
+            "Uses card twice",
+            "Spawn 20 double charged pennies",
+        },
         steps = {
             {
                 action = "RESTART",

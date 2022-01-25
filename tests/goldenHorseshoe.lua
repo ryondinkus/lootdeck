@@ -3,6 +3,11 @@ local card = lootcardKeys.goldenHorseshoe
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Go to treasure room",
+            "Exit room and reenter 3 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -41,6 +46,11 @@ return {
     },
     {
         name = card.Tag.."Labyrinth",
+        instructions = {
+            "Go to XL floor",
+            "Use card",
+            "Go to both treasure rooms",
+        },
         steps = {
             {
                 action = "RESTART",

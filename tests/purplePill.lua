@@ -3,6 +3,10 @@ local card = lootcardKeys.purplePill
 return {
     {
         name = card.Tag.."Recharge",
+        instructions = {
+            "Give uncharged Plum Flute",
+            "Use recharge effect of card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 1),
             {
@@ -25,6 +29,9 @@ return {
     },
     {
         name = card.Tag.."TearsUp",
+        instructions = {
+            "Use tears up effect of card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 2),
             {
@@ -43,6 +50,9 @@ return {
     },
     {
         name = card.Tag.."TearsDown",
+        instructions = {
+            "Use tears down effect of card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 3),
             {
@@ -61,6 +71,9 @@ return {
     },
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -91,6 +104,12 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Glowing hourglass",
+            "Use card again",
+            "Repeat 3 times"
+        },
         steps = {
             {
                 action = "REPEAT",

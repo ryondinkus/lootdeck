@@ -3,6 +3,11 @@ local card = lootcardKeys.purpleHeart
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Go to new room",
+            "Restart + repeat 9 more times"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -32,6 +37,12 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card 4 times",
+            "Go to new room",
+            "Kill all room enemies for enemy drops",
+            "Restart + repeat 4 more times"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -75,6 +86,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Go to new room",
+            "Restart on same seed + repeat"
+        },
         steps = {
             {
                 action = "REPEAT",

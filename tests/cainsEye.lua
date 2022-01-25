@@ -3,6 +3,10 @@ local card = lootcardKeys.cainsEye
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Uses card",
+            "Go to a new stage 5 times",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -33,6 +37,10 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Uses card 3 times",
+            "Go to a new stage 5 times",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -69,6 +77,11 @@ return {
     },
     {
         name = card.Tag.."Existing",
+        instructions = {
+            "Gives the map",
+            "Uses card twice",
+            "Go to a new stage 3 times",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -109,6 +122,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Uses card",
+            "Go to a new stage",
+            "Reload same seed and repeat"
+        },
         steps = {
             {
                 action = "REPEAT",

@@ -3,6 +3,10 @@ local card = lootcardKeys.whiteSpottedPill
 return {
     {
         name = card.Tag.."Swap",
+        instructions = {
+            "Give 5 keys",
+            "Use swap pickups effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 1),
             {
@@ -27,6 +31,10 @@ return {
     },
     {
         name = card.Tag.."RoomItems",
+        instructions = {
+            "Spawn 3 items",
+            "Use reroll pedestals effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 2),
             {
@@ -63,6 +71,10 @@ return {
     },
     {
         name = card.Tag.."Passives",
+        instructions = {
+            "Give 4 items",
+            "Use reroll run effect from card"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, 3),
             {
@@ -102,6 +114,9 @@ return {
     },
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -132,6 +147,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Glowing Hourglass, use again",
+            "Repeat two more times"
+        },
         steps = {
             {
                 action = "REPEAT",

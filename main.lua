@@ -186,8 +186,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
+    local isTaintedLost = false
+    helper.ForEachPlayer(function(p)
+        if p:GetPlayerType() == PlayerType.PLAYER_THELOST_B then
+            isTaintedLost = true
+        end
+    end)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
-	if not runeOnly then
+	if not runeOnly and not (isTaintedLost and id == Card.CARD_HOLY) then
         local isLootCard = lootcards[id] ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
 		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance, 100, r) and lootdeck.unlocks.gimmeTheLoot

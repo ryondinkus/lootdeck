@@ -3,6 +3,11 @@ local card = lootcardKeys.brokenAnkh
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Broken Ankh Debug enabled",
+            "Uses card",
+            "Die from razor blade"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -35,6 +40,15 @@ return {
     },
     {
         name = card.Tag.."JandE",
+        instructions = {
+            "Broken Ankh Debug enabled",
+            "Uses card as Jacob",
+            "Jacob dies from razor blade",
+            "Uses card as Jacob",
+            "Esau dies from razor blade",
+            "Uses card as Jacob and Esau",
+            "Jacob dies from razor blade"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -127,6 +141,11 @@ return {
     },
     {
         name = card.Tag.."Keeper",
+        instructions = {
+            "Broken Ankh Debug enabled",
+            "Uses card as Keeper",
+            "Dies from razor blade"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -159,6 +178,13 @@ return {
     },
     {
         name = card.Tag.."Forgotten",
+        instructions = {
+            "Broken Ankh Debug enabled",
+            "Uses card as Bones",
+            "Bones dies from razor blade",
+            "Uses card as Soul",
+            "Soul dies from razor blade"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -219,6 +245,11 @@ return {
     },
     {
         name = card.Tag.."Beast",
+        instructions = {
+            "Broken Ankh Debug enabled",
+            "Uses card",
+            "Die in Beast fight"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -259,6 +290,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Die from razor blade",
+            "Repeat on same seed"
+        },
         steps = {
             LootDeckAPI.ClearDebugFlagStep(card.Tag),
             {
@@ -297,6 +333,13 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card three times",
+            "Die from razor blade, revive",
+            "Repeat on same seed",
+            "Use card once",
+            "Die from razor blade, no revive",
+        },
         steps = {
             LootDeckAPI.ClearDebugFlagStep(card.Tag),
             {

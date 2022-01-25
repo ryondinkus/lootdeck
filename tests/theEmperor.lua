@@ -3,6 +3,10 @@ local card = lootcardKeys.theEmperor
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Go to room with enemies",
+            "Use the card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -27,6 +31,10 @@ return {
     },
     {
         name = card.Tag.."Boss",
+        instructions = {
+            "Go to boss room",
+            "Use the card"
+        },
         steps = {
             {
                 action = "RESTART",

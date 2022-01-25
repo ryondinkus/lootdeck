@@ -3,6 +3,11 @@ local card = lootcardKeys.theHierophant
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Spawn Horf",
+            "Take damage from Horf twice (will block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -27,6 +32,10 @@ return {
     },
     {
         name = card.Tag.."BloodBank",
+        instructions = {
+            "Use card",
+            "Take damage from Blood Bank (won't block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -52,6 +61,10 @@ return {
     },
     {
         name = card.Tag.."DullRazor",
+        instructions = {
+            "Use card",
+            "Take damage from Dull Razor (won't block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -72,6 +85,10 @@ return {
     },
     {
         name = card.Tag.."IvBag",
+        instructions = {
+            "Use card",
+            "Take damage from IV Bag (won't block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -92,6 +109,10 @@ return {
     },
     {
         name = card.Tag.."CurseRoom",
+        instructions = {
+            "Use card",
+            "Take damage from Curse Room (will block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -123,6 +144,10 @@ return {
     },
     {
         name = card.Tag.."SacrificeRoom",
+        instructions = {
+            "Use card",
+            "Take damage from Sac Room (will block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -144,6 +169,10 @@ return {
     },
     {
         name = card.Tag.."PoundOfFlesh",
+        instructions = {
+            "Use card",
+            "Take damage from Pound of Flesh shop item (won't block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -176,6 +205,11 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card 3 times",
+            "Spawn Horf",
+            "Take damage from Horf six times (will block)"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -202,6 +236,11 @@ return {
     },
     {
         name = card.Tag.."HolyMantle",
+        instructions = {
+            "Grant Holy Mantle",
+            "Use card",
+            "Take damage from Horf three times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -226,6 +265,11 @@ return {
     },
     {
         name = card.Tag.."HolyCard",
+        instructions = {
+            "Use Holy Card",
+            "Use card",
+            "Take damage from Horf three times"
+        },
         steps = {
             {
                 action = "RESTART",

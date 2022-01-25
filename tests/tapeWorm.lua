@@ -3,6 +3,12 @@ local card = lootcardKeys.tapeWorm
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Shoot in all directions",
+            "Use card three times",
+            "Shoot in all directions"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,11 @@ local card = lootcardKeys.chargedPenny
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Give uncharged Plum Flute",
+            "Use card, pick up coin",
+            "Use card again"
+        },
         steps = {
             {
                 action = "RESTART",

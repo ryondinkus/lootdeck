@@ -3,6 +3,10 @@ local card = lootcardKeys.theStars
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

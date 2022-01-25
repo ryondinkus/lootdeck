@@ -3,6 +3,9 @@ local card = lootcardKeys.ansuz
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card twice"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -30,6 +33,10 @@ return {
     },
     {
         name = card.Tag.."Boss",
+        instructions = {
+            "Go to Treasure Room and Shop",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -95,6 +102,10 @@ return {
     },
     {
         name = card.Tag.."Explore",
+        instructions = {
+            "Go to Treasure Room, Shop, and Boss Room",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,11 @@ local card = lootcardKeys.theSun
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Give two copies of the card, use one",
+            "Go to boss room, kill boss",
+            "On key press, spawn another card and grant card directly"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -52,6 +57,10 @@ return {
     },
     {
         name = card.Tag.."After",
+        instructions = {
+            "Go to boss room, kill boss",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,9 @@ local card = lootcardKeys.temperance
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card six times"
+        },
         steps = {
             {
                 action = "RESTART",

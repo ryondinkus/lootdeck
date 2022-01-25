@@ -3,6 +3,10 @@ local card = lootcardKeys.theMoon
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Exit and re-enter room"
+        },
         steps = {
             {
                 action = "RESTART",

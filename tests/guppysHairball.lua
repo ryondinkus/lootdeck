@@ -3,6 +3,11 @@ local card = lootcardKeys.guppysHairball
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from Horf (will block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -29,6 +34,11 @@ return {
     },
     {
         name = card.Tag.."BloodBank",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from Blood Bank (won't block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -56,6 +66,11 @@ return {
     },
     {
         name = card.Tag.."DullRazor",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from Dull Razor (won't block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -78,6 +93,11 @@ return {
     },
     {
         name = card.Tag.."IvBag",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from IV Bag (won't block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -100,6 +120,11 @@ return {
     },
     {
         name = card.Tag.."CurseRoom",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from Curse Room (will block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -133,6 +158,11 @@ return {
     },
     {
         name = card.Tag.."SacrificeRoom",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from Sac Room (will block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -156,6 +186,11 @@ return {
     },
     {
         name = card.Tag.."PoundOfFlesh",
+        instructions = {
+            "Guppys Hairball Debug enabled",
+            "Use card",
+            "Take damage from buying Pound of Flesh item (won't block)"
+        },
         steps = {
             LootDeckAPI.SetDebugFlagStep(card.Tag, true),
             {
@@ -190,6 +225,11 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card",
+            "Take damage from Horf",
+            "Restart on same seed, repeat"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,10 @@ local card = lootcardKeys.theChariot
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Exit room"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -26,6 +30,14 @@ return {
     },
     {
         name = card.Tag.."JandE",
+        instructions = {
+            "Use card as Jacob",
+            "Exit room and restart",
+            "Use card as Esau",
+            "Exit room and restart",
+            "Use card as Jacob and Esau",
+            "Exit room and restart",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -104,6 +116,14 @@ return {
     },
     {
         name = card.Tag.."TaintedForgotten",
+        instructions = {
+            "Use card as Tainted Bones",
+            "Exit room and restart",
+            "Use card as Tainted Soul",
+            "Exit room and restart",
+            "Use card as Tainted Bones and Tainted Soul",
+            "Exit room and restart",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -182,6 +202,16 @@ return {
     },
     {
         name = card.Tag.."Forgotten",
+        instructions = {
+            "Use card as The Bones",
+            "Exit room as The Bones and restart",
+            "Use card as The Soul",
+            "Exit room as The Soul and restart",
+            "Use card as The Bones",
+            "Exit room as The Soul and restart",
+            "Use card as The Soul",
+            "Exit room as The Bones and restart",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -289,6 +319,10 @@ return {
     },
     {
         name = card.Tag.."Keeper",
+        instructions = {
+            "Use card as Keeper 5 times",
+            "Exit room",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -314,6 +348,10 @@ return {
     },
     {
         name = card.Tag.."TaintedKeeper",
+        instructions = {
+            "Use card as Tainted Keeper 5 times",
+            "Exit room",
+        },
         steps = {
             {
                 action = "RESTART",

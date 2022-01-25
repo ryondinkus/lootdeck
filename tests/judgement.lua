@@ -3,6 +3,16 @@ local card = lootcardKeys.judgement
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card as Azazel with one black heart",
+            "Use card with half a red heart",
+            "Use card with no keys, then bombs",
+            "Use card with less than full health",
+            "Use card with less than 15 coins, then 5 keys, then 5 bombs",
+            "Use card with no trinkets in inventory or on ground",
+            "Use card with less than 6 hearts of any kind",
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -174,6 +184,13 @@ return {
     },
     {
         name = card.Tag.."Lost",
+        instructions = {
+            "Use card as The Lost",
+            "Use card with no keys, then bombs",
+            "Use card with less than 15 coins, then 5 keys, then 5 bombs",
+            "Use card with no trinkets in inventory or on ground",
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -325,6 +342,13 @@ return {
     },
     {
         name = card.Tag.."TaintedLost",
+        instructions = {
+            "Use card as Tainted Lost",
+            "Use card with no keys, then bombs",
+            "Use card with less than 15 coins, then 5 keys, then 5 bombs",
+            "Use card with no trinkets in inventory or on ground",
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -476,6 +500,14 @@ return {
     },
     {
         name = card.Tag.."BlueBaby",
+        instructions = {
+            "Use card as ??? with one Soul Heart",
+            "Use card with no keys, then bombs",
+            "Use card with less than 15 coins, then 5 keys, then 5 bombs",
+            "Use card with no trinkets in inventory or on ground",
+            "Use card with less than 6 hearts of any kind",
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -635,6 +667,12 @@ return {
     },
     {
         name = card.Tag.."TaintedBlueBaby",
+        instructions = {
+            "Use card as ??? with one Soul Heart",
+            "Use card with no keys, then bombs",
+            "It's just gonna spawn a buncha doodoo feces lmao",
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -794,6 +832,10 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

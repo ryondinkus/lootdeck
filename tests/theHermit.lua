@@ -3,6 +3,10 @@ local card = lootcardKeys.theHermit
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Buy item"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -32,6 +36,10 @@ return {
     },
     {
         name = card.Tag.."Devil",
+        instructions = {
+            "Go to Devil Room",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -56,6 +64,10 @@ return {
     },
     {
         name = card.Tag.."ActiveItem",
+        instructions = {
+            "Use card (active will spawn)",
+            "Buy and swap active items"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -90,6 +102,10 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

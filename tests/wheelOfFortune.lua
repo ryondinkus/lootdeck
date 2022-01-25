@@ -3,6 +3,9 @@ local card = lootcardKeys.wheelOfFortune
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card 10 times"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -29,6 +32,10 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Use card",
+            "Repeat on same seed"
+        },
         steps = {
             {
                 action = "REPEAT",

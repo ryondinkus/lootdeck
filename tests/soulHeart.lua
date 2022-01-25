@@ -3,6 +3,11 @@ local card = lootcardKeys.soulHeart
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Spawn Horf",
+            "Take damage from Horf"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -27,6 +32,10 @@ return {
     },
     {
         name = card.Tag.."Remove",
+        instructions = {
+            "Use card",
+            "Go to new room",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -50,6 +59,11 @@ return {
     },
     {
         name = card.Tag.."HolyMantle",
+        instructions = {
+            "Grant Holy Mantle",
+            "Use card",
+            "Take damage from Horf twice"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -74,6 +88,11 @@ return {
     },
     {
         name = card.Tag.."HolyCard",
+        instructions = {
+            "Use Holy Card",
+            "Use card",
+            "Take damage from Horf twice"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -98,6 +117,11 @@ return {
     },
     {
         name = card.Tag.."Hierophant",
+        instructions = {
+            "Use Hierophant",
+            "Use card",
+            "Take damage from Horf twice"
+        },
         steps = {
             {
                 action = "RESTART",

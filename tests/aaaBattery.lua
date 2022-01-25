@@ -3,6 +3,12 @@ local card = lootcardKeys.aaaBattery
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Glowing hourglass",
+            "Use card",
+            "Go to new floor"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -42,6 +48,10 @@ return {
     },
     {
         name = card.Tag.."Stacking",
+        instructions = {
+            "Use card twice",
+            "Go to new floor"
+        },
         steps = {
             {
                 action = "RESTART",

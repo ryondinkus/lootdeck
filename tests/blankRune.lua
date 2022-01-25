@@ -3,6 +3,10 @@ local card = lootcardKeys.blankRune
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Set player to 1 heart",
+            "Use card 15 times",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -37,6 +41,11 @@ return {
     },
     {
         name = card.Tag.."Rng",
+        instructions = {
+            "Uses the card",
+            "Glowing Hourglass and use card again",
+            "Repeat twice"
+        },
         steps = {
             {
                 action = "REPEAT",
@@ -86,6 +95,9 @@ return {
     },
     {
         name = card.Tag.."JandE",
+        instructions = {
+            "Uses the card as Jacob three times",
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,9 @@ local card = lootcardKeys.theFool
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Uses the card"
+        },
         steps = {
             {
                 action = "RESTART",

@@ -3,6 +3,14 @@ local card = lootcardKeys.creditCard
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Give Plum Flute",
+            "Use card",
+            "Go to shop",
+            "Try to buy active item, fail",
+            "Give a dollar",
+            "Buy item again, swapping actives"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -44,6 +52,12 @@ return {
     },
     {
         name = card.Tag.."Multiple",
+        instructions = {
+            "Give a dollar",
+            "Use card twice",
+            "Go to shop",
+            "Buy two items",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -95,6 +109,14 @@ return {
     },
     {
         name = card.Tag.."Devil",
+        instructions = {
+            "Give player 4 red hearts, 6 soul hearts",
+            "Use card 4 times",
+            "Buy 1 heart devil deal",
+            "Buy 2 heart devil deal",
+            "Buy 3 soul heart devil deal",
+            "Buy 1 red heart + 2 soul heart devil deal"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -207,6 +229,15 @@ return {
     },
     {
         name = card.Tag.."Battery",
+        instructions = {
+            "Give a dollar",
+            "Use card twice",
+            "Spawn two Mega Batteries for sale",
+            "Try to buy Mega Battery with no active",
+            "Give uncharged Plum Flute",
+            "Buy Mega Battery",
+            "Try to buy Mega Battery with charged active",
+        },
         steps = {
             {
                 action = "RESTART",

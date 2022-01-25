@@ -3,6 +3,9 @@ local card = lootcardKeys.diceShard
 return {
     {
         name = card.Tag.."NewLevel",
+        instructions = {
+            "Use card in floor starting room"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -23,6 +26,9 @@ return {
     },
     {
         name = card.Tag.."Regular",
+        instructions = {
+            "Use card in new room",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -46,6 +52,9 @@ return {
     },
     {
         name = card.Tag.."BlankCard",
+        instructions = {
+            "Use card with Blank Card",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -78,6 +87,9 @@ return {
     },
     {
         name = card.Tag.."Void",
+        instructions = {
+            "Use card with Black Card absorbed by Void",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -131,6 +143,9 @@ return {
     },
     {
         name = card.Tag.."JandE",
+        instructions = {
+            "J&E both have Dice Shard and alternate using it",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -177,6 +192,9 @@ return {
     },
     {
         name = card.Tag.."StarterDeck",
+        instructions = {
+            "Use card while holding another Dice Shard",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -210,6 +228,9 @@ return {
     },
     {
         name = card.Tag.."Beast",
+        instructions = {
+            "Use card during Beast fight",
+        },
         steps = {
             {
                 action = "RESTART",

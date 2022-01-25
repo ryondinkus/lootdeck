@@ -3,6 +3,10 @@ local card = lootcardKeys.theHangedMan
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Go to Caves room with holes",
+            "Use card"
+        },
         steps = {
             {
                 action = "RESTART",

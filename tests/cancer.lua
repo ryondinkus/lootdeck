@@ -3,6 +3,12 @@ local card = lootcardKeys.cancer
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Use card",
+            "Shoot in empty room",
+            "Spawn horf",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -31,6 +37,12 @@ return {
     },
     {
         name = card.Tag.."NewRoom",
+        instructions = {
+            "Use card",
+            "Shoot in empty room",
+            "Go to new room with enemies",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -58,41 +70,13 @@ return {
         }
     },
     {
-        name = card.Tag.."Stacking",
-        steps = {
-            {
-                action = "RESTART",
-                id = PlayerType.PLAYER_ISAAC,
-                seed = "ZH0R FKBE"
-            },
-            {
-                action = "REPEAT",
-                times = 2,
-                steps = {
-                    {
-                        action = "GIVE_CARD",
-                        id = card.Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    },
-                }
-            },
-            {
-                action = "SHOOT_UP",
-                seconds = 1
-            },
-            {
-                action = "GO_TO_DOOR"
-            },
-            {
-                action = "SHOOT_RIGHT",
-                seconds = 3
-            }
-        }
-    },
-    {
         name = card.Tag.."BossRush",
+        instructions = {
+            "Debug 10 + goto boss rush",
+            "Use card",
+            "Void items to trigger BR",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -125,6 +109,12 @@ return {
     },
     {
         name = card.Tag.."ChallengeRoom",
+        instructions = {
+            "Debug 10 + goto boss challenge room",
+            "Use card",
+            "Void items to trigger BR",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -157,6 +147,12 @@ return {
     },
     {
         name = card.Tag.."WallHuggers",
+        instructions = {
+            "Use card",
+            "Go to specific wall hugger seed",
+            "Go to specific wall hugger room",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -190,6 +186,12 @@ return {
     },
     {
         name = card.Tag.."LevelTwoSpiders",
+        instructions = {
+            "debug 3",
+            "Use card",
+            "Spawn 10 Lv 2 Spiders",
+            "Shoot"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -228,6 +230,14 @@ return {
     },
     {
         name = card.Tag.."BlueCap",
+        instructions = {
+            "debug 3",
+            "Give Blue Cap",
+            "Use card",
+            "Spawn Horf and shoot",
+            "Give 2 more Blue Caps",
+            "Spawn Horf and shoot",
+        },
         steps = {
             {
                 action = "RESTART",
@@ -282,6 +292,12 @@ return {
     },
     {
         name = card.Tag.."SoyMilk",
+        instructions = {
+            "debug 3",
+            "Give Soy Milk",
+            "Use card",
+            "Spawn Horf and shoot",
+        },
         steps = {
             {
                 action = "RESTART",

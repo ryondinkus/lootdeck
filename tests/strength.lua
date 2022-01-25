@@ -3,6 +3,14 @@ local card = lootcardKeys.strength
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Spawn enemy",
+            "Use card",
+            "Kill enemy",
+            "Use card again",
+            "Go to new room",
+            "Go to new floor"
+        },
         steps = {
             {
                 action = "RESTART",

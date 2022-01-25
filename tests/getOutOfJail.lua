@@ -3,6 +3,11 @@ local card = lootcardKeys.getOutOfJail
 return {
     {
         name = card.Tag.."Use",
+        instructions = {
+            "Spawn 20 Horfs",
+            "Move between Horfs",
+            "Go to new room, persist"
+        },
         steps = {
             {
                 action = "RESTART",
@@ -53,9 +58,5 @@ return {
                 action = "GO_TO_DOOR"
             }
         },
-        instructions = {
-            "Passes through Horfs",
-            "Persists between rooms"
-        }
     }
 }
