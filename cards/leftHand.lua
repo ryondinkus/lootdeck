@@ -24,8 +24,6 @@ local function MC_USE_CARD(_, c, p)
     helper.GiveItem(p, items.leftHand.Id, SoundEffect.SOUND_VAMP_GULP)
 end
 
-local INITIAL_POSITION = Vector(320, 380)
-
 return {
     Name = Name,
     Names = Names,
