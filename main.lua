@@ -428,15 +428,17 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, function(_, pickup)
     if LootDeckAPI.IsCoin(pickup, true) and pickup.Variant ~= entityVariants.doubleStickyNickel.Id then
         local closestPlayer
 
-        LootDeckAPI.ForEachPlayer(function(player)
-            if not closestPlayer then
-                closestPlayer = player
-            else
-                if player.Position:Distance(pickup.Position) < closestPlayer.Position:Distance(pickup.Position) then
-                    closestPlayer = player
-                end
-            end
-        end, CollectibleType.COLLECTIBLE_MAGNETO)
+		LootDeckAPI.ForEachPlayer(function(player)
+			if player:HasCollectible(CollectibleType.COLLECTIBLE_MAGNETO) or player:HasTrinket(TrinketType.TRINKET_BROKEN_MAGNET) then
+	            if not closestPlayer then
+	                closestPlayer = player
+	            else
+	                if player.Position:Distance(pickup.Position) < closestPlayer.Position:Distance(pickup.Position) then
+	                    closestPlayer = player
+	                end
+	            end
+			end
+        end)
 
         if closestPlayer then
             pickup.Velocity = (closestPlayer.Position - pickup.Position):Normalized() * magnetoSpeed
