@@ -108,14 +108,10 @@ return {
         }
     },
     {
-        name = card.Tag.."Devil",
+        name = card.Tag.."DevilOneHeart",
         instructions = {
-            "Give player 4 red hearts, 6 soul hearts",
-            "Use card 4 times",
-            "Buy 1 heart devil deal",
-            "Buy 2 heart devil deal",
-            "Buy 3 soul heart devil deal",
-            "Buy 1 red heart + 2 soul heart devil deal"
+            "Use card",
+            "Buy 1 heart devil deal"
         },
         steps = {
             {
@@ -123,35 +119,11 @@ return {
                 id = PlayerType.PLAYER_ISAAC
             },
             {
-                action = "GIVE_ITEM",
-                id = CollectibleType.COLLECTIBLE_BREAKFAST
+                action = "GIVE_CARD",
+                id = card.Id
             },
             {
-                action = "REPEAT",
-                times = 2,
-                steps = {
-                    {
-                        action = "GIVE_ITEM",
-                        id = CollectibleType.COLLECTIBLE_BREAKFAST
-                    },
-                    {
-                        action = "USE_ITEM",
-                        id = CollectibleType.COLLECTIBLE_GUPPYS_PAW
-                    }
-                }
-            },
-            {
-                action = "REPEAT",
-                times = 4,
-                steps = {
-                    {
-                        action = "GIVE_CARD",
-                        id = card.Id
-                    },
-                    {
-                        action = "USE_CARD"
-                    }
-                }
+                action = "USE_CARD"
             },
             {
                 action = "SPAWN",
@@ -167,10 +139,26 @@ return {
                 action = "MOVE_UP",
                 seconds = 1,
                 speed = 0.8
+            }
+        }
+    },
+    {
+        name = card.Tag.."DevilTwoHearts",
+        instructions = {
+            "Use card",
+            "Buy 2 heart devil deal"
+        },
+        steps = {
+            {
+                action = "RESTART",
+                id = PlayerType.PLAYER_ISAAC
             },
             {
-                action = "WAIT_FOR_SECONDS",
-                seconds = 1
+                action = "GIVE_CARD",
+                id = card.Id
+            },
+            {
+                action = "USE_CARD"
             },
             {
                 action = "SPAWN",
@@ -183,13 +171,34 @@ return {
                 end
             },
             {
-                action = "MOVE_DOWN",
+                action = "MOVE_UP",
                 seconds = 1,
                 speed = 0.8
+            }
+        }
+    },
+    {
+        name = card.Tag.."DevilThreeSoulHearts",
+        instructions = {
+            "Give player 3 soul hearts",
+            "Use card",
+            "Buy 3 soul heart devil deal"
+        },
+        steps = {
+            {
+                action = "RESTART",
+                id = PlayerType.PLAYER_ISAAC
             },
             {
-                action = "WAIT_FOR_SECONDS",
-                seconds = 1
+                action = "USE_ITEM",
+                id = CollectibleType.COLLECTIBLE_GUPPYS_PAW
+            },
+            {
+                action = "GIVE_CARD",
+                id = card.Id
+            },
+            {
+                action = "USE_CARD"
             },
             {
                 action = "SPAWN",
@@ -205,10 +214,31 @@ return {
                 action = "MOVE_UP",
                 seconds = 1,
                 speed = 0.8
+            }
+        }
+    },
+    {
+        name = card.Tag.."DevilOneHeartTwoSoulHearts",
+        instructions = {
+            "Give player 3 soul hearts",
+            "Use card",
+            "Buy 1 red heart + 2 soul heart devil deal"
+        },
+        steps = {
+            {
+                action = "RESTART",
+                id = PlayerType.PLAYER_ISAAC
             },
             {
-                action = "WAIT_FOR_SECONDS",
-                seconds = 1
+                action = "USE_ITEM",
+                id = CollectibleType.COLLECTIBLE_GUPPYS_PAW
+            },
+            {
+                action = "GIVE_CARD",
+                id = card.Id
+            },
+            {
+                action = "USE_CARD"
             },
             {
                 action = "SPAWN",
@@ -221,7 +251,7 @@ return {
                 end
             },
             {
-                action = "MOVE_DOWN",
+                action = "MOVE_UP",
                 seconds = 1,
                 speed = 0.8
             }
