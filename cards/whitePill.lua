@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 
-    helper.RunRandomFunction(rng, shouldDouble,
+    helper.RunRandomFunction(lootdeck.debug[Tag] or rng, shouldDouble,
     function()
         helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_BEAN)
     end,

@@ -23,6 +23,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique
 
 local function MC_USE_CARD(_, c, p)
 	helper.GiveItem(p, items.swallowedPenny.Id, SoundEffect.SOUND_VAMP_GULP)
+    p:AddCoins(1)
 end
 
 return {

@@ -55,18 +55,18 @@ return {
     HolographicDescriptions = HolographicDescriptions,
     WikiDescription = WikiDescription,
     Callbacks = {
-            {
-                ModCallbacks.MC_USE_CARD,
-                MC_USE_CARD,
-                Id
-            },
-            {
-                ModCallbacks.MC_POST_NEW_ROOM,
-                MC_POST_NEW_ROOM
-            },
-            {
-                ModCallbacks.MC_POST_PEFFECT_UPDATE,
-                MC_POST_PEFFECT_UPDATE
-            }
+        {
+            ModCallbacks.MC_USE_CARD,
+            MC_USE_CARD,
+            Id
+        },
+        {
+            ModCallbacks.MC_POST_NEW_ROOM,
+            MC_POST_NEW_ROOM
+        },
+        {
+            ModCallbacks.MC_POST_PEFFECT_UPDATE,
+            MC_POST_PEFFECT_UPDATE
+        }
     }
 }

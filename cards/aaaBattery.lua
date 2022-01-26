@@ -20,9 +20,9 @@ local HolographicDescriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("On use, grants a unique passive item.", "Passive effect: Grants a random temporary battery item for each new floor.", "- Additional copies of the passive grant extra battery items.", "Holographic Effect: Grants two copies of the passive.")
 
-local function MC_USE_CARD(_, c, p)
+local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     helper.GiveItem(p, items.aaaBattery.Id, SoundEffect.SOUND_VAMP_GULP)
-    items.aaaBattery.helpers.GivePlayerItem(p)
+    items.aaaBattery.helpers.GivePlayerItem(p, nil, rng)
     helper.GetLootDeckData(p)[Tag .. "Played"] = false
 end
 

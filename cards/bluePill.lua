@@ -24,7 +24,7 @@ local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
 	local sfx = lootdeck.sfx
 	local room = Game():GetRoom()
 
-	helper.RunRandomFunction(rng, shouldDouble,
+	helper.RunRandomFunction(lootdeck.debug[Tag] or rng, shouldDouble,
 	function()
 		sfx:Play(SoundEffect.SOUND_THUMBSUP	,1,0)
 		local cardId = helper.GetWeightedLootCardId(true, rng)

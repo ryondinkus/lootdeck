@@ -30,6 +30,7 @@ local defaultStartupValues = {
     showOverlay = false,
     firstEnteredLevel = false,
     lostSoul = false,
+	enemiesKilledInRoom = 0,
     isInitialized = false,
     isGameStarted = false,
     delayedCards = {},
@@ -47,6 +48,7 @@ lootdeck.sfx = SFXManager()
 lootdeck.mus = MusicManager()
 lootdeck.f = table.deepCopy(defaultStartupValues)
 lootdeck.unlocks = {}
+lootdeck.debug = {}
 
 local helper = LootDeckAPI
 local InitializeMCM = include("modConfigMenu")
@@ -184,8 +186,14 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune, runeOnly)
+    local isTaintedLost = false
+    helper.ForEachPlayer(function(p)
+        if p:GetPlayerType() == PlayerType.PLAYER_THELOST_B then
+            isTaintedLost = true
+        end
+    end)
     -- TODO make it so that a loot card spawning is always decided by the 5% and not by the game itself
-	if not runeOnly then
+	if not runeOnly and not (isTaintedLost and id == Card.CARD_HOLY) then
         local isLootCard = lootcards[id] ~= nil
 		local isHoloLootCard = helper.IsHolographic(id)
 		local holoChance = helper.PercentageChance(lootdeck.mcmOptions.HoloCardChance, 100, r) and lootdeck.unlocks.gimmeTheLoot
@@ -328,7 +336,7 @@ lootdeck:AddCallback(ModCallbacks.MC_POST_RENDER, function()
             local heldLootcard = helper.GetLootcardById(heldCardId)
 
             local isJacobAndEsau = p.SubType == PlayerType.PLAYER_JACOB or (p.SubType == PlayerType.PLAYER_ESAU and p:GetOtherTwin())
-            
+
             if heldLootcard then
                 local lootcardAnimationContainer = data.lootcardHUDAnimation
 
@@ -413,6 +421,28 @@ lootdeck:AddCallback(ModCallbacks.MC_USE_ITEM, function(_, type, rng, p)
         helper.PlayLootcardUseAnimation(p, heldLootcard.Id)
     end
 end, CollectibleType.COLLECTIBLE_DECK_OF_CARDS)
+
+local magnetoSpeed = 1.75
+
+lootdeck:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, function(_, pickup)
+    if LootDeckAPI.IsCoin(pickup, true) and pickup.Variant ~= entityVariants.doubleStickyNickel.Id then
+        local closestPlayer
+
+        LootDeckAPI.ForEachPlayer(function(player)
+            if not closestPlayer then
+                closestPlayer = player
+            else
+                if player.Position:Distance(pickup.Position) < closestPlayer.Position:Distance(pickup.Position) then
+                    closestPlayer = player
+                end
+            end
+        end, CollectibleType.COLLECTIBLE_MAGNETO)
+
+        if closestPlayer then
+            pickup.Velocity = (closestPlayer.Position - pickup.Position):Normalized() * magnetoSpeed
+        end
+    end
+end)
 
 if EID then
    local EIDLootCardIcon = Sprite()
@@ -606,3 +636,5 @@ for _, trinket in pairs(trinkets) do
 		})
 	end
 end
+
+include("tests/registry")

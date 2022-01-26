@@ -7,6 +7,7 @@ function LootDeckAPI.IsSoulHeartBart(player)
         PlayerType.PLAYER_JUDAS_B,
         PlayerType.PLAYER_XXX_B,
         PlayerType.PLAYER_THELOST_B,
+        PlayerType.PLAYER_THEFORGOTTEN_B,
         PlayerType.PLAYER_THESOUL_B,
         PlayerType.PLAYER_BETHANY_B,
     }
@@ -63,7 +64,13 @@ function LootDeckAPI.FindHealthToAdd(player, hp)
 end
 
 function LootDeckAPI.AddTemporaryHealth(player, hp) -- hp is calculated in half hearts
-	local data = LootDeckAPI.GetLootDeckData(player)
+	local data
+    
+    if player:GetPlayerType() == PlayerType.PLAYER_THESOUL_B then
+        data = LootDeckAPI.GetLootDeckData(player:GetMainTwin())
+    else
+        data = LootDeckAPI.GetLootDeckData(player)
+    end
     local amountToAdd = LootDeckAPI.FindHealthToAdd(player, hp)
     if player:GetPlayerType() == PlayerType.PLAYER_THESOUL then
         if not data.soulHp then
@@ -343,5 +350,11 @@ function LootDeckAPI.GetLootDeckData(player)
         end
 
         return data.lootdeck
+    end
+end
+
+function LootDeckAPI.RemoveCard(player, slot)
+    for i = (slot or 0), 3 do
+        player:SetCard(i, player:GetCard(i + 1))
     end
 end

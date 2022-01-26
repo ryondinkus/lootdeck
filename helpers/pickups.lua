@@ -133,7 +133,20 @@ function LootDeckAPI.GlyphOfBalance(player, rng)
     elseif player:GetHearts() + player:GetSoulHearts() < 12 and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
         return {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL}
     else
-        return {(rng:RandomInt(4) + 1) * 10, 1}
+		local potentialPickups =
+		{
+			{PickupVariant.PICKUP_KEY, KeySubType.KEY_NORMAL},
+			{PickupVariant.PICKUP_BOMB, BombSubType.BOMB_NORMAL},
+			{PickupVariant.PICKUP_COIN, CoinSubType.COIN_PENNY}
+		}
+		if player:GetPlayerType() ~= PlayerType.PLAYER_THELOST and player:GetPlayerType() ~= PlayerType.PLAYER_THELOST_B then
+			if player:GetPlayerType() == PlayerType.PLAYER_XXX or player:GetPlayerType() == PlayerType.PLAYER_XXX_B then
+				table.insert(potentialPickups, {PickupVariant.PICKUP_HEART, HeartSubType.HEART_SOUL})
+			else
+				table.insert(potentialPickups, {PickupVariant.PICKUP_HEART, HeartSubType.HEART_FULL})
+			end
+		end
+        return potentialPickups[rng:RandomInt(#potentialPickups) + 1]
     end
 end
 
@@ -148,6 +161,7 @@ function LootDeckAPI.IsCoin(pickup, onlyCustom)
 		2257, -- double charged penny
 		9192  -- charged penny
 	}
+	
 	if onlyCustom then
 		table.remove(customCoinVariants, 1)
 	end

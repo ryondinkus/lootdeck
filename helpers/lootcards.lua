@@ -94,3 +94,29 @@ function LootDeckAPI.FuckYou(p, type, variant, subtype, uses)
         end
     end
 end
+
+function LootDeckAPI.SetDebugFlagStep(flag, value)
+    return {
+        action = "EXECUTE_LUA",
+        code = function()
+            LootDeckAPI.SetDebugFlag(flag, value)
+        end
+    }
+end
+
+function LootDeckAPI.SetDebugFlag(flag, value)
+    lootdeck.debug[flag] = value
+end
+
+function LootDeckAPI.ClearDebugFlagStep(flag)
+    return {
+        action = "EXECUTE_LUA",
+        code = function()
+            LootDeckAPI.ClearDebugFlag(flag)
+        end
+    }
+end
+
+function LootDeckAPI.ClearDebugFlag(flag)
+    lootdeck.debug[flag] = nil
+end

@@ -22,7 +22,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On use, triggers one of
 local function MC_USE_CARD(_, c, p, f, shouldDouble, isDouble, rng)
     local sfx = lootdeck.sfx
 
-    return helper.RunRandomFunction(rng, shouldDouble,
+    return helper.RunRandomFunction(lootdeck.debug[Tag] or rng, shouldDouble,
         function()
             sfx:Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
             local coins = p:GetNumCoins()

@@ -17,7 +17,7 @@ local WikiDescription = helper.GenerateEncyclopediaPage("On damage taken, 5% cha
 local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
     local p = e:ToPlayer()
     if p:HasCollectible(Id) then
-        if helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
+        if lootdeck.debug[Tag] or helper.PercentageChance(5 * p:GetCollectibleNum(Id), 25) then
             local target = source
             if source.Type == EntityType.ENTITY_PROJECTILE then
                 target = source.Entity.SpawnerEntity

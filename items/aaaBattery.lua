@@ -14,15 +14,20 @@ local Descriptions = {
 }
 local WikiDescription = helper.GenerateEncyclopediaPage("Grants a random temporary battery item for each new floor.", "- Additional copies of the passive grant extra battery items.")
 
-local function GivePlayerItem(p, data)
+local function GivePlayerItem(p, data, rng)
     if not data then
         data = helper.GetLootDeckData(p)
     end
     local itemPool = Game():GetItemPool()
-    local collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
-    local itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
-    while itemConfig.Type == ItemType.ITEM_ACTIVE do
-        collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM)
+    local collectibleId
+    local itemConfig
+
+    if not rng then
+        rng = lootdeck.rng
+    end
+
+    while (not collectibleId and not itemConfig) or itemConfig.Type == ItemType.ITEM_ACTIVE do
+        collectibleId = itemPool:GetCollectible(ItemPoolType.POOL_BATTERY_BUM, false, rng:Next())
         itemConfig = Isaac.GetItemConfig():GetCollectible(collectibleId)
     end
     p:AddCollectible(collectibleId)

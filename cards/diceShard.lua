@@ -69,7 +69,7 @@ local function MC_POST_NEW_ROOM()
             for j=0,3 do
 				local currentCard = p:GetCard(j)
                 if (currentCard == Id or currentCard == lootcardKeys.holographicdiceShard.Id) and data[Tag .. "RemoveCard"] then
-                    p:SetCard(j, 0)
+                    LootDeckAPI.RemoveCard(p, j)
                     data[Tag .. "RemoveCard"] = nil
                 end
             end

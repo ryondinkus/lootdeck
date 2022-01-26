@@ -10,25 +10,24 @@ local Tag = "strength"
 local Id = Isaac.GetCardIdByName(Name)
 local Weight = 1
 local Descriptions = {
-    en_us = "Triggers the {{Collectible437}} D7 effect, respawning all enemies in the room to spawn an extra room reward#{{ArrowUp}} +1.0 Damage up until the end of the floor",
-    spa = "Activa el efecto del {{Collectible437}} D7, reviviendo a los enemigos muertos con una recompensa extra#{{ArrowUp}} +1.0 durante todo el piso"
+    en_us = "{{ArrowUp}} +0.25 Damage for each enemy killed in the room until the end of the floor",
+    spa = "{{ArrowUp}} +0.25 de daño para todos los enemigos derrotós en la habitación durante todo el piso"
 }
 local HolographicDescriptions = {
-    en_us = "Triggers the {{Collectible437}} D7 effect, respawning all enemies in the room to spawn an extra room reward#{{ArrowUp}} {{ColorRainbow}}+2.0{{CR}} Damage up until the end of the floor",
-    spa = "Activa el efecto del {{Collectible437}} D7, reviviendo a los enemigos muertos con una recompensa extra#{{ArrowUp}} {{ColorRainbow}}+2.0{{CR}} durante todo el piso"
+    en_us = "{{ArrowUp}} {{ColorRainbow}}+0.5{{CR}} Damage for each enemy killed in the room until the end of the floor",
+    spa = "{{ArrowUp}} {{ColorRainbow}}+0.5{{CR}} de daño para todos los enemigos derrotós en la habitación durante todo el piso"
 }
-local WikiDescription = helper.GenerateEncyclopediaPage("Triggers the D7 effect, which respawns all enemies in the room for a chance at an extra room reward.", "+1 Damage Up for the rest of the floor.", "Holographic Effect: Grants twice the damage increase.")
+local WikiDescription = helper.GenerateEncyclopediaPage("+0.25 Damage Up for each enemy killed in the room for the rest of the floor.", "Holographic Effect: Grants a +0.5 damage up for each enemy instead.")
 
 local function MC_USE_CARD(_, c, p)
-	helper.UseItemEffect(p, CollectibleType.COLLECTIBLE_D7)
-
     local data = helper.GetLootDeckData(p)
     local sprite = p:GetSprite()
     if not data[Tag] then
-        data[Tag] = 1
+        data[Tag] = lootdeck.f.enemiesKilledInRoom
     else
-        data[Tag] = data[Tag] + 1
+        data[Tag] = data[Tag] + lootdeck.f.enemiesKilledInRoom
     end
+    print(data[Tag])
     for i=1,data[Tag] or 0 do
         local color = Color(1, 1, 1, 1, data[Tag] / 10, 0, 0)
         sprite.Color = color
@@ -43,18 +42,25 @@ local function MC_EVALUATE_CACHE(_, p, f)
     local data = helper.GetLootDeckData(p)
     if f == CacheFlag.CACHE_DAMAGE then
         if data[Tag] then
-            p.Damage = p.Damage + data[Tag]
+            p.Damage = p.Damage + (data[Tag] * 0.25)
         end
+    end
+end
+
+local function MC_ENTITY_TAKE_DMG(_, e, amount, flags, source)
+    if e.Type ~= EntityType.ENTITY_FIREPLACE and e:IsVulnerableEnemy() and amount >= e.HitPoints then
+        lootdeck.f.enemiesKilledInRoom = lootdeck.f.enemiesKilledInRoom + 1
     end
 end
 
 local function MC_POST_NEW_ROOM()
     helper.ForEachPlayer(function(p, data)
         if data[Tag] then
-			p:TryRemoveNullCostume(costumes.strengthFire)
-			p:AddNullCostume(costumes.strengthGlow)
+            p:TryRemoveNullCostume(costumes.strengthFire)
+            p:AddNullCostume(costumes.strengthGlow)
         end
     end)
+    lootdeck.f.enemiesKilledInRoom = 0
 end
 
 local function MC_POST_NEW_LEVEL()
@@ -90,6 +96,10 @@ return {
         {
             ModCallbacks.MC_EVALUATE_CACHE,
             MC_EVALUATE_CACHE
+        },
+        {
+            ModCallbacks.MC_ENTITY_TAKE_DMG,
+            MC_ENTITY_TAKE_DMG
         },
         {
             ModCallbacks.MC_POST_NEW_ROOM,

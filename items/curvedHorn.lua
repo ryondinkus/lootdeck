@@ -32,6 +32,11 @@ local function Initialize(p)
 end
 
 local function MC_POST_NEW_ROOM()
+    helper.ForEachPlayer(function(_, data)
+        if data.curvedHornTearAmount then
+            data.curvedHornTearAmount = 0
+        end
+    end, Id)
     helper.ForEachPlayer(Initialize, Id)
 end
 

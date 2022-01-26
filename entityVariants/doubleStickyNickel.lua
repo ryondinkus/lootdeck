@@ -82,6 +82,10 @@ local function MC_PRE_PICKUP_COLLISION(_, pi, e)
         else
             return true
         end
+    else
+        if helper.IsCoin(pi) then
+            return true
+        end
     end
 end
 
