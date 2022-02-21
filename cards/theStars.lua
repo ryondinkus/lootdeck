@@ -32,7 +32,8 @@ local function MC_USE_CARD(_, c, p, f, _, _, rng)
     local itemConfig = Isaac.GetItemConfig():GetCollectible(collectible)
     if itemConfig.Type == ItemType.ITEM_ACTIVE then
         if p:GetActiveItem() ~= 0 then
-            helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, p:GetActiveItem(), room:FindFreePickupSpawnPosition(p.Position), Vector(0,0), p)
+            local item = helper.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, p:GetActiveItem(), room:FindFreePickupSpawnPosition(p.Position), Vector(0,0), p)
+            item:ToPickup().Charge = p:GetActiveCharge()
             p:RemoveCollectible(p:GetActiveItem(), false, ActiveSlot.SLOT_PRIMARY)
         end
     end
