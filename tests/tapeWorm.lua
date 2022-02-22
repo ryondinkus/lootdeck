@@ -4,10 +4,9 @@ return {
     {
         name = card.Tag.."Use",
         instructions = {
-            "Use card",
-            "Shoot in all directions",
-            "Use card three times",
-            "Shoot in all directions"
+            "Use card and shoot",
+            "Use card three times and shoot",
+            "Use Book of Belial and shoot"
         },
         steps = {
             {
@@ -84,6 +83,26 @@ return {
                     }
                 }
             },
+            {
+                action = "USE_ITEM",
+                id = CollectibleType.COLLECTIBLE_BOOK_OF_BELIAL
+            },
+            {
+                action = "SHOOT_UP",
+                seconds = 1
+            },
+            {
+                action = "SHOOT_RIGHT",
+                seconds = 1
+            },
+            {
+                action = "SHOOT_DOWN",
+                seconds = 1
+            },
+            {
+                action = "SHOOT_LEFT",
+                seconds = 1
+            }
         }
     }
 }
