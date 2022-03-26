@@ -211,6 +211,7 @@ lootdeck:AddCallback(ModCallbacks.MC_GET_CARD, function(_, r, id, playing, rune,
 end)
 
 lootdeck:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, function(_, shouldSave)
+	lootdeck.mus:Enable()
     if shouldSave then
         helper.SaveGame()
     end

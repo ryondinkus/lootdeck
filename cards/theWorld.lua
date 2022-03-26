@@ -48,6 +48,7 @@ local function MC_POST_UPDATE()
             helper.ForEachEntityInRoom(function(entity) entity:AddEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
                 return entity:IsEnemy() and not entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
             end)
+            mus:Disable()
         else
             helper.ForEachEntityInRoom(function(entity) entity:ClearEntityFlags(EntityFlag.FLAG_FREEZE) end, nil, nil, nil, function(entity)
                 return entity:IsEnemy() and entity:HasEntityFlags(EntityFlag.FLAG_FREEZE)
