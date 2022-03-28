@@ -70,6 +70,7 @@ local function MC_POST_PEFFECT_UPDATE(_, p)
             poof.Color = Color(0.6,0,0.6,1,0,0,0)
             lootdeck.sfx:Play(SoundEffect.SOUND_POWERUP1, 1, 0)
             p:AddCollectible(collectible)
+            itemPool:RemoveCollectible(collectible)
             data[Tag] = nil
         end
     end
